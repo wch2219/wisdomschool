@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.SysNotifitionActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <include
+        layout="@layout/toolbar"
+        />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:id="@+id/tv_clean"
+                style="@style/TextSizeSmallTitleBlack"
+                android:text="清空"
+                android:layout_centerInParent="true"
+                android:padding="10dp"
+                android:textColor="@color/blue"
+                 />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <View
+        style="@style/GaryDiveStyle"
+        />
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_list"
+            >
+
+        </ListView>
+    <View
+        style="@style/GaryDiveStyle"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已经全部加载完毕"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            />
+
+</LinearLayout>

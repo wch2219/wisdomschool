@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.VideoDescActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <include
+            layout="@layout/toolbar"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:layout_alignParentRight="true"
+            android:layout_height="?attr/actionBarSize">
+            <RelativeLayout
+                android:id="@+id/rl_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                >
+                <ImageView
+                    style="@style/Imagesmill2pic"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_huodonggd"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <com.xiao.nicevideoplayer.NiceVideoPlayer
+        android:id="@+id/nvplayert"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+    </com.xiao.nicevideoplayer.NiceVideoPlayer>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:text="欢迎使用智慧家校，快来管理班级和教学吧！"
+        />
+    <Button
+        android:id="@+id/btn_next"
+       style="@style/ButtonLoginStyles"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_class_btn"
+        android:text="下一篇，创建班级方法"
+        />
+</LinearLayout>

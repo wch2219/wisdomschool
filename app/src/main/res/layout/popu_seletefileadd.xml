@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_cirre_white_bg"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="全部文件"
+        android:padding="10dp"
+        android:id="@+id/tv_allfile"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="文档文件"
+        android:padding="10dp"
+        android:id="@+id/tv_documentfile"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="图片文件"
+        android:padding="10dp"
+        android:id="@+id/tv_picfile"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="音频文件"
+        android:padding="10dp"
+        android:id="@+id/tv_voicefile"
+        />
+
+</LinearLayout>

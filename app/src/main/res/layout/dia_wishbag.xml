@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="新建文件夹"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+        <EditText
+            android:id="@+id/et_filename"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blue"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:hint="请输入文件夹名称"
+            android:textColorHint="@color/white"
+            android:textSize="15sp"
+            android:gravity="center"
+            />
+    <View
+        style="@style/GaryDiveStyle"
+        android:layout_marginTop="20dp"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:id="@+id/tv_close"
+                style="@style/TextSizeSmallTitleBlack"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="取消"
+                />
+            <View
+                style="@style/GaryDiveStyle"
+                android:layout_height="match_parent"
+                android:layout_width="0.5dp"
+                />
+            <TextView
+                android:id="@+id/tv_create"
+                style="@style/TextSizeSmallTitleBlack"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="创建文件夹"
+                />
+
+        </LinearLayout>
+</LinearLayout>

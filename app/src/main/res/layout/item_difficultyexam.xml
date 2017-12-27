@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_gravity="center_vertical"
+                style="@style/TextSizecontentBlack"
+                android:text="dsadsa"
+                />
+            <ImageView
+                android:id="@+id/iv_pic"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/icon_nandua"
+                android:layout_height="25dp" />
+        </LinearLayout>
+        <ImageView
+            style="@style/Imagesmill3pic"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_jiantourig"
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

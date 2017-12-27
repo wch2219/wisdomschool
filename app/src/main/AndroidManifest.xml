@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dlwx.wisdomschool">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 允许程序打开网络套接字 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <application
+        android:name=".base.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 高德 -->
+        <service android:name="com.amap.api.location.APSService" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="07be7cf1435a43a8aecf157c33123e0b">
+            //开发者申请的key</meta-data>
+
+        <activity android:name=".base.MainActivity" />
+        <activity android:name=".activitys.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activitys.LoginInActivity" />
+        <activity android:name=".activitys.Register1Activity" />
+        <activity android:name=".activitys.RegisterActivity" />
+        <activity android:name=".activitys.ClassDescActivity" />
+        <activity android:name=".activitys.ClassMessageActivitry" />
+        <activity android:name=".activitys.ChangeClassNameActivity" />
+        <activity android:name=".activitys.SchoolAddressActivity" />
+        <activity android:name=".activitys.InOutClassActivity" />
+        <activity android:name=".activitys.GradeManageActivity" />
+        <activity android:name=".activitys.ClassAllStuActivity" />
+        <activity android:name=".activitys.AllSubJiectActivity" />
+        <activity android:name=".activitys.GradeActivity" />
+        <activity android:name=".activitys.PersionMessActivity" />
+        <activity android:name=".activitys.MyFacoriteActivity" />
+        <activity android:name=".activitys.WishDomBagActivity" />
+        <activity android:name=".activitys.VideoExplainActivity" />
+        <activity android:name=".activitys.VideoDescActivity" />
+        <activity android:name=".activitys.SetWorkTimeActivity" />
+        <activity android:name=".activitys.SysNotifitionActivity" />
+        <activity android:name=".activitys.FeedbackActivity" />
+        <activity android:name=".activitys.TeacherInvitaCodeActivity" />
+        <activity android:name=".activitys.SchoolTrainActivity" />
+        <activity android:name=".activitys.SettActivity" />
+        <activity android:name=".activitys.ForgetPwdActivity" />
+        <activity
+            android:name=".activitys.AgeWeeklyActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activitys.WeeklyDescActivity" />
+        <activity
+            android:name=".activitys.SendNotifiActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activitys.LookReadActivity" />
+        <activity android:name=".activitys.DisCussActivity" />
+        <activity android:name=".activitys.DisCussSettActivity" />
+        <activity android:name=".activitys.IDApproveActivity" />
+        <activity android:name=".activitys.PreinstallPicActivity" />
+        <activity android:name=".activitys.ClassFileActivity" />
+        <activity android:name=".activitys.SeleteFileActivity" />
+        <activity android:name=".activitys.InviteMemberActivity" />
+        <activity android:name=".activitys.DownNotifitionActivity" />
+        <activity
+            android:name=".activitys.MyClassMemberActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activitys.InviteTeachActivity" />
+        <activity android:name=".activitys.InviteTeach2Activity" />
+        <activity android:name=".activitys.AddTeachSuccessActivity" />
+        <activity android:name=".activitys.MemberShareActivity" />
+        <activity android:name=".activitys.WillShareMemberActivity" />
+        <activity android:name=".activitys.MemberMessActivity" />
+        <activity android:name=".activitys.ClassJurisdictionActivity" />
+        <activity android:name=".activitys.RemarkMessActivity" />
+        <activity android:name=".activitys.AddSeachClassActivity" />
+        <activity android:name=".activitys.GradeRankingActivity" />
+        <activity android:name=".activitys.GradeAnalyzeAllListActivity" />
+        <activity android:name=".activitys.YearAllStuGardAnalyzeActivity" />
+        <activity android:name=".activitys.SomeOneAllGradeAnalyzeActivity" />
+        <activity android:name=".activitys.GradeAnalyzeMapActivity" />
+        <activity android:name=".activitys.SeleteClassActivity" />
+        <activity android:name=".activitys.CreateGradeActivity" />
+        <activity android:name=".activitys.CreateClassActivity" />
+        <activity android:name=".activitys.ClassPropertyActivity" />
+        <activity android:name=".activitys.CreateClassCompleteActivity" />
+        <activity android:name=".activitys.RecordDescActivity" />
+        <activity android:name=".activitys.SynthesizeActivity" />
+        <activity android:name=".activitys.PublishUpPicActivity" />
+        <activity android:name=".activitys.PublishCompleteActivity" />
+        <activity android:name=".activitys.SynthesizeFullActivity" />
+        <activity android:name=".activitys.SeletePublishClassActivity" />
+        <activity
+            android:name=".activitys.PublishGroupUpActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activitys.AddLableActivity" />
+        <activity android:name=".activitys.NewAddLableActivity" />
+        <activity android:name=".activitys.ChangeIdTypeActivity" />
+        <activity android:name=".activitys.PatriarchExamActivity" />
+        <activity android:name=".activitys.ChoiceDifficultyExamActivity" />
+        <activity android:name=".activitys.StartExamActivity" />
+        <activity android:name=".activitys.MyCertificateActivity" />
+        <activity android:name=".activitys.MyCertificateDescActivity" />
+        <activity android:name=".activitys.MyJoinClassDescActivity" />
+        <activity
+            android:name=".activitys.SeleteOtherIdActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".activitys.LookStudentGradeActivity" />
+        <activity android:name=".activitys.MyJoinClassPersionMessActivity" />
+        <activity android:name=".activitys.ApplyBackClassActivity" />
+        <activity android:name=".activitys.ClassHistoryNewsActivitry" />
+        <activity android:name=".activitys.ChangeNamedActivity" />
+        <activity android:name=".activitys.ExclusiveCodeActivity" />
+        <activity android:name=".activitys.ChangePhoneActivity" />
+        <activity android:name=".activitys.ChangePhone2Activity" />
+        <activity android:name=".activitys.ChangePhoneSuccessActivity" />
+        <activity android:name=".activitys.InputPhoneInviteActivity"></activity>
+    </application>
+
+</manifest>

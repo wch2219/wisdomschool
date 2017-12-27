@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.SeleteClassActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+    <LinearLayout
+        android:id="@+id/ll_createclass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <TextView
+                style="@style/TextSizecontentBlack"
+            android:text="+创建班级"
+            android:layout_weight="1"
+            />
+            <ImageView
+                style="@style/Imagesmill3pic"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_jiantourig"
+                />
+    </LinearLayout>
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/lv_list"
+        android:layout_height="wrap_content"></ListView>
+</LinearLayout>

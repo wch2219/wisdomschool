@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/shape_cirre_white_bg"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="上传图片"
+        android:padding="10dp"
+        android:id="@+id/tv_uppic"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="上传文件"
+        android:padding="10dp"
+        android:id="@+id/tv_upfile"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="新建文件夹"
+        android:padding="10dp"
+        android:id="@+id/tv_addfile"
+        />
+
+</LinearLayout>

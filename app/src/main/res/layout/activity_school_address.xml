@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.SchoolAddressActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/black"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            >
+            <ImageView
+                style="@style/Imagesmillpic"
+                android:src="@mipmap/icon_jiantou"
+                />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/ll_seletecity"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:id="@+id/tv_cityname"
+                />
+            <ImageView
+                style="@style/Imagesmill3pic"
+                android:src="@mipmap/icon_cjbjjiantouxia"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_seach"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/shape_seach_bg">
+            <ImageView
+                style="@style/Imagesmill2pic"
+                android:src="@mipmap/icon_cjbjsousuo"
+                />
+                <TextView
+                    style="@style/TextSizeSmallTitleBlack"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/seach_text"
+                    />
+            ></LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_close"
+                android:visibility="gone"
+                style="@style/TextSizecontentBlack"
+                android:layout_gravity="center_vertical"
+                android:text="取消"
+               android:padding="10dp"
+                android:textColor="@color/black"
+                />
+    </LinearLayout>
+
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+
+    </com.amap.api.maps2d.MapView>
+    <TextView
+        android:id="@+id/tv_input"
+        style="@style/TextSizeSmallTitleBlack"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="+ 手动输入学校名称"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/black"
+        android:visibility="gone" />
+            <ListView
+            android:id="@+id/lv_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+</LinearLayout>

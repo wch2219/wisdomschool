@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:id="@+id/item_home"
+    android:icon="@drawable/selete_buttom_home"
+    android:title="作业" />
+<item
+    android:id="@+id/item_class"
+    android:icon="@drawable/selete_buttom_class"
+    android:title="班级" />
+<item
+    android:id="@+id/item_record"
+    android:icon="@drawable/selete_buttom_record"
+    android:title="成长记录" />
+<item
+    android:id="@+id/item_chat"
+    android:icon="@drawable/selete_buttom_chat"
+    android:title="私聊" />
+    <item
+    android:id="@+id/item_my"
+    android:icon="@drawable/selete_buttom_my"
+    android:title="我的" />
+
+</menu>

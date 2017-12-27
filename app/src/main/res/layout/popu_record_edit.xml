@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_synthesize"
+        style="@style/TextSizecontentBlack"
+        android:text="综合素质"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:text="视频纪录"
+        android:id="@+id/tv_video"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_picandtext"
+        style="@style/TextSizecontentBlack"
+        android:text="图文纪录"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:orientation="vertical"
+        android:id="@+id/ll_close"
+        android:padding="10dp"
+        >
+        <ImageView
+            style="@style/Imagesmill2pic"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/icon_bjxxtjcg"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

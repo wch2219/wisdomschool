@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.DisCussSettActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <View style="@style/GaryDiveStyle" />
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="讨论成员" />
+
+            <com.dlwx.baselib.view.MyGridView
+                android:id="@+id/gv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="10dp"
+                android:numColumns="5"
+                android:layout_margin="10dp"
+                android:verticalSpacing="10dp">
+
+            </com.dlwx.baselib.view.MyGridView>
+
+            <LinearLayout
+                android:id="@+id/ll_allpersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_weight="1"
+                    android:text="全部群成员" />
+
+                <TextView
+                    android:id="@+id/tv_notspeck"
+                    style="@style/TextSizecontentBlack"
+                    android:text="11人未发言"
+                    android:textSize="11sp"
+                    android:textColor="@color/blue"
+                    />
+                    <ImageView
+                        style="@style/Imagesmill3pic"
+                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/icon_jiantourig"
+                        />
+            </LinearLayout>
+                <View
+                    style="@style/GaryDiveStyle"
+                    android:layout_height="15dp"
+                    />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/ll_settendtime"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_weight="1"
+                    android:text="讨论结束时间" />
+
+                <TextView
+                    android:id="@+id/tv_endtime"
+                    style="@style/TextSizecontentBlack"
+                    android:text="不限时"
+                    android:textSize="11sp"
+                    android:textColor="@color/garytext"
+
+                    />
+            </LinearLayout>
+            <View
+                style="@style/GaryDiveStyle"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_weight="1"
+                    android:text="免打扰" />
+
+                <Switch
+                    android:id="@+id/nodisturbing"
+                    style="@style/switchstyle"
+
+                    />
+            </LinearLayout>
+            <View
+                style="@style/GaryDiveStyle"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:id="@+id/ll_stop"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_weight="1"
+                    android:text="暂停智慧讨论" />
+
+                <ImageView
+                    style="@style/Imagesmill3pic"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/icon_jiantourig"
+                    />
+            </LinearLayout>
+            <View
+                style="@style/GaryDiveStyle"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        >
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSizecontentBlack"
+            android:layout_weight="1"
+            android:text="创新精神"
+
+            />
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:id="@+id/tv_num"
+            android:text="0"
+
+            />
+
+    </LinearLayout>
+</RelativeLayout>

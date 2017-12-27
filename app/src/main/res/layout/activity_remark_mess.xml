@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.RemarkMessActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        android:background="@color/blue"
+        />
+    <RadioGroup
+        android:id="@+id/rg_group"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="40dp">
+        <RadioButton
+            android:id="@+id/rb_famialy"
+            style="@style/TextSizecontentBlack"
+            android:layout_weight="1"
+            android:text="家访登记表"
+            android:button="@null"
+            android:background="@drawable/selete_remark_title"
+            android:textColor="@drawable/selete_remark_title_text"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            />
+        <RadioButton
+            android:id="@+id/rb_hister"
+            style="@style/TextSizecontentBlack"
+            android:layout_weight="1"
+            android:text="纪录汇总"
+            android:button="@null"
+            android:background="@drawable/selete_remark_title"
+            android:textColor="@drawable/selete_remark_title_text"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            />
+    </RadioGroup>
+    <View
+        style="@style/GaryDiveStyle"
+        android:background="@color/blue"
+        />
+    <FrameLayout
+        android:id="@+id/fl_contents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</LinearLayout>

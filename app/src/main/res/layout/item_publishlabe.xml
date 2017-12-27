@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="80dp"
+        android:layout_height="70dp">
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSizecontentBlack"
+            android:background="@drawable/shape_gary_bg"
+            android:text="劳动"
+            android:layout_width="70dp"
+            android:textColor="@color/white"
+            android:padding="5dp"
+            android:maxEms="3"
+            android:maxLength="3"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            />
+            <ImageView
+                style="@style/Imagesmill3pic"
+                android:src="@mipmap/icon_szshanchu"
+                android:id="@+id/iv_close"
+                android:layout_alignParentRight="true"
+                />
+        ></RelativeLayout>
+</android.support.constraint.ConstraintLayout>

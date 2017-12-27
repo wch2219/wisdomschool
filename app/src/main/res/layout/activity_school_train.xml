@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.SchoolTrainActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/icon_bbbbb" />
+
+            <TextView
+                style="@style/TextSizeSmallTitleBlack"
+                android:padding="10dp"
+                android:text="在线申请预约讲座:"
+                android:textColor="@color/black" />
+
+            <View style="@style/GaryDiveStyle" />
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="学校所在省、市" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rl_pro"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/shape_black_line"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_pro"
+                        style="@style/TextSizecontentBlack"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:maxLength="3"
+                        android:text="省份" />
+
+                    <ImageView
+                        style="@style/Imagesmill3pic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/icon_wdxiala" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_city"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/shape_black_line"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/tv_city"
+                        style="@style/TextSizecontentBlack"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:maxLength="3"
+                        android:text="地址市" />
+
+                    <ImageView
+                        style="@style/Imagesmill3pic"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@mipmap/icon_wdxiala" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="申请所在学校名称" />
+
+            <EditText
+                android:id="@+id/et_schoolname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/shape_black_line"
+                android:maxLines="1" />
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="联系人" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/shape_black_line"
+                android:maxLines="1" />
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="联系人职务" />
+
+            <EditText
+                android:id="@+id/et_duty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/shape_black_line"
+                android:maxLines="1" />
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:padding="10dp"
+                android:text="联系人电话" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="80dp"
+                android:background="@drawable/shape_black_line"
+                android:maxLines="1" />
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:text="申请预约讲座"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="40dp"
+                android:background="@drawable/shape_class_btn"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

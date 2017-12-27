@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_close"
+            style="@style/Imagesmill2pic"
+            android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_cuowu"
+            android:layout_margin="10dp"
+             />
+
+    </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="确定您在此班的身份"
+            android:padding="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_oneself"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="以自己的身份加入"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_patriarch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="以学生家长的身份加入"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+</LinearLayout>

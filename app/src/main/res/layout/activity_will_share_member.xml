@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.WillShareMemberActivity">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <include
+           layout="@layout/toolbar"
+           />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            >
+                <TextView
+                    android:id="@+id/tv_aff"
+                    style="@style/TextSizecontentBlack"
+                    android:text="确认"
+                    android:textColor="@color/blue"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    />
+        </RelativeLayout>
+   </RelativeLayout>
+
+    <View
+        style="@style/GaryDiveStyle"
+        />
+
+        <GridView
+            android:id="@+id/gv_list"
+            android:numColumns="5"
+            android:layout_margin="10dp"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </GridView>
+</LinearLayout>

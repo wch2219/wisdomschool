@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+        <LinearLayout
+            android:id="@+id/ll_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:background="@color/blue"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_height="150dp"
+                android:src="@mipmap/icon_suzhi"
+                />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:text="综合素质大提升"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/tv_content"
+                style="@style/TextSizecontentBlack"
+                android:text="@string/synthesize"
+                android:lineSpacingExtra="5dp"
+                android:layout_marginTop="20dp"
+                android:textSize="11sp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                />
+            <RelativeLayout
+                android:id="@+id/btn_uppic"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shape_re_blue_line"
+                android:layout_marginRight="10dp"
+                >
+
+                <ImageView
+                    style="@style/Imagesmill2pic"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginStart="9dp"
+                    android:src="@mipmap/icon_szzhaop" />
+                    <TextView
+                        style="@style/TextSizecontentBlack"
+                        android:layout_centerInParent="true"
+                        android:text="上传照片"
+                        android:textColor="@color/blue"
+                        />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.ClassFileActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <include
+        layout="@layout/toolbar"
+        />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="?attr/actionBarSize">
+
+            <ImageView
+                android:id="@+id/iv_add"
+                style="@style/Imagesmillpic"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:src="@mipmap/icon_cj" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <View
+        style="@style/GaryDiveStyle"
+        />
+        <include
+            layout="@layout/entry_file"
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ll_noentry"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:background="@drawable/shape_black_line"
+            >
+            <ImageView
+                style="@style/Imagesmill2pic"
+                android:src="@mipmap/icon_cjbjsousuo"
+                />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    android:hint="搜索/分类查看"
+                    android:textSize="15sp"
+                    />
+        </LinearLayout>
+        <ExpandableListView
+            android:scrollbars="none"
+            android:dividerHeight="10dp"
+            android:divider="@color/white"
+android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ablv_list"
+            android:layout_weight="1"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:background="@color/blue"
+            >
+            <ProgressBar
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="wrap_content"
+                android:max="100"
+                android:progress="50"
+                android:id="@+id/progressbar"
+                android:progressDrawable="@drawable/shape_pross_blue_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_height="5dp" />
+                <TextView
+                    android:id="@+id/tv_size"
+                    style="@style/TextSizecontentBlack"
+                    android:layout_gravity="center_vertical"
+                    android:text="0KB/1.0GB"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="5dp"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

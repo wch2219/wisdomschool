@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.dlwx.wisdomschool.fragments.GroupChatFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content">
+        <ImageView
+           android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@mipmap/icon_cjwu"
+
+            />
+            <Button
+                android:id="@+id/btn_creategroup"
+                style="@style/ButtonLoginStyles"
+                android:layout_gravity="center_horizontal"
+                android:text="+创建群聊"
+                android:background="@drawable/shape_class_btn"
+                android:layout_height="30dp"
+                android:layout_width="100dp"
+                android:layout_marginTop="20dp"
+                />
+    </LinearLayout>
+
+</RelativeLayout>

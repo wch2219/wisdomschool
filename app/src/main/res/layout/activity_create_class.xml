@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.CreateClassActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/rl_pic"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_re_black_line"
+            >
+            <ImageView
+                android:id="@+id/iv_pic"
+                style="@style/ImageuppicSize"
+                android:src="@mipmap/ss33"
+
+                android:scaleType="fitXY"
+                />
+        </RelativeLayout>
+
+
+        </RelativeLayout>
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:text="班徽"
+            android:textSize="11sp"
+            android:layout_alignLeft="@id/rl_pic"
+            android:textColor="@color/blue"
+            />
+    </RelativeLayout>
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:text="  给您的班级起个名字吧"
+            android:textSize="11sp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            />
+        <EditText
+            android:id="@+id/et_classname"
+            android:layout_width="180dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="13sp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="30dp"
+            android:text="如：一2班语文"
+            android:background="@drawable/shape_class_btn"
+            />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="下一步"
+        android:id="@+id/btn_next"
+        android:textColor="@color/white"
+        android:background="@color/blue"
+        />
+</LinearLayout>

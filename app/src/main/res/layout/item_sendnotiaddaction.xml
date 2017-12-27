@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            style="@style/ImagehomeItempic"
+            android:padding="5dp"
+            android:id="@+id/iv_pic"
+            android:src="@mipmap/icon_tianjiatupian"
+            />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:id="@+id/et_title"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="选项A内容"
+                />
+            <ImageView
+                android:id="@+id/iv_close"
+                style="@style/Imagesmill3pic"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/icon_cuowu"
+                />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

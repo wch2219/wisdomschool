@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_re_black_line"
+        >
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/icon_zhucetouxiang"
+        android:id="@+id/iv_pic"
+
+        />
+    </RelativeLayout>
+            <TextView
+                style="@style/Imagesmill3pic"
+                android:text="1"
+                android:gravity="center"
+                android:textSize="8sp"
+                android:textColor="@color/white"
+               android:background="@drawable/shape_cirdot_red"
+                android:layout_alignParentRight="true"
+
+                />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/tv_name"
+        style="@style/TextSizecontentBlack"
+        android:text="刘楠楠"
+
+        android:layout_gravity="center_horizontal"
+        />
+</LinearLayout>

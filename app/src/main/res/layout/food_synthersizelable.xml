@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:textColor="@color/garytext"
+        android:text="详细了解综合素质"
+        android:gravity="center_horizontal"
+        android:textSize="11sp"
+        />
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.GradeAnalyzeMapActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+        <TextView
+            style="@style/TextSizeSmallTitleBlack"
+            android:text="语文"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+             />
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:textSize="11sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:text="近期成绩报表"
+            />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@mipmap/icon_grademap"
+            />
+</LinearLayout>

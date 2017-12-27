@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/shape_seleteclass_bg"
+    android:layout_height="wrap_content">
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:text="您的学校"
+        android:padding="10dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/gary"
+        >
+        <TextView
+
+            style="@style/TextSizecontentBlack"
+            android:text="您需要将班级最高管理权利转让给其"
+            />
+        <TextView
+
+            style="@style/TextSizecontentBlack"
+            android:text="他任课老师才能退出班级"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_aff"
+            style="@style/ButtonLoginStyles"
+            android:background="@drawable/shape_class_btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:text="我知道啦"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_height="35dp"
+            android:layout_width="match_parent"
+
+            />
+    </LinearLayout>
+</LinearLayout>

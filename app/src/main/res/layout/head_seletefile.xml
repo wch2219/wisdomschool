@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/shape_re_black_line"
+        >
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+
+            />
+
+    </RelativeLayout>
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:text="智慧书包"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            />
+    <ImageView
+        style="@style/Imagesmill3pic"
+        android:src="@mipmap/icon_jiantourig"
+        android:layout_gravity="center_vertical"
+        />
+</LinearLayout>

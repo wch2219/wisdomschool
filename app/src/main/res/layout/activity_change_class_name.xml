@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.ChangeClassNameActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+        <View
+            style="@style/GaryDiveStyle"
+            />
+        <EditText
+            android:id="@+id/et_name"
+            style="@style/TextSizecontentBlack"
+            android:padding="10dp"
+
+                android:text="@string/classname0"
+            android:layout_width="match_parent"
+            android:background="@null"
+            />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <Button
+        android:id="@+id/btn_create"
+        style="@style/ButtonLoginStyles"
+        android:background="@drawable/shape_class_btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="@string/affirm"
+        android:layout_height="35dp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="150dp"
+        />
+</LinearLayout>

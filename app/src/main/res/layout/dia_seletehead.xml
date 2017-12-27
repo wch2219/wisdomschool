@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_seleteclass_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+
+        <TextView
+            style="@style/TextSizeTitleBlack"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="选择班徽来源"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_close"
+            style="@style/TextSizecontentBlack"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:text="取消"
+            android:textColor="@color/blue" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <!--预设-->
+        <LinearLayout
+            android:id="@+id/ll_preinstall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+              android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:layout_marginTop="10dp"
+                android:text="选择预设"
+                android:textColor="@color/blue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:layout_marginTop="10dp"
+                android:text="拍照/相册"
+                android:textColor="@color/blue" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextSizecontentBlack"
+        android:text="1、出生情况"
+        android:padding="10dp"
+        />
+    <com.dlwx.baselib.view.MyListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gv_list"
+        android:divider="@null"
+        android:dividerHeight="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        ></com.dlwx.baselib.view.MyListView>
+</LinearLayout>

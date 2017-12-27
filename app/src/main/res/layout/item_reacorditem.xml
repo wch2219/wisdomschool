@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSizeSmallTitleBlack"
+            android:textColor="@color/blue"
+            android:text="顺产"
+            android:layout_gravity="center_vertical"
+            />
+        <TextView
+            android:id="@+id/tv_ratio"
+            style="@style/TextSizecontentBlack"
+            android:textColor="@color/garytext"
+            android:textSize="11sp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:text="5人占比20%"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:orientation="horizontal"
+        >
+    <ProgressBar
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="wrap_content"
+        android:max="100"
+        android:progress="50"
+        android:id="@+id/progressbar"
+        android:progressDrawable="@drawable/shape_pross_blue_gary_bg"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:layout_height="4dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.FeedbackActivity">
+    <include
+        layout="@layout/toolbar"
+        />
+        <View
+            style="@style/GaryDiveStyle"
+            />
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="10dp"
+            android:layout_margin="20dp"
+            android:gravity="top"
+            android:textSize="15sp"
+            android:background="@drawable/shape_class_bg"
+            android:hint="@string/feedback"
+            android:lineSpacingExtra="2dp"
+            />
+    <Button
+        android:id="@+id/btn_send"
+        style="@style/ButtonLoginStyles"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_class_btn"
+        android:text="发表"
+         />
+</LinearLayout>

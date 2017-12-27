@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        style="@style/GaryDiveStyle"
+        />
+
+    <TextView
+        android:id="@+id/tv_backclass"
+        style="@style/TextSizeSmallTitleBlack"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="退出班级"
+        android:textColor="@color/black" />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+     android:id="@+id/tv_dissolveclass"
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="解散班级"
+     android:layout_width="match_parent"
+     android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+ <TextView
+     android:id="@+id/tv_close"
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="取消"
+     android:layout_width="match_parent"
+     android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        />
+
+
+</LinearLayout>

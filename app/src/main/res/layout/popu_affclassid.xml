@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <View
+        style="@style/GaryDiveStyle"
+        />
+
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:layout_width="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="确定您在此班的身份"
+        android:textColor="@color/black" />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_current"
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="高飞爸爸"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_otherid"
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="或其他身份"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_close"
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        />
+
+</LinearLayout>

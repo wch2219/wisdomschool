@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#0B0B0B</color>
+    <color name="blue">#3287DD</color>
+    <color name="blue1">#98C2EA</color>
+    <color name="garytext">#737373</color>
+    <color name="gary">#DADADA</color>
+    <color name="green">#5Fcc89</color>
+    <color name="blacktran">#bb000000</color>
+    <color name="red">#FF0000</color>
+    <color name="publist1">#D73B48</color>
+    <color name="publist2">#F28220</color>
+    <color name="publist3">#2D9Ad2</color>
+    <color name="publist4">#00A392</color>
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:maxLines="1"
+            android:textColor="@color/black"
+            android:text="@string/schoolname"
+        />
+    <TextView
+        android:id="@+id/tv_local"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:maxEms="11"
+        android:textSize="13sp"
+        android:ellipsize="end"
+        android:text="河南省郑州市花园路农科路安华大厦1506"
+        />
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp"
+    android:layout_height="match_parent">
+        <include
+            layout="@layout/item_home_left"
+            />
+             <include
+            layout="@layout/item_home_right"
+            />
+        <include
+            layout="@layout/item_home_discuss"
+            />
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSizecontentBlack"
+            android:text="高飞"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/tv_grade"
+            style="@style/TextSizecontentBlack"
+            android:text="328分"
+            />
+        <ImageView
+            style="@style/Imagesmill3pic"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_jiantourig"
+
+            />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

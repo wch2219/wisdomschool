@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.fragments.AddClassFragment">
+    <include
+        layout="@layout/add_class_entry"
+        />
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/ll_noentry"
+            >
+            <ListView
+                android:layout_marginTop="10dp"
+                android:id="@+id/lv_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="15dp"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:layout_margin="20dp"
+                >
+            </ListView>
+
+            <Button
+                android:id="@+id/btn_noentryadd"
+                style="@style/ButtonLoginStyles"
+                android:text="加入班级"
+                android:background="@drawable/shape_class_btn"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:layout_height="30dp"
+                android:layout_width="120dp"
+                />
+        </LinearLayout>
+
+</LinearLayout>
