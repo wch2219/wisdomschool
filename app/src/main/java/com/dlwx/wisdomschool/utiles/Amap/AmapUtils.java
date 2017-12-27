@@ -34,7 +34,7 @@ public class AmapUtils {
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
         //获取一次定位结果：
         //该方法默认为false。
-        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocation(false);
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
         //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
@@ -59,6 +59,7 @@ public class AmapUtils {
                 }
                 if ( locationListener != null) {
                     locationListener.getResultAdd(city,latitude,longitude);
+                    locationListener.getaMapLocation(aMapLocation);
                 }
                 LogUtiles.LogI(city);
            }
@@ -68,6 +69,7 @@ public class AmapUtils {
     public interface LocationListener {
 
         void getResultAdd(String city,double latitude,double longitude);
+         void getaMapLocation(AMapLocation aMapLocation);
     }
     public static void setLocationListener(LocationListener location){
         locationListener = location;

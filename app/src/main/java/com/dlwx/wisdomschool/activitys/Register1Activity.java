@@ -77,7 +77,7 @@ public class Register1Activity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_getteachcode:
-
+                    startActivity(new Intent(ctx,GetTeachCodeActivity.class));
                 break;
         }
     }

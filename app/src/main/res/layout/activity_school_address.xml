@@ -39,9 +39,12 @@
             <TextView
                 style="@style/TextSizecontentBlack"
                 android:id="@+id/tv_cityname"
+                android:text="郑州市"
                 />
             <ImageView
-                style="@style/Imagesmill3pic"
+                android:layout_width="10dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center_vertical"
                 android:src="@mipmap/icon_cjbjjiantouxia"
                 />
         </LinearLayout>
@@ -80,13 +83,13 @@
     </LinearLayout>
 
 
-    <com.amap.api.maps2d.MapView
+    <com.amap.api.maps.MapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
 
-    </com.amap.api.maps2d.MapView>
+    </com.amap.api.maps.MapView>
     <TextView
         android:id="@+id/tv_input"
         style="@style/TextSizeSmallTitleBlack"

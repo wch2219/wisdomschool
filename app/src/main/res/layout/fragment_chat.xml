@@ -28,7 +28,6 @@
             android:gravity="center"
             android:textStyle="bold"
             android:layout_height="match_parent"
-            android:textSize="13sp"
             />
         <TextView
             android:id="@+id/tv_groupchat"
@@ -36,7 +35,6 @@
             android:text="群聊"
             android:textColor="@color/black"
             android:layout_weight="1"
-            android:textSize="13sp"
             android:layout_height="match_parent"
             android:gravity="center"
             />

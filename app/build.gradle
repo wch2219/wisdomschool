@@ -21,6 +21,7 @@ android {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "arm64-v8a", "x86_64"
         }
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -53,7 +54,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.android.support:cardview-v7:+'
     compile 'com.ruffian.library:RTextView:1.0.3'
-    compile 'com.amap.api:map2d:latest.integration'
+    compile 'com.android.support:multidex:+'
+    compile 'com.amap.api:3dmap:latest.integration'
     compile 'com.amap.api:search:latest.integration'
     compile 'com.amap.api:location:latest.integration'
     compile 'com.github.xiaoyanger0825:NiceVieoPlayer:v2.2'

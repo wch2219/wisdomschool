@@ -15,6 +15,7 @@ import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.FeedbackActivity;
+import com.dlwx.wisdomschool.activitys.LoginInActivity;
 import com.dlwx.wisdomschool.activitys.MyFacoriteActivity;
 import com.dlwx.wisdomschool.activitys.PatriarchExamActivity;
 import com.dlwx.wisdomschool.activitys.PersionMessActivity;
@@ -27,6 +28,7 @@ import com.dlwx.wisdomschool.activitys.VideoExplainActivity;
 import com.dlwx.wisdomschool.activitys.WishDomBagActivity;
 import com.dlwx.wisdomschool.adapter.MyFoodAdapter;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+import com.hyphenate.chat.EMClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +129,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 break;
             case R.id.tv_aff://退出登录
                 diaShow.dismiss();
+                EMClient.getInstance().logout(true);//退出环信登录
+                getActivity().finish();
+                startActivity(new Intent(ctx, LoginInActivity.class));
                 break;
 
         }

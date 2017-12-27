@@ -33,7 +33,26 @@
             android:name="com.amap.api.v2.apikey"
             android:value="07be7cf1435a43a8aecf157c33123e0b">
             //开发者申请的key</meta-data>
-
+        <!-- 设置环信应用的AppKey -->
+        <meta-data android:name="EASEMOB_APPKEY"  android:value="Your AppKey" />
+        <!-- 声明SDK所需的service SDK核心功能-->
+        <service android:name="com.hyphenate.chat.EMChatService" android:exported="true"/>
+        <service android:name="com.hyphenate.chat.EMJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true"
+            />
+        <!-- 声明SDK所需的receiver -->
+        <receiver android:name="com.hyphenate.chat.EMMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package"/>
+            </intent-filter>
+            <!-- 可选filter -->
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
         <activity android:name=".base.MainActivity" />
         <activity android:name=".activitys.SplashActivity">
             <intent-filter>
@@ -42,6 +61,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activitys.LoginInActivity" />
         <activity android:name=".activitys.Register1Activity" />
         <activity android:name=".activitys.RegisterActivity" />
@@ -134,7 +154,8 @@
         <activity android:name=".activitys.ChangePhoneActivity" />
         <activity android:name=".activitys.ChangePhone2Activity" />
         <activity android:name=".activitys.ChangePhoneSuccessActivity" />
-        <activity android:name=".activitys.InputPhoneInviteActivity"></activity>
+        <activity android:name=".activitys.InputPhoneInviteActivity" />
+        <activity android:name=".activitys.GetTeachCodeActivity"></activity>
     </application>
 
 </manifest>

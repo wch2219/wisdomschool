@@ -15,6 +15,7 @@ import com.dlwx.wisdomschool.activitys.AgeWeeklyActivity;
 import com.dlwx.wisdomschool.activitys.SendNotifiActivity;
 import com.dlwx.wisdomschool.adapter.HomeItmeAdapter;
 import com.dlwx.wisdomschool.adapter.HomeTitleAdapter;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -60,6 +61,10 @@ public class HomeFragment extends BaseFragment {
         refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
         refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
+        int TeacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
+        if (TeacherOrPatriarch == 1) {
+            flbtnEdit.setVisibility(View.GONE);
+        }
     }
     @Override
     protected void initDate() {

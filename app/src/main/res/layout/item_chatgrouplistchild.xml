@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <ImageView
+            android:id="@+id/iv_pic"
+            style="@style/Imagesmill2pic"
+            android:src="@mipmap/icon_zhucetouxiang"
+            />
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextSizecontentBlack"
+            android:text="一年级八班班级群"
+            android:layout_marginLeft="10dp"
+            />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tv_num"
+                    style="@style/TextSizecontentBlack"
+                    android:textSize="11sp"
+                    android:textColor="@color/garytext"
+                    android:text="(30)"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_alignParentBottom="true"
+                    />
+
+            </RelativeLayout>
+    </LinearLayout>
+    <View
+        style="@style/GaryDiveStyle"
+        />
+</LinearLayout>

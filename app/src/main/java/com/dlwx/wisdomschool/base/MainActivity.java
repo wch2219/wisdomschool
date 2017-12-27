@@ -20,7 +20,6 @@ import com.dlwx.wisdomschool.fragments.ClassFragment;
 import com.dlwx.wisdomschool.fragments.HomeFragment;
 import com.dlwx.wisdomschool.fragments.MyFragment;
 import com.dlwx.wisdomschool.fragments.RecordFragment;
-import com.dlwx.wisdomschool.utiles.Amap.AmapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     protected void initData() {
-        AmapUtils.initialization(ctx);
+//        AmapUtils.initialization(ctx);
         fragments.add(new HomeFragment());
         fragments.add(new ClassFragment());
         fragments.add(new RecordFragment());

@@ -23,11 +23,10 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
     public HomeItmeAdapter(Context ctx) {
         super(ctx);
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.item_homeitem
-                , null);
+                , parent,false);
         return new ViewHolder(view);
     }
 

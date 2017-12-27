@@ -2,6 +2,7 @@ package com.dlwx.wisdomschool.activitys;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMap;
-import com.amap.api.maps2d.LocationSource;
-import com.amap.api.maps2d.MapView;
-import com.amap.api.maps2d.model.MyLocationStyle;
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.MapView;
+import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
@@ -71,6 +73,9 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
     private String city;
     private List<CityJson.SanJiLianDBean.CityList.CBean> citys;
     private AlertDialog diashow;
+    private double latitude;
+    private double longitude;
+    private ViewHolderDia viewHolderDia;
 
     @Override
     protected void initView() {
@@ -80,7 +85,8 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
 
     @Override
     protected void initData() {
-        lvList.setAdapter(new SeleteSchoolAdapter(ctx));
+
+
 
     }
 
@@ -119,8 +125,6 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
 
         }
     }
-
-
     @Override
     public void save(Bundle savedInstanceState) {
         super.save(savedInstanceState);
@@ -128,27 +132,24 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
         //初始化地图控制器对象
         AMap aMap = null;
         aMap = mapview.getMap();
-        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);//连续定位、且将视角移动到地图中心点，定位点依照设备方向旋转，并且会跟随设备移动。（1秒1次定位）如果不设置myLocationType，默认也会执行此种模式。
-        myLocationStyle.interval(2000); //设置连续定位模式下的定位间隔，只在连续定位模式下生效，单次定位模式下不会生效。单位为毫秒。
-        aMap.setMyLocationStyle(myLocationStyle);//设置定位蓝点的Style
+        // 设置定位监听
+        aMap.setLocationSource(this);
+        myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
         myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATE);//定位一次，且将视角移动到地图中心点。
+        myLocationStyle.showMyLocation(true);
         aMap.getUiSettings().setMyLocationButtonEnabled(true);//设置默认定位按钮是否显示，非必需设置。
         aMap.setMyLocationEnabled(true);// 设置为true表示启动显示定位蓝点，false表示隐藏定位蓝点并不进行定位，默认是false。
 
-// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        aMap.setMyLocationEnabled(true);
-        // 设置定位监听
-        aMap.setLocationSource(this);
+
 // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
 
     }
-
-
     @Override
     public void activate(OnLocationChangedListener onLocationChangedListener) {
+        wch("开始定位");
         mListener = onLocationChangedListener;
+        //初始化定位
         if (mlocationClient == null) {
-            //初始化定位
             mlocationClient = new AMapLocationClient(this);
             //初始化定位参数
             mLocationOption = new AMapLocationClientOption();
@@ -176,6 +177,7 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
     @Override
     public void deactivate() {
         mListener = null;
+        wch("dsadasdas");
         if (mlocationClient != null) {
             mlocationClient.stopLocation();
             mlocationClient.onDestroy();
@@ -191,27 +193,31 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
                 city = aMapLocation.getCity();
                 tvCityname.setText(city);
+                latitude = aMapLocation.getLatitude();
+                longitude = aMapLocation.getLongitude();
+                queryDate("教育",city,latitude,longitude);
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.e("wch", errText);
+                tvCityname.setText("全国");
             }
         }
     }
-
     /**
      * 检索数据
      *
      * @param city
      */
-    private void queryDate(double latitude, double longitude, String city) {
-        PoiSearch.Query query = new PoiSearch.Query("", "", city);
+    private void queryDate(String keyword ,String city,double latitude,double longitude) {
+        PoiSearch.Query query = new PoiSearch.Query(keyword, "", city);
 //keyWord表示搜索字符串，
 //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
 //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
-        query.setPageSize(1);// 设置每页最多返回多少条poiitem
+        query.setPageSize(10);// 设置每页最多返回多少条poiitem
         query.setPageNum(1);//设置查询页码
         PoiSearch poiSearch = new PoiSearch(this, query);
-        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 10000));
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude,
+                longitude), 1000));//设置周边搜索的中心点以及半径
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
     }
@@ -219,8 +225,8 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
         ArrayList<PoiItem> pois = poiResult.getPois();
+        lvList.setAdapter(new SeleteSchoolAdapter(ctx,pois));
     }
-
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {
 
@@ -233,6 +239,7 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
         //在activity执行onDestroy时执行mMapView.onDestroy()，销毁地图
         mapview.onDestroy();
         if (null != mlocationClient) {
+
             mlocationClient.onDestroy();
         }
     }
@@ -295,6 +302,13 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
                 diashow.dismiss();
                 break;
             case R.id.btn_aff:
+                String trim = viewHolderDia.et_name.getText().toString().trim();
+                if (TextUtils.isEmpty(trim)) {
+
+                    Toast.makeText(ctx, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                queryDate(trim,city,latitude,longitude);
                 diashow.dismiss();
                 break;
         }
@@ -307,7 +321,7 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         View view = LayoutInflater.from(ctx).inflate(R.layout.dia_input, null);
         builder.setView(view);
-        ViewHolderDia viewHolderDia = new ViewHolderDia(view);
+        viewHolderDia = new ViewHolderDia(view);
         viewHolderDia.tv_close.setOnClickListener(this);
         viewHolderDia.btn_aff.setOnClickListener(this);
         diashow = builder.show();

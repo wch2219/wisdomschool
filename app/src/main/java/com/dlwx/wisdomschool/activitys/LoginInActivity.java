@@ -13,9 +13,12 @@ import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
+import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.base.MainActivity;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,7 +99,32 @@ public class LoginInActivity extends BaseActivity {
         }else{
             sp.edit().putInt(SpUtiles.TeacherOrPatriarch,0).commit();
         }
+//        huanxinLogin();
         //TODO
         startActivity(new Intent(ctx, MainActivity.class));
+    }
+
+    /**
+     * 登录环信
+     */
+    private void huanxinLogin() {
+        EMClient.getInstance().login("","",new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                LogUtiles.LogI("登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                LogUtiles.LogI("登录聊天服务器失败！");
+            }
+        });
     }
 }
