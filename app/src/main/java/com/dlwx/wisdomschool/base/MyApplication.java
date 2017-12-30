@@ -2,7 +2,6 @@ package com.dlwx.wisdomschool.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.multidex.MultiDex;
 
 import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.wisdomschool.utiles.ResouseString;
@@ -10,7 +9,9 @@ import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.util.NetUtils;
+import com.tencent.bugly.Bugly;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -20,17 +21,25 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
 public class MyApplication extends Application {
     public static String classnames;
+    private static MyApplication instance;
+    public static EaseUI easeUI;
+
+    public static MyApplication getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
         classnames = ResouseString.classnames;
         easeUIInit();
+        Bugly.init(getApplicationContext(), "567efebd79", false);
     }
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        MultiDex.install(this);
+//        MultiDex.install(this);
     }
     /**
      * 环信初始化
@@ -50,6 +59,7 @@ public class MyApplication extends Application {
         EMClient.getInstance().setDebugMode(true);
         //注册一个监听连接状态的listener
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
+        easeUI = EaseUI.getInstance();
     }
 
     //实现ConnectionListener接口

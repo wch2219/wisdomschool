@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@mipmap/icon_huodongpingfen"
+        android:duration="150"></item>
+        <item
+        android:drawable="@mipmap/icon_huodongpinglun"
+        android:duration="150"></item>
+        <item
+        android:drawable="@mipmap/icon_xxyuyin"
+        android:duration="150"></item>
+
+</animation-list>

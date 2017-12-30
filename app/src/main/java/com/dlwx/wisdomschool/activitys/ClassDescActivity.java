@@ -196,7 +196,7 @@ public class ClassDescActivity extends BaseActivity {
                 startActivity(new Intent(ctx, SendNotifiActivity.class));
                 break;
             case R.id.btn_lookhis://查看历史
-                startActivity(new Intent(ctx, LookStudentGradeActivity.class));
+                startActivity(new Intent(ctx,ClassHistoryNewsActivitry.class));
                 break;
             case R.id.ll_growup://智慧成长
                 break;

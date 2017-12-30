@@ -5,12 +5,15 @@
     android:orientation="horizontal"
     android:layout_marginTop="20dp"
     android:layout_height="wrap_content">
+    <!--学校发送的-->
         <include
-            layout="@layout/item_home_left"
+            layout="@layout/item_school_notifi"
             />
+    <!--我发送的消息-->
              <include
-            layout="@layout/item_home_right"
+            layout="@layout/item_home_mysend"
             />
+    <!--我接收的-->
         <include
             layout="@layout/item_home_discuss"
             />

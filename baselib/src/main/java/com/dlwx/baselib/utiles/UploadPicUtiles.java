@@ -73,7 +73,7 @@ public class UploadPicUtiles {
         mLlPhotoalbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                isCamera = false;
                 album(ctx);
             }
         });
@@ -85,7 +85,7 @@ public class UploadPicUtiles {
                 }else {
                     isCamera = true;
                     dialog.dismiss();
-                    opencamera((Activity) ctx, "com.dlwx.plana");
+                    opencamera((Activity) ctx, "com.dlwx.wisdomschool");
                 }
             }
         });
@@ -107,7 +107,7 @@ public class UploadPicUtiles {
                 dialog.dismiss();
             }
             isCamera = false;
-            openAlbum((Activity) ctx,"com.dlwx.plana");
+            openAlbum((Activity) ctx,"com.dlwx.wisdomschool");
 //                    Intent intent = new Intent(ctx, ImageListActivity.class);
 //                    ((Activity)ctx).startActivityForResult(intent,OPEN_ALBM_GET_PIC);
 
@@ -156,9 +156,7 @@ public class UploadPicUtiles {
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.N) {
             if (isCamera) {
                 cropPhoto(activity,wide,hight,x,y);
-
             }else{
-
                 uriForFile = data.getData();
                 cropPhoto(activity,wide,hight,x,y);
             }

@@ -49,9 +49,12 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationContainer);
         bottomNavigationContainer.setOnNavigationItemSelectedListener(this);
         changeFragment(0);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) ctx, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, 1002);
+                    Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.CAMERA
+                }, 1002);
         }
     }
 

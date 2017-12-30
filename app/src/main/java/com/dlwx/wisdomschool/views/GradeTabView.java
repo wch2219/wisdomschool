@@ -8,7 +8,6 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.dlwx.wisdomschool.R;
-import com.tencent.mm.opensdk.utils.Log;
 
 /**
  * 自定义成绩表
@@ -17,6 +16,9 @@ import com.tencent.mm.opensdk.utils.Log;
 public class GradeTabView extends View {
     private Paint vPaint = new Paint();
     private Paint hPaint = new Paint();
+
+
+
 
     private int w;
     private int h;
@@ -37,7 +39,6 @@ public class GradeTabView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         this.w = w;
         this.h = h;
-        Log.i("wch",h+"");
     }
 
     @Override

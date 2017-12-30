@@ -27,9 +27,8 @@
             android:text="近期成绩报表"
             />
 
-        <ImageView
+        <com.dlwx.wisdomschool.views.GradeLineChatView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:src="@mipmap/icon_grademap"
             />
 </LinearLayout>

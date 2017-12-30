@@ -30,7 +30,7 @@ public class CircleImageView extends ImageView {
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 1;
 
-    private static final int DEFAULT_BORDER_WIDTH = 5;
+    private static final int DEFAULT_BORDER_WIDTH = 2;
     private static final int DEFAULT_BORDER_COLOR = 0xFF70ACE7;
 
     private final RectF mDrawableRect = new RectF();

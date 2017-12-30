@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:id="@+id/ll_rightdiscuss"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -46,7 +46,7 @@
                     android:padding="5dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:text="@string/homeitemtestright"
+                    android:text="通过讨论来打到怎样帮助孩子提高学习能力和动手能力，希望家长朋友们的大力配合，从而打到家校合一的共同愿望"
                     />
                 <com.dlwx.baselib.view.MyGridView
                     android:layout_width="match_parent"

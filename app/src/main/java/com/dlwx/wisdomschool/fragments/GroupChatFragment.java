@@ -43,8 +43,7 @@ public class GroupChatFragment extends BaseFragment {
 
     @Override
     protected void initDate() {
-        lvList.setGroupIndicator(this.getResources().getDrawable(R.drawable.expandablelistviewselector));
-        
+//        lvList.setGroupIndicator(this.getResources().getDrawable(R.drawable.expandablelistviewselector));
         lvList.setAdapter(new ChatGroupListAdapter(ctx));
     }
 

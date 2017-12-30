@@ -6,111 +6,110 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.activitys.SetWorkTimeActivity">
-    <include
-        layout="@layout/toolbar"
-        />
-        <View
-            style="@style/GaryDiveStyle"
-            android:layout_height="5dp"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            >
-            <TextView
-               style="@style/TextSizeSmallTitleBlack"
-                android:text="开启工作时间段申请"
-                android:textColor="@color/black"
-                android:layout_weight="1"
-                />
-            <Switch
-                style="@style/switchstyle"
-                android:id="@+id/swich"
 
-                />
+    <include layout="@layout/toolbar" />
 
-        </LinearLayout>
     <View
         style="@style/GaryDiveStyle"
-        />
+        android:layout_height="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#F8F8F8"
-            android:padding="10dp"
-            android:textColor="@color/black"
-            android:text="开启后，对方即可知道您的工作时间外，您可能不能及时回复他的消息"
-            />
+            style="@style/TextSizeSmallTitleBlack"
+            android:layout_weight="1"
+            android:text="开启工作时间段申请"
+            android:textColor="@color/black" />
+
+        <Switch
+            android:id="@+id/swich"
+            style="@style/switchstyle" />
+
+    </LinearLayout>
+
+    <View style="@style/GaryDiveStyle" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F8F8F8"
+        android:padding="10dp"
+        android:text="开启后，对方即可知道您的工作时间外，您可能不能及时回复他的消息"
+        android:textColor="@color/black" />
+
     <TextView
         style="@style/TextSizeSmallTitleBlack"
+        android:padding="10dp"
         android:text="工作时间段"
-        android:padding="10dp"
-        android:textColor="@color/black"
-
-         />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/tv_start"
-                style="@style/TextSizeSmallTitleBlack"
-                android:layout_weight="1"
-                android:text="上午12：00"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:background="@drawable/shape_black_line"
-                 />
-                <TextView
-                    style="@style/TextSizeSmallTitleBlack"
-                    android:text="至"
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    />
-<TextView
-    android:id="@+id/tv_end"
-                style="@style/TextSizeSmallTitleBlack"
-                android:layout_weight="1"
-                android:text="上午12：00"
-                    android:padding="10dp"
-                android:textColor="@color/black"
-                android:background="@drawable/shape_black_line"
-                 />
-
-        </LinearLayout>
-    <TextView
-        style="@style/TextSizeSmallTitleBlack"
-        android:text="工作日"
-        android:padding="10dp"
         android:textColor="@color/black"
 
         />
-        <GridViewv
-            android:id="@+id/gv_list"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:numColumns="7"
-            android:horizontalSpacing="1dp"
-            android:background="@drawable/shape_day_bg"
-            android:layout_height="40dp"></GridViewv>
-        <View
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_start"
+            style="@style/TextSizeSmallTitleBlack"
             android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <Button
-            android:id="@+id/btn_saveset"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="保存设置"
-            android:textColor="@color/white"
-            android:background="@color/blue"
-            />
+            android:background="@drawable/shape_black_line"
+            android:padding="10dp"
+            android:text="上午12：00"
+            android:textColor="@color/black" />
+
+        <TextView
+            style="@style/TextSizeSmallTitleBlack"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="至"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            style="@style/TextSizeSmallTitleBlack"
+            android:layout_weight="1"
+            android:background="@drawable/shape_black_line"
+            android:padding="10dp"
+            android:text="上午12：00"
+            android:textColor="@color/black" />
+
+    </LinearLayout>
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:padding="10dp"
+        android:text="工作日"
+        android:textColor="@color/black"
+
+        />
+
+    <GridView
+        android:id="@+id/gv_list"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/shape_day_bg"
+        android:horizontalSpacing="1dp"
+        android:numColumns="7"></GridView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/btn_saveset"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/blue"
+        android:text="保存设置"
+        android:textColor="@color/white" />
 </LinearLayout>

@@ -71,6 +71,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
     @Override
     protected void onDestroy() {
         mPreenter.detachView();
+        ImmersionBar.with(this).destroy();
         super.onDestroy();
 
     }
@@ -108,7 +109,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.icon_jiantou);
-        immersionBar.statusBarDarkFont(true);
+       // immersionBar.statusBarDarkFont(true);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -127,7 +128,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
                 .transparentStatusBar()  //透明状态栏，不写默认透明色
                 .transparentNavigationBar()  //透明导航栏，不写默认黑色(设置此方法，fullScreen()方法自动为true)
                 .transparentBar()             //透明状态栏和导航栏，不写默认状态栏为透明色，导航栏为黑色（设置此方法，fullScreen()方法自动为true）
-                .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
+//                .statusBarColor(R.color.colorPrimary)     //状态栏颜色，不写默认透明色
                 .navigationBarColor(R.color.colorPrimary) //导航栏颜色，不写默认黑色
                 .barColor(R.color.colorPrimary)  //同时自定义状态栏和导航栏颜色，不写默认状态栏为透明色，导航栏为黑色
                 .statusBarAlpha(1.0f)  //状态栏透明度，不写默认0.0f

@@ -29,6 +29,7 @@ import com.dlwx.wisdomschool.activitys.WishDomBagActivity;
 import com.dlwx.wisdomschool.adapter.MyFoodAdapter;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.hyphenate.chat.EMClient;
+import com.tencent.bugly.beta.Beta;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -157,6 +158,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 startActivity(new Intent(ctx,SchoolTrainActivity.class));
                 break;
             case 6://版本信息
+                Beta.checkUpgrade();
                 break;
             case 7://设置
                 startActivity(new Intent(ctx,SettActivity.class));

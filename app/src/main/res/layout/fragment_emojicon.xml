@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:orientation="vertical"
+    android:layout_alignParentBottom="true"
+    tools:context="com.dlwx.wisdomschool.fragments.EmojiconFragment">
+        <GridView
+            android:id="@+id/gv_list"
+            android:numColumns="7"
+            android:layout_margin="10dp"
+            android:scrollbars="none"
+            android:layout_weight="1"
+            android:verticalSpacing="20dp"
+            android:horizontalSpacing="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+        </GridView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+                <View
+                    style="@style/GaryDiveStyle"
+                    />
+                <ImageView
+                    android:layout_margin="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ee_1"
+                    />
+
+        </LinearLayout>
+</LinearLayout>

@@ -16,5 +16,6 @@
     <color name="publist2">#F28220</color>
     <color name="publist3">#2D9Ad2</color>
     <color name="publist4">#00A392</color>
-
+    <color name="linegreen">#17AA7F</color>
+    <color name="transgreen">#aaE4F7F1</color>
 </resources>

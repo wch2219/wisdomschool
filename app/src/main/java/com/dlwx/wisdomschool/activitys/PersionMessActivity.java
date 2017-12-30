@@ -1,5 +1,6 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -7,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
+import com.dlwx.baselib.utiles.UploadPicUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +70,7 @@ public class PersionMessActivity extends BaseActivity {
         teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
         if (teacherOrPatriarch == 0) {//老师
             iv_idtype.setVisibility(View.GONE);
-        }else{//家长
+        } else {//家长
             tvName.setText("高飞爸爸");
             llSchname.setVisibility(View.GONE);
             tv_idtype.setText("家长");
@@ -87,26 +92,45 @@ public class PersionMessActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_head://头像
+                UploadPicUtiles.showDia(ctx);
                 break;
             case R.id.ll_name://称呼
-                startActivity(new Intent(ctx,ChangeNamedActivity.class));
+                startActivity(new Intent(ctx, ChangeNamedActivity.class));
                 break;
             case R.id.ll_schname://所在学校
-                startActivity(new Intent(ctx,SchoolAddressActivity.class));
+                startActivity(new Intent(ctx, SchoolAddressActivity.class));
                 break;
             case R.id.ll_code://二维码
-                startActivity(new Intent(ctx,ExclusiveCodeActivity.class));
+                startActivity(new Intent(ctx, ExclusiveCodeActivity.class));
                 break;
             case R.id.ll_phone://我的手机
-                startActivity(new Intent(ctx,ChangePhoneActivity.class));
+                startActivity(new Intent(ctx, ChangePhoneActivity.class));
                 break;
             case R.id.ll_idtype://身份类型
                 if (teacherOrPatriarch == 1) {
-                    startActivity(new Intent(ctx,ChangeIdTypeActivity.class));
+                    startActivity(new Intent(ctx, ChangeIdTypeActivity.class));
                 }
                 break;
             case R.id.ll_changepwd://修改密码
-                startActivity(new Intent(ctx,ForgetPwdActivity.class));
+                startActivity(new Intent(ctx, ForgetPwdActivity.class));
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        wch(requestCode + ";" + requestCode);
+        switch (requestCode) {
+            case 1://相机
+                UploadPicUtiles.startZoomPic((Activity) ctx,data,300,300,1,1);
+                break;
+            case 2://相册
+                UploadPicUtiles.startZoomPic((Activity) ctx,data,300,300,1,1);
+                break;
+            case 5://裁剪
+                File filePath = UploadPicUtiles.getFilePath1(data, ctx);
+                wch(filePath);
+                Glide.with(ctx).load(filePath).into(ivHead);
                 break;
         }
     }

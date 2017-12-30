@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="5dp"
+
+            >
+
+            <CheckBox
+                android:id="@+id/cb_type"
+                style="@style/Imagesmill2pic"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:button="@null"
+                android:background="@drawable/selete_check_viceortext"
+                />
+            <TextView
+                android:id="@+id/tv_speck"
+                style="@style/TextSizecontentBlack"
+                android:text="按住说话"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_class_btn"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <EditText
+                android:id="@+id/et_edit"
+                style="@style/TextSizecontentBlack"
+                android:layout_marginLeft="10dp"
+                android:visibility="visible"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:layout_weight="1"
+                />
+            <ImageView
+                android:id="@+id/iv_face"
+                style="@style/Imagesmill2pic"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_biaoqing"
+                />
+            <ImageView
+                android:id="@+id/iv_send"
+                style="@style/Imagesmill2pic"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_fasong"
+                />
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/emojicon_menu_container"
+            ></FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

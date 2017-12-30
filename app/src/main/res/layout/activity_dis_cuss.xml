@@ -1,44 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/panel_root"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.activitys.DisCussActivity">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <include
-        layout="@layout/toolbar"
-        />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_height="?attr/actionBarSize">
-        <ImageView
-            android:id="@+id/iv_persionmanage"
-            style="@style/Imagesmillpic"
-            android:src="@mipmap/icon_huodongcyry"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            />
-        </RelativeLayout>
-    </RelativeLayout>
+        android:layout_height="match_parent">
+
+    <com.dlwx.baselib.view.MyListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rv_recyclerview"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:stackFromBottom="true"
+        android:layout_above="@id/edit"
+        android:transcriptMode="normal"
+        ></com.dlwx.baselib.view.MyListView>
     <View
         style="@style/GaryDiveStyle"
         />
-    <RelativeLayout
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:orientation="vertical"
+       android:layout_alignParentBottom="true"
         >
-        <TextView
-            style="@style/TextSizeSmallTitleBlack"
-            android:text="发送讨论"
-            android:textColor="@color/black"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:padding="5dp"
+
+        >
+
+        <CheckBox
+            android:id="@+id/cb_type"
+            style="@style/Imagesmill2pic"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:button="@null"
+            android:background="@drawable/selete_check_viceortext"
             />
+        <TextView
+            android:id="@+id/tv_speck"
+            style="@style/TextSizecontentBlack"
+            android:text="按住说话"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_class_btn"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+            <LinearLayout
+                android:id="@+id/ll_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                >
+            <EditText
+                android:id="@+id/et_edit"
+                style="@style/TextSizecontentBlack"
+                android:layout_marginLeft="10dp"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+
+                />
+                <View
+                    style="@style/GaryDiveStyle"
+                    />
+            </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_face"
+            style="@style/Imagesmill2pic"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_biaoqing"
+            />
+        <ImageView
+            android:id="@+id/iv_send"
+            style="@style/Imagesmill2pic"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center_vertical"
+            android:src="@mipmap/icon_fasong"
+            />
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/emojicon_menu_container"
+        ></FrameLayout>
+    </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include
+                layout="@layout/toolbar"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="?attr/actionBarSize">
+                <ImageView
+                    android:id="@+id/iv_persionmanage"
+                    style="@style/Imagesmillpic"
+                    android:src="@mipmap/icon_huodongcyry"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <View
+            style="@style/GaryDiveStyle"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            >
+            <TextView
+                style="@style/TextSizeSmallTitleBlack"
+                android:text="发送讨论"
+                android:textColor="@color/black"
+                />
             <TextView
                 android:id="@+id/tv_type"
                 android:layout_width="wrap_content"
@@ -47,56 +165,9 @@
                 android:textSize="13sp"
                 android:layout_alignParentRight="true"
                 />
-    </RelativeLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rv_recyclerview"
-            android:layout_weight="1"
-            ></android.support.v7.widget.RecyclerView>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_type"
-                style="@style/Imagesmill2pic"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/icon_xxyuyin"
-                />
-            <TextView
-                android:id="@+id/tv_speck"
-                style="@style/TextSizecontentBlack"
-                android:text="按住说话"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:background="@drawable/shape_class_btn"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-            <ImageView
-                android:id="@+id/iv_face"
-                style="@style/Imagesmill2pic"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/icon_biaoqing"
-                />
-            <ImageView
-                android:id="@+id/iv_send"
-                style="@style/Imagesmill2pic"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center_vertical"
-                android:src="@mipmap/icon_fasong"
-                />
-        </LinearLayout>
-</LinearLayout>
+        </RelativeLayout>
+        <View
+            style="@style/GaryDiveStyle"
+            />
+    </LinearLayout>
+</FrameLayout>

@@ -85,7 +85,7 @@
                             android:id="@+id/tv_notlooknum"
                             android:layout_marginLeft="15dp"
                             style="@style/TextSizecontentBlack"
-                            android:text="1人已查看"
+                            android:text="1人未查看"
                             android:textSize="11sp"
                             />
                     </LinearLayout>
@@ -98,11 +98,11 @@
                         android:background="@drawable/shape_blue_line"
                         >
                         <ImageView
-                            android:layout_width="13dp"
-                            android:layout_height="13dp"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
                             android:layout_marginLeft="5dp"
-
-                            android:src="@mipmap/ic_launcher"
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/icon_wdwdxitong"
                             />
                             <TextView
                                 style="@style/TextSizecontentBlack"
@@ -148,6 +148,7 @@
         <ListView
             android:layout_width="match_parent"
             android:id="@+id/lv_list"
+            android:scrollbars="none"
             android:dividerHeight="10dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
@@ -169,7 +170,9 @@
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="全选"
+                android:text=" 全选"
+                android:layout_marginLeft="10dp"
+                android:button="@drawable/selete_check"
                 />
                 <TextView
                     android:id="@+id/tv_onekey"
