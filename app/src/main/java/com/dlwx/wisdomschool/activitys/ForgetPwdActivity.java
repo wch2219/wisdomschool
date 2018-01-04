@@ -12,7 +12,13 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.CountDownUtiles;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.utiles.AuthWindow;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +53,8 @@ public class ForgetPwdActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-            tvTitle.setText("忘记密码");
-            initTabBar(toolBar);
+        tvTitle.setText("忘记密码");
+        initTabBar(toolBar);
     }
 
     @Override
@@ -62,7 +68,6 @@ public class ForgetPwdActivity extends BaseActivity {
     }
 
 
-
     @OnClick({R.id.tv_auth, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -72,8 +77,61 @@ public class ForgetPwdActivity extends BaseActivity {
 
                 break;
             case R.id.btn_submit:
+                submit();
                 break;
         }
+    }
+
+    private void submit() {
+        String phone = etPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(phone)) {
+            vibrator.vibrate(50);
+            Toast.makeText(ctx, "请输入您的手机号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String auth = etAuth.getText().toString().trim();
+        if (TextUtils.isEmpty(auth)) {
+            vibrator.vibrate(50);
+            Toast.makeText(ctx, "请输入您的验证码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String pwd = etPwd.getText().toString().trim();
+        if (TextUtils.isEmpty(pwd)) {
+            vibrator.vibrate(50);
+            Toast.makeText(ctx, "请输入您的密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String affpwd = etAffpwd.getText().toString().trim();
+        if (TextUtils.isEmpty(affpwd)) {
+            vibrator.vibrate(50);
+            Toast.makeText(ctx, "请输入您的确认密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!pwd.equals(affpwd)) {
+            Toast.makeText(ctx, "两次密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
+            etPwd.setText("");
+            etAffpwd.setText("");
+            return;
+        }
+
+        Map<String,String> map =  new HashMap<>();
+        map.put("telephone",phone);
+        map.put("password",pwd);
+        mPreenter.fetch(map,false, HttpUrl.setnewpassword,"");
+
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+        if (backResultBean.getCode() == 200) {
+            finish();
+        }
+        Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+
     }
     /**
      * 获取图片验证码
@@ -90,6 +148,7 @@ public class ForgetPwdActivity extends BaseActivity {
         authWindow.startShowPopu(ctx, tvAuth, "");
         authWindow.setAuthListener(authListener);
     }
+
     /**
      * 输入图形验证码后返回的数据
      */

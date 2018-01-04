@@ -16,7 +16,13 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.CountDownUtiles;
 import com.dlwx.baselib.utiles.VerificationCodeUtiles;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.utiles.AuthWindow;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +49,11 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.btn_register)
     Button btnRegister;
     private VerificationCodeUtiles codeUtiles;
+    private String role;
+
     @Override
     protected void initView() {
+        role = getIntent().getStringExtra("role");
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
     }
@@ -86,6 +95,7 @@ public class RegisterActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_register:
+
                 goregister();
                 break;
         }
@@ -115,9 +125,22 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(ctx, R.string.editpwd, Toast.LENGTH_SHORT).show();
             return;
         }
-        //TODO
-        Toast.makeText(ctx, "注册成功,请登录", Toast.LENGTH_SHORT).show();
-        finish();
+        Map<String,String> map = new HashMap<>();
+        map.put("role",role);
+        map.put("telephone",phone);
+        map.put("password",pwd);
+        mPreenter.fetch(map,false, HttpUrl.register,"");
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        Gson gson = new Gson();
+        BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+        if (backResultBean.getCode() == 200) {
+            finish();
+        }
+        Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
     }
 
     /**

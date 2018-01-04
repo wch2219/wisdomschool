@@ -8,15 +8,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ApplyListAdapter;
+import com.dlwx.wisdomschool.bean.ClassAppliListeBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
  * 入退班申请
@@ -37,9 +47,12 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     @BindView(R.id.tv_allaggress)
     TextView tvAllaggress;
     private ApplyListAdapter applyListAdapter;
+    private String classid;
+    private List<ClassAppliListeBean.BodyBean> body;
 
     @Override
     protected void initView() {
+        classid = getIntent().getStringExtra("classid");
         setContentView(R.layout.activity_in_out_class);
         ButterKnife.bind(this);
     }
@@ -48,8 +61,16 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     protected void initData() {
         tvTitle.setText("一年级八班");
         initTabBar(toolBar);
-        applyListAdapter = new ApplyListAdapter(ctx);
-        lvList.setAdapter(applyListAdapter);
+
+        getData("1");
+    }
+
+    private void getData(String isAdd) {
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        map.put("classid",classid);
+        map.put("isadd",isAdd);
+        mPreenter.fetch(map,true, HttpUrl.Classapplylist,HttpUrl.Classapplylist+Token+classid+isAdd);
     }
 
     @Override
@@ -69,8 +90,10 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             case R.id.tv_inclass:
                 tvInclass.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 tvOut.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//加粗
+                getData("1");
                 break;
             case R.id.tv_out:
+                getData("2");
                 tvOut.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 tvInclass.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//加粗
                 break;
@@ -91,5 +114,24 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
 
         }
 
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        ClassAppliListeBean classAppliListeBean = gson.fromJson(s, ClassAppliListeBean.class);
+        if (classAppliListeBean.getCode() == 200) {
+            body = classAppliListeBean.getBody();
+            if (body == null) {
+
+                return;
+            }
+            applyListAdapter = new ApplyListAdapter(ctx,body);
+            lvList.setAdapter(applyListAdapter);
+        }else{
+            Toast.makeText(ctx, classAppliListeBean.getResult(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

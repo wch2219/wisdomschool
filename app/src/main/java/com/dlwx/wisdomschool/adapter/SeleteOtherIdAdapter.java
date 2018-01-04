@@ -14,13 +14,14 @@ import com.dlwx.wisdomschool.R;
  */
 
 public class SeleteOtherIdAdapter extends BaseFastAdapter {
+    public String [] strs = {"爸爸","妈妈","爷爷","奶奶","姥姥，姥爷"};
     public SeleteOtherIdAdapter(Context ctx) {
         super(ctx);
     }
 
     @Override
     public int getCount() {
-        return 6;
+        return strs.length;
     }
 
     @Override
@@ -33,14 +34,18 @@ public class SeleteOtherIdAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        if (position == 0) {
+        if (position == pos) {
             vh.tv_name.setBackgroundResource(R.color.blue);
         }else{
             vh.tv_name.setBackgroundResource(R.color.gary);
         }
         return convertView;
     }
-
+    private int pos;
+    private void setCheck(int pos){
+        this.pos = pos;
+        notifyDataSetChanged();
+    }
     private class ViewHolder {
         public View rootView;
         public TextView tv_name;

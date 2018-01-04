@@ -8,7 +8,10 @@ import android.text.TextUtils;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.base.MainActivity;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 public class SplashActivity extends BaseActivity {
     private String first;
@@ -55,7 +58,11 @@ public class SplashActivity extends BaseActivity {
 //                    startActivity(new Intent(ctx,GuideActivity.class));
 
                 }else{
-                    startActivity(new Intent(ctx,LoginInActivity.class));
+                    if (TextUtils.isEmpty(Token)) {
+                        startActivity(new Intent(ctx,LoginInActivity.class));
+                    }else{
+                        startActivity(new Intent(ctx, MainActivity.class));
+                    }
                 }
                 finish();
             }

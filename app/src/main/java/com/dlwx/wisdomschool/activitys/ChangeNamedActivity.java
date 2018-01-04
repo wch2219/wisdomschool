@@ -1,8 +1,10 @@
 package com.dlwx.wisdomschool.activitys;
 
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
@@ -49,6 +51,11 @@ public class ChangeNamedActivity extends BaseActivity {
 
     @OnClick(R.id.tv_save)
     public void onViewClicked() {
+        String name = etName.getText().toString().trim();
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(ctx, "请输入学生姓名", Toast.LENGTH_SHORT).show();
+            return;
+        }
         finish();
     }
 }

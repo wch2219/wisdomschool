@@ -16,9 +16,6 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/12/16/016.
- */
 
 public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickListener, NumberPicker.OnValueChangeListener {
 
@@ -34,7 +31,8 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
         super(context);
     }
 
-    protected SeleteClassDiaUtiles(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    protected
+    SeleteClassDiaUtiles(Context context, boolean cancelable, OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
     }
 
@@ -80,9 +78,6 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
         vh.class3.setOnValueChangedListener(this);
         this.setView(view);
         this.show();
-
-
-
     }
 
     @Override

@@ -67,10 +67,9 @@ public class DisCussActivity extends BaseActivity {
     protected LayoutInflater layoutInflater;
     private View foodView;
     private ViewHolder foodholder;
-
     @Override
     protected void initView() {
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContentView(R.layout.activity_dis_cuss);
         View foodView = LayoutInflater.from(ctx).inflate(R.layout.food_discuss, null);
         ButterKnife.bind(this);
@@ -105,7 +104,7 @@ public class DisCussActivity extends BaseActivity {
                     ll_edit.setVisibility(View.VISIBLE);
                     tvSpeck.setVisibility(View.GONE);
 //                    showSoftInputFromWindow((Activity) ctx, etEdit);
-//                    emojiconMenuContainer.setVisibility(View.VISIBLE);
+                    emojiconMenuContainer.setVisibility(View.VISIBLE);
                     tvSpeck.setVisibility(View.GONE);
                 } else {
                     ll_edit.setVisibility(View.GONE);

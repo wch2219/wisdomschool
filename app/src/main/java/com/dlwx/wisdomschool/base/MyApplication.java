@@ -2,8 +2,11 @@ package com.dlwx.wisdomschool.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.multidex.MultiDex;
 
 import com.dlwx.baselib.utiles.LogUtiles;
+import com.dlwx.baselib.utiles.SpUtiles;
 import com.dlwx.wisdomschool.utiles.ResouseString;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
@@ -11,6 +14,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.util.NetUtils;
+import com.lzy.okgo.OkGo;
 import com.tencent.bugly.Bugly;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
@@ -23,7 +27,7 @@ public class MyApplication extends Application {
     public static String classnames;
     private static MyApplication instance;
     public static EaseUI easeUI;
-
+    public static String Token;
     public static MyApplication getInstance() {
         return instance;
     }
@@ -31,15 +35,18 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        OkGo.getInstance().init(this);
         instance = this;
         classnames = ResouseString.classnames;
         easeUIInit();
+        SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode,MODE_PRIVATE);
+       Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
         Bugly.init(getApplicationContext(), "567efebd79", false);
     }
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-//        MultiDex.install(this);
+        MultiDex.install(this);
     }
     /**
      * 环信初始化
@@ -67,7 +74,6 @@ public class MyApplication extends Application {
         @Override
         public void onConnected() {
         }
-
         @Override
         public void onDisconnected(final int error) {
             runOnUiThread(new Runnable() {

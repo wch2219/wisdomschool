@@ -18,6 +18,12 @@ import android.widget.Toast;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.BackResultBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +78,7 @@ public class Register1Activity extends BaseActivity {
 
                 break;
             case R.id.rl_patriarch:
-                intent.putExtra("type", "");
+                intent.putExtra("role", "2");
                 startActivity(intent);
                 finish();
                 break;
@@ -113,13 +119,30 @@ public class Register1Activity extends BaseActivity {
                             Toast.makeText(ctx, "邀请码不能为空", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        Intent intent = new Intent(ctx, RegisterActivity.class);
-                        intent.putExtra("type", "");
-                        startActivity(intent);
-                        finish();
-                            popu.dismiss();
+                        Map<String,String> map = new HashMap<>();
+                        map.put("code",code);
+                        mPreenter.fetch(map,true, HttpUrl.check_teacher_code,"");
+
+
                         break;
                 }
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        Gson gson = new Gson();
+        BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+        if (backResultBean.getCode() == 200) {
+            finish();
+            Intent intent = new Intent(ctx, RegisterActivity.class);
+            intent.putExtra("role", "1");
+            startActivity(intent);
+            finish();
+            popu.dismiss();
+        }
+        Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+
     }
 
     private class ViewHolder {

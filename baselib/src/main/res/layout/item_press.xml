@@ -16,7 +16,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
-        app:indicator_color="@color/colorAccent"
+        app:indicator_color="#000"
         app:indicator="LineSpinFadeLoader"
         />
         <TextView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="正在加载..."
-            android:textColor="@color/colorAccent"
+            android:textColor="@android:color/black"
             android:layout_marginTop="3dp"
             />
     </LinearLayout>

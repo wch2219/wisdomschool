@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.dlwx.baselib.utiles.UploadPicUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.PreinstallPicActivity;
 
@@ -47,6 +48,7 @@ public class SeleteHeadDiautils extends AlertDialog.Builder implements View.OnCl
                     show.dismiss();
                         break;
                      case R.id.ll_camera://相机相册
+                         UploadPicUtiles.album(ctx);
                          show.dismiss();
                         break;
 

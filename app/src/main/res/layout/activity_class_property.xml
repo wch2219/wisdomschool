@@ -56,7 +56,8 @@
         <TextView
             android:id="@+id/tv_schoolname"
             style="@style/TextSizecontentBlack"
-            android:text="@string/schoolname"
+            android:hint="选择所属学校"
+            android:gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             />
@@ -79,6 +80,7 @@
         <TextView
             style="@style/TextSizecontentBlack"
             android:text="真实班级"
+
             android:layout_weight="1"
             />
         <TextView

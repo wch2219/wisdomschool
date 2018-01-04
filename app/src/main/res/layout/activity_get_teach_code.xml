@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                style="@style/TextSizeSmallTitleBlack"
+                style="@style/TextSizecontentBlack"
                 android:text="姓名"
                 android:layout_weight="1"
                 android:textColor="@color/black"
@@ -38,7 +38,7 @@
             <EditText
                 android:id="@+id/et_name"
                 android:hint="请输入姓名"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                style="@style/TextSizeSmallTitleBlack"
+                style="@style/TextSizecontentBlack"
                 android:text="联系电话"
                 android:layout_weight="1"
                 android:textColor="@color/black"
@@ -64,7 +64,11 @@
             <EditText
                 android:id="@+id/et_phone"
                 android:hint="请输入联系电话"
-                android:textSize="15sp"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:lines="1"
+                android:inputType="phone"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                 android:layout_width="match_parent"
@@ -82,7 +86,7 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                style="@style/TextSizeSmallTitleBlack"
+                style="@style/TextSizecontentBlack"
                 android:text="学校"
                 android:layout_weight="1"
                 android:textColor="@color/black"
@@ -90,7 +94,7 @@
             <EditText
                 android:id="@+id/et_schoolname"
                 android:hint="请填写全名以便专人给你回访"
-                android:textSize="15sp"
+                android:textSize="13sp"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="5"
                 android:layout_width="match_parent"

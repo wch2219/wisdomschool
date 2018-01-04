@@ -64,6 +64,7 @@
         <TextView
             style="@style/TextSizecontentBlack"
             android:textColor="@color/garytext"
+            android:visibility="invisible"
             android:text="来自李老师：李老师的成员分享"
             />
     </LinearLayout>

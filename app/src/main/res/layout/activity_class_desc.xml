@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_root"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.activitys.ClassDescActivity">
     <RelativeLayout
@@ -15,11 +16,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/black"
-            />
         <android.support.v7.widget.Toolbar
             android:id="@+id/tool_bar"
             android:layout_width="match_parent"
@@ -38,7 +34,7 @@
     </LinearLayout>
         <ImageView
             style="@style/Imagesmill2pic"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
            android:layout_marginRight="10dp"
             android:id="@+id/iv_back"
             android:src="@mipmap/icon_fenxianglan"

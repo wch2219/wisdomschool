@@ -81,6 +81,7 @@
                         style="@style/ImagehomeItempic"
                         android:src="@mipmap/ss33"
                         android:scaleType="fitXY"
+                        android:id="@+id/iv_pic"
                         />
                         <LinearLayout
                             android:layout_width="match_parent"

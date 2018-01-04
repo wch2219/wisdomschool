@@ -5,7 +5,11 @@ package com.dlwx.wisdomschool.utiles;
  */
 
 public class SpUtiles {
-    public static final String SPMODE = "SPMODE" ;
     public static final String First = "first";
     public static final String TeacherOrPatriarch = "TeacherOrPatriarch";
+    public static final String Token = "token";
+    public static final String Nickname = "nickname";
+    public static final String Header_pic = "Header_pic";
+    public static final String Userid = "UserId";
+    public static final String Telephone = "Telephone";
 }

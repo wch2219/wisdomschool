@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
             >
             <TextView
                 android:id="@+id/tv_inclass"
@@ -62,6 +61,7 @@
             />
     </RelativeLayout>
             <TextView
+                android:id="@+id/tv_classname"
                 style="@style/TextSizecontentBlack"
                 android:text="一年级二班"
                 android:layout_gravity="center_horizontal"
@@ -71,6 +71,7 @@
                 />
     </LinearLayout>
     <TextView
+        android:id="@+id/tv_classcode"
         style="@style/TextSizecontentBlack"
         android:text="班级号：15789"
         android:layout_gravity="center_horizontal"
@@ -125,7 +126,7 @@
             >
             <ImageView
                 style="@style/ImageLogoSize"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon_cjbjqq"
                 />
             <TextView
                 android:layout_width="wrap_content"
@@ -147,7 +148,7 @@
             >
             <ImageView
                 style="@style/ImageLogoSize"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon_cjbjweixin"
                 />
             <TextView
                 android:layout_width="wrap_content"

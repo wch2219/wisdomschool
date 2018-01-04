@@ -116,11 +116,5 @@
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         />
-        <CheckBox
-            android:id="@+id/cb_check"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:text="勾选，进入家长模式,不勾选，默认老师模式"
-            android:layout_height="wrap_content" />
+
 </LinearLayout>

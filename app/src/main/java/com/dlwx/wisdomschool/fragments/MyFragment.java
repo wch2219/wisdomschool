@@ -28,7 +28,6 @@ import com.dlwx.wisdomschool.activitys.VideoExplainActivity;
 import com.dlwx.wisdomschool.activitys.WishDomBagActivity;
 import com.dlwx.wisdomschool.adapter.MyFoodAdapter;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
-import com.hyphenate.chat.EMClient;
 import com.tencent.bugly.beta.Beta;
 
 import butterknife.BindView;
@@ -63,8 +62,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
     private int[] pics;
     @Override
     protected void initDate() {
-        teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
-        if (teacherOrPatriarch == 0) {//老师
+        teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
+        if (teacherOrPatriarch == 1) {//老师
             foodarr = getResources().getStringArray(R.array.my_food);
             headvh.tv_schoolname.setText(R.string.schoolname);
             headvh.tv_name.setText("老师");
@@ -90,7 +89,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                     R.mipmap.icon_wdwdtuichu,
             };
         }
-
         lvList.setHeaderDividersEnabled(true);
         lvList.setAdapter(new MyFoodAdapter(ctx, foodarr,pics));
     }
@@ -130,7 +128,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 break;
             case R.id.tv_aff://退出登录
                 diaShow.dismiss();
-                EMClient.getInstance().logout(true);//退出环信登录
+//                EMClient.getInstance().logout(true);//退出环信登录
                 getActivity().finish();
                 startActivity(new Intent(ctx, LoginInActivity.class));
                 break;

@@ -10,20 +10,36 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassDescBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/22/022.
  */
 
 public class ClassDescMemberAdapter extends BaseFastAdapter {
-
-    public ClassDescMemberAdapter(Context ctx) {
+    private List<ClassDescBean.BodyBean.AddUserBean> add_user;
+    public ClassDescMemberAdapter(Context ctx,List<ClassDescBean.BodyBean.AddUserBean> add_user) {
         super(ctx);
+        this.add_user = add_user;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        if (add_user != null) {
+            if (add_user.size()>3) {
+                return 4;
+            }else if (add_user.size()<=3&&add_user.size()>0) {
+
+                return add_user.size();
+            }else{
+                return 1;
+            }
+
+        }
+
+       return 0;
     }
 
     @Override
@@ -36,15 +52,37 @@ public class ClassDescMemberAdapter extends BaseFastAdapter {
         }else {
             vh = (ViewHolder) convertView.getTag();
         }
-        if (position == 2) {
-            Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
-            vh.tv_name.setText("添加成员");
-            vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
-        }else{
-            Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_pic);
-            vh.tv_name.setText("高飞");
-            vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
-        }
+
+            if (add_user.size() > 3) {
+                if (position == 3) {
+                    Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
+                    vh.tv_name.setText("添加成员");
+                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
+                }else{
+                    Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_pic);
+                    vh.tv_name.setText("高飞");
+                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                }
+            }else if (add_user.size() == 0) {
+                if (position == 0) {
+                    Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
+                    vh.tv_name.setText("添加成员");
+                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
+                }
+            }
+            else{
+                if (position == add_user.size()-1) {
+                    Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
+                    vh.tv_name.setText("添加成员");
+                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
+                }else{
+                    Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_pic);
+                    vh.tv_name.setText("高飞");
+                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                }
+            }
+
+
         return convertView;
     }
 

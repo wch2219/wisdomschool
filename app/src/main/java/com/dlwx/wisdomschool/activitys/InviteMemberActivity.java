@@ -2,7 +2,11 @@ package com.dlwx.wisdomschool.activitys;
 
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -70,7 +74,9 @@ public class InviteMemberActivity extends BaseActivity {
                 getWechatApi();
                 break;
             case R.id.ll_phoneaddress://从手机通讯录邀请
-
+                Uri uri = ContactsContract.Contacts.CONTENT_URI;
+                Intent intent = new Intent(Intent.ACTION_PICK,uri);
+                startActivityForResult(intent,0);
                 break;
             case R.id.ll_inputphone://输入手机号邀请
                 startActivity(new Intent(ctx,InputPhoneInviteActivity.class));
@@ -98,5 +104,44 @@ public class InviteMemberActivity extends BaseActivity {
             // TODO: handle exception
             Toast.makeText(ctx, "检查到您手机没有安装微信，请安装后使用该功能", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         switch (requestCode){
+                    case 0:
+                        Uri uri=data.getData();
+                        String[] contacts=getPhoneContacts(uri);
+                        wch("姓名:"+contacts[0]+" "+"手机号:"+contacts[1]);
+                        break;
+                }
+    }
+
+    private String[] getPhoneContacts(Uri uri){
+        String[] contact=new String[2];
+        //得到ContentResolver对象
+        ContentResolver cr = getContentResolver();
+        //取得电话本中开始一项的光标
+        Cursor cursor=cr.query(uri,null,null,null,null);
+        if(cursor!=null){
+            cursor.moveToFirst();
+            //取得联系人姓名
+            int nameFieldColumnIndex=cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
+            contact[0]=cursor.getString(nameFieldColumnIndex);
+            //取得电话号码
+            String ContactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            Cursor phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + ContactId, null, null);
+            if(phone != null){
+                phone.moveToFirst();
+                contact[1] = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            }
+            phone.close();
+            cursor.close();
+        }
+        else{
+            return null;
+        }
+        return contact;
     }
 }

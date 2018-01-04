@@ -11,12 +11,21 @@ import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
-import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
+import com.dlwx.wisdomschool.adapter.MeCreateCLassAdapter;
+import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
  * 我加入的班级
@@ -46,10 +55,18 @@ public class AddClassFragment extends BaseFragment {
 
     @Override
     protected void initDate() {
-        MeAddCLassAdapter meaddCLassAdapter = new MeAddCLassAdapter(ctx);
-        lvList.setAdapter(meaddCLassAdapter);
-    }
 
+        getClassList();
+    }
+    /**
+     * 获取班级列表
+     */
+    private void getClassList() {
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        map.put("type","1");
+        mPreenter.fetch(map,true, HttpUrl.Classroom,HttpUrl.Classroom+Token+"1");
+    }
     @Override
     protected void initListener() {
 
@@ -75,6 +92,27 @@ public class AddClassFragment extends BaseFragment {
             case R.id.btn_noentryadd:
                 startActivity(new Intent(ctx,AddSeachClassActivity.class));
                 break;
+        }
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        ClassListBean classListBean = gson.fromJson(s, ClassListBean.class);
+        if (classListBean.getCode() == 200) {
+            List<ClassListBean.BodyBean> body = classListBean.getBody();
+            if (body != null |body.size() != 0) {
+
+                MeCreateCLassAdapter meCreateCLassAdapter = new MeCreateCLassAdapter(ctx,body);
+                lvList.setAdapter(meCreateCLassAdapter);
+            }else{
+                llEntry.setVisibility(View.VISIBLE);
+                llNoentry.setVisibility(View.GONE);
+            }
+
         }
     }
 }

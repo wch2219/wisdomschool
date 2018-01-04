@@ -15,7 +15,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="20dp"
             android:layout_alignParentRight="true"
             >
             <TextView
@@ -67,6 +66,7 @@
                 android:orientation="horizontal"
                 >
                 <EditText
+                    android:id="@+id/et_seach"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:singleLine="true"
@@ -85,6 +85,8 @@
                         />
             </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll_class"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:padding="10dp"

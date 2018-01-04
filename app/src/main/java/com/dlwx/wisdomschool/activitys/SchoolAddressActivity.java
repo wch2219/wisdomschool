@@ -1,6 +1,7 @@
 package com.dlwx.wisdomschool.activitys;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,7 +48,7 @@ import butterknife.OnClick;
  * 学校地址
  */
 public class SchoolAddressActivity extends BaseActivity implements LocationSource, AMapLocationListener
-        , PoiSearch.OnPoiSearchListener {
+        , PoiSearch.OnPoiSearchListener ,AdapterView.OnItemClickListener{
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
     @BindView(R.id.tv_cityname)
@@ -76,6 +77,7 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
     private double latitude;
     private double longitude;
     private ViewHolderDia viewHolderDia;
+    private ArrayList<PoiItem> pois;
 
     @Override
     protected void initView() {
@@ -92,6 +94,7 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
 
     @Override
     protected void initListener() {
+        lvList.setOnItemClickListener(this);
     }
 
     @Override
@@ -99,6 +102,15 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
         return new Presenter(this);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        PoiItem poiItem = pois.get(i);
+        String schoolname = poiItem.getTitle();
+        Intent intent = new Intent();
+        intent.putExtra("schoolname",schoolname);
+        setResult(11,intent);
+        finish();
+    }
 
     @OnClick({R.id.rl_back, R.id.ll_seletecity, R.id.tv_input, R.id.ll_seach, R.id.tv_close})
     public void onViewClicked(View view) {
@@ -224,8 +236,8 @@ public class SchoolAddressActivity extends BaseActivity implements LocationSourc
 
     @Override
     public void onPoiSearched(PoiResult poiResult, int i) {
-        ArrayList<PoiItem> pois = poiResult.getPois();
-        lvList.setAdapter(new SeleteSchoolAdapter(ctx,pois));
+        pois = poiResult.getPois();
+        lvList.setAdapter(new SeleteSchoolAdapter(ctx, pois));
     }
     @Override
     public void onPoiItemSearched(PoiItem poiItem, int i) {

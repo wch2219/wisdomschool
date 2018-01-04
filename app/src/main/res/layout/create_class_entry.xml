@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:id="@+id/ll_createentry"
+
     android:layout_gravity="center"
     android:layout_width="match_parent"
     android:visibility="gone"
+    android:id="@+id/ll_createentry"
     android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_entrycreate"
+        style="@style/ButtonLoginStyles"
+        android:background="@drawable/shape_class_btn"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+
+        android:text="@string/createclass"
+        android:layout_centerInParent="true"
+        android:layout_height="35dp"
+        android:layout_marginBottom="40dp"
+        android:layout_width="150dp"
+        />
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_above="@id/btn_entrycreate"
+        >
     <ImageView
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="100dp"
         android:src="@mipmap/icon_cjwu"
 
         android:layout_gravity="center_horizontal"
@@ -23,5 +44,5 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/class_entry"
             />
-
-</LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

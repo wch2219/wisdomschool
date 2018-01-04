@@ -43,7 +43,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPreenter = createPresenter();
-        setImmer(R.color.trans);
+
         ctx = this;
         HideUtil.init(this);
         vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
@@ -54,6 +54,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
         initData();
         initListener();
         save(savedInstanceState);
+//        setImmer(R.color.trans);
     }
 
     protected abstract void initView();

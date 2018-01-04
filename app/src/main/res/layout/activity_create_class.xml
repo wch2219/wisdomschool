@@ -36,7 +36,7 @@
             <ImageView
                 android:id="@+id/iv_pic"
                 style="@style/ImageuppicSize"
-                android:src="@mipmap/ss33"
+                android:src="@mipmap/icon_szzhaop"
 
                 android:scaleType="fitXY"
                 />
@@ -70,7 +70,8 @@
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_height="30dp"
-            android:text="如：一2班语文"
+            android:hint="如：一2班语文"
+            android:textColorHint="@color/white"
             android:background="@drawable/shape_class_btn"
             />
     <View

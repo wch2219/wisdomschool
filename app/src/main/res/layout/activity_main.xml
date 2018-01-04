@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.base.MainActivity">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@color/black"
-            />
         <FrameLayout
 
             android:id="@+id/fl_content"

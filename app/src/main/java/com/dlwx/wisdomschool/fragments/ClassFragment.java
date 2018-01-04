@@ -83,8 +83,8 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
 
     @Override
     protected void initDate() {
-        teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
-        if (teacherOrPatriarch == 0) {
+        teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
+        if (teacherOrPatriarch == 1) {
             fragments.add(new CreateClassFragment());
             fragments.add(new AddClassFragment());
             changeFragment(0);

@@ -31,7 +31,7 @@
                     android:id="@+id/iv_head"
                     style="@style/ImagehomeItempic"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/ss33"
+
                      />
             <ImageView
                 android:layout_marginRight="10dp"
@@ -64,7 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/classname0"
             android:textSize="11sp" />
         <ImageView
             style="@style/Imagesmill3pic"
@@ -94,7 +93,6 @@
             android:id="@+id/tv_school"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/schoolname"
             android:textSize="11sp"
             android:layout_gravity="center_vertical"
             />
@@ -126,7 +124,6 @@
             android:id="@+id/tv_realclass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="高中高一"
             android:textSize="11sp"
             android:layout_gravity="center_vertical"
             />

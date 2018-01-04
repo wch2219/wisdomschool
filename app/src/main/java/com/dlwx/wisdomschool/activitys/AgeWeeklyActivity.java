@@ -1,12 +1,12 @@
 package com.dlwx.wisdomschool.activitys;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,6 +16,7 @@ import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.AgeWeekHeadAdapter;
 import com.dlwx.wisdomschool.adapter.AgeWeeklyAdapter;
+import com.dlwx.wisdomschool.utiles.PopuShareUtiles;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
@@ -25,11 +26,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 0到19岁周刊
  */
-public class AgeWeeklyActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class AgeWeeklyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -41,6 +43,8 @@ public class AgeWeeklyActivity extends BaseActivity implements AdapterView.OnIte
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     private ViewHolderHead vhHead;
+    @BindView(R.id.iv_shape)
+    ImageView iv_shape;
 
     @Override
     protected void initView() {
@@ -84,6 +88,7 @@ public class AgeWeeklyActivity extends BaseActivity implements AdapterView.OnIte
 
             }
         });
+        lvList.setOnItemClickListener(this);
     }
 
     @Override
@@ -91,15 +96,17 @@ public class AgeWeeklyActivity extends BaseActivity implements AdapterView.OnIte
         return new Presenter(this);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(ctx,WeeklyDescActivity.class);
+        Intent intent = new Intent(ctx, WeeklyDescActivity.class);
+        new PopuShareUtiles(ctx,etSeach);
+    }
+
+
+    @OnClick(R.id.iv_shape)
+    public void onViewClicked() {
+
     }
 
     private class ViewHolderHead {

@@ -85,7 +85,8 @@ public class UploadPicUtiles {
                 }else {
                     isCamera = true;
                     dialog.dismiss();
-                    opencamera((Activity) ctx, "com.dlwx.wisdomschool");
+                    String packageName = ctx.getPackageName();
+                    opencamera((Activity) ctx, packageName);
                 }
             }
         });
@@ -97,7 +98,7 @@ public class UploadPicUtiles {
      * @param ctx
      */
     public static void album(Context ctx) {
-        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) ctx, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
             }, GET_Permission_Camer_code);
@@ -107,7 +108,7 @@ public class UploadPicUtiles {
                 dialog.dismiss();
             }
             isCamera = false;
-            openAlbum((Activity) ctx,"com.dlwx.wisdomschool");
+            openAlbum((Activity) ctx,ctx.getPackageName());
 //                    Intent intent = new Intent(ctx, ImageListActivity.class);
 //                    ((Activity)ctx).startActivityForResult(intent,OPEN_ALBM_GET_PIC);
 
@@ -157,6 +158,9 @@ public class UploadPicUtiles {
             if (isCamera) {
                 cropPhoto(activity,wide,hight,x,y);
             }else{
+                if (data == null) {
+                    return;
+                }
                 uriForFile = data.getData();
                 cropPhoto(activity,wide,hight,x,y);
             }
@@ -164,7 +168,9 @@ public class UploadPicUtiles {
             if (isCamera) {
                 startPhotoZoom(uriForFile,activity,wide,hight,x,y);
             }else{
-
+                if (data == null) {
+                    return;
+                }
                 startPhotoZoom(data.getData(),activity,150,150,x,y);
 
             }
@@ -219,8 +225,6 @@ public class UploadPicUtiles {
      * 打开相机
      */
     public static void opencamera(Activity activity,String packname) {
-
-
 
         //创建一个File对象用于存储拍照后的照片
         outputImage = new File(Environment.getExternalStorageDirectory()+"/images/","output_image.jpg");

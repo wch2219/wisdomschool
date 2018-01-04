@@ -61,8 +61,8 @@ public class HomeFragment extends BaseFragment {
         refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
         refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
-        int TeacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
-        if (TeacherOrPatriarch == 1) {
+        int TeacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
+        if (TeacherOrPatriarch == 2) {
             flbtnEdit.setVisibility(View.GONE);
         }
     }

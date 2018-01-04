@@ -85,10 +85,10 @@ public class MyJoinClassDescActivity extends BaseActivity {
         initTabBar(toolBar);
         toolBar.setBackgroundResource(R.color.blue);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.icon_jiantoubaise);
-        classDescTeachAdapter = new ClassDescTeachAdapter(ctx);
-        gvList.setAdapter(classDescTeachAdapter);
-        classDescMemberAdapter = new ClassDescMemberAdapter(ctx);
-        gvListmeber.setAdapter(classDescMemberAdapter);
+//        classDescTeachAdapter = new ClassDescTeachAdapter(ctx);
+//        gvList.setAdapter(classDescTeachAdapter);
+//        classDescMemberAdapter = new ClassDescMemberAdapter(ctx);
+//        gvListmeber.setAdapter(classDescMemberAdapter);
     }
 
     @Override
@@ -156,7 +156,6 @@ public class MyJoinClassDescActivity extends BaseActivity {
             Intent intent = new Intent(ctx,MyJoinClassPersionMessActivity.class);
             intent.putExtra("tag",0);
             startActivity(intent);
-
         }
     };
     /**

@@ -10,19 +10,24 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassAppliListeBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/18/018.
  */
 
 public class ApplyListAdapter extends BaseFastAdapter {
-    public ApplyListAdapter(Context ctx) {
+    private List<ClassAppliListeBean.BodyBean> body;
+    public ApplyListAdapter(Context ctx,List<ClassAppliListeBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return body.size();
     }
 
     @Override
@@ -36,10 +41,14 @@ public class ApplyListAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         if (pos == position) {
-            Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_check);
+            Glide.with(ctx).load(R.mipmap.icon_bjxxfxcy).into(vh.iv_check);
         }else{
-            Glide.with(ctx).load(R.mipmap.ic_launcher).into(vh.iv_check);
+            Glide.with(ctx).load(R.mipmap.icon_xzxuanwei).into(vh.iv_check);
         }
+        ClassAppliListeBean.BodyBean bodyBean = body.get(position);
+        Glide.with(ctx).load(bodyBean.getHeader_pic()).into(vh.iv_pic);
+        vh.tv_name.setText(bodyBean.getJoin_role());
+
         return convertView;
     }
     private int pos;

@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许程序设置内置sd卡的写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- 允许程序获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 允许程序访问WiFi网络信息 -->
@@ -18,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
     <application
         android:name=".base.MyApplication"
         android:allowBackup="true"
@@ -33,7 +35,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="${applicationId}.fileProvider"
+            android:authorities="com.dlwx.wisdomschool.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -51,7 +53,7 @@
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="Your AppKey" />
+            android:value="1161170306178203#zhihuijiaxiao" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -74,121 +76,369 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".base.MainActivity" >
+        <activity
+            android:name=".base.MainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".activitys.SplashActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".activitys.SplashActivity">
-
-        </activity>
-        <activity android:name=".activitys.LoginInActivity" />
-        <activity android:name=".activitys.Register1Activity" />
-        <activity android:name=".activitys.RegisterActivity" />
-        <activity android:name=".activitys.ClassDescActivity" />
-        <activity android:name=".activitys.ClassMessageActivitry" />
-        <activity android:name=".activitys.ChangeClassNameActivity" />
-        <activity android:name=".activitys.SchoolAddressActivity" />
-        <activity android:name=".activitys.InOutClassActivity" />
-        <activity android:name=".activitys.GradeManageActivity" />
-        <activity android:name=".activitys.ClassAllStuActivity" />
-        <activity android:name=".activitys.AllSubJiectActivity" />
-        <activity android:name=".activitys.GradeActivity" />
-        <activity android:name=".activitys.PersionMessActivity" />
-        <activity android:name=".activitys.MyFacoriteActivity" />
-        <activity android:name=".activitys.WishDomBagActivity" />
-        <activity android:name=".activitys.VideoExplainActivity" />
-        <activity android:name=".activitys.VideoDescActivity" />
-        <activity android:name=".activitys.SetWorkTimeActivity" />
-        <activity android:name=".activitys.SysNotifitionActivity" />
-        <activity android:name=".activitys.FeedbackActivity" />
-        <activity android:name=".activitys.TeacherInvitaCodeActivity" />
-        <activity android:name=".activitys.SchoolTrainActivity" />
-        <activity android:name=".activitys.SettActivity" />
-        <activity android:name=".activitys.ForgetPwdActivity" />
+        <activity
+            android:name=".activitys.LoginInActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.Register1Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.RegisterActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassMessageActivitry"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangeClassNameActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SchoolAddressActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.InOutClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GradeManageActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassAllStuActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.AllSubJiectActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PersionMessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MyFacoriteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.WishDomBagActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.VideoExplainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.VideoDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SetWorkTimeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SysNotifitionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.FeedbackActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.TeacherInvitaCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SchoolTrainActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SettActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ForgetPwdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.AgeWeeklyActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activitys.WeeklyDescActivity" />
+        <activity
+            android:name=".activitys.WeeklyDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.SendNotifiActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activitys.LookReadActivity" />
+        <activity
+            android:name=".activitys.LookReadActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.DisCussActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
-        <activity android:name=".activitys.DisCussSettActivity" />
-        <activity android:name=".activitys.IDApproveActivity" />
-        <activity android:name=".activitys.PreinstallPicActivity" />
-        <activity android:name=".activitys.ClassFileActivity" />
-        <activity android:name=".activitys.SeleteFileActivity" />
-        <activity android:name=".activitys.InviteMemberActivity" />
-        <activity android:name=".activitys.DownNotifitionActivity" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".activitys.DisCussSettActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.IDApproveActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PreinstallPicActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassFileActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SeleteFileActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.InviteMemberActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.DownNotifitionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.MyClassMemberActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activitys.InviteTeachActivity" />
-        <activity android:name=".activitys.InviteTeach2Activity" />
-        <activity android:name=".activitys.AddTeachSuccessActivity" />
-        <activity android:name=".activitys.MemberShareActivity" />
-        <activity android:name=".activitys.WillShareMemberActivity" />
-        <activity android:name=".activitys.MemberMessActivity" />
-        <activity android:name=".activitys.ClassJurisdictionActivity" />
-        <activity android:name=".activitys.RemarkMessActivity" />
-        <activity android:name=".activitys.AddSeachClassActivity" />
-        <activity android:name=".activitys.GradeRankingActivity" />
-        <activity android:name=".activitys.GradeAnalyzeAllListActivity" />
-        <activity android:name=".activitys.YearAllStuGardAnalyzeActivity" />
-        <activity android:name=".activitys.SomeOneAllGradeAnalyzeActivity" />
-        <activity android:name=".activitys.GradeAnalyzeMapActivity" />
-        <activity android:name=".activitys.SeleteClassActivity" />
-        <activity android:name=".activitys.CreateGradeActivity" />
-        <activity android:name=".activitys.CreateClassActivity" />
-        <activity android:name=".activitys.ClassPropertyActivity" />
-        <activity android:name=".activitys.CreateClassCompleteActivity" />
-        <activity android:name=".activitys.RecordDescActivity" />
-        <activity android:name=".activitys.SynthesizeActivity" />
-        <activity android:name=".activitys.PublishUpPicActivity" />
-        <activity android:name=".activitys.PublishCompleteActivity" />
-        <activity android:name=".activitys.SynthesizeFullActivity" />
-        <activity android:name=".activitys.SeletePublishClassActivity" />
-        <activity
-            android:name=".activitys.PublishGroupUpActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activitys.AddLableActivity" />
-        <activity android:name=".activitys.NewAddLableActivity" />
-        <activity android:name=".activitys.ChangeIdTypeActivity" />
-        <activity android:name=".activitys.PatriarchExamActivity" />
-        <activity android:name=".activitys.ChoiceDifficultyExamActivity" />
-        <activity android:name=".activitys.StartExamActivity" />
-        <activity android:name=".activitys.MyCertificateActivity" />
-        <activity android:name=".activitys.MyCertificateDescActivity" />
-        <activity android:name=".activitys.MyJoinClassDescActivity" />
-        <activity
-            android:name=".activitys.SeleteOtherIdActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".activitys.LookStudentGradeActivity" />
-        <activity android:name=".activitys.MyJoinClassPersionMessActivity" />
-        <activity android:name=".activitys.ApplyBackClassActivity" />
-        <activity android:name=".activitys.ClassHistoryNewsActivitry" />
-        <activity android:name=".activitys.ChangeNamedActivity" />
-        <activity android:name=".activitys.ExclusiveCodeActivity" />
-        <activity android:name=".activitys.ChangePhoneActivity" />
-        <activity android:name=".activitys.ChangePhone2Activity" />
-        <activity android:name=".activitys.ChangePhoneSuccessActivity" />
-        <activity android:name=".activitys.InputPhoneInviteActivity" />
-        <activity android:name=".activitys.GetTeachCodeActivity" />
-        <activity android:name=".activitys.ChatActivity"
-            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            ></activity>
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".activitys.InviteTeachActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.InviteTeach2Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.AddTeachSuccessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MemberShareActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.WillShareMemberActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MemberMessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassJurisdictionActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.RemarkMessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.AddSeachClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GradeRankingActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GradeAnalyzeAllListActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.YearAllStuGardAnalyzeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SomeOneAllGradeAnalyzeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GradeAnalyzeMapActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SeleteClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.CreateGradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.CreateClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassPropertyActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.CreateClassCompleteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.RecordDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SynthesizeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PublishUpPicActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PublishCompleteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SynthesizeFullActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SeletePublishClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PublishGroupUpActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".activitys.AddLableActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.NewAddLableActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangeIdTypeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.PatriarchExamActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChoiceDifficultyExamActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.StartExamActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MyCertificateActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MyCertificateDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MyJoinClassDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.SeleteOtherIdActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".activitys.LookStudentGradeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.MyJoinClassPersionMessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ApplyBackClassActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ClassHistoryNewsActivitry"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangeNamedActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ExclusiveCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangePhoneActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangePhone2Activity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChangePhoneSuccessActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.InputPhoneInviteActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.GetTeachCodeActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.ChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

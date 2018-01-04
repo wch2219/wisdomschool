@@ -72,18 +72,16 @@
                 android:id="@+id/et_sendmessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
+                android:layout_marginRight="35dip"
                 android:background="@null"
-                android:imeOptions="actionSend"
                 android:maxLines="3"
                 android:minHeight="40dp"
                 android:paddingBottom="3dp"
                 android:paddingLeft="1dp"
                 android:paddingRight="1dp"
                 android:paddingTop="3dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:imeOptions="actionSend"/>
 
             <RelativeLayout 
                 android:id="@+id/rl_face"
