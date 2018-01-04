@@ -60,11 +60,11 @@
                     android:textSize="15sp"
                     />
         </LinearLayout>
-        <ExpandableListView
+        <ListView
             android:scrollbars="none"
             android:dividerHeight="10dp"
             android:divider="@color/white"
-android:layout_margin="10dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/ablv_list"

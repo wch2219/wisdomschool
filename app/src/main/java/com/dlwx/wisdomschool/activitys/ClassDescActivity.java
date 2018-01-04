@@ -109,6 +109,8 @@ public class ClassDescActivity extends BaseActivity {
     RelativeLayout rlLookall;
     @BindView(R.id.sw_check)
     Switch swCheck;
+    @BindView(R.id.tv_allsize)
+    TextView tv_allsize;
     private PopupWindow popupWindow;
     private ClassDescTeachAdapter classDescTeachAdapter;
     private ClassDescMemberAdapter classDescMemberAdapter;
@@ -130,14 +132,17 @@ public class ClassDescActivity extends BaseActivity {
             llPatriarch.setVisibility(View.GONE);
             llTeach.setVisibility(View.VISIBLE);
             tvTeach1.setVisibility(View.VISIBLE);
-            rlLookall.setVisibility(View.GONE);
-        }else{//家长
+            rlLookall.setVisibility(View.VISIBLE);
+        } else {//家长
             llPatriarch.setVisibility(View.VISIBLE);
             llTeach.setVisibility(View.GONE);
             tvTeach1.setVisibility(View.GONE);
             rlLookall.setVisibility(View.VISIBLE);
         }
+
+        register();
     }
+
     @Override
     protected void initData() {
         initTabBar(toolBar);
@@ -152,16 +157,18 @@ public class ClassDescActivity extends BaseActivity {
         super.onResume();
         getClassDesc();
     }
+
     private int HttpType;
+
     /**
      * 获取班级详情
      */
     private void getClassDesc() {
         HttpType = 1;
-        Map<String,String> map = new HashMap<>();
-        map.put("token",Token);
-        map.put("classid",classid);
-        mPreenter.fetch(map,true, HttpUrl.classdesc,HttpUrl.classdesc+classid+Token);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        map.put("classid", classid);
+        mPreenter.fetch(map, true, HttpUrl.classdesc, HttpUrl.classdesc + classid + Token);
 
     }
 
@@ -189,22 +196,23 @@ public class ClassDescActivity extends BaseActivity {
             Glide.with(ctx).load(body.getClass_pic()).into(ivHead);//班徽
             tvClassName.setText(body.getClass_name());//班级名称
             tvScoolName.setText(body.getSchool_name());//学校名称
-            tvClassmember.setText("班级号："+body.getClass_no());//班级号
+            tvClassmember.setText("班级号：" + body.getClass_no());//班级号
             Glide.with(ctx).load(body.getClass_qrcode()).into(ivQrcode);//班级二维码
             if (body.getIs_teacher_open() == 1) {//1任课老师消息互见，2不互见
-                    swCheck.setChecked(true);
-            }else{
+                swCheck.setChecked(true);
+            } else {
                 swCheck.setChecked(false);
             }
             ClassDescBean.BodyBean.CreateTeacherBean create_teacher = body.getCreate_teacher();
             add_teacher = body.getAdd_teacher();
-            classDescTeachAdapter = new ClassDescTeachAdapter(ctx,create_teacher, add_teacher);
+            classDescTeachAdapter = new ClassDescTeachAdapter(ctx, create_teacher, add_teacher);
             gvList.setAdapter(classDescTeachAdapter);
             add_user = body.getAdd_user();
+            tv_allsize.setText("查看全部" + add_user.size() + "名成员");
             classDescMemberAdapter = new ClassDescMemberAdapter(ctx, add_user);
             gvListmeber.setAdapter(classDescMemberAdapter);
 
-        }else{
+        } else {
             Toast.makeText(ctx, classDescBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -217,16 +225,20 @@ public class ClassDescActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             if (i == 0) {//我的
                 startActivity(new Intent(ctx, PersionMessActivity.class));
-            } else if (i == 3) {//最后一个添加教师
-                startActivity(new Intent(ctx, InviteTeachActivity.class));
+            } else if (i == add_teacher.size() + 1) {//最后一个添加教师
+                startActivity(new Intent(ctx, InviteTeachActivity.class).putExtra("classid", classid));
+
             } else {//其他成员的
-                skipMemberMess();
+                String jcid = add_teacher.get(i - 1).getJcid();
+                skipMemberMess(jcid);
             }
         }
     };
 
-    private void skipMemberMess() {
+    private void skipMemberMess(String jcid) {
         Intent intent = new Intent(ctx, MemberMessActivity.class);
+        intent.putExtra("jcid", jcid);
+        intent.putExtra("classid", classid);
         startActivity(intent);
     }
 
@@ -237,29 +249,23 @@ public class ClassDescActivity extends BaseActivity {
     private AdapterView.OnItemClickListener memberOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (add_user.size()>0) {
-                if (add_user.size() >3) {
-                    if (i == 3) {
-                        startActivity(new Intent(ctx, MyClassMemberActivity.class));
-                    } else if(i == 0){
-                        startActivity(new Intent(ctx, MyClassMemberActivity.class));
-                    }else {
-                        skipMemberMess();
-                    }
-                }else{
-                    if (i == add_user.size()) {
-                        startActivity(new Intent(ctx, MyClassMemberActivity.class));
-                    }else if(i == 0){
-                        startActivity(new Intent(ctx, MyClassMemberActivity.class));
-                    } else {
-                        skipMemberMess();
-                    }
+            if (add_user.size() > 3) {
+                if (i == 3) {
+                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+                } else {
+                    String jcid = add_user.get(i).getJcid();
+                    skipMemberMess(jcid);
                 }
-
-            }else{
+            } else if (add_user.size() > 0) {
+                if (i == add_user.size()) {
+                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+                } else {
+                    String jcid = add_user.get(i).getJcid();
+                    skipMemberMess(jcid);
+                }
+            } else {
                 startActivity(new Intent(ctx, MyClassMemberActivity.class));
             }
-
         }
     };
 
@@ -268,15 +274,15 @@ public class ClassDescActivity extends BaseActivity {
         return new Presenter(this);
     }
 
-
     @OnClick({R.id.rl_classmess, R.id.ll_sendnotifi, R.id.ll_discussion, R.id.ll_survey,
             R.id.ll_activity, R.id.btn_lookhis, R.id.ll_growup, R.id.ll_file, R.id.ll_membersinvite,
-            R.id.ll_inout, R.id.ll_share, R.id.iv_back,R.id.ll_myclassid,R.id.ll_lookstudentgrade,R.id.rl_lookall})
+            R.id.ll_inout, R.id.ll_share, R.id.iv_back, R.id.ll_myclassid, R.id.ll_lookstudentgrade, R.id.rl_lookall})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
 
             case R.id.rl_classmess://查看班级信息
-                startActivity(new Intent(ctx, ClassMessageActivitry.class).putExtra("classid",classid));
+                startActivity(new Intent(ctx, ClassMessageActivitry.class).putExtra("classid", classid));
                 break;
             case R.id.ll_sendnotifi://发通知
                 startActivity(new Intent(ctx, SendNotifiActivity.class));
@@ -291,18 +297,20 @@ public class ClassDescActivity extends BaseActivity {
                 startActivity(new Intent(ctx, SendNotifiActivity.class));
                 break;
             case R.id.btn_lookhis://查看历史
-                startActivity(new Intent(ctx,ClassHistoryNewsActivitry.class));
+                startActivity(new Intent(ctx, ClassHistoryNewsActivitry.class));
                 break;
             case R.id.ll_growup://智慧成长
                 break;
             case R.id.ll_file://班级文件
-                startActivity(new Intent(ctx, ClassFileActivity.class));
+                intent = new Intent(ctx, ClassFileActivity.class);
+                intent.putExtra("classid", classid);
+                startActivity(intent);
                 break;
             case R.id.ll_membersinvite://成员邀请
                 startActivity(new Intent(ctx, InviteMemberActivity.class));
                 break;
             case R.id.ll_inout://入退班申请
-                startActivity(new Intent(ctx, InOutClassActivity.class).putExtra("classid",classid));
+                startActivity(new Intent(ctx, InOutClassActivity.class).putExtra("classid", classid));
                 break;
 //            case R.id.iv_inviteteach://教师邀请
 //
@@ -319,15 +327,19 @@ public class ClassDescActivity extends BaseActivity {
             case R.id.ll_myclassid://我的班级身份
                 showPopuClassId();
                 break;
-            case R.id.ll_lookstudentgrade:
-                startActivity(new Intent(ctx,LookStudentGradeActivity.class));
+            case R.id.ll_lookstudentgrade://查看学生成绩
+                startActivity(new Intent(ctx, LookStudentGradeActivity.class));
                 break;
             case R.id.rl_lookall:
-
+                intent = new Intent(ctx, LookAllMemberActivity.class);
+                intent.putExtra("adduser", (Serializable) add_user);
+                intent.putExtra("classid", classid);
+                startActivity(intent);
                 break;
 
         }
     }
+
     /**
      * 选择您在班级中的身份
      */
@@ -351,6 +363,7 @@ public class ClassDescActivity extends BaseActivity {
         popupWindow.showAtLocation(tvClassmember, Gravity.BOTTOM, 0, 0);
 
     }
+
     /**
      * 退群，解散群
      */
@@ -390,7 +403,7 @@ public class ClassDescActivity extends BaseActivity {
                 break;
             case R.id.tv_otherid://选择其他身份
                 popupWindow.dismiss();
-                startActivity(new Intent(ctx,SeleteOtherIdActivity.class));
+                startActivity(new Intent(ctx, SeleteOtherIdActivity.class));
                 break;
             case R.id.tv_close:
                 popupWindow.dismiss();

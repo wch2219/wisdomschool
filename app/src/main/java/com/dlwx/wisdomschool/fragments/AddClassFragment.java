@@ -1,17 +1,16 @@
 package com.dlwx.wisdomschool.fragments;
-
-
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
+import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
-import com.dlwx.wisdomschool.adapter.MeCreateCLassAdapter;
+import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
@@ -26,17 +25,16 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.dlwx.wisdomschool.base.MyApplication.Token;
-
 /**
  * 我加入的班级
  */
-public class AddClassFragment extends BaseFragment {
+public class AddClassFragment extends BaseFragment implements AdapterView.OnItemClickListener{
     @BindView(R.id.btn_addclass)
     Button btnAddclass;
     @BindView(R.id.ll_entry)
     LinearLayout llEntry;
     @BindView(R.id.lv_list)
-    ListView lvList;
+    MyListView lvList;
     @BindView(R.id.btn_noentryadd)
     Button btnNoentryadd;
     @BindView(R.id.ll_noentry)
@@ -64,12 +62,12 @@ public class AddClassFragment extends BaseFragment {
     private void getClassList() {
         Map<String,String> map = new HashMap<>();
         map.put("token",Token);
-        map.put("type","1");
+        map.put("type","2");
         mPreenter.fetch(map,true, HttpUrl.Classroom,HttpUrl.Classroom+Token+"1");
     }
     @Override
     protected void initListener() {
-
+        lvList.setOnItemClickListener(this);
     }
 
     @Override
@@ -96,6 +94,11 @@ public class AddClassFragment extends BaseFragment {
     }
 
     @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
     public void showData(String s) {
         disLoading();
         disLoading();
@@ -105,8 +108,9 @@ public class AddClassFragment extends BaseFragment {
         if (classListBean.getCode() == 200) {
             List<ClassListBean.BodyBean> body = classListBean.getBody();
             if (body != null |body.size() != 0) {
-
-                MeCreateCLassAdapter meCreateCLassAdapter = new MeCreateCLassAdapter(ctx,body);
+                llNoentry.setVisibility(View.VISIBLE);
+                llEntry.setVisibility(View.GONE);
+                MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx,body);
                 lvList.setAdapter(meCreateCLassAdapter);
             }else{
                 llEntry.setVisibility(View.VISIBLE);

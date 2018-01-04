@@ -81,7 +81,7 @@ public class ClassDescTeachAdapter extends BaseFastAdapter {
                     vh.tv_name.setText(create_teacher.getNickname());
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
                 } else {
-                    ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position);
+                    ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position-1);
                     Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
                     vh.tv_name.setText(addTeacherBean.getJoin_role());
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));

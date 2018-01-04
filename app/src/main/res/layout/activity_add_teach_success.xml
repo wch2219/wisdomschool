@@ -15,7 +15,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:layout_marginTop="20dp"
             android:layout_alignParentRight="true"
             >
             <ImageView
@@ -23,7 +22,7 @@
                 style="@style/Imagesmill2pic"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/icon_bjxxtjcg"
                 />
         </RelativeLayout>
 
@@ -34,7 +33,7 @@
     <ImageView
         style="@style/ImageLogoSize"
         android:layout_gravity="center_horizontal"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/icon_bjxxtianjiachenggong"
         android:layout_marginTop="30dp"
         />
     <TextView

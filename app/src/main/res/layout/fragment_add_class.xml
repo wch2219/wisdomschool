@@ -7,6 +7,11 @@
     <include
         layout="@layout/add_class_entry"
         />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
         <LinearLayout
             android:visibility="gone"
             android:layout_width="match_parent"
@@ -14,7 +19,7 @@
             android:orientation="vertical"
             android:id="@+id/ll_noentry"
             >
-            <ListView
+            <com.dlwx.baselib.view.MyListView
                 android:layout_marginTop="10dp"
                 android:id="@+id/lv_list"
                 android:layout_width="match_parent"
@@ -24,7 +29,7 @@
                 android:scrollbars="none"
                 android:layout_margin="20dp"
                 >
-            </ListView>
+            </com.dlwx.baselib.view.MyListView>
 
             <Button
                 android:id="@+id/btn_noentryadd"
@@ -38,5 +43,5 @@
                 android:layout_width="120dp"
                 />
         </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>

@@ -58,6 +58,8 @@
     <string name="publishcontent3">你可以上传孩子看书、作业、认真听讲的照片这些都属于\n热爱学习的表现哦！</string>
     <string name="publishcontent4">你可以上传孩子跳绳、跑步、打球的照片这些都属于\n体育活动的表现哦！</string>
     <string name="classmessentry">老师发来消息后要注意查看,看完以后\n千万不要忘记点阅哦~</string>
-
-
+    <string name="classjurisdiction1">一般为班干部、家委会成员、协助老师发布消息</string>
+    <string name="classjurisdiction">一般家长、学生，他们可以接收/参与活动</string>
+    <string name="classjurisdiction2">适用于其他学科教师、搭班教师等，任课教师可以相互以\n对方的视角查看信息，权限基本等同于班级创建者</string>
+    <string name="classjurisdiction3">转让您的班级创建者身份给到这位成员</string>
 </resources>

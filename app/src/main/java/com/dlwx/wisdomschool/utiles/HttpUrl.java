@@ -21,4 +21,10 @@ public class HttpUrl {
     public static final String findClass = BaseUrl + "Classroom/findclass";//查找班级
     public static final String batch_adduser = BaseUrl + "Classroom/batch_adduser";//分享成员进目标班级
     public static final String JoinClass = BaseUrl + "Classroom/addclass";//加入班级
+    public static final String Edit_Apply = BaseUrl + "Classroom/edit_apply";//同意/忽略入班操作，同意/忽略退班操作
+    public static final String set_teach = BaseUrl + "Classroom/set_teacher";//添加任课老师
+    public static final String LookMemberMess = BaseUrl + "Classroom/class_one_userinfo";//点击成员头像查看联系人信息
+    public static final String changeClassJurisd = BaseUrl + "Classroom/edit_user_power";//班级内成员权限修改
+    public static final String getClassFile = BaseUrl + "Classroom/classfile";//班级文件
+    public static final String CreateClassFile = BaseUrl + "Classroom/makefolder";//"创建班级文件夹";
 }

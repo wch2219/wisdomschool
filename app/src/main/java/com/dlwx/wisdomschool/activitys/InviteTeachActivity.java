@@ -29,9 +29,11 @@ public class InviteTeachActivity extends BaseActivity {
     Button btnUserphone;
     @BindView(R.id.iv_appoint)
     ImageView ivAppoint;
+    private String classid;
 
     @Override
     protected void initView() {
+        classid = getIntent().getStringExtra("classid");
         setContentView(R.layout.activity_invite_teach);
         ButterKnife.bind(this);
     }
@@ -58,7 +60,8 @@ public class InviteTeachActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_userphone:
-                startActivity(new Intent(ctx,InviteTeach2Activity.class));
+                finish();
+                startActivity(new Intent(ctx,InviteTeach2Activity.class).putExtra("classid",classid));
                 break;
             case R.id.iv_appoint:
                 showDia();
@@ -88,4 +91,5 @@ public class InviteTeachActivity extends BaseActivity {
             }
         });
     }
+
 }

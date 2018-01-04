@@ -27,19 +27,14 @@ public class ClassDescMemberAdapter extends BaseFastAdapter {
 
     @Override
     public int getCount() {
-        if (add_user != null) {
             if (add_user.size()>3) {
                 return 4;
-            }else if (add_user.size()<=3&&add_user.size()>0) {
+            }else if (add_user.size()>0) {
 
-                return add_user.size();
+                return add_user.size()+1;
             }else{
                 return 1;
             }
-
-        }
-
-       return 0;
     }
 
     @Override
@@ -53,14 +48,16 @@ public class ClassDescMemberAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
 
-            if (add_user.size() > 3) {
+        if (add_user.size() > 3) {
                 if (position == 3) {
+                    ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(position);
                     Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
                     vh.tv_name.setText("添加成员");
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
                 }else{
-                    Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_pic);
-                    vh.tv_name.setText("高飞");
+                    ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(position);
+                    Glide.with(ctx).load(addUserBean.getHeader_pic()).into(vh.iv_pic);
+                    vh.tv_name.setText(addUserBean.getJoin_role());
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
                 }
             }else if (add_user.size() == 0) {
@@ -71,18 +68,17 @@ public class ClassDescMemberAdapter extends BaseFastAdapter {
                 }
             }
             else{
-                if (position == add_user.size()-1) {
+                if (position == add_user.size()) {
                     Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
                     vh.tv_name.setText("添加成员");
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
                 }else{
-                    Glide.with(ctx).load(R.mipmap.ss33).into(vh.iv_pic);
-                    vh.tv_name.setText("高飞");
+                    ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(position);
+                    Glide.with(ctx).load(addUserBean.getHeader_pic()).into(vh.iv_pic);
+                    vh.tv_name.setText(addUserBean.getJoin_role());
                     vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
                 }
             }
-
-
         return convertView;
     }
 

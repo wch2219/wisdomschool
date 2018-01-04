@@ -7,6 +7,7 @@
     android:background="@drawable/shape_class_bg"
     android:layout_height="match_parent">
     <ImageView
+        android:id="@+id/iv_pic"
         style="@style/ImagehomeItempic"
         android:layout_gravity="center_vertical"
         android:src="@mipmap/icon_cjbjwenjian"
@@ -14,7 +15,44 @@
     <TextView
         style="@style/TextSizecontentBlack"
         android:text="一年级二班"
+        android:id="@+id/tv_classname"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical"
         />
+    <LinearLayout
+        android:id="@+id/ll_file"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:id="@+id/tv_filename"
+            android:text="IMG-2017110258-203225.jpg"
+            />
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="275KB"
+                android:id="@+id/tv_filesize"
+                android:layout_weight="1"
+                android:textSize="11sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12-04"
+                android:id="@+id/tv_date"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

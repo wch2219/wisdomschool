@@ -234,6 +234,15 @@ public class ClassDescBean implements Serializable{
             private String userid;
             private String join_role;
             private String header_pic;
+            private String  jcid;
+
+            public String getJcid() {
+                return jcid;
+            }
+
+            public void setJcid(String jcid) {
+                this.jcid = jcid;
+            }
 
             public String getUserid() {
                 return userid;

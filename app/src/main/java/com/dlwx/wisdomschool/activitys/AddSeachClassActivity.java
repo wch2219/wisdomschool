@@ -131,6 +131,7 @@ public class AddSeachClassActivity extends BaseActivity {
         Gson gson = new Gson();
         if (HttpType == 1) {
 
+
             checkClass(s, gson);
         }else {
             BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
@@ -199,7 +200,6 @@ public class AddSeachClassActivity extends BaseActivity {
         @Override
         public void onClick(View view) {
             popupWindow.dismiss();
-            finish();
             switch (view.getId()) {
                 case R.id.iv_close:
 

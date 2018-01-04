@@ -16,7 +16,7 @@ public class GlideuploadUtils {
                 // 占位图
                 .placeholder(R.mipmap.icon_load)
                 // 加载错误图
-                .error(R.mipmap.error);
+                .error(R.mipmap.icon_load);
         return error;
     }
     public static void glideCleanCache(Context ctx){

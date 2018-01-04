@@ -1,119 +1,87 @@
 package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.dlwx.baselib.utiles.LogUtiles;
+import com.bumptech.glide.Glide;
+import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassFileBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/22/022.
  */
 
-public class ClassFileAdapter extends BaseExpandableListAdapter {
-    private Context ctx;
-    public ClassFileAdapter(Context ctx){
-        this.ctx = ctx;
+public class ClassFileAdapter extends BaseFastAdapter {
+    private List<ClassFileBean.BodyBean.ListBean> list;
+    public ClassFileAdapter(Context ctx,List<ClassFileBean.BodyBean.ListBean> list) {
+        super(ctx);
+        this.list = list;
+    }
+    @Override
+    public int getCount() {
+        return list.size();
     }
 
     @Override
-    public void registerDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver dataSetObserver) {
-
-    }
-
-    @Override
-    public int getGroupCount() {
-        return 3;
-    }
-
-    @Override
-    public int getChildrenCount(int i) {
-        return 2;
-    }
-
-    @Override
-    public Object getGroup(int i) {
-        return null;
-    }
-
-    @Override
-    public Object getChild(int i, int i1) {
-        return null;
-    }
-
-    @Override
-    public long getGroupId(int i) {
-        return 0;
-    }
-
-    @Override
-    public long getChildId(int i, int i1) {
-        return 0;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = LayoutInflater.from(ctx).inflate(R.layout.item_classfile_group,null);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder vh;
+        if (convertView == null) {
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.item_classfile_group, null);
+            vh = new ViewHolder(convertView);
+            convertView.setTag(vh);
+        }else{
+            vh = (ViewHolder) convertView.getTag();
         }
-        LogUtiles.LogI(b+"");
-        return view;
-    }
+        ClassFileBean.BodyBean.ListBean listBean = list.get(position);
+        int type = listBean.getType();
+        if (type == 1) {//图片
+            vh.ll_file.setVisibility(View.GONE);
+            Glide.with(ctx).load(listBean.getFile_pic()).into(vh.iv_pic);
+            vh.tv_filename.setText(listBean.getName());
+            vh.tv_filesize.setText(listBean.getSize()+"KB");
+            vh.tv_date.setText(listBean.getTime());
 
-    @Override
-    public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = LayoutInflater.from(ctx).inflate(R.layout.item_classfile_child,null);
+        }else if (type == 2) {//音频
+            vh.ll_file.setVisibility(View.GONE);
+            Glide.with(ctx).load(R.mipmap.icon_viceo).into(vh.iv_pic);
+            vh.tv_filesize.setText(listBean.getSize()+"KB");
+            vh.tv_date.setText(listBean.getTime());
+        }else if (type == 3) {//文档
+
+        }else {//文件夹
+            Glide.with(ctx).load(R.mipmap.icon_cjbjwenjian).into(vh.iv_pic);
+            vh.tv_classname.setText(listBean.getName());
+            vh.ll_file.setVisibility(View.GONE);
         }
-        return view;
+        return convertView;
     }
 
-    @Override
-    public boolean isChildSelectable(int i, int i1) {
-        return false;
-    }
+    private class ViewHolder {
+        public View rootView;
+        public ImageView iv_pic;
+        public TextView tv_classname;
+        public TextView tv_filename;
+        public TextView tv_filesize;
+        public TextView tv_date;
+        public LinearLayout ll_file;
 
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
+        public ViewHolder(View rootView) {
+            this.rootView = rootView;
+            this.iv_pic = (ImageView) rootView.findViewById(R.id.iv_pic);
+            this.tv_classname = (TextView) rootView.findViewById(R.id.tv_classname);
+            this.tv_filename = (TextView) rootView.findViewById(R.id.tv_filename);
+            this.tv_filesize = (TextView) rootView.findViewById(R.id.tv_filesize);
+            this.tv_date = (TextView) rootView.findViewById(R.id.tv_date);
+            this.ll_file = (LinearLayout) rootView.findViewById(R.id.ll_file);
+        }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public void onGroupExpanded(int i) {
-
-    }
-
-    @Override
-    public void onGroupCollapsed(int i) {
-
-    }
-
-    @Override
-    public long getCombinedChildId(long l, long l1) {
-        return 0;
-    }
-
-    @Override
-    public long getCombinedGroupId(long l) {
-        return 0;
     }
 }

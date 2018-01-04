@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassDescBean;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

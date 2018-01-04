@@ -31,7 +31,7 @@ public class ApplyListAdapter extends BaseFastAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.item_apply, null);
@@ -48,7 +48,18 @@ public class ApplyListAdapter extends BaseFastAdapter {
         ClassAppliListeBean.BodyBean bodyBean = body.get(position);
         Glide.with(ctx).load(bodyBean.getHeader_pic()).into(vh.iv_pic);
         vh.tv_name.setText(bodyBean.getJoin_role());
-
+            vh.tv_lose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    closeAndAgressOnclicklistener.closes(position);
+                }
+            });
+            vh.tv_aggress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    closeAndAgressOnclicklistener.aggress(position);
+                }
+            });
         return convertView;
     }
     private int pos;
@@ -56,7 +67,14 @@ public class ApplyListAdapter extends BaseFastAdapter {
         this.pos = i;
         notifyDataSetChanged();
     }
-
+    public interface CloseAndAgressOnclicklistener{
+        void closes(int postion);
+        void aggress(int postion);
+    }
+    private CloseAndAgressOnclicklistener closeAndAgressOnclicklistener;
+    public void setCloseAndAgressOnclicklistener(CloseAndAgressOnclicklistener closeAndAgressOnclicklistener){
+        this.closeAndAgressOnclicklistener = closeAndAgressOnclicklistener;
+    }
     private class ViewHolder {
         public View rootView;
         public ImageView iv_check;

@@ -26,7 +26,6 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassDescActivity;
 import com.dlwx.wisdomschool.activitys.GradeManageActivity;
 import com.dlwx.wisdomschool.activitys.MyJoinClassDescActivity;
-import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 
 import java.util.ArrayList;
@@ -95,10 +94,10 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
             llPatriarch.setVisibility(View.VISIBLE);
             rlEntrypatriarch.setVisibility(View.GONE);
             llNoentrypatriarch.setVisibility(View.VISIBLE);
-            MeAddCLassAdapter meaddCLassAdapter = new MeAddCLassAdapter(ctx);
-            lvListpatriarch.setAdapter(meaddCLassAdapter);
-            lvListpatriarch.setOnItemClickListener(this);
-            ivAdd.setVisibility(View.GONE);
+//            MeAddCLassAdapter meaddCLassAdapter = new MeAddCLassAdapter(ctx);
+//            lvListpatriarch.setAdapter(meaddCLassAdapter);
+//            lvListpatriarch.setOnItemClickListener(this);
+//            ivAdd.setVisibility(View.GONE);
         }
 
     }

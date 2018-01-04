@@ -33,7 +33,7 @@
         <TextView
             android:padding="10dp"
             style="@style/TextSizecontentBlack"
-            android:text="一般家长、学生，他们可以接收/参与活动"
+            android:text="@string/classjurisdiction"
             android:textColor="@color/garytext"
             android:textSize="11sp"
             android:layout_gravity="center_horizontal"
@@ -54,7 +54,7 @@
         <TextView
             android:padding="10dp"
             style="@style/TextSizecontentBlack"
-            android:text="一般家长、学生，他们可以接收/参与活动"
+            android:text="@string/classjurisdiction1"
             android:textColor="@color/garytext"
             android:textSize="11sp"
             android:layout_gravity="center_horizontal"
@@ -76,7 +76,7 @@
         <TextView
             android:padding="10dp"
             style="@style/TextSizecontentBlack"
-            android:text="一般家长、学生，他们可以接收/参与活动"
+            android:text="@string/classjurisdiction2"
             android:textColor="@color/garytext"
             android:textSize="11sp"
             android:layout_gravity="center_horizontal"
@@ -98,7 +98,7 @@
         <TextView
             android:padding="10dp"
             style="@style/TextSizecontentBlack"
-            android:text="一般家长、学生，他们可以接收/参与活动"
+            android:text="@string/classjurisdiction3"
             android:textColor="@color/garytext"
             android:textSize="11sp"
             android:layout_gravity="center_horizontal"

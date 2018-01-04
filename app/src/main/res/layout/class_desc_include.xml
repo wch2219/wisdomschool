@@ -183,6 +183,25 @@
         >
 
     </com.dlwx.baselib.view.MyGridView>
+    <RelativeLayout
+        android:id="@+id/rl_lookall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        >
+        <TextView
+            android:id="@+id/tv_allsize"
+            style="@style/TextSizecontentBlack"
+            android:text="查看全部2名成员"
+            android:layout_centerHorizontal="true"
+            />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            style="@style/Imagesmill3pic"
+            android:src="@mipmap/icon_jiantourig"
+            />
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -250,23 +269,6 @@
         android:layout_height="8dp"
         />
     </LinearLayout>
-    <RelativeLayout
-        android:id="@+id/rl_lookall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
-        <TextView
-            style="@style/TextSizecontentBlack"
-            android:text="查看全部2名成员"
-            android:layout_centerHorizontal="true"
-            />
-        <ImageView
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            style="@style/Imagesmill3pic"
-            android:src="@mipmap/icon_jiantourig"
-            />
-    </RelativeLayout>
+
 
 </LinearLayout>

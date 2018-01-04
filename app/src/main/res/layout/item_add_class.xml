@@ -15,6 +15,7 @@
         android:orientation="horizontal"
         >
         <ImageView
+            android:id="@+id/iv_pic"
             style="@style/ImagehomeItempic"
             android:src="@mipmap/ss33"
             android:scaleType="fitXY"
@@ -32,6 +33,7 @@
                 android:orientation="horizontal"
                 >
                 <TextView
+                    android:id="@+id/tv_classname"
                     style="@style/TextSizecontentBlack"
                     android:text="092"
                     android:layout_weight="1"
