@@ -60,6 +60,12 @@
                     android:textSize="15sp"
                     />
         </LinearLayout>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/smallLabel"
+            android:layout_height="wrap_content">
+
         <ListView
             android:scrollbars="none"
             android:dividerHeight="10dp"
@@ -70,7 +76,7 @@
             android:id="@+id/ablv_list"
             android:layout_weight="1"
             />
-
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="35dp"

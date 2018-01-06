@@ -22,7 +22,7 @@ import com.dlwx.wisdomschool.bean.ClassInfoBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SeleteClassDiaUtiles;
-import com.dlwx.wisdomschool.utiles.UpPicUtiles;
+import com.dlwx.wisdomschool.utiles.UpFileUtiles;
 import com.dlwx.wisdomschool.views.SeleteHeadDiautils;
 import com.google.gson.Gson;
 import com.lzy.okgo.model.Response;
@@ -205,7 +205,7 @@ public class ClassMessageActivitry extends BaseActivity implements CompoundButto
                 break;
             case 5://裁剪成功后
                 File filePath = UploadPicUtiles.getFilePath(data, ctx);
-                UpPicUtiles.setBackInterface(new UpPicUtiles.BackInterface() {
+                UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                     @Override
                     public void success(Response<String> response) {
                         wch("返回" + response.body());
@@ -223,7 +223,7 @@ public class ClassMessageActivitry extends BaseActivity implements CompoundButto
                         Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
                 });
-                UpPicUtiles.start(ctx, filePath);
+                UpFileUtiles.start(ctx, filePath,"1",0);
                 break;
 
             case 10://班级名称

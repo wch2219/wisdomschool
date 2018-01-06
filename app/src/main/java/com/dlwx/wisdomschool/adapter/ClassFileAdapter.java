@@ -43,27 +43,42 @@ public class ClassFileAdapter extends BaseFastAdapter {
         ClassFileBean.BodyBean.ListBean listBean = list.get(position);
         int type = listBean.getType();
         if (type == 1) {//图片
-            vh.ll_file.setVisibility(View.GONE);
+            vh.ll_file.setVisibility(View.VISIBLE);
+            vh.tv_classname.setVisibility(View.GONE);
             Glide.with(ctx).load(listBean.getFile_pic()).into(vh.iv_pic);
             vh.tv_filename.setText(listBean.getName());
             vh.tv_filesize.setText(listBean.getSize()+"KB");
             vh.tv_date.setText(listBean.getTime());
-
+            vh.tv_filename.setText(listBean.getName());
         }else if (type == 2) {//音频
-            vh.ll_file.setVisibility(View.GONE);
+            vh.ll_file.setVisibility(View.VISIBLE);
+            vh.tv_classname.setVisibility(View.GONE);
             Glide.with(ctx).load(R.mipmap.icon_viceo).into(vh.iv_pic);
             vh.tv_filesize.setText(listBean.getSize()+"KB");
             vh.tv_date.setText(listBean.getTime());
-        }else if (type == 3) {//文档
-
-        }else {//文件夹
+            vh.tv_filename.setText(listBean.getName());
+        }else if (type == 3) {//txt
+            vh.ll_file.setVisibility(View.VISIBLE);
+            vh.tv_classname.setVisibility(View.GONE);
+            Glide.with(ctx).load(R.mipmap.icon_txt).into(vh.iv_pic);
+            vh.tv_filesize.setText(listBean.getSize()+"KB");
+            vh.tv_date.setText(listBean.getTime());
+            vh.tv_filename.setText(listBean.getName());
+        }else if (type == 4) {//doc
+            vh.ll_file.setVisibility(View.VISIBLE);
+            vh.tv_classname.setVisibility(View.GONE);
+            Glide.with(ctx).load(R.mipmap.icon_word).into(vh.iv_pic);
+            vh.tv_filesize.setText(listBean.getSize()+"KB");
+            vh.tv_date.setText(listBean.getTime());
+            vh.tv_filename.setText(listBean.getName());
+        } else {//文件夹
+            vh.ll_file.setVisibility(View.GONE);
+            vh.tv_classname.setVisibility(View.VISIBLE);
             Glide.with(ctx).load(R.mipmap.icon_cjbjwenjian).into(vh.iv_pic);
             vh.tv_classname.setText(listBean.getName());
-            vh.ll_file.setVisibility(View.GONE);
         }
         return convertView;
     }
-
     private class ViewHolder {
         public View rootView;
         public ImageView iv_pic;

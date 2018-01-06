@@ -40,11 +40,7 @@ public class ApplyListAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        if (pos == position) {
-            Glide.with(ctx).load(R.mipmap.icon_bjxxfxcy).into(vh.iv_check);
-        }else{
-            Glide.with(ctx).load(R.mipmap.icon_xzxuanwei).into(vh.iv_check);
-        }
+
         ClassAppliListeBean.BodyBean bodyBean = body.get(position);
         Glide.with(ctx).load(bodyBean.getHeader_pic()).into(vh.iv_pic);
         vh.tv_name.setText(bodyBean.getJoin_role());
@@ -60,10 +56,15 @@ public class ApplyListAdapter extends BaseFastAdapter {
                     closeAndAgressOnclicklistener.aggress(position);
                 }
             });
+        if (bodyBean.isCheck()) {
+            Glide.with(ctx).load(R.mipmap.icon_bjxxfxcy).into(vh.iv_check);
+        }else{
+            Glide.with(ctx).load(R.mipmap.icon_xzxuanwei).into(vh.iv_check);
+        }
         return convertView;
     }
-    private int pos;
-    public void setCheck(int i) {
+    private int pos = -1;
+    public void setCheck(int i,boolean is) {
         this.pos = i;
         notifyDataSetChanged();
     }

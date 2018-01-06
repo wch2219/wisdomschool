@@ -7,21 +7,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFastAdapter;
+import com.dlwx.baselib.bean.Image;
 import com.dlwx.wisdomschool.R;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/22/022.
  */
 
 public class SeleteFileAdapter extends BaseFastAdapter {
-    public SeleteFileAdapter(Context ctx) {
+     private List<Image> images;
+    public SeleteFileAdapter(Context ctx,List<Image> images) {
         super(ctx);
+        this.images = images;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return images.size();
     }
 
     @Override
@@ -34,6 +40,20 @@ public class SeleteFileAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
+        Image image = images.get(position);
+        int filetype = image.getFiletype();
+        if (filetype == 1) {//图片
+            Glide.with(ctx).load(image.getPath()).into(vh.iv_pic);
+        }else if (filetype == 2) {//音频
+            Glide.with(ctx).load(R.mipmap.icon_viceo).into(vh.iv_pic);
+
+        }else if (filetype == 3) {//txt
+            Glide.with(ctx).load(R.mipmap.icon_txt).into(vh.iv_pic);
+        }else{
+            Glide.with(ctx).load(R.mipmap.icon_word).into(vh.iv_pic);
+        }
+        String[] split = image.getPath().split("/");
+        vh.tv_name.setText("-"+split[split.length-1]);
         return convertView;
     }
 

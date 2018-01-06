@@ -79,6 +79,8 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     @Override
     protected void initListener() {
         cbAll.setOnCheckedChangeListener(this);
+        lvList.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -109,17 +111,39 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        applyListAdapter.setCheck(i);
+        ClassAppliListeBean.BodyBean bodyBean = body.get(i);
+        boolean check = bodyBean.isCheck();
+            bodyBean.setCheck(!check);
+            int totalnum = 0;
+        for (int j = 0; j < body.size(); j++) {
+            ClassAppliListeBean.BodyBean bodyBean1 = body.get(j);
+            if (bodyBean1.isCheck()) {
+                totalnum++;
+            }
+        }
+        if (totalnum == body.size()) {
+            cbAll.setChecked(true);
+        }else{
+            cbAll.setChecked(false);
+        }
+            applyListAdapter.notifyDataSetChanged();
     }
-
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         if (b) {
-
+            for (int j = 0; j < body.size(); j++) {
+                ClassAppliListeBean.BodyBean bodyBean1 = body.get(j);
+                    bodyBean1.setCheck(true);
+            }
+            applyListAdapter.notifyDataSetChanged();
+        }else{
+            for (int j = 0; j < body.size(); j++) {
+                ClassAppliListeBean.BodyBean bodyBean1 = body.get(j);
+                bodyBean1.setCheck(false);
+            }
+            applyListAdapter.notifyDataSetChanged();
         }
-
     }
-
     @Override
     public void showData(String s) {
         disLoading();
@@ -134,9 +158,7 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             }
             Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
         }
-
     }
-
     /**
      * 申请列表
      * @param s
@@ -164,6 +186,7 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             map.put("classid",classid);
             map.put("ischeck","2");
             map.put("jcid",body.get(postion).getJcid());
+            closeAndAggress(map);
         }
 
         @Override
@@ -172,6 +195,7 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             map.put("classid",classid);
             map.put("ischeck","1");
             map.put("jcid",body.get(postion).getJcid());
+            closeAndAggress(map);
         }
     };
         private void closeAndAggress(Map <String,String> map){

@@ -9,8 +9,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
-import com.dlwx.baselib.utiles.ImgesLisetBean;
+import com.dlwx.baselib.bean.Image;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.interfac.Picseltete;
 import com.dlwx.wisdomschool.utiles.GlideuploadUtils;
 
 import java.util.List;
@@ -20,9 +21,9 @@ import java.util.List;
  */
 
 public class AllPicAdapter extends BaseFastAdapter {
-    private List<ImgesLisetBean.Image> images;
+    private List<Image> images;
 
-    public AllPicAdapter(Context ctx, List<ImgesLisetBean.Image> images) {
+    public AllPicAdapter(Context ctx, List<Image> images) {
         super(ctx);
         this.images = images;
     }
@@ -33,8 +34,8 @@ public class AllPicAdapter extends BaseFastAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder vh;
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.item_allpic, null);
             vh = new ViewHolder(convertView);
@@ -45,14 +46,26 @@ public class AllPicAdapter extends BaseFastAdapter {
         if (position == 0) {
             vh.rl_pic.setVisibility(View.GONE);
             vh.rl_paizhao.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             vh.rl_pic.setVisibility(View.VISIBLE);
             vh.rl_paizhao.setVisibility(View.GONE);
-            GlideuploadUtils.glideUPload(ctx,images.get(position-1).getPath()).into(vh.iv_pic);
+            GlideuploadUtils.glideUPload(ctx, images.get(position - 1).getPath()).into(vh.iv_pic);
+            vh.cb_check.setChecked(images.get(position - 1).isCheck());
         }
 
+
+
+        vh.cb_check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = vh.cb_check.isChecked();
+                images.get(position-1).setCheck(checked);
+                Picseltete.sletePicInterf.checkback(position-1, checked);
+            }
+        });
         return convertView;
     }
+
 
 
     private class ViewHolder {

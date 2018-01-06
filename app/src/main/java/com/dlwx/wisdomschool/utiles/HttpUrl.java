@@ -27,4 +27,5 @@ public class HttpUrl {
     public static final String changeClassJurisd = BaseUrl + "Classroom/edit_user_power";//班级内成员权限修改
     public static final String getClassFile = BaseUrl + "Classroom/classfile";//班级文件
     public static final String CreateClassFile = BaseUrl + "Classroom/makefolder";//"创建班级文件夹";
+    public static final String AddFile = BaseUrl + "Classroom/addfile";//添加文件
 }

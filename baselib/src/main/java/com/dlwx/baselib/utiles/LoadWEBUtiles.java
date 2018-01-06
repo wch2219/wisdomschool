@@ -50,7 +50,7 @@ public class LoadWEBUtiles {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                view.loadUrl(url);
+                view.loadUrl(url);
 //                if (url.contains("login.m.taobao.com")) {
 //                    LogUtiles.LogI("拦截登录成功");
 //                    return true;

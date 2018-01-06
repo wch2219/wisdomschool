@@ -16,6 +16,7 @@
         style="@style/TextSizecontentBlack"
         android:text="一年级二班"
         android:id="@+id/tv_classname"
+        android:visibility="gone"
         android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical"
         />
@@ -38,14 +39,14 @@
             android:orientation="horizontal"
             android:layout_gravity="center_vertical"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/tv_filesize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="275KB"
-                android:id="@+id/tv_filesize"
                 android:layout_weight="1"
-                android:textSize="11sp"
-                />
+                android:text="275KB"
+                android:textSize="11sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

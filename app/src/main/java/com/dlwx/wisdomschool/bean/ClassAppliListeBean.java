@@ -54,7 +54,7 @@ public class ClassAppliListeBean {
         private String userid;
         private String join_role;
         private String header_pic;
-
+        private boolean check;
         public String getJcid() {
             return jcid;
         }
@@ -85,6 +85,14 @@ public class ClassAppliListeBean {
 
         public void setHeader_pic(String header_pic) {
             this.header_pic = header_pic;
+        }
+
+        public boolean isCheck() {
+            return check;
+        }
+
+        public void setCheck(boolean check) {
+            this.check = check;
         }
     }
 }

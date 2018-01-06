@@ -1,14 +1,15 @@
 package com.dlwx.wisdomschool.activitys;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,8 +27,8 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.MyPopuWindow;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassFileAdapter;
-import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.ClassFileBean;
+import com.dlwx.wisdomschool.bean.MorePicUpBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -53,57 +54,120 @@ import butterknife.OnClick;
 import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
- * 班级文件
+ * 班级文件文件夹详细列表
  */
-public class ClassFileActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class PageFileDescActivity extends BaseActivity implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener
+{
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
+    @BindView(R.id.iv_add)
+    ImageView ivAdd;
     @BindView(R.id.rl_entry)
     RelativeLayout rlEntry;
     @BindView(R.id.ablv_list)
     ListView ablvList;
+    @BindView(R.id.smallLabel)
+    SmartRefreshLayout smallLabel;
     @BindView(R.id.progressbar)
     ProgressBar progressbar;
     @BindView(R.id.tv_size)
     TextView tvSize;
-    @BindView(R.id.ll_noentry)
-    LinearLayout llNoentry;
-    @BindView(R.id.iv_add)
-    ImageView ivAdd;
-    @BindView(R.id.smallLabel)
-    SmartRefreshLayout refreshLayout;
-    private MyPopuWindow popuWindow;
+    @BindView(R.id.et_seach)
+    EditText etSeach;
+    private String name;
+    private String cfid;
     private String classid;
-    private ViewHolderDia vhDia;
-    private AlertDialog diaShow;
     private List<ClassFileBean.BodyBean.ListBean> fileList;
+    private MyPopuWindow popuWindow;
     private List<Image> images;
 
     @Override
     protected void initView() {
-        classid = getIntent().getStringExtra("classid");
-        setContentView(R.layout.activity_class_file);
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
+        cfid = intent.getStringExtra("cfid");
+        classid = intent.getStringExtra("classid");
+        setContentView(R.layout.activity_page_file_desc);
         ButterKnife.bind(this);
     }
 
     @Override
     protected void initData() {
-        tvTitle.setText("班级文件");
+        tvTitle.setText(name);
         initTabBar(toolBar);
-        getFileList();
+        getData("");
+    }
+    @Override
+    protected void initListener() {
+        initrefresh(smallLabel, true);
+        ablvList.setOnItemClickListener(this);
+        ablvList.setOnItemLongClickListener(this);
+        etSeach.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (i == KeyEvent.KEYCODE_ENTER) {
+                    // 先隐藏键盘
+                    ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                            .hideSoftInputFromWindow(PageFileDescActivity.this.getCurrentFocus()
+                                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
+                    search();
+                }
+                return false;
+            }
+
+        });
     }
 
     @Override
-    protected void initListener() {
-        initrefresh(refreshLayout, true);
-        ablvList.setOnItemClickListener(this);
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        final ClassFileBean.BodyBean.ListBean listBean = fileList.get(i);
+        int type = listBean.getType();
+        if (type == 3 || type == 4) {
+            DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
+                @Override
+                public void back(File file) {
+                    Intent intent = new Intent(ctx,ReadWordActivity.class);
+                    wch("下载文件"+file);
+                    intent.putExtra("path",file+"");
+                    intent.putExtra("filename",listBean.getName());
+                    startActivity(intent);
+                }
+            });
+            DownFileSave.down(ctx,listBean.getFile_pic());
+        }else if (type == 1) {
+            //大图显示
+            LookPic.showPic(ctx,tvTitle,images,i);
+        }
+    }
+    /**
+     * 长按编辑删除
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     * @return
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        return false;
+    }
+
+    private void search() {
+        String seach = etSeach.getText().toString().trim();
+        if (TextUtils.isEmpty(seach)) {
+            Toast.makeText(ctx, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        getData(seach);
     }
 
     @Override
     public void downOnRefresh() {
-        getFileList();
+        getData("");
     }
 
     @Override
@@ -117,61 +181,16 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         showPopu();
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        ClassFileBean.BodyBean.ListBean listBean = fileList.get(i);
-        int type = listBean.getType();//1图片，2音视频，3文档
-        Intent intent;
-        switch (type) {
-            case 1://图片
-                //大图显示
-                LookPic.showPic(ctx,tvTitle,images,i);
-                break;
-            case 2://MP3
-                break;
-            case 3://txt
-               readFile(listBean);
-                break;
-            case 4://doc
-                readFile(listBean);
-                break;
-
-            case 99:
-                intent = new Intent(ctx, PageFileDescActivity.class);
-                intent.putExtra("name", listBean.getName());
-                intent.putExtra("cfid", listBean.getCfid());
-                intent.putExtra("classid", classid);
-                startActivity(intent);
-                break;
-
-        }
-
-    }
-    private void readFile(final ClassFileBean.BodyBean.ListBean listBean){
-        DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
-            @Override
-            public void back(File file) {
-                Intent intent = new Intent(ctx,ReadWordActivity.class);
-                wch("下载文件"+file);
-                intent.putExtra("path",file+"");
-                intent.putExtra("filename",listBean.getName());
-                startActivity(intent);
-            }
-        });
-        DownFileSave.down(ctx,listBean.getFile_pic());
-    }
     /**
-     * 获得文件列表
+     * 获取当前文件下的列表
      */
-    private void getFileList() {
-        HttpType = 1;
+    private void getData(String seach) {
         Map<String, String> map = new HashMap<>();
         map.put("token", Token);
         map.put("classid", classid);
-//        map.put("type",type);
-//        map.put("name",name);
-        mPreenter.fetch(map, true, HttpUrl.getClassFile, HttpUrl.getClassFile + Token + classid);
-
+        map.put("cfid", cfid);
+        map.put("name", seach);
+        mPreenter.fetch(map, true, HttpUrl.getClassFile, HttpUrl.getClassFile + Token + classid + cfid + seach);
     }
 
     @Override
@@ -179,16 +198,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        if (HttpType == 1) {
-
-            fileList(s, gson);
-        } else if (HttpType == 2) {
-            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
-            if (backResultBean.getCode() == 200) {
-                getFileList();
-            }
-            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
-        }
+        fileList(s, gson);
     }
 
     /**
@@ -228,6 +238,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                     images.add(image);
                 }
             }
+
             ablvList.setAdapter(new ClassFileAdapter(ctx, fileList));
         } else {
             Toast.makeText(ctx, classFileBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -251,7 +262,6 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         });
         popuWindow.showAsDropDown(ivAdd, -10, 10, Gravity.RIGHT);
     }
-
     private class ViewHolderPopu implements View.OnClickListener {
         public View rootView;
         public TextView tv_uppic;
@@ -265,7 +275,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
             this.tv_addfile = (TextView) rootView.findViewById(R.id.tv_addfile);
             tv_uppic.setOnClickListener(this);
             tv_upfile.setOnClickListener(this);
-            tv_addfile.setOnClickListener(this);
+            tv_addfile.setVisibility(View.GONE);
         }
 
         @Override
@@ -274,71 +284,14 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
             switch (view.getId()) {
                 case R.id.tv_uppic:
                     startActivityForResult(new Intent(ctx, AllPicActivity.class), 100);
-
                     break;
                 case R.id.tv_upfile:
-                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class), 101);
+                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class),101);
                     break;
-                case R.id.tv_addfile:
-                    showDia();
-                    break;
-
             }
         }
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_close:
-                diaShow.dismiss();
-                break;
-            case R.id.tv_create:
-                String filename = vhDia.et_filename.getText().toString().trim();
-                if (TextUtils.isEmpty(filename)) {
-                    Toast.makeText(ctx, "请填写文件名称", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Map<String, String> map = new HashMap<>();
-                map.put("token", Token);
-                HttpType = 2;
-                map.put("classid", classid);
-                map.put("name", filename);
-                mPreenter.fetch(map, false, HttpUrl.CreateClassFile, "");
-                diaShow.dismiss();
-                break;
-
-        }
-    }
-
-    private void showDia() {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.dia_wishbag, null);
-        vhDia = new ViewHolderDia(view);
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        builder.setView(view);
-        builder.setCancelable(false);
-        diaShow = builder.show();
-        vhDia.tv_close.setOnClickListener(this);
-        vhDia.tv_create.setOnClickListener(this);
-    }
-
-    private class ViewHolderDia {
-        public View rootView;
-        public EditText et_filename;
-        public TextView tv_close;
-        public TextView tv_create;
-
-        public ViewHolderDia(View rootView) {
-            this.rootView = rootView;
-            this.et_filename = (EditText) rootView.findViewById(R.id.et_filename);
-            this.tv_close = (TextView) rootView.findViewById(R.id.tv_close);
-            this.tv_create = (TextView) rootView.findViewById(R.id.tv_create);
-        }
-
-    }
-
     private int tag = 0;
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {
@@ -346,7 +299,6 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         }
         switch (requestCode) {
             case 100:
-
                 ArrayList<String> images = data.getStringArrayListExtra("images");
                 upPic(images);
                 break;
@@ -354,10 +306,10 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                 final String filepath = data.getStringExtra("path");
                 String[] split = filepath.split("/");
                 final String filename = split[split.length - 1];
-                final int filetype = data.getIntExtra("filetype", 0);
+                final int filetype = data.getIntExtra("filetype",0);
                 final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
                 showLoading();
-                tag = 0;
+               tag = 0;
                 UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                     @Override
                     public void success(Response<String> response) {
@@ -367,28 +319,28 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                             if (tag == 0) {
                                 tag = 1;
                                 int fileid = upPicBean.getBody().getFileid();
-                                Map<String, String> map = new HashMap<>();
-                                map.put("token", Token);
-                                map.put("classid", classid);
-                                map.put("name", filename);
-                                map.put("type", filetype + "");
-                                map.put("fileid", fileid + "");
-                                map.put("size", size + "");
-                                UpFileUtiles.addfile(ctx, map);
-                            } else {
-                                disLoading();
-                                Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
-                                getFileList();
+                                Map<String,String> map = new HashMap<>();
+                                map.put("token",Token);
+                                map.put("classid",classid);
+                                map.put("folderid",cfid);
+                                map.put("name",filename);
+                                map.put("type",filetype+"");
+                                map.put("fileid",fileid+"");
+                                map.put("size",size+"");
+                                UpFileUtiles.addfile(ctx,map);
+                            }else{
+                                   disLoading();
+                                 getData("");
                             }
-                        } else {
+                        }else{
                             disLoading();
-                            Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                         }
+                        Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 UpFileUtiles.TYPE = 1;
                 File file = new File(filepath);
-                UpFileUtiles.start(ctx, file, filetype + "", size);
+                UpFileUtiles.start(ctx,file,filetype+"",size);
                 break;
         }
     }
@@ -403,6 +355,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         List<File> lists = new ArrayList<>();
         for (int i = 0; i < images.size(); i++) {
             lists.add(new File(images.get(i)));
+            wch(images);
         }
         wch(lists.size());
         PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
@@ -412,8 +365,14 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         post.execute(new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
-                wch(response.body());
-                disLoading();
+                Gson gson = new Gson();
+                MorePicUpBean morePicUpBean = gson.fromJson(response.body(), MorePicUpBean.class);
+                if (morePicUpBean.getCode() == 200) {
+                    MorePicUpBean.BodyBean body = morePicUpBean.getBody();
+
+                }else{
+                    Toast.makeText(ctx, morePicUpBean.getResult(), Toast.LENGTH_SHORT).show();
+                }
 //                getFileList();
             }
 
@@ -424,7 +383,3 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         });
     }
 }
-
-
-
-

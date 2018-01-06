@@ -11,6 +11,7 @@
             android:layout_gravity="center_vertical"
         android:src="@mipmap/icon_xzxuanwei"
         android:layout_margin="5dp"
+
          />
     <ImageView
         android:id="@+id/iv_pic"

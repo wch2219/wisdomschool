@@ -16,6 +16,7 @@ import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.util.NetUtils;
 import com.lzy.okgo.OkGo;
 import com.tencent.bugly.Bugly;
+import com.tencent.smtt.sdk.TbsDownloader;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -36,6 +37,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         OkGo.getInstance().init(this);
+        TbsDownloader.needDownload(getApplicationContext(), false);
         instance = this;
         classnames = ResouseString.classnames;
         easeUIInit();
