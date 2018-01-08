@@ -17,6 +17,7 @@ import com.dlwx.wisdomschool.adapter.MeCreateCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,8 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     RelativeLayout llCreateentry;
     @BindView(R.id.rl_noentry)
     RelativeLayout rlNoentry;
-
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.lv_list)
     ListView lvList;
     Unbinder unbinder;
@@ -52,20 +54,24 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     public int getLayoutID() {
         return R.layout.fragment_create_class;
     }
-
     @Override
     protected void initView(View view) {
         unbinder = ButterKnife.bind(this, view);
     }
-
     @Override
     protected void initDate() {
-
-
-        getClassList();
+        initrefresh(refreshLayout,true);
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getClassList();
+    }
+    @Override
+    public void downOnRefresh() {
+        getClassList();
+    }
     /**
      * 获取班级列表
      */
@@ -80,20 +86,15 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     protected void initListener() {
         lvList.setOnItemClickListener(this);
     }
-
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
     }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
@@ -104,8 +105,6 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
         startActivity(intent);
 
     }
-
-
     @OnClick({R.id.btn_entrycreate, R.id.btn_create})
     public void onViewClicked(View view) {
         switch (view.getId()) {

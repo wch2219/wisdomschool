@@ -52,9 +52,10 @@ public class MeCreateCLassAdapter extends BaseFastAdapter {
 
         vh.tv_file.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View view) {
                 Intent intent = new Intent(ctx, ClassFileActivity.class);
-                intent.putExtra("classid",bodyBean.getClass_no());
+                intent.putExtra("classid",bodyBean.getCnid());
                 ctx.startActivity(intent);
             }
         });

@@ -33,6 +33,7 @@ import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.LookPic;
+import com.dlwx.wisdomschool.utiles.MediaPlayUtils;
 import com.dlwx.wisdomschool.utiles.UpFileUtiles;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -83,7 +84,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
     private List<ClassFileBean.BodyBean.ListBean> fileList;
     private MyPopuWindow popuWindow;
     private List<Image> images;
-
+    private List<Image> mp3s;
     @Override
     protected void initView() {
         Intent intent = getIntent();
@@ -141,6 +142,9 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
         }else if (type == 1) {
             //大图显示
             LookPic.showPic(ctx,tvTitle,images,i);
+        }else if (type == 2) {
+            MediaPlayUtils playUtils = new MediaPlayUtils(ctx);
+            playUtils.showPopu(ablvList,mp3s,i);
         }
     }
     /**
@@ -229,6 +233,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
             }
             fileList = body.getList();
             images = new ArrayList<>();
+            mp3s = new ArrayList<>();
             for (int i = 0; i < body.getList().size(); i++) {
                 int type = body.getList().get(i).getType();
                 if (type == 1) {
@@ -236,6 +241,11 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                     image.setPath(body.getList().get(i).getFile_pic());
                     image.setOldposition(i);
                     images.add(image);
+                }else if(type == 2){
+                    Image image = new Image();
+                    image.setPath(body.getList().get(i).getFile_pic());
+                    image.setOldposition(i);
+                    mp3s.add(image);
                 }
             }
 

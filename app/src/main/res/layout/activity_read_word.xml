@@ -9,6 +9,20 @@
     <include
         layout="@layout/toolbar"
         />
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <TextView
+        android:id="@+id/tv_otherapp"
+        style="@style/TextSizecontentBlack"
+        android:text="其他应用打开"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:background="@color/white"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
     <FrameLayout
         android:id="@+id/m_web_view"
         android:layout_width="match_parent"

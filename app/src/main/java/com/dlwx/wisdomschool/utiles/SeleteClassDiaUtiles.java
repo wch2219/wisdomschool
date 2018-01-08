@@ -67,14 +67,17 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
 
         vh.class1.setDisplayedValues(class1);
         vh.class1.setMaxValue(class1.length - 1);
+        vh.class1.setMinValue(0);
         vh.class1.setOnValueChangedListener(this);
 
         vh.class2.setDisplayedValues(class2);
         vh.class2.setMaxValue(class2.length - 1);
+        vh.class2.setMinValue(0);
         vh.class2.setOnValueChangedListener(this);
 
         vh.class3.setDisplayedValues(class3);
         vh.class3.setMaxValue(class3.length - 1);
+        vh.class3.setMinValue(0);
         vh.class3.setOnValueChangedListener(this);
         this.setView(view);
         this.show();
@@ -120,9 +123,11 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
 
                     vh.class2.setDisplayedValues(class2);
                     vh.class2.setMaxValue(class2.length-1);
+                    vh.class2.setMinValue(0);
                 }else{
                     vh.class2.setMaxValue(class2.length-1);
                     vh.class2.setDisplayedValues(class2);
+                    vh.class2.setMinValue(0);
                 }
                 vh.class2.setOnValueChangedListener(this);
                 strc2 = class2s.get(0).getClass2name();
@@ -130,9 +135,11 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
 
                     vh.class3.setDisplayedValues(class3);
                     vh.class3.setMaxValue(class3.length-1);
+                    vh.class3.setMinValue(0);
                 }else{
                     vh.class3.setMaxValue(class3.length-1);
                     vh.class3.setDisplayedValues(class3);
+                    vh.class3.setMinValue(0);
                 }
                 class3s = classSeleteBean.getClass1().get(c1).getClass2().get(0).getClass3();
                 vh.class3.setDisplayedValues(class3);
@@ -154,9 +161,12 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
 
                     vh.class3.setDisplayedValues(class3);
                     vh.class3.setMaxValue(class3.length-1);
+                    vh.class3.setMinValue(0);
+
                 }else{
                     vh.class3.setMaxValue(class3.length-1);
                     vh.class3.setDisplayedValues(class3);
+                    vh.class3.setMinValue(0);
                 }
                 vh.class3.setOnValueChangedListener(this);
                 break;
@@ -164,7 +174,6 @@ public class SeleteClassDiaUtiles extends AlertDialog implements View.OnClickLis
                 c3 = j;
                 strc3 = class3s.get(j).getClass3name();
                 break;
-
         }
     }
     private SeleteResult seleteResult;

@@ -1,17 +1,18 @@
 package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.ClassFileActivity;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.ruffian.library.RTextView;
 
@@ -44,7 +45,7 @@ public class MeAddCLassAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         vh.tv_invite.setText("联系教师");
-        ClassListBean.BodyBean bodyBean = body.get(position);
+        final ClassListBean.BodyBean bodyBean = body.get(position);
         int ischeck = bodyBean.getIscheck();
         if (ischeck == 3) {//待审核
             vh.ll_apply.setVisibility(View.VISIBLE);
@@ -62,7 +63,10 @@ public class MeAddCLassAdapter extends BaseFastAdapter {
         vh.tv_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ctx, "dsad", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ctx, ClassFileActivity.class);
+                intent.putExtra("classid",bodyBean.getCnid());
+                ctx.startActivity(intent);
+
             }
         });
         return convertView;

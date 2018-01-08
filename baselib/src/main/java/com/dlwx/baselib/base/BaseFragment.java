@@ -17,6 +17,12 @@ import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.baselib.utiles.MyProgressLoading;
 import com.dlwx.baselib.utiles.SpUtiles;
 import com.dlwx.baselib.view.ViewInterface;
+import com.scwang.smartrefresh.header.WaterDropHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 
 /**
@@ -97,4 +103,55 @@ public abstract class BaseFragment<V,T extends Presenter<V>> extends Fragment im
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }
+
+    /**
+     * 下拉刷新基本设置
+     * @param refreshLayout
+     * @param isLoadmore 是否启用下拉刷新
+     */
+    public void initrefresh (SmartRefreshLayout refreshLayout, boolean isLoadmore){
+        refreshLayout.setDragRate(0.5f);//显示下拉高度/手指真实下拉高度=阻尼效果
+        refreshLayout.setReboundDuration(300);//回弹动画时长（毫秒）
+        refreshLayout.setEnableRefresh(true);//是否启用下拉刷新功能
+        if (isLoadmore) {
+
+            refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
+        }else{
+            refreshLayout.setEnableLoadmore(false);//是否启用上拉加载功能
+        }
+        refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
+        refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
+        refreshLayout.setRefreshHeader(new WaterDropHeader(ctx));
+        //设置 Footer 为 球脉冲
+        refreshLayout.setRefreshFooter(new FalsifyFooter(ctx));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                refreshlayout.finishRefresh(1000);
+                downOnRefresh();
+            }
+        });
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore();
+                loadmore();
+            }
+        });
+    }
+    /**
+     * 下拉刷新
+     */
+    public void downOnRefresh(){
+
+    }
+
+    /**
+     * 上拉加载更多
+     */
+    public void loadmore(){
+
+    }
+
 }

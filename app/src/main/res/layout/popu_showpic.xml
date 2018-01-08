@@ -9,4 +9,23 @@
         android:layout_height="match_parent"
         android:id="@+id/iv_pic"
         />
+    <ImageView
+        android:id="@+id/iv_down"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:src="@mipmap/icon_down"
+        android:padding="3dp"
+        android:background="@color/garytext"
+        />
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="1/5"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/tv_num"
+        android:layout_marginBottom="10dp"
+        />
 </RelativeLayout>

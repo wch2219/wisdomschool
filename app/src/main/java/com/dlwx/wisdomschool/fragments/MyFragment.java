@@ -138,7 +138,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (teacherOrPatriarch == 0) {
+        if (teacherOrPatriarch == 1) {
         switch (i) {
             case 1://设置工作时间
                 startActivity(new Intent(ctx,SetWorkTimeActivity.class));

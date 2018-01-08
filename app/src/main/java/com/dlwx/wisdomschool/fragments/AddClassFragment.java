@@ -14,6 +14,7 @@ import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,8 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
     Button btnNoentryadd;
     @BindView(R.id.ll_noentry)
     LinearLayout llNoentry;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
 
     @Override
@@ -53,9 +56,21 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     protected void initDate() {
+            initrefresh(refreshLayout,true);
 
+    }
+
+    @Override
+    public void onResume() {
+        getClassList();
+        super.onResume();
+    }
+
+    @Override
+    public void downOnRefresh() {
         getClassList();
     }
+
     /**
      * 获取班级列表
      */

@@ -8,26 +8,29 @@ import android.widget.CheckBox;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.SetWorkTimeBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class SetTimeAdapter extends BaseFastAdapter {
-    private String [] strs;
-    public SetTimeAdapter(Context ctx,String [] strs) {
+    private List<SetWorkTimeBean> alltimes;
+    public SetTimeAdapter(Context ctx,List<SetWorkTimeBean> alltimes) {
         super(ctx);
-        this.strs = strs;
+        this.alltimes = alltimes;
     }
 
     @Override
     public int getCount() {
-        return strs.length;
+        return alltimes.size();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder vh;
+        final ViewHolder vh;
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.item_time, null);
             vh = new ViewHolder(convertView);
@@ -35,7 +38,20 @@ public class SetTimeAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.tv_time.setText(strs[position]);
+        if (position>0&&position<alltimes.size()-1) {
+            vh.tv_time.setChecked(true);
+        }else{
+            vh.tv_time.setChecked(false);
+        }
+        final SetWorkTimeBean timeBean = alltimes.get(position);
+        vh.tv_time.setText(timeBean.getDay());
+        vh.tv_time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = vh.tv_time.isChecked();
+                timeBean.setCheck(checked);
+            }
+        });
         return convertView;
     }
 

@@ -7,26 +7,27 @@
      <include
          layout="@layout/create_class_entry"
          />
-     <RelativeLayout
-         android:id="@+id/rl_noentry"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         >
-          <Button
-         android:id="@+id/btn_create"
-         style="@style/ButtonLoginStyles"
-              android:layout_alignParentBottom="true"
-         android:background="@drawable/shape_class_btn"
-         android:layout_gravity="center_horizontal"
-         android:layout_marginTop="10dp"
-
-         android:text="@string/createclass"
-      android:layout_centerInParent="true"
-         android:layout_height="35dp"
-         android:layout_marginBottom="40dp"
-         android:layout_width="150dp"
-         />
-
+          <com.scwang.smartrefresh.layout.SmartRefreshLayout
+              android:layout_width="match_parent"
+              android:id="@+id/refreshLayout"
+              android:layout_height="match_parent">
+               <RelativeLayout
+                   android:id="@+id/rl_noentry"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   >
+               <Button
+                   android:id="@+id/btn_create"
+                   style="@style/ButtonLoginStyles"
+                   android:background="@drawable/shape_class_btn"
+                   android:layout_gravity="center_horizontal"
+                   android:layout_marginTop="10dp"
+                   android:text="@string/createclass"
+                   android:layout_centerInParent="true"
+                   android:layout_height="35dp"
+                   android:layout_marginBottom="40dp"
+                   android:layout_width="150dp"
+                   />
           <ListView
               android:layout_marginTop="10dp"
               android:id="@+id/lv_list"
@@ -36,11 +37,12 @@
               android:dividerHeight="15dp"
               android:divider="@null"
               android:scrollbars="none"
-            android:layout_marginLeft="20dp"
+               android:layout_marginLeft="20dp"
               android:layout_marginRight="20dp"
               >
           </ListView>
+               </RelativeLayout>
+          </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-     </RelativeLayout>
 
 </LinearLayout>

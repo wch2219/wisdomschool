@@ -43,6 +43,7 @@ public class IDApproveActivity extends BaseActivity {
     private String type;
     private String classid;
     private String jcid;
+    private String flag;
 
     @Override
     protected void initView() {
@@ -50,6 +51,7 @@ public class IDApproveActivity extends BaseActivity {
         type = intent.getStringExtra("type");
         classid = intent.getStringExtra("classid");
         jcid = intent.getStringExtra("jcid");
+        flag = intent.getStringExtra("flag");
         setContentView(R.layout.activity_idapprove);
         ButterKnife.bind(this);
         register();
@@ -91,11 +93,16 @@ public class IDApproveActivity extends BaseActivity {
         }
         Map<String,String> map = new HashMap<>();
         map.put("token",Token);
-        map.put("jcid",jcid);
         map.put("classid",classid);
-        map.put("vip",type);
         map.put("password",pwd);
-        mPreenter.fetch(map,true, HttpUrl.changeClassJurisd,"");
+        if (!flag.equals("解散班级")) {
+
+            map.put("jcid",jcid);
+            map.put("vip",type);
+            mPreenter.fetch(map,true, HttpUrl.changeClassJurisd,"");
+        }else{
+            mPreenter.fetch(map,false,HttpUrl.deleteClass,"");
+        }
 
     }
 

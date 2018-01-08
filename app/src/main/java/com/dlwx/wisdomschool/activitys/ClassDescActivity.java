@@ -331,6 +331,7 @@ public class ClassDescActivity extends BaseActivity {
                 startActivity(new Intent(ctx, LookStudentGradeActivity.class));
                 break;
             case R.id.rl_lookall:
+                register();
                 intent = new Intent(ctx, LookAllMemberActivity.class);
                 intent.putExtra("adduser", (Serializable) add_user);
                 intent.putExtra("classid", classid);
@@ -425,7 +426,10 @@ public class ClassDescActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 show.dismiss();
-                startActivity(new Intent(ctx, IDApproveActivity.class));
+                Intent intent = new Intent(ctx, IDApproveActivity.class);
+                intent.putExtra("flag","解散班级");
+                intent.putExtra("classid",classid);
+                startActivity(intent);
 
             }
         });

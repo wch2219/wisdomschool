@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:background="@drawable/shape_black_line"
             android:padding="10dp"
-            android:text="上午12：00"
+            android:text="8：00"
             android:textColor="@color/black" />
 
         <TextView
@@ -78,7 +78,7 @@
             android:layout_weight="1"
             android:background="@drawable/shape_black_line"
             android:padding="10dp"
-            android:text="上午12：00"
+            android:text="18：00"
             android:textColor="@color/black" />
 
     </LinearLayout>

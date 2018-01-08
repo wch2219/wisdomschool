@@ -87,7 +87,6 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     protected Presenter createPresenter() {
         return new Presenter(this);
     }
-
     @OnClick({R.id.tv_inclass, R.id.tv_out,R.id.tv_allaggress})
     public void onViewClicked(View view) {
         switch (view.getId()) {

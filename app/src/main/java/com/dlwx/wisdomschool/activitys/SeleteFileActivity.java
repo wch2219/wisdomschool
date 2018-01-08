@@ -167,8 +167,10 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
         Image image = images.get(i-1);
         int filetype = image.getFiletype();
+
         wch(filetype+image.getPath());
 
         back(image.getPath(),image.getSize(),image.getFiletype());

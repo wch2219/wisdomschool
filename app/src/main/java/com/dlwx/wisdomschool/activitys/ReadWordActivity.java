@@ -2,7 +2,10 @@ package com.dlwx.wisdomschool.activitys;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -12,9 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
+import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.wisdomschool.R;
 import com.tencent.smtt.sdk.TbsReaderView;
 
@@ -22,6 +27,9 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+import static com.hyphenate.util.FileUtils.getMIMEType;
 
 /**
  * 显示word文档
@@ -34,6 +42,8 @@ public class ReadWordActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.m_web_view)
     FrameLayout webview;
+    @BindView(R.id.tv_otherapp)
+    TextView tvOtherApp;
     private String path;
     private TbsReaderView readerView;
     private String filename;
@@ -44,24 +54,25 @@ public class ReadWordActivity extends BaseActivity {
         ButterKnife.bind(this);
         path = getIntent().getStringExtra("path");
         filename = getIntent().getStringExtra("filename");
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions((Activity) ctx, new String[]{Manifest.permission.READ_PHONE_STATE},1);
-        }else{
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) ctx, new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        } else {
             openFile(path);
         }
 
     }
+
     @Override
     protected void initData() {
-            initTabBar(toolBar);
-            tvTitle.setText(filename);
+        initTabBar(toolBar);
+        tvTitle.setText(filename);
     }
 
     @Override
     protected void initListener() {
 
     }
+
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -124,6 +135,37 @@ public class ReadWordActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 1) {
             openFile(path);
+        }
+    }
+
+    /**
+     * 其他应用打开
+     */
+    @OnClick(R.id.tv_otherapp)
+    public void onViewClicked() {
+
+        openFile(ctx,new File(path));
+    }
+    /**
+     * 调用系统应用打开文件
+     * @param context
+     * @param file
+     */
+    public static void openFile(Context context, File file){
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //设置intent的Action属性
+        intent.setAction(Intent.ACTION_VIEW);
+        //获取文件file的MIME类型
+        String type = getMIMEType(file);
+        //设置intent的data和Type属性。
+        intent.setDataAndType(Uri.fromFile(file), type);
+        //跳转
+        try {
+            context.startActivity(intent);
+        } catch (Exception e) {
+            LogUtiles.LogE("FileUtil:"+ e);
+            Toast.makeText(context, "找不到打开此文件的应用！", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -7,8 +7,9 @@
     <include
         layout="@layout/add_class_entry"
         />
-    <ScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
+        android:id="@+id/refreshLayout"
         android:layout_height="wrap_content">
 
 
@@ -43,5 +44,5 @@
                 android:layout_width="120dp"
                 />
         </LinearLayout>
-    </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

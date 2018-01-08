@@ -32,6 +32,7 @@ import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.LookPic;
+import com.dlwx.wisdomschool.utiles.MediaPlayUtils;
 import com.dlwx.wisdomschool.utiles.UpFileUtiles;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -80,6 +81,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
     private AlertDialog diaShow;
     private List<ClassFileBean.BodyBean.ListBean> fileList;
     private List<Image> images;
+    private List<Image> mp3s;
 
     @Override
     protected void initView() {
@@ -128,6 +130,9 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                 LookPic.showPic(ctx,tvTitle,images,i);
                 break;
             case 2://MP3
+
+                MediaPlayUtils playUtils = new MediaPlayUtils(ctx);
+                playUtils.showPopu(ablvList,mp3s,i);
                 break;
             case 3://txt
                readFile(listBean);
@@ -147,6 +152,8 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         }
 
     }
+
+
     private void readFile(final ClassFileBean.BodyBean.ListBean listBean){
         DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
             @Override
@@ -219,6 +226,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
             }
             fileList = body.getList();
             images = new ArrayList<>();
+            mp3s = new ArrayList<>();
             for (int i = 0; i < body.getList().size(); i++) {
                 int type = body.getList().get(i).getType();
                 if (type == 1) {
@@ -226,6 +234,12 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                     image.setPath(body.getList().get(i).getFile_pic());
                     image.setOldposition(i);
                     images.add(image);
+                }else if(type == 2){
+                    Image image = new Image();
+                    image.setPath(body.getList().get(i).getFile_pic());
+                    image.setOldposition(i);
+                    image.setName(body.getList().get(i).getName());
+                    mp3s.add(image);
                 }
             }
             ablvList.setAdapter(new ClassFileAdapter(ctx, fileList));
@@ -388,6 +402,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                 });
                 UpFileUtiles.TYPE = 1;
                 File file = new File(filepath);
+                wch("类型："+filetype+"\n"+"size:"+size);
                 UpFileUtiles.start(ctx, file, filetype + "", size);
                 break;
         }
