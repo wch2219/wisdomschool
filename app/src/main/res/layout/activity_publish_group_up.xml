@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
             >
             <TextView
                 style="@style/TextSizeSmallTitleBlack"
@@ -83,11 +82,41 @@
                         />
             </RelativeLayout>
                 <ImageView
-                    android:id="@+id/iv_pic"
+                    android:id="@+id/iv_addpic"
                     style="@style/ImageuppicSize"
                     android:layout_margin="10dp"
                     android:src="@mipmap/icon_sztianjia"
                     />
+                    <LinearLayout
+                        android:id="@+id/ll_video"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <ImageView
+                            android:id="@+id/iv_videopic"
+                            android:layout_width="80dp"
+                            android:layout_height="60dp"
+                            android:scaleType="fitXY"
+                            android:layout_margin="10dp"
+
+                            />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/tv_anewrecord"
+                                style="@style/TextSizecontentBlack"
+                                android:textColor="@color/blue"
+                                android:text="重录"
+                                android:padding="10dp"
+                                android:layout_alignParentBottom="true"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
         </LinearLayout>
     <View
         style="@style/GaryDiveStyle"
@@ -125,6 +154,7 @@
         style="@style/GaryDiveStyle"
         />
     <LinearLayout
+        android:id="@+id/ll_picandrtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -133,15 +163,15 @@
             style="@style/Imagesmillpic"
             android:src="@mipmap/icon_czjlpinglun"
             />
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
-            android:textSize="13sp"
             android:layout_marginLeft="10dp"
-            android:hint="请输入您想说的话....."
             android:layout_weight="1"
-            />
+            android:background="@null"
+            android:hint="请输入您想说的话....."
+            android:textSize="13sp" />
         <ImageView
             style="@style/Imagesmillpic"
             android:layout_marginLeft="10dp"
@@ -159,6 +189,7 @@
         style="@style/GaryDiveStyle"
         />
     <LinearLayout
+        android:id="@+id/ll_uppic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -203,5 +234,27 @@
                 />
 
         </LinearLayout>
+
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_face"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        >
+    <ImageView
+        android:id="@+id/iv_face1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/icon_biaoqing"
+        />
+    </LinearLayout>
+    <FrameLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
 </LinearLayout>

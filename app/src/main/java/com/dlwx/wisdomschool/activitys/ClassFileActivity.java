@@ -122,7 +122,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ClassFileBean.BodyBean.ListBean listBean = fileList.get(i);
-        int type = listBean.getType();//1图片，2音视频，3文档
+        int type = listBean.getType();//1图片，2音视频，3txt 4 doc 99文件夹
         Intent intent;
         switch (type) {
             case 1://图片

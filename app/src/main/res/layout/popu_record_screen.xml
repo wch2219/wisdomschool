@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <RadioGroup
+        android:layout_marginTop="20dp"
+        android:id="@+id/rg_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/rb_all"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="全部纪录" />
+
+        <View style="@style/GaryDiveStyle" />
+
+        <RadioButton
+            android:id="@+id/rb_myself"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="只看我的纪录" />
+    </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_close"
+            style="@style/TextSizeSmallTitleBlack"
+            android:text="取消"
+            android:layout_width="match_parent"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:padding="10dp"
+            />
+</LinearLayout>

@@ -101,12 +101,27 @@
                 android:layout_width="match_parent"
                 android:text="隐私"
                 />
-            <com.dlwx.baselib.view.MyListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/lv_listprivacy"
-                android:scrollbars="none"
-                ></com.dlwx.baselib.view.MyListView>
+                android:id="@+id/ll_listprivacy"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:id="@+id/iv_pic"
+                    style="@style/ImagehomeItempic"
+                    android:src="@mipmap/ss33"
+                    android:layout_marginLeft="30dp"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:text="仅自己可见"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
             <View
                 style="@style/GaryDiveStyle"
                 android:layout_marginBottom="50dp"

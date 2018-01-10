@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/ll_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_class_bg"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <ImageView
+                android:id="@+id/iv_pic"
+                style="@style/ImagehomeItempic2"
+                android:src="@mipmap/icon_bjxxtianjiachenggong"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                >
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TextSizecontentBlack"
+                    android:text="李老师"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        style="@style/TextSizecontentBlack"
+                        android:text="纪录："
+                        android:textSize="11sp"
+                        android:textColor="@color/garytext"
+                        />
+                    <TextView
+                        android:id="@+id/tv_classname"
+                        style="@style/TextSizecontentBlack"
+                        android:text="一年级八班"
+                        android:textSize="11sp"
+                        android:textColor="@color/garytext"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:textSize="11sp"
+                android:text="18:13"
+                android:id="@+id/tv_time"
+                android:textColor="@color/garytext"
+                />
+            <ImageView
+                android:layout_marginTop="3dp"
+                style="@style/Imagesmill3pic"
+                android:id="@+id/iv_share"
+                android:src="@mipmap/icon_huodonggd"
+                />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.dlwx.baselib.view.MyGridView
+                android:id="@+id/gv_list"
+                android:layout_width="match_parent"
+                android:numColumns="3"
+                android:layout_height="wrap_content">
+
+            </com.dlwx.baselib.view.MyGridView>
+               <ImageView
+                   android:layout_width="match_parent"
+                   android:layout_height="200dp"
+                   android:id="@+id/iv_video"
+                   />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_viceo"
+            android:layout_width="100dp"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_black_line"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                style="@style/Imagesmill2pic"
+                android:src="@mipmap/icon_syyuyin"
+                />
+
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:text="10”"
+                android:id="@+id/tv_viceotime"
+                android:textColor="@color/blue" />
+        </RelativeLayout>
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/id_flowlayout"
+            zhy:max_select="-1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
+        <TextView
+            android:id="@+id/tv_connect"
+            style="@style/TextSizecontentBlack"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="20dp"
+            android:text="        欢迎使用智慧家校！智慧家校可以帮助您纪录汇总孩子的成长，这是一本真正的家校共育概念的成长手册"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>

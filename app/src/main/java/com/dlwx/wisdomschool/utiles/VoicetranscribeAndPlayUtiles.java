@@ -8,7 +8,7 @@ import android.util.Log;
 import java.io.IOException;
 
 /**
- * Created by Administrator on 2017/12/29/029.
+ * 语音录制
  */
 
 public class VoicetranscribeAndPlayUtiles {

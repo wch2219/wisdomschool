@@ -4,17 +4,29 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginLeft="30dp"
+
 
        android:padding="10dp"
 
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
+        <CheckBox
+            android:id="@+id/cb_check"
+            android:layout_width="20dp"
+            android:enabled="false"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/selete_check"
+            android:button="@null"
+            android:focusable="false" />
         <ImageView
             android:id="@+id/iv_pic"
             style="@style/ImagehomeItempic"
             android:src="@mipmap/ss33"
+            android:layout_marginLeft="10dp"
             android:scaleType="fitXY"
             />
         <LinearLayout

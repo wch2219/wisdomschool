@@ -6,6 +6,9 @@ package com.dlwx.wisdomschool.utiles;
 
 public class HttpUrl {
     private static final String BaseUrl = "http://192.168.0.199/school/index.php/Mobile/";
+    private static final String BaseUrl1 = "http://192.168.0.196/house/index.php/Mobile/";
+
+
     public static final String get_teacher_code = BaseUrl + "Register/get_teacher_code";//获取教师邀请码
     public static final String check_teacher_code = BaseUrl + "Register/check_teacher_code";//教师邀请码验证
     public static final String login = BaseUrl + "Login/login";//登录
@@ -30,4 +33,7 @@ public class HttpUrl {
     public static final String AddFile = BaseUrl + "Classroom/addfile";//添加文件
     public static final String deleteClass = BaseUrl + "Classroom/delclass";//删除班级
     public static final String setWorkTime = BaseUrl + "User/set_worktime";//设置工作时间
+    public static final String Growthrecord = BaseUrl1 + "Growthrecord/grow_list";//成长记录列表数据
+    public static final String Signlist = BaseUrl1 + "Sign/Signlist";//成长纪录标签
+    public static final String common_sign = BaseUrl1 + "Sign/common_sign";//常用标签
 }

@@ -12,6 +12,16 @@ public  class Image{
     private boolean check;
     private String size;
     private int filetype;//图片，2音视频，3txt 4 doc
+    private long duration;
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
     public boolean isCheck() {
         return check;
     }

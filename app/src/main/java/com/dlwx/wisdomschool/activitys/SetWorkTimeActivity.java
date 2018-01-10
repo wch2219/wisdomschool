@@ -78,7 +78,6 @@ public class SetWorkTimeActivity extends BaseActivity {
     @Override
     protected void initListener() {
 
-
     }
 
     @Override
@@ -146,6 +145,8 @@ public class SetWorkTimeActivity extends BaseActivity {
     private String[] mins = new String[61];
 
     private void showPopu() {
+        hour = "00";
+        min = "00";
         View view = LayoutInflater.from(ctx).inflate(R.layout.dia_selete_time, null);
         ViewHolder diaVh = new ViewHolder(view);
         for (int i = 0; i <= 24; i++) {
@@ -182,7 +183,7 @@ public class SetWorkTimeActivity extends BaseActivity {
 
         });
 
-        diaVh.numPickerhour.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+        diaVh.numPickermin.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
                 wch(mins[i] + ":" + mins[i1]);
@@ -197,7 +198,7 @@ public class SetWorkTimeActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        switch (view.getId()) {
+        switch (v.getId()) {
             case R.id.tv_comple:
                 show.dismiss();
                 if (startorend == 0) {//开始时间

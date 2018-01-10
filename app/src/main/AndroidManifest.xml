@@ -19,9 +19,14 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 内容提供者定义的权限 -->
     <uses-permission android:name="com.bqt.permission" />
+    <!-- 在sdcard中创建/删除文件的权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".base.MyApplication"
@@ -443,7 +448,12 @@
         <activity android:name=".activitys.LookAllMemberActivity" />
         <activity android:name=".activitys.AllPicActivity" />
         <activity android:name=".activitys.PageFileDescActivity" />
-        <activity android:name=".activitys.ReadWordActivity"></activity>
+        <activity android:name=".activitys.ReadWordActivity" />
+        <activity
+            android:name=".activitys.RecordVideoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activitys.VideoPlayActivity" />
+        <activity android:name=".activitys.MyRecordVideoListActivity"></activity>
     </application>
 
 </manifest>

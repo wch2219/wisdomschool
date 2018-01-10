@@ -14,12 +14,25 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         >
+        <LinearLayout
+            android:id="@+id/ll_seleteclass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            >
         <TextView
             style="@style/TextSizeSmallTitleBlack"
-            android:layout_centerInParent="true"
             android:text="全部成长纪录"
             android:textColor="@color/black"
              />
+            <ImageView
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_wdxiala"
+                />
+        </LinearLayout>
             <ImageView
                 android:id="@+id/iv_screen"
                 style="@style/Imagesmill2pic"
@@ -49,7 +62,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         >
         <TextView
             style="@style/TextSizecontentBlack"
@@ -61,86 +77,25 @@
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/ll_list"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:background="@drawable/shape_class_bg"
+            android:layout_height="match_parent"
+            android:id="@+id/refreshLayout"
             >
-             <LinearLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:orientation="horizontal"
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_list"
+                android:divider="@null"
+                android:scrollbars="none"
+                android:layout_marginBottom="20dp"
+                >
 
-                 >
-                 <ImageView
-                     style="@style/ImagehomeItempic2"
-                     android:src="@mipmap/icon_bjxxtianjiachenggong"
-                     />
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="5dp"
-                        android:layout_gravity="center_vertical"
-                        >
-                        <TextView
-                            style="@style/TextSizecontentBlack"
-                            android:text="李老师"
-                            />
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            >
-                            <TextView
-                                style="@style/TextSizecontentBlack"
-                                android:text="纪录："
-                                android:textSize="11sp"
-                                android:textColor="@color/garytext"
-                                />
-                             <TextView
-                                style="@style/TextSizecontentBlack"
-                                android:text="一年级八班"
-                                android:textSize="11sp"
-                                android:textColor="@color/garytext"
-                                />
+            </ListView>
 
-                        </LinearLayout>
-
-                    </LinearLayout>
-                 <TextView
-                     style="@style/TextSizecontentBlack"
-                     android:textSize="11sp"
-                     android:text="18:13"
-                     android:textColor="@color/garytext"
-                     />
-                    <ImageView
-                        android:layout_marginTop="3dp"
-                        style="@style/Imagesmill3pic"
-                        android:src="@mipmap/icon_huodonggd"
-                        />
-             </LinearLayout>
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:layout_margin="10dp"
-                        android:src="@mipmap/ss33"
-                        />
-                <TextView
-                    style="@style/TextSizecontentBlack"
-                    android:lineSpacingExtra="2dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="        欢迎使用智慧家校！智慧家校可以帮助您纪录汇总孩子的成长，这是一本真正的家校共育概念的成长手册"
-                    />
-        </LinearLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
+
         <Button
             android:id="@+id/fab_edit"
             android:layout_width="50dp"
