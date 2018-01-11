@@ -10,15 +10,19 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.PublishSaveTagBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/25/025.
  */
 
 public class PublishLableAdapter extends BaseRecrviewAdapter {
-
-    public PublishLableAdapter(Context ctx) {
+    private List<PublishSaveTagBean> saveTagBeans;
+    public PublishLableAdapter(Context ctx, List<PublishSaveTagBean> saveTagBeans) {
         super(ctx);
+        this.saveTagBeans = saveTagBeans;
     }
 
     @Override
@@ -28,13 +32,19 @@ public class PublishLableAdapter extends BaseRecrviewAdapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        ((ViewHolder)holder).tv_name.setText(saveTagBeans.get(position).getTagName());
+        ((ViewHolder)holder).iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    deleteTagListener.delete(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return saveTagBeans.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{
@@ -50,4 +60,13 @@ public class PublishLableAdapter extends BaseRecrviewAdapter {
         }
 
     }
+    public interface DeleteTagListener{
+        void delete(int postion);
+    }
+    private DeleteTagListener deleteTagListener;
+
+    public void setDeleteTagListener(DeleteTagListener deleteTagListener){
+        this.deleteTagListener = deleteTagListener;
+    }
+
 }

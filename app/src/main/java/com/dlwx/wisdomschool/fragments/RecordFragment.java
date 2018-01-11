@@ -32,6 +32,7 @@ import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,8 +252,6 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             intent = new Intent(ctx, RecordVideoActivity.class);
             startActivityForResult(intent, 1);
         }
-
-
     }
 
     private class ViewHolderDia {
@@ -354,6 +353,10 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent);
                 break;
             case 2://图片
+                ArrayList<String> images = data.getStringArrayListExtra("images");
+                intent = new Intent(ctx,PublishGroupUpActivity.class);
+                intent.putStringArrayListExtra("images",images);
+                startActivity(intent);
                 break;
         }
     }

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
@@ -32,6 +33,8 @@ import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.yinglan.keyboard.HideUtil;
+
+import java.io.File;
 
 /**
  * Created by Administrator on 2017/8/12/012.
@@ -252,7 +255,16 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
         }
     }
 
-
+    /**
+     * 发送通知给相册更新
+     * @param path
+     */
+    public void sendRecord(File path){
+        Uri uri = Uri.fromFile(path);
+        Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        intent.setData(uri);
+        sendBroadcast(intent);
+    }
 
 
 

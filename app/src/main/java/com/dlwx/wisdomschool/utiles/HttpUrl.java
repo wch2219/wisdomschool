@@ -36,4 +36,9 @@ public class HttpUrl {
     public static final String Growthrecord = BaseUrl1 + "Growthrecord/grow_list";//成长记录列表数据
     public static final String Signlist = BaseUrl1 + "Sign/Signlist";//成长纪录标签
     public static final String common_sign = BaseUrl1 + "Sign/common_sign";//常用标签
+    public static final String Edit_info = BaseUrl + "User/edit_userinfo";//修改个人昵称，头像，所在学校
+    public static final String MyMess = BaseUrl + "User/userinfo";//个人资料
+    public static final String AddTag = BaseUrl1 + "Sign/addSign";//添加个人标签
+    public static final String DelteSign = BaseUrl1 + "Sign/delSign";//删除标签
+    public static final String SendgroupUp = BaseUrl1 + "Growthrecord/add_record";//发布成长记录
 }

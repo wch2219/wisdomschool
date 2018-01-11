@@ -5,7 +5,7 @@
         <RelativeLayout
             android:id="@+id/rl_pic"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="100dp">
             <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/iv_pic"

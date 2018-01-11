@@ -3,9 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:weightSum="1"
+    android:fitsSystemWindows="true"
     tools:context="com.dlwx.wisdomschool.activitys.PublishGroupUpActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,7 +68,7 @@
         />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/shape_gary_line"
             android:layout_margin="10dp"
             android:orientation="vertical"
@@ -66,7 +81,7 @@
                 <EditText
                     android:id="@+id/et_content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     android:gravity="top"
                     android:hint="请编辑本次活动内容"
                     android:textSize="11sp"
@@ -81,11 +96,12 @@
                         android:layout_margin="10dp"
                         />
             </RelativeLayout>
-                <ImageView
-                    android:id="@+id/iv_addpic"
-                    style="@style/ImageuppicSize"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/gv_piclist"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:src="@mipmap/icon_sztianjia"
                     />
                     <LinearLayout
                         android:id="@+id/ll_video"
@@ -145,116 +161,56 @@
     <View
         style="@style/GaryDiveStyle"
         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
     <View
         style="@style/GaryDiveStyle"
         />
     <LinearLayout
-        android:id="@+id/ll_picandrtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:orientation="vertical"
         >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
         <ImageView
+            android:id="@+id/iv_mp3"
             style="@style/Imagesmillpic"
-            android:src="@mipmap/icon_czjlpinglun"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/icon_ltyuyin" />
+
+        <ImageView style="@style/Imagesmillpic"
+            android:id="@+id/iv_addpic"
+            android:src="@mipmap/icon_lttupian"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="请输入您想说的话....."
-            android:textSize="13sp" />
-        <ImageView
-            style="@style/Imagesmillpic"
-            android:layout_marginLeft="10dp"
+        <ImageView style="@style/Imagesmillpic"
             android:id="@+id/iv_face"
-            android:src="@mipmap/icon_biaoqing"
+            android:src="@mipmap/icon_ltxiaolian"
+            android:layout_marginLeft="20dp"
             />
-        <ImageView
-            android:id="@+id/iv_send"
-            android:layout_marginLeft="10dp"
-            style="@style/Imagesmillpic"
-            android:src="@mipmap/icon_fasong"
-            />
-    </LinearLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <LinearLayout
-        android:id="@+id/ll_uppic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <LinearLayout
-            android:id="@+id/ll_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_margin="10dp"
-            >
-            <ImageView
-                android:id="@+id/iv_album"
-                style="@style/ImagehomeItembigpic"
-                android:src="@mipmap/icon_szxiangce"
-                />
-            <TextView
-                style="@style/TextSizecontentBlack"
-                android:text="相册"
-                android:layout_marginTop="5dp"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_margin="10dp"
-            >
-
-            <ImageView
-                android:id="@+id/iv_camera"
-                style="@style/ImagehomeItembigpic"
-                android:src="@mipmap/icon_szpaishe" />
-            <TextView
-                style="@style/TextSizecontentBlack"
-                android:text="相机"
-                android:layout_marginTop="5dp"
-                />
-
-        </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ll_face"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        >
-    <ImageView
-        android:id="@+id/iv_face1"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/icon_biaoqing"
-        />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/emojicon_menu_container"
+                ></FrameLayout>
     </LinearLayout>
-    <FrameLayout
+        </RelativeLayout>
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </FrameLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -158,7 +158,6 @@ public class SeletePublishClassActivity extends BaseActivity {
         }
         Intent intent = new Intent();
         intent.putExtra("class_nos",class_nos);
-
         setResult(101,intent);
         finish();
     }

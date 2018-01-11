@@ -45,6 +45,7 @@
             android:textColor="@color/black"
             />
         <EditText
+            android:id="@+id/et_tag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
@@ -71,5 +72,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        auto_select_effect="true | false"
          />
 </LinearLayout>

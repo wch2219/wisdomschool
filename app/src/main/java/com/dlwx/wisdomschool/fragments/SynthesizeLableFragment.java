@@ -1,6 +1,7 @@
 package com.dlwx.wisdomschool.fragments;
 
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseFragment;
+import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.AddLableAdapter;
@@ -76,8 +78,20 @@ public class SynthesizeLableFragment extends BaseFragment {
         Gson gson = new Gson();
         TagListBean tagListBean = gson.fromJson(s, TagListBean.class);
         if (tagListBean.getCode() == 200) {
-            List<TagListBean.BodyBean> body = tagListBean.getBody();
-            lvList.setAdapter(new AddLableAdapter(ctx,body));
+            final List<TagListBean.BodyBean> body = tagListBean.getBody();
+            AddLableAdapter addLableAdapter = new AddLableAdapter(ctx, body);
+            lvList.setAdapter(addLableAdapter);
+            addLableAdapter.setOnItemClickListener(new BaseRecrviewAdapter.OnItemClickListener() {
+                @Override
+                public void setOnClick(int position) {
+                    Intent intent = new Intent();
+                    intent.putExtra("tag",body.get(position).getSigname());
+                    intent.putExtra("quality_sign",body.get(position).getId());
+                    getActivity().setResult(10,intent);
+                    getActivity().finish();
+                }
+            });
+
         }else{
             Toast.makeText(ctx, tagListBean.getResult(), Toast.LENGTH_SHORT).show();
         }

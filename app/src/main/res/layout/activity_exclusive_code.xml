@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.dlwx.wisdomschool.activitys.ExclusiveCodeActivity">
     <include
         layout="@layout/toolbar"
@@ -13,12 +14,14 @@
             style="@style/GaryDiveStyle"
             />
         <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:layout_weight="6"
             >
             <LinearLayout
+                android:id="@+id/ll_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -35,6 +38,7 @@
                     android:background="@drawable/shape_re_black_line"
                     >
                     <ImageView
+                        android:id="@+id/iv_code"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"

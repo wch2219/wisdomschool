@@ -81,11 +81,14 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
     private int current;//当前选择数量
     private ArrayList<String> seletepiclist = new ArrayList<>();//存放选中图片的路径
     private PicViewPAgeAdapter picViewPAgeAdapter;
+    private int currnum;
 
     @Override
     protected void initView() {
+        currnum = getIntent().getIntExtra("currnum", 0);
         setContentView(R.layout.activity_all_pic);
         ButterKnife.bind(this);
+        MAXLenth = MAXLenth - currnum;
     }
 
     @Override
@@ -248,7 +251,7 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                 }
                 Intent intent = new Intent();
               intent.putStringArrayListExtra("images",seletepiclist);
-              setResult(100,intent);
+              setResult(2,intent);
               finish();
                 break;
         }

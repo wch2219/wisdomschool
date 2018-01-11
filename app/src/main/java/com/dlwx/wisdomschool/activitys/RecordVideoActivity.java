@@ -210,8 +210,8 @@ public class RecordVideoActivity extends BaseActivity implements
     @OnClick(R.id.tv_upvideo)
     public void onViewClicked() {
         Intent intent = new Intent(ctx,MyRecordVideoListActivity.class);
-        intent.putExtra("files",outfilePath+"");
-        startActivity(intent);
+
+        startActivityForResult(intent,1);
 
     }
 
@@ -346,6 +346,19 @@ public class RecordVideoActivity extends BaseActivity implements
             drawable.stop();
         }
     }
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         switch (requestCode){
+                    case 1:
+                        if (data == null) {
+                            return;
+                        }
+                        String videofile = data.getStringExtra("videofile");
+                        Intent intent = new Intent();
+                        intent.putExtra("videofile",videofile);
+                        setResult(1,intent);
+                        finish();
+                        break;
+                }
+    }
 }

@@ -1,5 +1,6 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -56,6 +57,9 @@ public class ChangeNamedActivity extends BaseActivity {
             Toast.makeText(ctx, "请输入学生姓名", Toast.LENGTH_SHORT).show();
             return;
         }
+        Intent intent = new Intent();
+        intent.putExtra("nickName",name);
+        setResult(10,intent);
         finish();
     }
 }

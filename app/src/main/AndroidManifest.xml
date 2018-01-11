@@ -337,6 +337,7 @@
         <activity
             android:name=".activitys.PublishUpPicActivity"
             android:launchMode="singleTop"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.PublishCompleteActivity"
@@ -354,7 +355,7 @@
             android:name=".activitys.PublishGroupUpActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".activitys.AddLableActivity"
             android:launchMode="singleTop"

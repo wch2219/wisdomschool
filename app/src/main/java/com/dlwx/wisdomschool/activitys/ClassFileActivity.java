@@ -287,7 +287,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
             popuWindow.dismiss();
             switch (view.getId()) {
                 case R.id.tv_uppic:
-                    startActivityForResult(new Intent(ctx, AllPicActivity.class), 100);
+                    startActivityForResult(new Intent(ctx, AllPicActivity.class), 2);
 
                     break;
                 case R.id.tv_upfile:
@@ -359,7 +359,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
             return;
         }
         switch (requestCode) {
-            case 100:
+            case 2:
 
                 ArrayList<String> images = data.getStringArrayListExtra("images");
                 upPic(images);

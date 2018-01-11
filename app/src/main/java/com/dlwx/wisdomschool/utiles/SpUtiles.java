@@ -12,4 +12,5 @@ public class SpUtiles {
     public static final String Header_pic = "Header_pic";
     public static final String Userid = "UserId";
     public static final String Telephone = "Telephone";
+    public static final String Exten_code = "Exten_code";//教师邀请码
 }

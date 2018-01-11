@@ -5,56 +5,52 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.bean.TagListBean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by Administrator on 2017/12/25/025.
+ * Created by Administrator on 2018/1/11/011.
  */
 
-public class AddLableAdapter extends BaseRecrviewAdapter {
-    private List<TagListBean.BodyBean> body;
-    public AddLableAdapter(Context ctx,List<TagListBean.BodyBean> body) {
+public class SendMessPicListAdapter extends BaseRecrviewAdapter {
+    private ArrayList<String> images;
+    public SendMessPicListAdapter(Context ctx,ArrayList<String> images) {
         super(ctx);
-        this.body = body;
+        this.images = images;
     }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.item_addlable, null);
-        return new ViewHolder(view);
+        View convertView = LayoutInflater.from(ctx).inflate(R.layout.item_sendmesspic, null);
+        return new ViewHolder(convertView);
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        TagListBean.BodyBean bodyBean = body.get(position);
-        ((ViewHolder)holder).tv_name.setText(bodyBean.getSigname());
-        ((ViewHolder)holder).rootView.setOnClickListener(new View.OnClickListener() {
+        Glide.with(ctx).load(images.get(position)).into( ((ViewHolder)holder).iv_pic);
+        ((ViewHolder)holder).iv_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onItemClickListener.setOnClick(position);
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return body.size();
+        return images.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{
         public View rootView;
-        public TextView tv_name;
+        public ImageView iv_pic;
 
         public ViewHolder(View rootView) {
             super(rootView);
             this.rootView = rootView;
-            this.tv_name = (TextView) rootView.findViewById(R.id.tv_name);
+            this.iv_pic = (ImageView) rootView.findViewById(R.id.iv_pic);
         }
 
     }

@@ -43,6 +43,7 @@ public class MyApplication extends Application {
         easeUIInit();
         SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode,MODE_PRIVATE);
        Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
+       LogUtiles.LogI(Token);
         Bugly.init(getApplicationContext(), "567efebd79", false);
     }
     @Override

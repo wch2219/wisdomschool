@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseFragment;
+import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.NewAddLableActivity;
 import com.dlwx.wisdomschool.adapter.AddLableAdapter;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.TagListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
@@ -42,6 +44,8 @@ public class PersionLableFragment extends BaseFragment {
     @BindView(R.id.rev_view)
     SwipeMenuRecyclerView revView;
     Unbinder unbinder;
+    private List<TagListBean.BodyBean> body;
+    private AddLableAdapter addLableAdapter;
 
     @Override
     public int getLayoutID() {
@@ -71,17 +75,28 @@ public class PersionLableFragment extends BaseFragment {
 
     @Override
     public void onResume() {
+
+        getPersionTag();
+        super.onResume();
+    }
+
+    /**
+     * 获取个人标签列表
+     */
+    private void getPersionTag() {
+        Httptype =1;
         Map<String,String> map = new HashMap<>();
         map.put("token",Token);
         map.put("type","2");
         mPreenter.fetch(map,true, HttpUrl.Signlist,HttpUrl.Signlist+Token+"1");
-        super.onResume();
     }
 
     @Override
     protected void initListener() {
         revView.setSwipeMenuCreator(swipeMenuCreator);
         revView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+
+
     }
 
     @Override
@@ -95,12 +110,32 @@ public class PersionLableFragment extends BaseFragment {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        TagListBean tagListBean = gson.fromJson(s, TagListBean.class);
-        if (tagListBean.getCode() == 200) {
-            List<TagListBean.BodyBean> body = tagListBean.getBody();
-            revView.setAdapter(new AddLableAdapter(ctx,body));
+        if (Httptype == 1) {
+
+            TagListBean tagListBean = gson.fromJson(s, TagListBean.class);
+            if (tagListBean.getCode() == 200) {
+                body = tagListBean.getBody();
+                addLableAdapter = new AddLableAdapter(ctx, body);
+                revView.setAdapter(addLableAdapter);
+                addLableAdapter.setOnItemClickListener(new BaseRecrviewAdapter.OnItemClickListener() {
+                    @Override
+                    public void setOnClick(int position) {
+                        Intent intent = new Intent();
+                        intent.putExtra("tag",body.get(position).getSigname());
+                        intent.putExtra("tagid",body.get(position).getId());
+                        getActivity().setResult(10,intent);
+                        getActivity().finish();
+                    }
+                });
+            }else{
+                Toast.makeText(ctx, tagListBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
         }else{
-            Toast.makeText(ctx, tagListBean.getResult(), Toast.LENGTH_SHORT).show();
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                getPersionTag();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -162,13 +197,17 @@ public class PersionLableFragment extends BaseFragment {
             int menuPosition = menuBridge.getPosition();
 
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
-
+                Map<String,String> map = new HashMap<>();
+                map.put("token",Token);
+                Httptype = 2;
+                map.put("id",body.get(menuPosition).getId());
+                mPreenter.fetch(map,true,HttpUrl.DelteSign,"");
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
                 Toast.makeText(ctx, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             }
         }
     };
-
+    private int Httptype;
 
     public static class DensityUtil {
 

@@ -286,7 +286,7 @@ public class UploadPicUtiles {
         File dir = new File(cachePath);
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss");
         String timeStamp = format.format(new Date());
-        String fileName = "robot_" + timeStamp + ".png";
+        String fileName = "robot_" + timeStamp + ".jpg";
         File file = new File(dir, fileName);
         if (file.exists()) {
             file.delete();

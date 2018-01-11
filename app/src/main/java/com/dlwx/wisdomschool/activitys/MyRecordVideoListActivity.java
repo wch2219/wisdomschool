@@ -13,7 +13,7 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.bean.Image;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.adapter.AllPicAdapter;
+import com.dlwx.wisdomschool.adapter.AllVideoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,6 @@ public class MyRecordVideoListActivity extends BaseActivity implements AdapterVi
 
     @Override
     protected void initView() {
-        String files = getIntent().getStringExtra("files");
         setContentView(R.layout.activity_my_record_video_list);
         ButterKnife.bind(this);
     }
@@ -40,6 +39,7 @@ public class MyRecordVideoListActivity extends BaseActivity implements AdapterVi
     @Override
     protected void initData() {
         initTabBar(toolBar);
+        tvTitle.setText("视频列表");
         Cursor cursor = getContentResolver().query(
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
         while (cursor.moveToNext()) {
@@ -59,9 +59,10 @@ public class MyRecordVideoListActivity extends BaseActivity implements AdapterVi
             filelist.add(image);
         }
         wch(filelist.size());
-        AllPicAdapter allPicAdapter = new AllPicAdapter(ctx, filelist);
-        gvList.setAdapter(allPicAdapter);
+        AllVideoAdapter allVideoAdapter = new AllVideoAdapter(ctx, filelist);
+        gvList.setAdapter(allVideoAdapter);
     }
+
     @Override
     protected void initListener() {
         gvList.setOnItemClickListener(this);
@@ -74,11 +75,12 @@ public class MyRecordVideoListActivity extends BaseActivity implements AdapterVi
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Image image = filelist.get(i-1);
+        Image image = filelist.get(i);
         wch(image.getPath());
-        Intent intent = new Intent(ctx,PublishGroupUpActivity.class);
-        intent.putExtra("videofile",image.getPath());
-        startActivity(intent);
+        Intent intent = new Intent();
+        intent.putExtra("videofile", image.getPath());
+        setResult(1, intent);
+        finish();
     }
 
 }

@@ -79,19 +79,17 @@
     </LinearLayout>
 
 
-    <com.dlwx.baselib.view.MyListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:id="@+id/rv_recyclerview"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:divider="@null"
-        android:stackFromBottom="true"
-        android:layout_above="@id/edit"
-        android:layout_below="@id/header"
-        android:transcriptMode="normal"
-        ></com.dlwx.baselib.view.MyListView>
+        <com.dlwx.baselib.view.MyListView
+            android:id="@+id/rv_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:divider="@null"
+            android:stackFromBottom="true"
+            android:transcriptMode="normal"></com.dlwx.baselib.view.MyListView>
 
 
 
