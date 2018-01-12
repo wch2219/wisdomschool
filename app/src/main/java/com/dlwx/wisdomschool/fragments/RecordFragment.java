@@ -16,7 +16,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
@@ -26,15 +25,12 @@ import com.dlwx.wisdomschool.activitys.AllPicActivity;
 import com.dlwx.wisdomschool.activitys.PublishGroupUpActivity;
 import com.dlwx.wisdomschool.activitys.RecordVideoActivity;
 import com.dlwx.wisdomschool.activitys.SynthesizeActivity;
-import com.dlwx.wisdomschool.adapter.RecordListAdapter;
-import com.dlwx.wisdomschool.bean.RecordListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -290,8 +286,6 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             this.ll_close = (LinearLayout) rootView.findViewById(R.id.ll_close);
         }
     }
-
-
     /**
      * 拉取数据
      */
@@ -308,13 +302,13 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
-        if (recordListBean.getCode() == 200) {
-            List<RecordListBean.BodyBean> body = recordListBean.getBody();
-            lv_list.setAdapter(new RecordListAdapter(ctx, body));
-        } else {
-            Toast.makeText(ctx, recordListBean.getResult(), Toast.LENGTH_SHORT).show();
-        }
+//        RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
+//        if (recordListBean.getCode() == 200) {
+//            List<RecordListBean.BodyBean> body = recordListBean.getBody();
+//            lv_list.setAdapter(new RecordListAdapter(ctx, body));
+//        } else {
+//            Toast.makeText(ctx, recordListBean.getResult(), Toast.LENGTH_SHORT).show();
+//        }
     }
 
     /**
@@ -346,7 +340,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         Intent intent;
         switch (requestCode) {
             case 1://视频
-                String vodeofile = data.getStringExtra("vodeofile");
+                String vodeofile = data.getStringExtra("videofile");
                 wch("视频："+vodeofile);
                 intent = new Intent(ctx,PublishGroupUpActivity.class);
                 intent.putExtra("videofile",vodeofile);

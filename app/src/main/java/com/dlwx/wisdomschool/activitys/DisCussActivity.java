@@ -29,8 +29,6 @@ import com.dlwx.wisdomschool.fragments.EmojiconFragment;
 import com.dlwx.wisdomschool.interfac.EmoInterface;
 import com.dlwx.wisdomschool.utiles.VoicetranscribeAndPlayUtiles;
 
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -119,7 +117,7 @@ public class DisCussActivity extends BaseActivity {
             @Override
             public void backEmo(Bitmap bitmap, int i) {
                 ImageSpan imageSpan = new ImageSpan(ctx, bitmap);
-                SpannableString spannableString = new SpannableString("ee_");   //“image”是图片名称的前缀
+                SpannableString spannableString = new SpannableString("ee_"+(i+1));   //“image”是图片名称的前缀
                 spannableString.setSpan(imageSpan, 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 etEdit.append(spannableString);
             }
@@ -182,20 +180,20 @@ public class DisCussActivity extends BaseActivity {
                     tvSpeck.setText("按住说话");
                     tvSpeck.setTextColor(getResources().getColor(R.color.white));
                     tvSpeck.setBackgroundResource(R.drawable.shape_class_btn);
-                    try {
-                        String outFile = VoicetranscribeAndPlayUtiles.stop();
-                        //filePath为语音文件路径，length为录音时间(秒)
-                        double v = VoicetranscribeAndPlayUtiles.durationTime();
-                        wch(v);
-                        //发送语音
-//                        EMMessage message = EMMessage.createVoiceSendMessage(outFile, length, "toChatUsername");
-//                        //如果是群聊，设置chattype，默认是单聊
-//                        if (chatType == CHATTYPE_GROUP)
-//                            message.setChatType(EMMessage.ChatType.GroupChat);
-//                        EMClient.getInstance().chatManager().sendMessage(message);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        String outFile = VoicetranscribeAndPlayUtiles.stop();
+//                        //filePath为语音文件路径，length为录音时间(秒)
+//                        double v = VoicetranscribeAndPlayUtiles.durationTime();
+//                        wch(v);
+//                        //发送语音
+////                        EMMessage message = EMMessage.createVoiceSendMessage(outFile, length, "toChatUsername");
+////                        //如果是群聊，设置chattype，默认是单聊
+////                        if (chatType == CHATTYPE_GROUP)
+////                            message.setChatType(EMMessage.ChatType.GroupChat);
+////                        EMClient.getInstance().chatManager().sendMessage(message);
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
                     break;
                 case MotionEvent.ACTION_MOVE:
                     int height = view.getHeight();

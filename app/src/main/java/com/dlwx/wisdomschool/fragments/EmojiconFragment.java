@@ -1,6 +1,7 @@
 package com.dlwx.wisdomschool.fragments;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.interfac.EmoInterface;
 import com.dlwx.wisdomschool.utiles.Content;
 
 import butterknife.BindView;
@@ -62,14 +66,14 @@ public class EmojiconFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-//        Glide.with(ctx).load(icons[i]).asBitmap().into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//
-//                EmoInterface.checkEmoInterface.backEmo(resource,i);
-//
-//            }
-//        });
+
+        Glide.with(ctx).asBitmap().load(icons[i]).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                EmoInterface.checkEmoInterface.backEmo(resource,i);
+            }
+        });
+
 
     }
 

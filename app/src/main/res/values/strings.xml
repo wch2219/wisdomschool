@@ -62,4 +62,7 @@
     <string name="classjurisdiction">一般家长、学生，他们可以接收/参与活动</string>
     <string name="classjurisdiction2">适用于其他学科教师、搭班教师等，任课教师可以相互以\n对方的视角查看信息，权限基本等同于班级创建者</string>
     <string name="classjurisdiction3">转让您的班级创建者身份给到这位成员</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

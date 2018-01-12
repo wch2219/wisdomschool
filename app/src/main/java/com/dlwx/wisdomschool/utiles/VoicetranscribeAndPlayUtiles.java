@@ -23,7 +23,7 @@ public class VoicetranscribeAndPlayUtiles {
         myAudioRecorder.setOnErrorListener(onErrorListener);
         myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.MPEG_4);
         myAudioRecorder.setOutputFile(outputFile);
         try {
             myAudioRecorder.prepare();
@@ -38,7 +38,7 @@ public class VoicetranscribeAndPlayUtiles {
         }
     }
 
-    public static String stop() throws IOException {
+    public static String stop() {
        long time1 = System.currentTimeMillis();
         if (((time1-time)/100)>1) {
             myAudioRecorder.setOnErrorListener(null);
@@ -71,13 +71,18 @@ public class VoicetranscribeAndPlayUtiles {
     }
 
 
-    public static void play() throws IllegalArgumentException,
-            SecurityException, IllegalStateException, IOException{
+    public static void play() {
 
         MediaPlayer m = new MediaPlayer();
-        m.setDataSource(outputFile);
-        m.prepare();
-        m.start();
+        try {
+            m.setDataSource(outputFile);
+            m.prepare();
+            m.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
     private static MediaRecorder.OnErrorListener onErrorListener = new MediaRecorder.OnErrorListener() {
         @Override

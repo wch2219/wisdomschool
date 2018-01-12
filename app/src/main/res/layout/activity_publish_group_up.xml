@@ -54,6 +54,7 @@
         android:padding="10dp"
         >
         <TextView
+            android:id="@+id/tv_classnames"
             style="@style/TextSizecontentBlack"
             android:text="记录到哪个班级？"
             android:layout_weight="1"
@@ -63,10 +64,8 @@
             android:src="@mipmap/icon_jiantourig"
             />
     </LinearLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-        <LinearLayout
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_gary_line"
@@ -133,6 +132,36 @@
                         </RelativeLayout>
 
                     </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/ll_voice"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_black_line"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            style="@style/Imagesmill2pic"
+                            android:src="@mipmap/icon_syyuyin"
+                            />
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
+                            android:text="10”"
+                            android:textColor="@color/blue" />
+                    </RelativeLayout>
+
+                </LinearLayout>
         </LinearLayout>
     <View
         style="@style/GaryDiveStyle"
@@ -187,21 +216,42 @@
             style="@style/Imagesmillpic"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_ltyuyin" />
 
         <ImageView style="@style/Imagesmillpic"
             android:id="@+id/iv_addpic"
             android:src="@mipmap/icon_lttupian"
             android:layout_marginLeft="20dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             />
 
         <ImageView style="@style/Imagesmillpic"
             android:id="@+id/iv_face"
+            android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_ltxiaolian"
             android:layout_marginLeft="20dp"
             />
-
+            <View
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="1dp"
+                />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:layout_gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_hind"
+                       android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone"
+                        android:src="@mipmap/icon_wdxiala"
+                        />
+                </RelativeLayout>
     </LinearLayout>
             <FrameLayout
                 android:layout_width="match_parent"
@@ -209,8 +259,24 @@
                 android:visibility="gone"
                 android:id="@+id/emojicon_menu_container"
                 ></FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:id="@+id/rl_record"
+
+                    android:layout_height="wrap_content">
+
+
+                </FrameLayout>
     </LinearLayout>
         </RelativeLayout>
+
+        <View
+            style="@style/GaryDiveStyle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="92dp" />
 
     </RelativeLayout>
 </LinearLayout>

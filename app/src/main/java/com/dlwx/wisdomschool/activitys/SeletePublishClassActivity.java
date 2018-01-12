@@ -65,6 +65,9 @@ public class SeletePublishClassActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        addclass_nos = intent.getStringExtra("addclass_nos");
+        createclass_nos = intent.getStringExtra("createclass_nos");
         setContentView(R.layout.activity_selete_publish_class);
         ButterKnife.bind(this);
     }
@@ -123,22 +126,28 @@ public class SeletePublishClassActivity extends BaseActivity {
 
         }
     }
-    private String class_nos;
+
+    private String createclass_nos;//选择的创建班级的班级id
+    private String addclass_nos;//选择的据加入班级的班级id
+    private String sleteMy;//选择了我自己
+    private String classnames;//选择的班级名称
     /**
      * 提交选择的结果
      */
     private void submit() {
 
         if (cb_myself.isChecked()) {//选择了自己
-
+            //todo
         }else{//选择了班级
             for (int i = 0; i < create_list.size(); i++) {
                 MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
                 if (createListBean.isCheck()) {
-                    if (TextUtils.isEmpty(class_nos)) {
-                        class_nos = createListBean.getClass_no();
+                    if (TextUtils.isEmpty(createclass_nos)) {
+                        createclass_nos = createListBean.getCnid();
+                        classnames = createListBean.getClass_name();
                     }else{
-                        class_nos = class_nos + ","+createListBean.getClass_no();
+                        createclass_nos = createclass_nos + ","+createListBean.getCnid();
+                        classnames = classnames + "," + createListBean.getClass_name();
                     }
 
                 }
@@ -146,10 +155,12 @@ public class SeletePublishClassActivity extends BaseActivity {
             for (int i = 0; i < join_list.size(); i++) {
                 MyAllClassBean.BodyBean.JoinListBean joinListBean = join_list.get(i);
                 if (joinListBean.isCheck()) {
-                    if (TextUtils.isEmpty(class_nos)) {
-                        class_nos = joinListBean.getClass_no();
+                    if (TextUtils.isEmpty(addclass_nos)) {
+                        addclass_nos = joinListBean.getCnid();
+                        classnames = joinListBean.getClass_name();
                     }else{
-                        class_nos = class_nos + ","+joinListBean.getClass_no();
+                        addclass_nos = addclass_nos + ","+joinListBean.getCnid();
+                        classnames = classnames + "," + joinListBean.getClass_name();
                     }
 
                 }
@@ -157,7 +168,9 @@ public class SeletePublishClassActivity extends BaseActivity {
 
         }
         Intent intent = new Intent();
-        intent.putExtra("class_nos",class_nos);
+        intent.putExtra("addclass_nos",addclass_nos);
+        intent.putExtra("createclass_nos",createclass_nos);
+        intent.putExtra("classnames",classnames);
         setResult(101,intent);
         finish();
     }
@@ -222,6 +235,33 @@ public class SeletePublishClassActivity extends BaseActivity {
             MyAllClassBean.BodyBean body = myAllClassBean.getBody();
             create_list = body.getCreate_list();
             join_list = body.getJoin_list();
+            if (!TextUtils.isEmpty(addclass_nos)) {
+
+                    String[] split = addclass_nos.split(",");
+                    for (int j = 0; j < split.length; j++) {
+                        for (int i = 0; i < join_list.size(); i++) {
+                        if (join_list.get(i).getCnid().equals(split[j])) {
+                            join_list.get(i).setCheck(true);
+                        }else{
+                            join_list.get(i).setCheck(false);
+                        }
+                    }
+                }
+            }
+
+            if (!TextUtils.isEmpty(createclass_nos)) {
+                for (int i = 0; i < create_list.size(); i++) {
+
+                    String[] split = createclass_nos.split(",");
+                    for (int j = 0; j < split.length; j++) {
+                        if (create_list.get(i).getCnid().equals(split[j])) {
+                            create_list.get(i).setCheck(true);
+                        }else{
+                            create_list.get(i).setCheck(false);
+                        }
+                    }
+                 }
+            }
 
             if (create_list.size() > 2) {
                 createNum = 2;
