@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.GradeYearBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/23/023.
  */
 
 public class GradeRankitemAdapter extends BaseFastAdapter {
-    public GradeRankitemAdapter(Context ctx) {
+    private List<GradeYearBean.BodyBean> body;
+    public GradeRankitemAdapter(Context ctx, List<GradeYearBean.BodyBean> body ) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return body.size();
     }
 
     @Override
@@ -33,6 +38,9 @@ public class GradeRankitemAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
+        GradeYearBean.BodyBean bodyBean = body.get(position);
+        vh.tv_name.setText("第"+bodyBean.getSort()+"次");
+        vh.tv_data.setText(bodyBean.getDate());
         return convertView;
     }
 

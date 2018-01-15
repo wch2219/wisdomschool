@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassListBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/18/018.
@@ -18,14 +21,15 @@ import com.dlwx.wisdomschool.R;
 
 public class ClassGradeAdapter extends BaseExpandableListAdapter {
     private Context ctx;
-
-    public ClassGradeAdapter(Context ctx) {
+    private List<ClassListBean.BodyBean> body;
+    public ClassGradeAdapter(Context ctx,List<ClassListBean.BodyBean> body) {
         this.ctx = ctx;
+        this.body = body;
     }
 
     @Override
     public int getGroupCount() {
-        return 3;
+        return body.size();
     }
 
     @Override
@@ -68,6 +72,9 @@ public class ClassGradeAdapter extends BaseExpandableListAdapter {
         } else {
             vh = (ViewHolderGroup) convertView.getTag();
         }
+        ClassListBean.BodyBean bodyBean = body.get(i);
+        vh.tv_name.setText(bodyBean.getClass_name());
+
         return convertView;
     }
 

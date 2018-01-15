@@ -82,10 +82,10 @@ public class RecordListAdapter extends BaseFastAdapter {
 //        标签
         List<String> mVals = new ArrayList<>();
         for (int i = 0; i < bodyBean.getPerson_sign().size(); i++) {
-            mVals.add(bodyBean.getPerson_sign().get(i));
+            mVals.add((String) bodyBean.getPerson_sign().get(i));
         }
          for (int i = 0; i < bodyBean.getQuality_sign().size(); i++) {
-            mVals.add(bodyBean.getQuality_sign().get(i));
+            mVals.add((String) bodyBean.getQuality_sign().get(i));
         }
         vh.id_flowlayout.setAdapter(new TagAdapter<String>(mVals)
         {

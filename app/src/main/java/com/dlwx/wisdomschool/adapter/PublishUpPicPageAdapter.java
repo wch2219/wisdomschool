@@ -1,7 +1,6 @@
 package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -12,7 +11,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.activitys.PublishCompleteActivity;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/23/023.
@@ -20,18 +20,21 @@ import com.dlwx.wisdomschool.activitys.PublishCompleteActivity;
 
 public class PublishUpPicPageAdapter extends PagerAdapter {
     private Context ctx;
-    private final int[] intArray = {R.color.publist1,R.color.publist2,R.color.publist3,R.color.publist4};
-    private int [] contents = {R.string.publishcontent1,R.string.publishcontent2,R.string.publishcontent3,R.string.publishcontent4};
-    private String [] titles  = {"品质发展","动手能力","热爱学习","体育活动"};
-    public PublishUpPicPageAdapter(Context ctx) {
+    private List<String> titleList ;
+    private List<Integer> contentList;
+    private List<Integer> intteArrList;
+
+    public PublishUpPicPageAdapter(Context ctx,List<String> titleList,List<Integer> contentList,List<Integer> intteArrList) {
         super();
         this.ctx = ctx;
-
+        this.titleList = titleList;
+        this.contentList = contentList;
+        this.intteArrList = intteArrList;
     }
 
     @Override
     public int getCount() {
-        return titles.length;
+        return titleList.size();
     }
 
     @Override
@@ -41,17 +44,17 @@ public class PublishUpPicPageAdapter extends PagerAdapter {
 
     @NonNull
     @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, final int position) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.item_publishpage, null);
             ViewHolder vh = new ViewHolder(view);
-            vh.tv_title.setText(titles[position]);
-            vh.tv_content.setText(contents[position]);
-            vh.ll_bg.setBackgroundResource(intArray[position]);
+            vh.tv_title.setText(titleList.get(position));
+            vh.tv_content.setText(contentList.get(position));
+            vh.ll_bg.setBackgroundResource(intteArrList.get(position));
         container.addView(view);
         vh.btn_uppic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ctx.startActivity(new Intent(ctx,PublishCompleteActivity.class));
+                skiAddPicBackListener.back(titleList.get(position),position);
             }
         });
         return view;
@@ -76,4 +79,14 @@ public class PublishUpPicPageAdapter extends PagerAdapter {
         }
 
     }
+
+    public interface SkiAddPicBackListener{
+        void back(String tagname,int position);
+    }
+    public SkiAddPicBackListener skiAddPicBackListener;
+
+    public void setSkiAddPicBackListener(SkiAddPicBackListener skiAddPicBackListener) {
+        this.skiAddPicBackListener = skiAddPicBackListener;
+    }
 }
+

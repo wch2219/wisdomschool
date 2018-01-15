@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,7 +17,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.MyListView;
@@ -25,12 +28,21 @@ import com.dlwx.wisdomschool.activitys.AllPicActivity;
 import com.dlwx.wisdomschool.activitys.PublishGroupUpActivity;
 import com.dlwx.wisdomschool.activitys.RecordVideoActivity;
 import com.dlwx.wisdomschool.activitys.SynthesizeActivity;
+import com.dlwx.wisdomschool.activitys.SynthesizeFullActivity;
+import com.dlwx.wisdomschool.adapter.RecordListAdapter;
+import com.dlwx.wisdomschool.adapter.RecordScreenAddAdapter;
+import com.dlwx.wisdomschool.adapter.RecordScreenCreateAdapter;
+import com.dlwx.wisdomschool.bean.MyAllClassBean;
+import com.dlwx.wisdomschool.bean.PublishUpPiccheckBean;
+import com.dlwx.wisdomschool.bean.RecordListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -56,11 +68,20 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.lv_list)
     ListView lv_list;
+    @BindView(R.id.tv_classseach)
+    TextView tv_classseach;
     Unbinder unbinder;
     private AlertDialog diashow;
     private PopupWindow popupWindow;
     private String type = "";
     private String class_no = "";
+    private List<MyAllClassBean.BodyBean.CreateListBean> create_list;
+    private List<MyAllClassBean.BodyBean.JoinListBean> join_list;
+    private int createNum;
+    private RecordScreenCreateAdapter createAdapter;
+    private int addNum;
+    private RecordScreenAddAdapter addAdapter;
+    private ViewHolderDia vhDia;
 
     @Override
     public int getLayoutID() {
@@ -107,7 +128,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                 showBottomPopu();
                 break;
             case R.id.rl_synthesize://综合素质大提升
-                startActivity(new Intent(ctx, SynthesizeActivity.class));
+                skipSynther();
                 break;
             case R.id.fab_edit://编辑
                 showPopu();
@@ -116,11 +137,26 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 //                startActivity(new Intent(ctx, RecordDescActivity.class));
 //                break;
             case R.id.ll_seleteclass://选择班级纪录
-                showDia();
+                Httptype = 2;
+                Map<String, String> map = new HashMap<>();
+                map.put("token", Token);
+                mPreenter.fetch(map, true, HttpUrl.Classroom, HttpUrl.Classroom + Token);
                 break;
 
         }
     }
+
+    /**
+     * 综合素质
+     */
+    private void skipSynther() {
+        Httptype = 3;
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        mPreenter.fetch(map, true, HttpUrl.CheckSign, HttpUrl.CheckSign + Token);
+    }
+
+    private int Httptype;
 
     /**
      *
@@ -141,6 +177,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                     case R.id.rb_all:
                         popuSceer.dismiss();
                         type = "";
+
                         getDataList();
                         break;
                     case R.id.rb_myself:
@@ -194,13 +231,105 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 
     private void showDia() {
         View view = LayoutInflater.from(ctx).inflate(R.layout.dia_recordscreen, null);
-        ViewHolderDia vhDia = new ViewHolderDia(view);
+        vhDia = new ViewHolderDia(view);
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         builder.setView(view);
         diashow = builder.show();
         vhDia.iv_close.setOnClickListener(this);
-//        vhDia.lv_listcreate.setAdapter(new RecordScreenCreateAdapter(ctx));
-//        vhDia.lv_listadd.setAdapter(new RecordScreenAddAdapter(ctx));
+        vhDia.tv_mycreatenum.setOnClickListener(this);
+        vhDia.tv_myaddnum.setOnClickListener(this);
+        vhDia.ll_listprivacy.setOnClickListener(this);
+        vhDia.ll_allrecord.setOnClickListener(this);
+        vhDia.lv_listcreate.setOnItemClickListener(createListener);
+        vhDia.lv_listadd.setOnItemClickListener(addListener);
+        Glide.with(ctx).load(sp.getString(SpUtiles.Header_pic, "")).into(vhDia.iv_pic);
+        if (create_list.size() > 2) {
+            createNum = 2;
+            vhDia.tv_mycreatenum.setVisibility(View.VISIBLE);
+            vhDia.tv_mycreatenum.setText("显示全部" + create_list.size() + "个班级");
+            createAdapter = new RecordScreenCreateAdapter(ctx, create_list, createNum);
+
+        } else {
+            createNum = create_list.size();
+            vhDia.tv_mycreatenum.setVisibility(View.GONE);
+            createAdapter = new RecordScreenCreateAdapter(ctx, create_list, createNum);
+        }
+        vhDia.lv_listcreate.setAdapter(createAdapter);
+
+        if (join_list.size() > 2) {
+            addNum = 2;
+            vhDia.tv_myaddnum.setVisibility(View.VISIBLE);
+            vhDia.tv_myaddnum.setText("显示全部" + join_list.size() + "个班级");
+            addAdapter = new RecordScreenAddAdapter(ctx, join_list, addNum);
+        } else {
+            addNum = join_list.size();
+            vhDia.tv_myaddnum.setVisibility(View.GONE);
+            addAdapter = new RecordScreenAddAdapter(ctx, join_list, addNum);
+        }
+        vhDia.lv_listadd.setAdapter(addAdapter);
+    }
+
+    /**
+     * 创建的班级条目点击监听
+     */
+    private AdapterView.OnItemClickListener createListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
+            boolean check = createListBean.isCheck();
+            createListBean.setCheck(!check);
+            createAdapter.notifyDataSetChanged();
+            vhDia.cb_myself.setChecked(false);
+            class_no = createListBean.getCnid();
+            vhDia.cb_check.setChecked(false);
+            tv_classseach.setText(createListBean.getClass_name());
+            diashow.dismiss();
+            type = "";
+            getDataList();
+        }
+    };
+    /**
+     * 加入的班级条目点击监听
+     */
+    private AdapterView.OnItemClickListener addListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            MyAllClassBean.BodyBean.JoinListBean joinListBean = join_list.get(i);
+            boolean check = joinListBean.isCheck();
+            joinListBean.setCheck(!check);
+            addAdapter.notifyDataSetChanged();
+            vhDia.cb_myself.setChecked(false);
+            class_no = joinListBean.getCnid();
+            vhDia.cb_check.setChecked(false);
+            diashow.dismiss();
+            type = "";
+            tv_classseach.setText(joinListBean.getClass_name());
+            getDataList();
+        }
+    };
+
+    /**
+     * 选择自己改变状态
+     */
+    private void change() {
+        for (int i = 0; i < create_list.size(); i++) {
+            MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
+            createListBean.setCheck(false);
+        }
+        for (int i = 0; i < join_list.size(); i++) {
+            MyAllClassBean.BodyBean.JoinListBean joinListBean = join_list.get(i);
+            joinListBean.setCheck(false);
+        }
+        createAdapter.notifyDataSetChanged();
+        addAdapter.notifyDataSetChanged();
+        if (!vhDia.cb_myself.isChecked()) {
+            vhDia.cb_myself.setChecked(true);
+        }
+        diashow.dismiss();
+        type = "1";
+        class_no = "";
+        tv_classseach.setText("仅自己可见");
+        getDataList();
     }
 
     @Override
@@ -225,7 +354,52 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             case R.id.iv_close:
                 diashow.dismiss();
                 break;
+            case R.id.tv_mycreatenum:
+
+                createNum = create_list.size();
+                vhDia.tv_mycreatenum.setVisibility(View.GONE);
+                createAdapter = new RecordScreenCreateAdapter(ctx, create_list, createNum);
+                vhDia.lv_listcreate.setAdapter(createAdapter);
+                break;
+
+            case R.id.tv_myaddnum:
+
+                addNum = join_list.size();
+                vhDia.tv_myaddnum.setVisibility(View.GONE);
+                addAdapter = new RecordScreenAddAdapter(ctx, join_list, addNum);
+                vhDia.lv_listadd.setAdapter(addAdapter);
+                break;
+            case R.id.ll_listprivacy:
+                change();
+                break;
+            case R.id.ll_allrecord://查看全部成长纪录
+                allRecord();
+                break;
+
         }
+    }
+
+    /**
+     * 查看全部成长纪录
+     */
+    private void allRecord() {
+        for (int i = 0; i < create_list.size(); i++) {
+            MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
+            createListBean.setCheck(false);
+        }
+        for (int i = 0; i < join_list.size(); i++) {
+            MyAllClassBean.BodyBean.JoinListBean joinListBean = join_list.get(i);
+            joinListBean.setCheck(false);
+        }
+        createAdapter.notifyDataSetChanged();
+        addAdapter.notifyDataSetChanged();
+        vhDia.cb_check.setChecked(true);
+        vhDia.cb_myself.setChecked(false);
+
+        class_no = "";
+        type = "";
+        diashow.dismiss();
+        getDataList();
     }
 
     /**
@@ -236,11 +410,8 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     private void publishGroupUp(int type) {
         Intent intent;
         if (type == 1) {
-            intent = new Intent(ctx, SynthesizeActivity.class);
-            startActivity(intent);
+            skipSynther();
         } else if (type == 3) {
-//            intent = new Intent(ctx, PublishGroupUpActivity.class);
-
             intent = new Intent(ctx, AllPicActivity.class);
             intent.putExtra("type", type);
             startActivityForResult(intent, 2);
@@ -253,20 +424,28 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     private class ViewHolderDia {
         public View rootView;
         public ImageView iv_close;
+        public ImageView iv_pic;
         public CheckBox cb_check;
         public MyListView lv_listcreate;
         public TextView tv_mycreatenum;
+        public TextView tv_myaddnum;
         public MyListView lv_listadd;
         public LinearLayout ll_listprivacy;
+        public CheckBox cb_myself;
+        public LinearLayout ll_allrecord;
 
         public ViewHolderDia(View rootView) {
             this.rootView = rootView;
             this.iv_close = (ImageView) rootView.findViewById(R.id.iv_close);
+            this.iv_pic = (ImageView) rootView.findViewById(R.id.iv_pic);
             this.cb_check = (CheckBox) rootView.findViewById(R.id.cb_check);
             this.lv_listcreate = (MyListView) rootView.findViewById(R.id.lv_listcreate);
             this.tv_mycreatenum = (TextView) rootView.findViewById(R.id.tv_mycreatenum);
+            this.tv_myaddnum = (TextView) rootView.findViewById(R.id.tv_myaddnum);
             this.lv_listadd = (MyListView) rootView.findViewById(R.id.lv_listadd);
             this.ll_listprivacy = (LinearLayout) rootView.findViewById(R.id.ll_listprivacy);
+            this.ll_allrecord = (LinearLayout) rootView.findViewById(R.id.ll_allrecord);
+            this.cb_myself = rootView.findViewById(R.id.cb_myself);
 
         }
     }
@@ -286,10 +465,12 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             this.ll_close = (LinearLayout) rootView.findViewById(R.id.ll_close);
         }
     }
+
     /**
      * 拉取数据
      */
     private void getDataList() {
+        Httptype = 1;
         Map<String, String> map = new HashMap<>();
         map.put("token", Token);
         map.put("type", type);
@@ -302,13 +483,44 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         disLoading();
         wch(s);
         Gson gson = new Gson();
-//        RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
-//        if (recordListBean.getCode() == 200) {
-//            List<RecordListBean.BodyBean> body = recordListBean.getBody();
-//            lv_list.setAdapter(new RecordListAdapter(ctx, body));
-//        } else {
-//            Toast.makeText(ctx, recordListBean.getResult(), Toast.LENGTH_SHORT).show();
-//        }
+        if (Httptype == 1) {
+
+            recordList(s, gson);
+        } else if (Httptype == 2) {//选择班级列表
+            MyAllClassBean myAllClassBean = gson.fromJson(s, MyAllClassBean.class);
+            if (myAllClassBean.getCode() == 200) {
+                MyAllClassBean.BodyBean body = myAllClassBean.getBody();
+                create_list = body.getCreate_list();
+                join_list = body.getJoin_list();
+                showDia();
+            }
+        }else if (Httptype == 3) {//检查综合素质提升
+            PublishUpPiccheckBean publishUpPiccheckBean = gson.fromJson(s, PublishUpPiccheckBean.class);
+            if (publishUpPiccheckBean.getCode() == 200) {
+                List<Integer> body = publishUpPiccheckBean.getBody();
+                if (body != null) {
+                    if (body.size() != 0) {
+                        Intent intent = new Intent(ctx, SynthesizeActivity.class);
+                        intent.putIntegerArrayListExtra("body", (ArrayList<Integer>) body);
+                        startActivity(intent);
+                    }else{
+                        startActivity(new Intent(ctx,SynthesizeFullActivity.class));
+                    }
+                }else{
+                    startActivity(new Intent(ctx,SynthesizeFullActivity.class));
+                }
+            }
+        }
+    }
+
+    private void recordList(String s, Gson gson) {
+        RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
+        if (recordListBean.getCode() == 200) {
+            List<RecordListBean.BodyBean> body = recordListBean.getBody();
+            lv_list.setAdapter(new RecordListAdapter(ctx, body));
+        } else {
+            Toast.makeText(ctx, recordListBean.getResult(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -341,15 +553,15 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         switch (requestCode) {
             case 1://视频
                 String vodeofile = data.getStringExtra("videofile");
-                wch("视频："+vodeofile);
-                intent = new Intent(ctx,PublishGroupUpActivity.class);
-                intent.putExtra("videofile",vodeofile);
+                wch("视频：" + vodeofile);
+                intent = new Intent(ctx, PublishGroupUpActivity.class);
+                intent.putExtra("videofile", vodeofile);
                 startActivity(intent);
                 break;
             case 2://图片
                 ArrayList<String> images = data.getStringArrayListExtra("images");
-                intent = new Intent(ctx,PublishGroupUpActivity.class);
-                intent.putStringArrayListExtra("images",images);
+                intent = new Intent(ctx, PublishGroupUpActivity.class);
+                intent.putStringArrayListExtra("images", images);
                 startActivity(intent);
                 break;
         }

@@ -38,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:id="@+id/ll_allrecord"
         android:orientation="horizontal"
         >
         <TextView
@@ -50,33 +51,41 @@
         <CheckBox
            style="@style/CheckBoxStyle"
             android:id="@+id/cb_check"
-            android:checked="true"
+            android:focusable="false"
             android:button="@drawable/selete_check"
             />
 
 
     </LinearLayout>
-    <TextView
-        android:background="#F6F6F6"
-        android:padding="10dp"
-        style="@style/TextSizecontentBlack"
-
-        android:layout_width="match_parent"
-        android:text="我创建的班级"
-        />
-        <com.dlwx.baselib.view.MyListView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lv_listcreate"
-            android:scrollbars="none"
-            ></com.dlwx.baselib.view.MyListView>
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:background="#F6F6F6"
+                android:padding="10dp"
+                style="@style/TextSizecontentBlack"
+
+                android:layout_width="match_parent"
+                android:text="我创建的班级"
+                />
+            <com.dlwx.baselib.view.MyListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_listcreate"
+                android:scrollbars="none"
+                ></com.dlwx.baselib.view.MyListView>
             <TextView
                 android:id="@+id/tv_mycreatenum"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:padding="10dp"
                 android:textSize="11sp"
+                android:visibility="gone"
                 android:text="显示全部2个班级"
                 />
             <TextView
@@ -93,6 +102,17 @@
                 android:id="@+id/lv_listadd"
                 android:scrollbars="none"
                 ></com.dlwx.baselib.view.MyListView>
+
+            <TextView
+                android:id="@+id/tv_myaddnum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:text="显示全部2个班级"
+                android:textSize="11sp" />
             <TextView
                 android:background="#F6F6F6"
                 android:padding="10dp"
@@ -108,13 +128,25 @@
                 android:padding="10dp"
                 android:orientation="horizontal"
                 >
+                <CheckBox
+                    android:id="@+id/cb_myself"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:button="@null"
+                    android:enabled="false"
+                    android:layout_marginLeft="10dp"
+                    android:focusable="false"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/selete_check"
+                    />
+
                 <ImageView
                     android:id="@+id/iv_pic"
                     style="@style/ImagehomeItempic"
-                    android:src="@mipmap/ss33"
-                    android:layout_marginLeft="30dp"
+                    android:layout_height="38dp"
+                    android:layout_marginLeft="10dp"
                     android:scaleType="fitXY"
-                    />
+                     />
                 <TextView
                     style="@style/TextSizecontentBlack"
                     android:text="仅自己可见"
@@ -126,6 +158,7 @@
                 style="@style/GaryDiveStyle"
                 android:layout_marginBottom="50dp"
                 />
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

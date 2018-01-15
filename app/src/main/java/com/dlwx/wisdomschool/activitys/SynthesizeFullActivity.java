@@ -3,7 +3,6 @@ package com.dlwx.wisdomschool.activitys;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +14,6 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.adapter.PublishUpPicPageAdapter;
 import com.dlwx.wisdomschool.adapter.SynthesizeFullBottomAdapter;
 import com.dlwx.wisdomschool.adapter.SynthesizeFullTopAdapter;
 
@@ -83,8 +81,8 @@ public class SynthesizeFullActivity extends BaseActivity implements AdapterView.
                 backgroundAlpha(1);
             }
         });
-        popovh.vp_view.setAdapter(new PublishUpPicPageAdapter(ctx));
-        popupWindow.showAtLocation(tvTitle, Gravity.CENTER, 0, 0);
+//        popovh.vp_view.setAdapter(new PublishUpPicPageAdapter(ctx));
+//        popupWindow.showAtLocation(tvTitle, Gravity.CENTER, 0, 0);
 
     }
 

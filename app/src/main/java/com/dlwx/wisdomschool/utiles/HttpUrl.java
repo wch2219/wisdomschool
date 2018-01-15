@@ -41,4 +41,11 @@ public class HttpUrl {
     public static final String AddTag = BaseUrl1 + "Sign/addSign";//添加个人标签
     public static final String DelteSign = BaseUrl1 + "Sign/delSign";//删除标签
     public static final String SendgroupUp = BaseUrl1 + "Growthrecord/add_record";//发布成长记录
+    public static final String CheckSign = BaseUrl1 + "Sign/owed_sign";//添加记录时，检查用户已完成的综合素质
+    public static final String getBookBag = BaseUrl + "Bookbag/classfile";//智慧书包全部文件列表
+    public static final String CreateBookbag = BaseUrl + "Bookbag/makefolder";//创建智慧书包文件夹
+    public static final String BookBagAddFile = BaseUrl + "Bookbag/addfile";//智慧书包添加文件
+    public static final String GetScore_record = BaseUrl + "Score/score_record";//年份下考试列表
+    public static final String get_xueke = BaseUrl + "Score/get_xueke";//获取该考试下所有学科
+    public static final String user_score_sort = BaseUrl + "Score/user_score_sort";//各科成绩排名
 }

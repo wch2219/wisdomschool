@@ -57,7 +57,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 发布成长
  */
-public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordOrPlayListener.RecordListener{
+public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordOrPlayListener.RecordListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -115,8 +115,18 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         Intent intent = getIntent();
         videofile = intent.getStringExtra("videofile");
         images = intent.getStringArrayListExtra("images");
+        String tagname = intent.getStringExtra("tagname");
+        String tagId = intent.getStringExtra("tagId");
+        PublishSaveTagBean saveTagBean = new PublishSaveTagBean();
+        saveTagBean.setTagName(tagname);
+        quality_sign = tagId;
         setContentView(R.layout.activity_publish_group_up);
         ButterKnife.bind(this);
+
+        saveTagBeans.add(saveTagBean);
+        publishLableAdapter = new PublishLableAdapter(ctx, saveTagBeans);
+        gvList.setAdapter(publishLableAdapter);
+
         if (!TextUtils.isEmpty(videofile)) {//判断是视频
             ivMp3.setVisibility(View.GONE);
             ivAddpic.setVisibility(View.GONE);
@@ -219,8 +229,8 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
 
     @SuppressLint("WrongConstant")
     @OnClick({R.id.tv_aff, R.id.ll_seleteclass, R.id.tv_addlabel, R.id.iv_face, R.id.iv_addpic, R.id.iv_mp3,
-            R.id.tv_anewrecord, R.id.iv_videopic, R.id.iv_hind,R.id.ll_voice})
-    public void onViewClicked(View view){
+            R.id.tv_anewrecord, R.id.iv_videopic, R.id.iv_hind, R.id.ll_voice})
+    public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
             case R.id.tv_aff://发送
@@ -317,7 +327,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                     public void success(Response<String> response) {
                         disLoading();
                         Gson gson = new Gson();
-                        wch("语音上传："+response.body());
+                        wch("语音上传：" + response.body());
                         UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                         if (upPicBean.getCode() == 200) {
                             video = upPicBean.getBody().getFileid() + "";
@@ -450,6 +460,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     public void backFile(String file) {
         voiceFile = file;
         //录制完成返回的语音文件
-            ll_voice.setVisibility(View.VISIBLE);
+        ll_voice.setVisibility(View.VISIBLE);
     }
 }

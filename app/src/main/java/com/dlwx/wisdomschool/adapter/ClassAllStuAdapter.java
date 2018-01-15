@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.GreadRankBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class ClassAllStuAdapter extends BaseFastAdapter {
-    public ClassAllStuAdapter(Context ctx) {
+    private List<GreadRankBean.BodyBean> body;
+    public ClassAllStuAdapter(Context ctx,List<GreadRankBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return body.size();
     }
 
     @Override
@@ -34,10 +39,10 @@ public class ClassAllStuAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-            vh.tv_name.setText((position+1)+"、高飞");
+            vh.tv_name.setText((position+1)+"、"+body.get(position).getUser_nickname());
+        vh.tv_grade.setText(body.get(position).getScore()+"分");
         return convertView;
     }
-
     private class ViewHolder {
         public View rootView;
         public TextView tv_name;

@@ -24,6 +24,7 @@
         <TextView
             style="@style/TextSizeSmallTitleBlack"
             android:text="全部成长纪录"
+            android:id="@+id/tv_classseach"
             android:textColor="@color/black"
              />
             <ImageView

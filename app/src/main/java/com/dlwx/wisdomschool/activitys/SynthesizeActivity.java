@@ -9,6 +9,9 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,17 +26,19 @@ public class SynthesizeActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.btn_start)
     Button btnStart;
+    private List<Integer> body;
 
     @Override
     protected void initView() {
+        body = getIntent().getIntegerArrayListExtra("body");
         setContentView(R.layout.activity_synthesize);
         ButterKnife.bind(this);
     }
 
     @Override
     protected void initData() {
-            tvTitle.setText("综合素质首页");
-            initTabBar(toolBar);
+        tvTitle.setText("综合素质首页");
+        initTabBar(toolBar);
     }
 
     @Override
@@ -49,6 +54,8 @@ public class SynthesizeActivity extends BaseActivity {
 
     @OnClick(R.id.btn_start)
     public void onViewClicked() {
-        startActivity(new Intent(ctx,PublishUpPicActivity.class));
+        Intent intent = new Intent(ctx, PublishUpPicActivity.class);
+        intent.putIntegerArrayListExtra("body", (ArrayList<Integer>) body);
+        startActivity(intent);
     }
 }

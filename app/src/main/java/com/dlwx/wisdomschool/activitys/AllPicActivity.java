@@ -86,6 +86,7 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
     @Override
     protected void initView() {
         currnum = getIntent().getIntExtra("currnum", 0);
+        MAXLenth = getIntent().getIntExtra("MAXNUM",9);
         setContentView(R.layout.activity_all_pic);
         ButterKnife.bind(this);
         MAXLenth = MAXLenth - currnum;
@@ -196,7 +197,7 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                         images.get(pos).setCheck(false);
                     } else {
                         images.get(pos).setCheck(false);
-                        Toast.makeText(ctx, "当前最多只能选择9张图片", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ctx, "当前最多只能选择"+MAXLenth+"张图片", Toast.LENGTH_SHORT).show();
                     }
 
                 }

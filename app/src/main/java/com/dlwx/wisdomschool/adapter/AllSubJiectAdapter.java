@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.AllSubjectBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class AllSubJiectAdapter extends BaseFastAdapter {
-    public AllSubJiectAdapter(Context ctx) {
+    private List<AllSubjectBean.BodyBean> body;
+    public AllSubJiectAdapter(Context ctx,List<AllSubjectBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return body.size()+1;
     }
 
     @Override
@@ -33,6 +38,12 @@ public class AllSubJiectAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
 
+        }
+        if (position == 0) {
+            vh.tv_name.setText("总成绩排名");
+        }else{
+            AllSubjectBean.BodyBean bodyBean = body.get(position - 1);
+            vh.tv_name.setText(bodyBean.getXueke_name());
         }
         return convertView;
     }

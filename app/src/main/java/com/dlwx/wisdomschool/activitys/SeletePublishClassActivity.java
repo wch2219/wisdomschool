@@ -230,13 +230,12 @@ public class SeletePublishClassActivity extends BaseActivity {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        MyAllClassBean myAllClassBean = gson.fromJson(s, MyAllClassBean.class);
+       MyAllClassBean myAllClassBean = gson.fromJson(s, MyAllClassBean.class);
         if (myAllClassBean.getCode() == 200) {
             MyAllClassBean.BodyBean body = myAllClassBean.getBody();
             create_list = body.getCreate_list();
             join_list = body.getJoin_list();
             if (!TextUtils.isEmpty(addclass_nos)) {
-
                     String[] split = addclass_nos.split(",");
                     for (int j = 0; j < split.length; j++) {
                         for (int i = 0; i < join_list.size(); i++) {
@@ -250,10 +249,9 @@ public class SeletePublishClassActivity extends BaseActivity {
             }
 
             if (!TextUtils.isEmpty(createclass_nos)) {
+                String[] split = createclass_nos.split(",");
+                for (int j = 0; j < split.length; j++) {
                 for (int i = 0; i < create_list.size(); i++) {
-
-                    String[] split = createclass_nos.split(",");
-                    for (int j = 0; j < split.length; j++) {
                         if (create_list.get(i).getCnid().equals(split[j])) {
                             create_list.get(i).setCheck(true);
                         }else{
@@ -290,6 +288,5 @@ public class SeletePublishClassActivity extends BaseActivity {
         } else {
             Toast.makeText(ctx, myAllClassBean.getResult(), Toast.LENGTH_SHORT).show();
         }
-
     }
 }

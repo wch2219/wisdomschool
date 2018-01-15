@@ -1,5 +1,6 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -45,6 +46,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,9 +59,8 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 班级文件文件夹详细列表
  */
-public class PageFileDescActivity extends BaseActivity implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener
-{
+public class BookBagFileDescActivity extends BaseActivity implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -78,6 +79,8 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
     TextView tvSize;
     @BindView(R.id.et_seach)
     EditText etSeach;
+    @BindView(R.id.ll_bottom)
+    LinearLayout ll_bottom;
     private String name;
     private String cfid;
     private String classid;
@@ -85,7 +88,6 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
     private MyPopuWindow popuWindow;
     private List<Image> images;
     private List<Image> mp3s;
-    private String tag1;
 
     @Override
     protected void initView() {
@@ -93,9 +95,11 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
         name = intent.getStringExtra("name");
         cfid = intent.getStringExtra("cfid");
         classid = intent.getStringExtra("classid");
-        tag1 = intent.getStringExtra("tag");
+
         setContentView(R.layout.activity_page_file_desc);
         ButterKnife.bind(this);
+        ll_bottom.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -104,6 +108,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
         initTabBar(toolBar);
         getData("");
     }
+
     @Override
     protected void initListener() {
         initrefresh(smallLabel, true);
@@ -115,7 +120,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                 if (i == KeyEvent.KEYCODE_ENTER) {
                     // 先隐藏键盘
                     ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(PageFileDescActivity.this.getCurrentFocus()
+                            .hideSoftInputFromWindow(BookBagFileDescActivity.this.getCurrentFocus()
                                     .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
                     search();
@@ -134,24 +139,26 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
             DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
                 @Override
                 public void back(File file) {
-                    Intent intent = new Intent(ctx,ReadWordActivity.class);
-                    wch("下载文件"+file);
-                    intent.putExtra("path",file+"");
-                    intent.putExtra("filename",listBean.getName());
+                    Intent intent = new Intent(ctx, ReadWordActivity.class);
+                    wch("下载文件" + file);
+                    intent.putExtra("path", file + "");
+                    intent.putExtra("filename", listBean.getName());
                     startActivity(intent);
                 }
             });
-            DownFileSave.down(ctx,listBean.getFile_pic());
-        }else if (type == 1) {
+            DownFileSave.down(ctx, listBean.getFile_pic());
+        } else if (type == 1) {
             //大图显示
-            LookPic.showPic(ctx,tvTitle,images,i);
-        }else if (type == 2) {
+            LookPic.showPic(ctx, tvTitle, images, i);
+        } else if (type == 2) {
             MediaPlayUtils playUtils = new MediaPlayUtils(ctx);
-            playUtils.showPopu(ablvList,mp3s,i);
+            playUtils.showPopu(ablvList, mp3s, i);
         }
     }
+
     /**
      * 长按编辑删除
+     *
      * @param adapterView
      * @param view
      * @param i
@@ -196,16 +203,14 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
         map.put("token", Token);
         map.put("cfid", cfid);
         map.put("name", seach);
-        if (tag1 == null) {
-            map.put("classid", classid);
-            mPreenter.fetch(map, true, HttpUrl.getClassFile, HttpUrl.getClassFile + Token + classid + cfid + seach);
-        }else{
-            map.put("type",type);
-            mPreenter.fetch(map, true, HttpUrl.getBookBag, HttpUrl.getBookBag + Token + type + seach);
-        }
+        map.put("type", type);
+        mPreenter.fetch(map, true, HttpUrl.getBookBag, HttpUrl.getBookBag + Token + type + seach);
+
 
     }
+
     private String type;
+
     @Override
     public void showData(String s) {
         disLoading();
@@ -250,7 +255,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                     image.setPath(body.getList().get(i).getFile_pic());
                     image.setOldposition(i);
                     images.add(image);
-                }else if(type == 2){
+                } else if (type == 2) {
                     Image image = new Image();
                     image.setPath(body.getList().get(i).getFile_pic());
                     image.setOldposition(i);
@@ -281,6 +286,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
         });
         popuWindow.showAsDropDown(ivAdd, -10, 10, Gravity.RIGHT);
     }
+
     private class ViewHolderPopu implements View.OnClickListener {
         public View rootView;
         public TextView tv_uppic;
@@ -305,12 +311,14 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                     startActivityForResult(new Intent(ctx, AllPicActivity.class), 2);
                     break;
                 case R.id.tv_upfile:
-                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class),101);
+                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class), 101);
                     break;
             }
         }
     }
+
     private int tag = 0;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {
@@ -325,10 +333,10 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                 final String filepath = data.getStringExtra("path");
                 String[] split = filepath.split("/");
                 final String filename = split[split.length - 1];
-                final int filetype = data.getIntExtra("filetype",0);
+                final int filetype = data.getIntExtra("filetype", 0);
                 final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
                 showLoading();
-               tag = 0;
+                tag = 0;
                 UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                     @Override
                     public void success(Response<String> response) {
@@ -338,20 +346,19 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                             if (tag == 0) {
                                 tag = 1;
                                 int fileid = upPicBean.getBody().getFileid();
-                                Map<String,String> map = new HashMap<>();
-                                map.put("token",Token);
-                                map.put("classid",classid);
-                                map.put("folderid",cfid);
-                                map.put("name",filename);
-                                map.put("type",filetype+"");
-                                map.put("fileid",fileid+"");
-                                map.put("size",size+"");
-                                UpFileUtiles.addfile(ctx,map);
-                            }else{
-                                   disLoading();
-                                 getData("");
+                                Map<String, String> map = new HashMap<>();
+                                map.put("token", Token);
+                                map.put("folderid", cfid);
+                                map.put("name", filename);
+                                map.put("type", filetype + "");
+                                map.put("fileid", fileid + "");
+                                map.put("size", size + "");
+                                addfile(ctx, map);
+                            } else {
+                                disLoading();
+                                getData("");
                             }
-                        }else{
+                        } else {
                             disLoading();
                         }
                         Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -359,9 +366,29 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                 });
                 UpFileUtiles.TYPE = 1;
                 File file = new File(filepath);
-                UpFileUtiles.start(ctx,file,filetype+"",size);
+                UpFileUtiles.start(ctx, file, filetype + "", size);
                 break;
         }
+    }
+
+    private void addfile(final Context ctx, Map<String, String> map) {
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        PostRequest<String> post = OkGo.<String>post(HttpUrl.BookBagAddFile);
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> next = iterator.next();
+            post.params(next.getKey(), next.getValue());
+        }
+        post.execute(new StringCallback() {
+            @Override
+            public void onSuccess(Response<String> response) {
+                getData("");
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                Toast.makeText(ctx, "网络连接失败", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -389,7 +416,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                 if (morePicUpBean.getCode() == 200) {
                     MorePicUpBean.BodyBean body = morePicUpBean.getBody();
 
-                }else{
+                } else {
                     Toast.makeText(ctx, morePicUpBean.getResult(), Toast.LENGTH_SHORT).show();
                 }
 //                getFileList();
