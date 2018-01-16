@@ -82,8 +82,10 @@ public class LoginInActivity extends BaseActivity {
         }
     }
     private void login() {
-        etPhone.setText("18637051978");
-        etPwd.setText("123456");
+//        etPhone.setText("18637051978");
+//        etPwd.setText("123456");
+        etPhone.setText("18625903203");
+        etPwd.setText("654321");
         String phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
 

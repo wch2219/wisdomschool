@@ -12,7 +12,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ImageSpan;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -29,12 +28,14 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.PublishLableAdapter;
 import com.dlwx.wisdomschool.adapter.SendMessPicListAdapter;
+import com.dlwx.wisdomschool.bean.PublishGrouBean;
 import com.dlwx.wisdomschool.bean.PublishSaveTagBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.fragments.EmojiconFragment;
 import com.dlwx.wisdomschool.fragments.RecordOrPlayFragment;
 import com.dlwx.wisdomschool.interfac.EmoInterface;
 import com.dlwx.wisdomschool.interfac.VoiceRecordOrPlayListener;
+import com.dlwx.wisdomschool.listener.EdiTextInPutListener;
 import com.dlwx.wisdomschool.utiles.GroupPublishBigPic;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.UpFileUtiles;
@@ -98,6 +99,8 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     TextView tv_classnames;
     @BindView(R.id.iv_hind)
     ImageView iv_hind;
+    @BindView(R.id.iv_viecoplaytype)
+    ImageView iv_viecoplaytype;
     private String videofile;
     private int requestCodeVideo = 1;//视频
     private int requestCodePic = 2;//图片
@@ -117,13 +120,15 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         images = intent.getStringArrayListExtra("images");
         String tagname = intent.getStringExtra("tagname");
         String tagId = intent.getStringExtra("tagId");
-        PublishSaveTagBean saveTagBean = new PublishSaveTagBean();
-        saveTagBean.setTagName(tagname);
-        quality_sign = tagId;
+
         setContentView(R.layout.activity_publish_group_up);
         ButterKnife.bind(this);
-
-        saveTagBeans.add(saveTagBean);
+        if (!TextUtils.isEmpty(tagId)) {
+            PublishSaveTagBean saveTagBean = new PublishSaveTagBean();
+            saveTagBean.setTagName(tagname);
+            quality_sign = tagId;
+            saveTagBeans.add(saveTagBean);
+        }
         publishLableAdapter = new PublishLableAdapter(ctx, saveTagBeans);
         gvList.setAdapter(publishLableAdapter);
 
@@ -154,7 +159,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                         image.setOldposition(i);
                         imageList.add(image);
                     }
-
                     GroupPublishBigPic.showPic(ctx, gvList, imageList, position);
                     GroupPublishBigPic.setDeletteListener(new GroupPublishBigPic.DeletteListener() {
                         @Override
@@ -202,7 +206,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         recordTransaction.show(recordOrPlayFragment);
         recordTransaction.commit();
 
-//        etContent.addTextChangedListener(new EdiTextInPutListener());
+        etContent.addTextChangedListener(new EdiTextInPutListener(tvNum));
 
         EmoInterface.setCheckEmoInterface(new EmoInterface.CheckEmoInterface() {
             @Override
@@ -287,7 +291,8 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 break;
             case R.id.ll_voice://播放语音
                 //todo
-                VoicetranscribeAndPlayUtiles.play();
+                iv_viecoplaytype.setImageResource(R.drawable.anim_viceo_play);
+                VoicetranscribeAndPlayUtiles.play(iv_viecoplaytype);
                 break;
         }
     }
@@ -309,6 +314,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                     Gson gson = new Gson();
                     UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                     if (upPicBean.getCode() == 200) {
+                        wch("视频上传成功：" + response.body());
                         video = upPicBean.getBody().getFileid() + "";
                         send();
 
@@ -320,6 +326,10 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
             UpFileUtiles.start(ctx, new File(videofile), "2", 0);
 
         } else {
+            if (images.size() == 0) {
+                Toast.makeText(ctx, "请先选择图片", Toast.LENGTH_SHORT).show();
+                return;
+            }
             //上传图片语音
             if (!TextUtils.isEmpty(voiceFile)) {//先判断是否有语音,有语音先上传语音
                 UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
@@ -330,9 +340,9 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                         wch("语音上传：" + response.body());
                         UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                         if (upPicBean.getCode() == 200) {
-                            video = upPicBean.getBody().getFileid() + "";
+                            voice = upPicBean.getBody().getFileid() + "";
                             //上传成功后再多图上传
-
+                            upPic();
                         } else {
                             Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                         }
@@ -340,12 +350,77 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 });
                 wch(voiceFile);
                 UpFileUtiles.start(ctx, new File(voiceFile), "2", 0);
+            } else {//没有语音开始多图上传
+                upPic();
             }
         }
     }
 
+    private int pos = -1;
+
+    private void upPic() {
+        pos++;
+        if (pos >= images.size()) {
+            //图片上传完成
+            send();
+            return;
+        }
+        UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
+            @Override
+            public void success(Response<String> response) {
+                disLoading();
+                Gson gson = new Gson();
+                UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
+                if (upPicBean.getCode() == 200) {
+                    if (TextUtils.isEmpty(imgs)) {
+                        imgs = upPicBean.getBody().getFileid() + "";
+                    } else {
+                        imgs = imgs + "," + upPicBean.getBody().getFileid();
+                    }
+                    upPic();
+                } else {
+                    Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        UpFileUtiles.start(ctx, new File(images.get(pos)), "1", 0);
+
+    }
+
+
+    //    /**
+//     * 多图上传
+//     *
+//     * @param images
+//     */
+//    private void upPic(ArrayList<String> images) {
+//        showLoading();
+//        List<File> lists = new ArrayList<>();
+//        for (int i = 0; i < images.size(); i++) {
+//            lists.add(new File(images.get(i)));
+//        }
+//        wch(lists.size());
+//        PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
+//        for (int i = 0; i < images.size(); i++) {
+//            post.params("file" + i, lists.get(i));
+//        }
+//        post.execute(new StringCallback() {
+//            @Override
+//            public void onSuccess(Response<String> response) {
+//                wch(response.body());
+//                disLoading();
+////                getFileList();
+//            }
+//
+//            @Override
+//            public void onError(Response<String> response) {
+//                disLoading();
+//            }
+//        });
+//    }
     private String imgs;//图片id
     private String video;//视频id
+    private String voice;//语音id
     private String quality_sign;//综合素质标签
     private String person_sign;//个人素质标签
     private String addclass_nos;//添加的班级
@@ -362,10 +437,10 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         map.put("record_bf", content);
         map.put("imgs", imgs);
         map.put("video", video);
+        map.put("voice",voice);
         map.put("quality_sign", quality_sign);
         map.put("person_sign", person_sign);
         mPreenter.fetch(map, false, HttpUrl.SendgroupUp, "");
-
     }
 
     @Override
@@ -373,6 +448,20 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
 
         disLoading();
         wch(s);
+        Gson gson = new Gson();
+        PublishGrouBean publishGrouBean = gson.fromJson(s, PublishGrouBean.class);
+        if (publishGrouBean.getCode() == 200) {
+            String is_infour = publishGrouBean.getBody().getIs_infour();
+            if (is_infour.equals("1")) {//四个大标签
+                Intent intent = new Intent(ctx, PublishCompleteActivity.class);
+                startActivity(intent);
+            } else {
+                finish();
+            }
+        } else {
+            Toast.makeText(ctx, publishGrouBean.getResult(), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -416,13 +505,14 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                     quality_sign = quality_sign + "," + qusign;
                 }
                 if (TextUtils.isEmpty(person_sign)) {
-                    person_sign = tag;
+                    person_sign = tagid;
                 } else {
-                    person_sign = person_sign + "," + tag;
+                    person_sign = person_sign + "," + tagid;
                 }
                 if (TextUtils.isEmpty(tag)) {
 
                     saveTagBean.setTagName(qusign);
+
                 } else {
                     saveTagBean.setTagName(tag);
                 }
@@ -433,6 +523,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                     @Override
                     public void delete(int postion) {
                         saveTagBeans.remove(postion);
+
                         publishLableAdapter.notifyDataSetChanged();
                     }
                 });
@@ -446,20 +537,17 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
      */
     private List<PublishSaveTagBean> saveTagBeans = new ArrayList<>();
 
-    /**
-     * 播放或者录制
-     *
-     * @param type
-     */
-    private void showRecordorPlay(int type) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.popu_record_or_play, null);
-
-    }
-
     @Override
     public void backFile(String file) {
         voiceFile = file;
         //录制完成返回的语音文件
         ll_voice.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        VoicetranscribeAndPlayUtiles.stopPlay();
+        super.onDestroy();
     }
 }

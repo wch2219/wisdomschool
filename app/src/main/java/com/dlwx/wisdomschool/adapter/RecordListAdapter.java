@@ -15,6 +15,7 @@ import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.RecordListBean;
+import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -78,7 +79,11 @@ public class RecordListAdapter extends BaseFastAdapter {
         List<String> imgs = bodyBean.getImgs();
         vh.gv_list.setAdapter(new RecordPicListAdapter(ctx,imgs));
         //语音
-
+        if (TextUtils.isEmpty(bodyBean.getVoice())) {
+            vh.rl_viceo.setVisibility(View.GONE);
+        }else{
+            vh.rl_viceo.setVisibility(View.VISIBLE);
+        }
 //        标签
         List<String> mVals = new ArrayList<>();
         for (int i = 0; i < bodyBean.getPerson_sign().size(); i++) {
@@ -100,6 +105,7 @@ public class RecordListAdapter extends BaseFastAdapter {
         });
         //文字简介
         vh.tv_connect.setText(bodyBean.getRecord_bf());
+        EmoSwichUtiles.toSwich(ctx,vh.tv_connect,bodyBean.getRecord_bf());
         //语音播放
         vh.rl_viceo.setOnClickListener(new View.OnClickListener() {
             @Override

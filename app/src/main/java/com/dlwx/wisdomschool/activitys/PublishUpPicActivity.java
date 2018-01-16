@@ -59,7 +59,7 @@ public class PublishUpPicActivity extends BaseActivity {
                 tagname = tagName;
                 tagId = body.get(position);
                 Intent intent = new Intent(ctx, AllPicActivity.class);
-                intent.putExtra("MAXNUM", 3);
+
                 startActivityForResult(intent, 2);
             }
         });

@@ -46,7 +46,6 @@ public class AddLableAdapter extends BaseRecrviewAdapter {
     public int getItemCount() {
         return body.size();
     }
-
     private class ViewHolder extends RecyclerView.ViewHolder{
         public View rootView;
         public TextView tv_name;

@@ -82,6 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="top"
+                    android:maxLength="200"
+                    android:maxEms="200"
                     android:hint="请编辑本次活动内容"
                     android:textSize="11sp"
                     android:padding="10dp"
@@ -149,6 +151,7 @@
 
                         <ImageView
                             style="@style/Imagesmill2pic"
+                            android:id="@+id/iv_viecoplaytype"
                             android:src="@mipmap/icon_syyuyin"
                             />
 
@@ -209,6 +212,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/white"
         android:padding="10dp">
 
         <ImageView

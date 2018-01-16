@@ -40,11 +40,11 @@ public class RecordPicListAdapter extends BaseFastAdapter {
         }
         ViewGroup.LayoutParams layoutParams = vh.iv_pic.getLayoutParams();
         if (imgs.size() == 1) {
-            layoutParams.height = 200;
+            layoutParams.height = 400;
         }else if (imgs.size() == 2) {
-            layoutParams.height = 1500;
+            layoutParams.height = 300;
         } else{
-            layoutParams.height = 100;
+            layoutParams.height = 200;
         }
         vh.iv_pic.setLayoutParams(layoutParams);
         Glide.with(ctx).load(imgs.get(position)).into(vh.iv_pic);

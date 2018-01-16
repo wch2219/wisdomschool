@@ -171,7 +171,7 @@ public class DisCussActivity extends BaseActivity {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
 
-                    VoicetranscribeAndPlayUtiles.start((Activity) ctx);
+                    VoicetranscribeAndPlayUtiles.start((Activity) ctx,null,null);
                     tvSpeck.setText("松开 结束");
                     tvSpeck.setTextColor(getResources().getColor(R.color.garytext));
                     tvSpeck.setBackgroundResource(R.drawable.selete_speck_bggary);

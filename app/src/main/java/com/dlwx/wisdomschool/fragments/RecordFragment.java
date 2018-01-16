@@ -95,9 +95,14 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initDate() {
-        getDataList();
+
     }
 
+    @Override
+    public void onResume() {
+        getDataList();
+        super.onResume();
+    }
 
     @Override
     protected void initListener() {
@@ -512,7 +517,6 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             }
         }
     }
-
     private void recordList(String s, Gson gson) {
         RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
         if (recordListBean.getCode() == 200) {
