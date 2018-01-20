@@ -21,6 +21,12 @@
             android:orientation="horizontal"
 
             >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/ll_title"
+                >
             <ImageView
                 android:id="@+id/iv_pic"
                 style="@style/ImagehomeItempic2"
@@ -61,6 +67,13 @@
                 </LinearLayout>
 
             </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/ll_share"
+                >
             <TextView
                 style="@style/TextSizecontentBlack"
                 android:textSize="11sp"
@@ -74,6 +87,7 @@
                 android:id="@+id/iv_share"
                 android:src="@mipmap/icon_huodonggd"
                 />
+            </LinearLayout>
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -82,16 +96,33 @@
                 android:id="@+id/gv_list"
                 android:layout_width="match_parent"
                 android:numColumns="3"
+                android:layout_marginTop="5dp"
                 android:verticalSpacing="5dp"
+                android:layout_margin="10dp"
                 android:layout_height="wrap_content">
 
             </com.dlwx.baselib.view.MyGridView>
+            <RelativeLayout
+                android:id="@+id/rl_voide"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
                <ImageView
                    android:layout_width="match_parent"
                    android:layout_height="200dp"
                    android:id="@+id/iv_video"
+                   android:layout_marginTop="5dp"
                    />
 
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_waterplay" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -105,6 +136,7 @@
 
             <ImageView
                 style="@style/Imagesmill2pic"
+                android:id="@+id/iv_playing"
                 android:src="@mipmap/icon_syyuyin"
                 />
 
@@ -128,10 +160,68 @@
             android:id="@+id/tv_connect"
             style="@style/TextSizecontentBlack"
             android:lineSpacingExtra="2dp"
+            android:layout_width="match_parent"
             android:layout_marginBottom="20dp"
             android:text="        欢迎使用智慧家校！智慧家校可以帮助您纪录汇总孩子的成长，这是一本真正的家校共育概念的成长手册"
             />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            >
+            <!--赞-->
+            <LinearLayout
+                android:id="@+id/ll_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_praise"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/icon_czjlzana"
+                    />
+                <TextView
+                   style="@style/TextSizecontentBlack"
+                    android:text="赞"
+                    android:id="@+id/tv_praisenum"
+                    android:textColor="@color/garytext"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+            <!--评价-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:id="@+id/ll_comment"
+                android:layout_alignParentRight="true"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/icon_czjlpinglun"
+                    />
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:text="评论"
+                    android:textColor="@color/garytext"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+            <com.dlwx.baselib.view.MyListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_comment"
+                android:divider="@null"
+                ></com.dlwx.baselib.view.MyListView>
 
     </LinearLayout>
 </LinearLayout>

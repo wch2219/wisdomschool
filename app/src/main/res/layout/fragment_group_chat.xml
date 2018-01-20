@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:id="@+id/ll_entry"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content">
         <ImageView
@@ -31,7 +31,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_noentry"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -67,12 +67,16 @@
         <View
             style="@style/GaryDiveStyle"
             />
-            <ExpandableListView
-                android:layout_width="match_parent"
-                android:id="@+id/lv_list"
-                android:layout_height="wrap_content">
+            <!--<ExpandableListView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:id="@+id/lv_list"-->
+                <!--android:layout_height="wrap_content">-->
 
-            </ExpandableListView>
-
+            <!--</ExpandableListView>-->
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_list"
+            ></ListView>
     </LinearLayout>
 </RelativeLayout>

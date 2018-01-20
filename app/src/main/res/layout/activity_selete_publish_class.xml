@@ -45,7 +45,7 @@
                 android:background="#F6F6F6"
                 android:padding="10dp"
                 style="@style/TextSizecontentBlack"
-
+                android:id="@+id/tv_create"
                 android:layout_width="match_parent"
                 android:text="我创建的班级"
                 />
@@ -66,6 +66,12 @@
                 android:visibility="gone"
                 android:text="显示全部2个班级"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_add"
+                >
             <TextView
                 android:background="#F6F6F6"
                 android:padding="10dp"
@@ -91,6 +97,13 @@
                 android:visibility="gone"
                 android:text="显示全部2个班级"
                 android:textSize="11sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_myself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
             <TextView
                 android:background="#F6F6F6"
                 android:padding="10dp"
@@ -131,10 +144,12 @@
                         android:layout_marginLeft="10dp"
                         />
             </LinearLayout>
+            </LinearLayout>
             <View
                 style="@style/GaryDiveStyle"
                 android:layout_marginBottom="50dp"
                 />
+
         </LinearLayout>
     </ScrollView>
 

@@ -8,21 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ActionTitleBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/21/021.
  */
 
 public class SendNotiSeleteAdapter extends BaseFastAdapter {
-    private String[] strs;
-    public SendNotiSeleteAdapter(Context ctx,String[] strs) {
+    private List<ActionTitleBean.BodyBean> actionTitles;
+    public SendNotiSeleteAdapter(Context ctx,List<ActionTitleBean.BodyBean> actionTitles) {
         super(ctx);
-        this.strs = strs;
+        this.actionTitles = actionTitles;
     }
 
     @Override
     public int getCount() {
-        return strs.length;
+        return actionTitles.size();
     }
 
     @Override
@@ -35,7 +38,8 @@ public class SendNotiSeleteAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.tv_name.setText(strs[position]);
+
+        vh.tv_name.setText(actionTitles.get(position).getActivity_type());
         return convertView;
     }
 

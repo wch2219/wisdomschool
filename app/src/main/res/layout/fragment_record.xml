@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.dlwx.wisdomschool.views.PolaroidResizeLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:id="@+id/poresize"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         >
     <RelativeLayout
@@ -42,6 +46,13 @@
                 android:src="@mipmap/icon_czjlshaixuan"
                 />
 </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
     <RelativeLayout
         android:id="@+id/rl_synthesize"
         android:layout_width="match_parent"
@@ -58,7 +69,6 @@
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             />
-
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,24 +88,80 @@
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/refreshLayout"
-            >
-            <ListView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/lv_list"
-                android:divider="@null"
-                android:scrollbars="none"
-                android:stackFromBottom="true"
-                android:layout_marginBottom="20dp"
-                >
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical">
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/refreshLayout"
+                    android:layout_weight="1"
+                    >
+                <ListView
+                    android:id="@+id/lv_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
 
-            </ListView>
+                    android:divider="@null"
+                    android:scrollbars="none">
+                </ListView>
+               </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                <LinearLayout
+                    android:id="@+id/ll_bottominput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone">
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+                    <ImageView
+                        android:id="@+id/iv_face"
+                        style="@style/Imagesmillpic"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone"
+                        android:src="@mipmap/icon_biaoqing" />
+
+                    <EditText
+                        android:id="@+id/et_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_gary_line"
+                        android:hint="评论内容"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_sendsms"
+                        style="@style/TextSizeSmallTitleBlack"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@mipmap/ic_launcher"
+                        android:text="发送"
+                        android:textColor="@color/black" />
+                    >
+                </LinearLayout>
+
+                <!--android:stackFromBottom="true"-->
+
+            </LinearLayout>
+            </LinearLayout>
+
+
     </LinearLayout>
 
         <Button
@@ -108,4 +174,5 @@
             android:layout_marginRight="20dp"
             android:background="@mipmap/icon_bianxie"
             />
-</RelativeLayout>
+    </RelativeLayout>
+</com.dlwx.wisdomschool.views.PolaroidResizeLinearLayout>

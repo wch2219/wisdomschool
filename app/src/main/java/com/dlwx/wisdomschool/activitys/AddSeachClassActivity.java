@@ -95,7 +95,7 @@ public class AddSeachClassActivity extends BaseActivity {
                     Toast.makeText(ctx, "班级号不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                inputshoworhind();
+                inputhind(iv_pic);
 
                 checkClass();
                 break;

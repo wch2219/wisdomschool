@@ -66,11 +66,14 @@ public class VoicetranscribeAndPlayUtiles {
             myAudioRecorder.release();
             myAudioRecorder = null;
             mView.setBackgroundResource(pics[1]);
+            tvTime.setText("00:00");
         } else {
             if (myAudioRecorder != null) {
                 myAudioRecorder.stop();
+                mView.setBackgroundResource(pics[1]);
                 myAudioRecorder.release();
                 myAudioRecorder = null;
+                tvTime.setText("00:00");
                 return null;
             }
         }
@@ -79,11 +82,10 @@ public class VoicetranscribeAndPlayUtiles {
     }
 
 
-
-    public static String durationTime() {
+    public static String durationTime(String path) {
         MediaPlayer player = new MediaPlayer();
         try {
-            player.setDataSource(outputFile);  //recordingFilePath（）为音频文件的路径
+            player.setDataSource(path);  //recordingFilePath（）为音频文件的路径
             player.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -116,17 +118,26 @@ public class VoicetranscribeAndPlayUtiles {
     private static final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            int v = (int) (db / 10);
-            LogUtiles.LogI(v + "分贝、10");
-            mView.setBackgroundResource(pics[v]);
-            startTime += 100;
-            if (startTime >= 300000) {
-                stop();
-            } else {
-                SimpleDateFormat format = new SimpleDateFormat("mm:ss");
-                String time = format.format(new Date(startTime));
-                tvTime.setText(time);
+            switch (msg.what) {
+                case 0:
+                    int v = (int) (db / 10);
+                    LogUtiles.LogI(v + "分贝、10");
+                    mView.setBackgroundResource(pics[v]);
+                    startTime += 100;
+                    if (startTime >= 300000) {
+                        stop();
+                    } else {
+                        SimpleDateFormat format = new SimpleDateFormat("mm:ss");
+                        String time = format.format(new Date(startTime));
+                        tvTime.setText(time);
+                    }
+                    break;
+                default:
+                    tvTime.setText("00:00");
+                    mView.setBackgroundResource(pics[1]);
+                    break;
             }
+
         }
     };
     private static int[] pics = {R.drawable.ease_record_animate_01, R.drawable.ease_record_animate_02,
@@ -140,7 +151,12 @@ public class VoicetranscribeAndPlayUtiles {
     private static Runnable mUpdateMicStatusTimer = new Runnable() {
         public void run() {
             updateMicStatus();
-            mHandler.sendEmptyMessage(0);
+            if (myAudioRecorder != null) {
+
+                mHandler.sendEmptyMessage(0);
+            }else{
+                mHandler.sendEmptyMessage(1);
+            }
         }
     };
 
@@ -166,15 +182,16 @@ public class VoicetranscribeAndPlayUtiles {
     private static MediaPlayer mMediaPlayer;
     private static AnimationDrawable drawable;
 
-    public static void play(final ImageView view) {
-        if (mMediaPlayer != null ) {
+    public static void play(final ImageView view, String path) {
+        if (mMediaPlayer != null) {
             if (mMediaPlayer.isPlaying()) {
-                return;
+                mMediaPlayer.stop();
+
             }
         }
         mMediaPlayer = new MediaPlayer();
         try {
-            mMediaPlayer.setDataSource(outputFile);
+            mMediaPlayer.setDataSource(path);
             mMediaPlayer.prepare();
             mMediaPlayer.start();
             drawable = (AnimationDrawable) view.getDrawable();
@@ -184,6 +201,7 @@ public class VoicetranscribeAndPlayUtiles {
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     drawable.stop();
                     mediaPlayer.release();
+                    mMediaPlayer = null;
                     view.setImageResource(R.mipmap.icon_syyuyin);
                 }
             });

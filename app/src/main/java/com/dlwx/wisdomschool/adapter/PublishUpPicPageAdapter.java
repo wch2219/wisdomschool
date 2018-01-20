@@ -57,9 +57,16 @@ public class PublishUpPicPageAdapter extends PagerAdapter {
                 skiAddPicBackListener.back(titleList.get(position),position);
             }
         });
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (disspopuResultListener != null) {
+                        disspopuResultListener.diss();
+                    }
+                }
+            });
         return view;
     }
-
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
@@ -87,6 +94,14 @@ public class PublishUpPicPageAdapter extends PagerAdapter {
 
     public void setSkiAddPicBackListener(SkiAddPicBackListener skiAddPicBackListener) {
         this.skiAddPicBackListener = skiAddPicBackListener;
+    }
+    public interface DisspopuResultListener{
+        void diss();
+    }
+    public DisspopuResultListener disspopuResultListener;
+
+    public void setDisspopuResultListener(DisspopuResultListener disspopuResultListener) {
+        this.disspopuResultListener = disspopuResultListener;
     }
 }
 

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +59,8 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 发布成长
  */
-public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordOrPlayListener.RecordListener {
+public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordOrPlayListener.RecordListener ,
+    VoiceRecordOrPlayListener.CleanOrAnewRecordListener{
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -101,6 +103,10 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     ImageView iv_hind;
     @BindView(R.id.iv_viecoplaytype)
     ImageView iv_viecoplaytype;
+    @BindView(R.id.tv_sec)
+    TextView tv_sec;
+    @BindView(R.id.rl_voide)
+    RelativeLayout rl_voide;
     private String videofile;
     private int requestCodeVideo = 1;//视频
     private int requestCodePic = 2;//图片
@@ -141,6 +147,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
             llVideo.setVisibility(View.VISIBLE);
             ivVideopic.setImageBitmap(ImageCrop(bitmap));
         } else {
+
             llVideo.setVisibility(View.GONE);
             ivMp3.setVisibility(View.VISIBLE);
             ivAddpic.setVisibility(View.VISIBLE);
@@ -224,6 +231,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     @Override
     protected void initListener() {
         VoiceRecordOrPlayListener.setRecordListener(this);
+        VoiceRecordOrPlayListener.setAnewRecordListener(this);
     }
 
     @Override
@@ -233,7 +241,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
 
     @SuppressLint("WrongConstant")
     @OnClick({R.id.tv_aff, R.id.ll_seleteclass, R.id.tv_addlabel, R.id.iv_face, R.id.iv_addpic, R.id.iv_mp3,
-            R.id.tv_anewrecord, R.id.iv_videopic, R.id.iv_hind, R.id.ll_voice})
+            R.id.tv_anewrecord, R.id.rl_voide, R.id.iv_hind, R.id.ll_voice})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -264,7 +272,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 intent = new Intent(ctx, RecordVideoActivity.class);
                 startActivityForResult(intent, requestCodeVideo);
                 break;
-            case R.id.iv_videopic://点击播放
+            case R.id.rl_voide://点击播放
                 intent = new Intent(ctx, VideoPlayActivity.class);
                 intent.putExtra("path", videofile);
                 startActivity(intent);
@@ -288,11 +296,12 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 emojiconMenuContainer.setVisibility(View.GONE);
                 rl_record.setVisibility(View.GONE);
                 iv_hind.setVisibility(View.GONE);
+                VoiceRecordOrPlayListener.visibilityLis.isVisibi(rl_record.getVisibility());
                 break;
             case R.id.ll_voice://播放语音
                 //todo
                 iv_viecoplaytype.setImageResource(R.drawable.anim_viceo_play);
-                VoicetranscribeAndPlayUtiles.play(iv_viecoplaytype);
+                VoicetranscribeAndPlayUtiles.play(iv_viecoplaytype,voiceFile);
                 break;
         }
     }
@@ -355,7 +364,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
             }
         }
     }
-
     private int pos = -1;
 
     private void upPic() {
@@ -386,8 +394,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         UpFileUtiles.start(ctx, new File(images.get(pos)), "1", 0);
 
     }
-
-
     //    /**
 //     * 多图上传
 //     *
@@ -425,7 +431,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     private String person_sign;//个人素质标签
     private String addclass_nos;//添加的班级
     private String createclass_nos;//创建的班级
-
     /**
      * 发送
      */
@@ -437,7 +442,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         map.put("record_bf", content);
         map.put("imgs", imgs);
         map.put("video", video);
-        map.put("voice",voice);
+        map.put("voice", voice);
         map.put("quality_sign", quality_sign);
         map.put("person_sign", person_sign);
         mPreenter.fetch(map, false, HttpUrl.SendgroupUp, "");
@@ -455,9 +460,11 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
             if (is_infour.equals("1")) {//四个大标签
                 Intent intent = new Intent(ctx, PublishCompleteActivity.class);
                 startActivity(intent);
+
             } else {
-                finish();
+
             }
+            finish();
         } else {
             Toast.makeText(ctx, publishGrouBean.getResult(), Toast.LENGTH_SHORT).show();
         }
@@ -484,7 +491,28 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 for (int i = 0; i < imag.size(); i++) {
                     images.add(imag.get(i));
                 }
-                gvPiclist.setAdapter(new SendMessPicListAdapter(ctx, images));
+                final SendMessPicListAdapter sendMessPicListAdapter = new SendMessPicListAdapter(ctx, images);
+                gvPiclist.setAdapter(sendMessPicListAdapter);
+                sendMessPicListAdapter.setOnItemClickListener(new BaseRecrviewAdapter.OnItemClickListener() {
+                    @Override
+                    public void setOnClick(final int position) {
+                        List<Image> imageList = new ArrayList<>();
+                        for (int i = 0; i < images.size(); i++) {
+                            Image image = new Image();
+                            image.setPath(images.get(i));
+                            image.setOldposition(i);
+                            imageList.add(image);
+                        }
+                        GroupPublishBigPic.showPic(ctx, gvPiclist, imageList, position);
+                        GroupPublishBigPic.setDeletteListener(new GroupPublishBigPic.DeletteListener() {
+                            @Override
+                            public void delete(int postion) {
+                                images.remove(position);
+                                sendMessPicListAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
                 break;
             case 101://选择的班级
                 createclass_nos = data.getStringExtra("createclass_nos");
@@ -512,7 +540,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 if (TextUtils.isEmpty(tag)) {
 
                     saveTagBean.setTagName(qusign);
-
                 } else {
                     saveTagBean.setTagName(tag);
                 }
@@ -542,7 +569,13 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         voiceFile = file;
         //录制完成返回的语音文件
         ll_voice.setVisibility(View.VISIBLE);
+        tv_sec.setText(VoicetranscribeAndPlayUtiles.durationTime(voiceFile));
+    }
 
+    @Override
+    public void clean() {
+        ll_voice.setVisibility(View.GONE);
+        voiceFile = "";
     }
 
     @Override

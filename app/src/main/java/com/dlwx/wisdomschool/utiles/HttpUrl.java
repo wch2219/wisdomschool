@@ -48,4 +48,16 @@ public class HttpUrl {
     public static final String GetScore_record = BaseUrl + "Score/score_record";//年份下考试列表
     public static final String get_xueke = BaseUrl + "Score/get_xueke";//获取该考试下所有学科
     public static final String user_score_sort = BaseUrl + "Score/user_score_sort";//各科成绩排名
+    public static final String RecordComment = BaseUrl1 + "Praisecomment/add_view";//成长纪录评论
+    public static final String Recordreply = BaseUrl1 + "Praisecomment/reply_view";//成长纪录回复
+    public static final String RecordPrise = BaseUrl1 + "Praisecomment/praise_record";//成长记录，用户点赞/取消点赞
+    public static final String DeleteRecord = BaseUrl1 + "Growthrecord/del_record";//删除一条成长记录，记录分享页面数据
+    public static final String EightSign = BaseUrl1 + "sign/number_of_labels";//8个综合素质标签完成的数量
+    public static final String Add_group = BaseUrl + "Easemob/add_group";//创建环信群时保存群信息
+    public static final String Grouplist = BaseUrl + "Easemob/get_grouplist";//获取群列表
+    public static final String ActionTitle = BaseUrl1 + "Public/theme";//活动主题
+    public static final String Publish_inves = BaseUrl + "Investigation/publish_inves";//发布调查
+    public static final String HomeList = BaseUrl + "Investigation/Investigation_list";//首页列表
+    public static final String ActionDesc = BaseUrl + "Investigation/activity_info";//老师发表的活动详情
+    public static final String JoinAction = BaseUrl + "Investigation/add_activity_pinglun";//参与活动
 }

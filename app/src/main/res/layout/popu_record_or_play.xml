@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/ll_record"
         >
     <View
@@ -70,7 +70,7 @@
             android:id="@+id/ll_play"
             android:layout_width="match_parent"
             android:orientation="vertical"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_height="match_parent">
             <View
                 style="@style/GaryDiveStyle"

@@ -57,5 +57,6 @@ public class SynthesizeActivity extends BaseActivity {
         Intent intent = new Intent(ctx, PublishUpPicActivity.class);
         intent.putIntegerArrayListExtra("body", (ArrayList<Integer>) body);
         startActivity(intent);
+        finish();
     }
 }

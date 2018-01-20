@@ -246,13 +246,26 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
-    public void inputshoworhind(){
+    /*隐藏软键盘*/
+    public void inputhind(View view){
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (getWindow().getAttributes().softInputMode == WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
-
-            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+    /*显示软键盘*/
+    public void inputShow(final View view){
+        getWindow().getDecorView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    view.requestFocus();
+                    imm.showSoftInput(view, 0);
+                }
+            }
+        }, 100);
     }
 
     /**

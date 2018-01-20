@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dlwx.wisdomschool.R;
+import com.hyphenate.chat.EMGroup;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/27/027.
@@ -16,10 +19,11 @@ import com.dlwx.wisdomschool.R;
 
 public class ChatGroupListAdapter extends BaseExpandableListAdapter {
     private Context ctx;
-
-    public ChatGroupListAdapter(Context ctx) {
+    private List<EMGroup> grouplist;
+    public ChatGroupListAdapter(Context ctx, List<EMGroup> grouplist) {
         super();
         this.ctx = ctx;
+        this.grouplist = grouplist;
     }
 
     @Override
@@ -29,7 +33,7 @@ public class ChatGroupListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return 3;
+        return grouplist.size();
     }
 
     @Override
@@ -84,6 +88,13 @@ public class ChatGroupListAdapter extends BaseExpandableListAdapter {
             view.setTag(viewHolderChild);
         }else{
             viewHolderChild = (ViewHolderChild) view.getTag();
+        }
+        if (i == 0) {
+            EMGroup emGroup = grouplist.get(i1);
+            viewHolderChild.tv_name.setText(emGroup.getGroupName());
+            viewHolderChild.tv_num.setText("("+emGroup.getMemberCount()+")");
+        }else{
+
         }
         return view;
     }

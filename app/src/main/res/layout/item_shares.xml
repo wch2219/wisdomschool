@@ -12,7 +12,7 @@
         android:src="@mipmap/ic_launcher"
         />
         <TextView
-            style="@style/TextSizeSmallTitleBlack"
+            style="@style/TextSizecontentBlack"
             android:id="@+id/tv_name"
             android:textColor="@color/black"
             android:layout_marginTop="3dp"

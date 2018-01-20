@@ -26,6 +26,7 @@ public class ChatActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.iv_persionmanage)
     ImageView ivPersionmanage;
+    private String title;
 
     @Override
     protected void initView() {
@@ -34,17 +35,18 @@ public class ChatActivity extends BaseActivity {
         ButterKnife.bind(this);
         //聊天人或群id
        String toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
+        title = getIntent().getStringExtra("title");
         EaseChatFragment chatFragment = new EaseChatFragment();
         //传入参数
         chatFragment.setArguments(getIntent().getExtras());
+
         getSupportFragmentManager().beginTransaction().add(R.id.rl_chat, chatFragment).commit();
     }
     @Override
     protected void initData() {
         initTabBar(toolBar);
-        tvTitle.setText("高飞爸爸");
+        tvTitle.setText(title);
     }
-
     @Override
     protected void initListener() {
     }

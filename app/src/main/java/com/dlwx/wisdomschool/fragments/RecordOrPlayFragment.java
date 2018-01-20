@@ -28,7 +28,7 @@ import butterknife.Unbinder;
 /**
  * 录音和播放
  */
-public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeekBarChangeListener{
+public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeekBarChangeListener, VoiceRecordOrPlayListener.VisibilityListener {
 
     @BindView(R.id.cb_record)
     CheckBox cbRecord;
@@ -70,6 +70,8 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
     protected void initListener() {
         cbRecord.setOnCheckedChangeListener(recordListener);
         seekbar.setOnSeekBarChangeListener(this);
+        cbPlay.setOnCheckedChangeListener(playListener);
+        VoiceRecordOrPlayListener.setVisibilityListener(this);
     }
 
     @Override
@@ -88,8 +90,12 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_record://重新录制
+                VoiceRecordOrPlayListener.anewRecordListener.clean();
+                release();
                 break;
             case R.id.tv_delete://删除
+                release();
+                VoiceRecordOrPlayListener.anewRecordListener.clean();
                 break;
         }
     }
@@ -103,18 +109,35 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
             } else {//结束录制
                 outFile = VoicetranscribeAndPlayUtiles.stop();
                 VoiceRecordOrPlayListener.recordListener.backFile(outFile);
-                tvRecord.setText("点击开始录制");
+                tv_recordType.setText("点击开始录制");
+                tv_time.setText("00:00");
                 llPlay.setVisibility(View.VISIBLE);
                 llRecord.setVisibility(View.GONE);
-                startPlay();
+                cbPlay.setChecked(true);
             }
         }
     };
+
+    private CompoundButton.OnCheckedChangeListener playListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            boolean isplay = isChecked == true ? startPlay() : stopPlay();
+        }
+    };
+
+    @Override
+    public void isVisibi(int i) {
+        if (i == View.GONE) {
+            release();
+        }
+    }
+
     private String outFile;
     private MediaPlayer mMediaPlayer;
     private int duration;//音频时长
     private int currTime;
-    private void startPlay() {
+
+    private boolean startPlay() {
         try {
             mMediaPlayer = new MediaPlayer();
             mMediaPlayer.setDataSource(outFile);
@@ -126,26 +149,44 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            if (currTime >= duration) {
-                    mMediaPlayer.stop();
-                    mMediaPlayer.release();
-                    seekbar.setProgress(0);
-                    currTime = 0;
-            }else{
-                seekbar.setProgress(currTime);
-                handler.postDelayed(mUpdateMicStatusTimer,100);
+    private boolean stopPlay() {
+        if (mMediaPlayer != null) {
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
             }
         }
+        return false;
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    if (currTime >= duration) {
+                        mMediaPlayer.stop();
+                        mMediaPlayer.release();
+                        seekbar.setProgress(0);
+                        currTime = 0;
+                    } else {
+                        seekbar.setProgress(currTime);
+                        handler.postDelayed(mUpdateMicStatusTimer, 100);
+                    }
+                    break;
+
+            }
+
+        }
     };
-    private  Runnable mUpdateMicStatusTimer = new Runnable() {
+    private Runnable mUpdateMicStatusTimer = new Runnable() {
         public void run() {
-            currTime += 100;
-            handler.sendEmptyMessage(0);
+            if (mMediaPlayer != null) {
+                currTime = mMediaPlayer.getCurrentPosition();
+                handler.sendEmptyMessage(0);
+            }
         }
     };
 
@@ -168,11 +209,21 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
 
     @Override
     public void onDestroy() {
+        release();
+        super.onDestroy();
+    }
+
+    /**
+     * 释放资源
+     */
+    private void release() {
         if (mMediaPlayer != null) {
-            mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
+            llRecord.setVisibility(View.VISIBLE);
+            llPlay.setVisibility(View.GONE);
+            llRecord.setVisibility(View.VISIBLE);
+            llPlay.setVisibility(View.GONE);
         }
-        super.onDestroy();
     }
 }

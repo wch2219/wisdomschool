@@ -4,11 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.utiles.SlideCancelLoadPic;
+import com.dlwx.wisdomschool.views.PicImageView;
 
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
 
 public class RecordPicListAdapter extends BaseFastAdapter {
     private  List<String> imgs;
+
     public RecordPicListAdapter(Context ctx, List<String> imgs) {
         super(ctx);
         this.imgs = imgs;
@@ -38,27 +42,28 @@ public class RecordPicListAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
+        RequestManager requestManager = SlideCancelLoadPic.loadPic(ctx);
+        requestManager.load(imgs.get(position)).apply(new RequestOptions().
+                centerCrop().placeholder(R.mipmap.icon_lttupian).diskCacheStrategy(DiskCacheStrategy.ALL)).into(vh.iv_pic);
         ViewGroup.LayoutParams layoutParams = vh.iv_pic.getLayoutParams();
         if (imgs.size() == 1) {
-            layoutParams.height = 400;
+            layoutParams.height = 500;
         }else if (imgs.size() == 2) {
             layoutParams.height = 300;
         } else{
             layoutParams.height = 200;
         }
         vh.iv_pic.setLayoutParams(layoutParams);
-        Glide.with(ctx).load(imgs.get(position)).into(vh.iv_pic);
-
         return convertView;
     }
 
     private class ViewHolder {
         public View rootView;
-        public ImageView iv_pic;
+        public PicImageView iv_pic;
 
         public ViewHolder(View rootView) {
             this.rootView = rootView;
-            this.iv_pic = (ImageView) rootView.findViewById(R.id.iv_pic);
+            this.iv_pic = (PicImageView) rootView.findViewById(R.id.iv_pic);
         }
 
     }

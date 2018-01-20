@@ -17,7 +17,6 @@
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -27,10 +26,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal">
-
+                <!--时间-->
                 <ImageView
                     style="@style/Imagesmillpic"
-                    android:src="@mipmap/icon_naozhong" />
+                    android:src="@mipmap/icon_naozhong"
+                    android:visibility="gone" />
 
                 <TextView
 
@@ -66,7 +66,7 @@
                     android:id="@+id/tv_classname"
                     style="@style/TextSizecontentBlack"
                     android:layout_weight="1"
-                    android:text="一年级八班"
+                    android:text="选择班级"
                     android:textColor="@color/black" />
 
                 <ImageView
@@ -104,41 +104,80 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:background="@color/gary"
+                    android:background="#F7F7F7"
                     android:orientation="vertical"
                     android:padding="10dp">
 
                     <EditText
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:background="@null"
-
+                        android:gravity="top"
+                        android:id="@+id/et_content"
                         android:hint="请编辑调查内容"
                         android:textSize="13sp" />
 
-                    <com.dlwx.baselib.view.MyGridView
-                        android:id="@+id/gv_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:numColumns="4"></com.dlwx.baselib.view.MyGridView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/gv_piclist"
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    />
+                <LinearLayout
+                    android:id="@+id/ll_video"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <RelativeLayout
+                        android:id="@+id/rl_voide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/iv_video"
-                        style="@style/ImagehomeItempic"
-                        android:layout_margin="5dp"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/ss33" />
 
+                        <ImageView
+                            android:id="@+id/iv_videopic"
+                            android:layout_width="80dp"
+                            android:layout_height="60dp"
+                            android:scaleType="fitXY"
+                            android:layout_margin="10dp"
+
+                            />
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/icon_waterplay"
+                            />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_anewrecord"
+                            style="@style/TextSizecontentBlack"
+                            android:textColor="@color/blue"
+                            android:text="重录"
+                            android:padding="10dp"
+                            android:layout_alignParentBottom="true"
+                            />
+                    </RelativeLayout>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
+                        android:visibility="visible"
+                        android:id="@+id/ll_voice"
                         android:orientation="horizontal">
 
                         <RelativeLayout
                             android:layout_width="100dp"
+                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_black_line"
                             android:orientation="horizontal"
@@ -146,10 +185,12 @@
 
                             <ImageView
                                 style="@style/Imagesmill2pic"
+                                android:id="@+id/iv_viecoplaytype"
                                 android:src="@mipmap/icon_syyuyin"
                                 />
 
                             <TextView
+                                android:id="@+id/tv_sec"
                                 style="@style/TextSizecontentBlack"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
@@ -161,77 +202,99 @@
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
-
+            <!--调查-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:orientation="vertical">
 
-                    <TextView
-                        style="@style/TextSizecontentBlack"
-                        android:layout_weight="1"
-                        android:text="调查选项"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        style="@style/TextSizecontentBlack"
-                        android:text="点击加号可上传一张图片"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <View style="@style/GaryDiveStyle" />
-
-                <com.dlwx.baselib.view.MyListView
-                    android:id="@+id/lv_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></com.dlwx.baselib.view.MyListView>
-
-                <View style="@style/GaryDiveStyle" />
-
-                <TextView
-                    android:id="@+id/tv_addaction"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:padding="10dp"
-                    android:text="+增加一个选项"
-                    android:textColor="@color/black" />
-
-                <View style="@style/GaryDiveStyle" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <TextView
-                        style="@style/TextSizecontentBlack"
-                        android:text="匿名调查"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="（您将无法查看选项名单）"
-                        android:textSize="11sp" />
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
-                    <Switch
-                        style="@style/switchstyle"
-                        />
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:layout_weight="1"
+                            android:text="调查选项"
+                            android:textColor="@color/black" />
 
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="点击加号可上传一张图片"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <View style="@style/GaryDiveStyle" />
+
+                    <com.dlwx.baselib.view.MyListView
+                        android:id="@+id/lv_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></com.dlwx.baselib.view.MyListView>
+
+                    <View style="@style/GaryDiveStyle" />
+
+                    <TextView
+                        android:id="@+id/tv_addaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="+增加一个选项"
+                        android:textColor="@color/black" />
+
+                    <View style="@style/GaryDiveStyle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="匿名调查"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:text="（您将无法查看选项名单）"
+                            android:textSize="11sp" />
+
+                        <Switch style="@style/switchstyle" />
+
+                    </LinearLayout>
+
+                    <View style="@style/GaryDiveStyle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:layout_weight="1"
+                            android:text="可多选" />
+
+                        <Switch style="@style/switchstyle" />
+
+                    </LinearLayout>
+
+                    <View style="@style/GaryDiveStyle" />
                 </LinearLayout>
-
-                <View style="@style/GaryDiveStyle" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -242,70 +305,110 @@
                     <TextView
                         style="@style/TextSizecontentBlack"
                         android:layout_weight="1"
-                        android:text="可多选" />
+                        android:text="参与者可查看结果" />
 
-                    <Switch
-                        style="@style/switchstyle" />
+                    <Switch style="@style/switchstyle" />
 
                 </LinearLayout>
-
-                <View style="@style/GaryDiveStyle" />
             </LinearLayout>
 
+            <View style="@style/GaryDiveStyle" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:padding="20dp"
+                android:text="如何快速私聊&amp;最佳方案"
+                android:textColor="@color/blue" />
             <LinearLayout
+                android:id="@+id/ll_endtime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
                 <TextView
+
                     style="@style/TextSizecontentBlack"
                     android:layout_weight="1"
-                    android:text="参与者可查看结果" />
+                    android:text="活动结束时间"
 
-                <Switch
-                    style="@style/switchstyle" />
-
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/tv_entime"
+                    style="@style/TextSizecontentBlack"
+                    android:layout_weight="1"
+                    android:textColor="@color/black" />
+                <ImageView
+                    style="@style/Imagesmill3pic"
+                    android:src="@mipmap/icon_cjbjjiantouxia" />
             </LinearLayout>
-
-            <View style="@style/GaryDiveStyle" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/blue"
-                android:text="如何快速私聊&amp;最佳方案"
+            <include
+                layout="@layout/selete_time"
                 />
         </LinearLayout>
 
     </ScrollView>
-    <View
-        style="@style/GaryDiveStyle"
-        />
+
+    <View style="@style/GaryDiveStyle" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <ImageView style="@style/Imagesmillpic"
+        <ImageView
             android:id="@+id/iv_mp3"
-            android:src="@mipmap/icon_ltyuyin"
+            style="@style/Imagesmillpic"
             android:layout_marginLeft="20dp"
-            />
+            android:src="@mipmap/icon_ltyuyin" />
 
-        <ImageView style="@style/Imagesmillpic"
+        <ImageView
             android:id="@+id/iv_addpic"
-            android:src="@mipmap/icon_lttupian"
+            style="@style/Imagesmillpic"
             android:layout_marginLeft="40dp"
-            />
+            android:src="@mipmap/icon_lttupian" />
 
-        <ImageView style="@style/Imagesmillpic"
+        <ImageView
             android:id="@+id/iv_face"
-            android:src="@mipmap/icon_ltxiaolian"
+            style="@style/Imagesmillpic"
             android:layout_marginLeft="40dp"
+            android:src="@mipmap/icon_ltxiaolian" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="1dp"
             />
-
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:id="@+id/iv_hind"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:visibility="gone"
+                android:src="@mipmap/icon_wdxiala"
+                />
+        </RelativeLayout>
     </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/emojicon_menu_container"
+        ></FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:id="@+id/rl_record"
+
+        android:layout_height="wrap_content">
+
+
+    </FrameLayout>
 </LinearLayout>

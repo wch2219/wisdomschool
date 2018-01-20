@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -751,6 +753,22 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         if (message == null) {
             return;
         }
+
+        try {
+            //我的信息，一般本地自己取出来
+//            message.setAttribute("from_user_id", ""+(int)SPUtils.get(getActivity(),EaseConstant.USER_ID,0));
+            SharedPreferences sp = getActivity().getSharedPreferences("sp_mode",Context.MODE_PRIVATE);
+            Log.i("wch","头像发送"+sp.getString("Header_pic",""));
+            message.setAttribute("from_headportrait",sp.getString("Header_pic",""));
+            message.setAttribute("from_username", sp.getString("nickname",""));
+            //对方的信息，一般上个界面传值传过来
+//            message.setAttribute("to_user_id", getArguments().getString("to_user_id", ""));
+            message.setAttribute("to_headportrait", getArguments().getString("to_headportrait", ""));
+            message.setAttribute("to_username", getArguments().getString("to_username", ""));
+        } catch (Exception e) {
+
+        }
+
         if(chatFragmentHelper != null){
             //set extension
             chatFragmentHelper.onSetMessageAttributes(message);

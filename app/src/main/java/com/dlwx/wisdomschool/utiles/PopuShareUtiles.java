@@ -26,7 +26,6 @@ public class PopuShareUtiles extends PopupWindow implements View.OnClickListener
         this.setFocusable(true);
         this.setContentView(view);
         this.setOutsideTouchable(true);
-        this.setAnimationStyle(R.style.Animation);
         //设置PopupWindow弹出窗体的宽
         this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
         //设置PopupWindow弹出窗体的高
@@ -34,7 +33,8 @@ public class PopuShareUtiles extends PopupWindow implements View.OnClickListener
         //实例化一个ColorDrawable颜色为半透明
         ColorDrawable dw = new ColorDrawable(0xb0000000);
         //设置SelectPicPopupWindow弹出窗体的背景
-        this.setBackgroundDrawable(dw);
+//        this.setBackgroundDrawable(dw);
+        this.setAnimationStyle(R.style.AnimationPopuAp);
         String[] shares = context.getResources().getStringArray(R.array.shares);
         vh.gv_list.setAdapter(new SharesAdapter(context,shares));
         vh.tv_close.setOnClickListener(this);

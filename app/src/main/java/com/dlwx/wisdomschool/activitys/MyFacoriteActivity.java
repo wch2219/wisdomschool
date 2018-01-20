@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.adapter.HomeItmeAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,7 @@ public class MyFacoriteActivity extends BaseActivity {
         initTabBar(toolBar);
         LinearLayoutManager itemManager = new LinearLayoutManager(ctx);
         rvRecyclerview.setLayoutManager(itemManager);
-        rvRecyclerview.setAdapter(new HomeItmeAdapter(ctx));
+//        rvRecyclerview.setAdapter(new HomeItmeAdapter(ctx));
     }
 
     @Override

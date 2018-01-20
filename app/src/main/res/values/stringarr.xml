@@ -66,4 +66,25 @@
         <item>@color/publist3</item>
         <item>@color/publist4</item>
     </integer-array>
+
+        <string-array name="eightsynther">
+            <item>品德发展</item>
+            <item>公民素质</item>
+            <item>修习课程</item>
+            <item>学科成绩</item>
+            <item>身心健康</item>
+            <item>艺术素养</item>
+            <item>实践能力</item>
+            <item>创新精神</item>
+        </string-array>
+        <integer-array name="signcolor">
+            <item>@color/sign1</item>
+            <item>@color/sign2</item>
+            <item>@color/sign3</item>
+            <item>@color/sign4</item>
+            <item>@color/sign5</item>
+            <item>@color/sign6</item>
+            <item>@color/sign7</item>
+            <item>@color/sign8</item>
+        </integer-array>
 </resources>

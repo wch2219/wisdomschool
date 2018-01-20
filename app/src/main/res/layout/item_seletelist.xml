@@ -9,6 +9,6 @@
         style="@style/TextSizecontentBlack"
         android:textColor="@color/white"
         android:padding="5dp"
-        android:textSize="11sp"
+        android:textSize="15sp"
         />
 </android.support.constraint.ConstraintLayout>

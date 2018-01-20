@@ -58,7 +58,7 @@ public class RecordVideoActivity extends BaseActivity implements
     private MediaRecorder mediaRecorder;
     private long startmilliTime;
     private File videoFile;
-    private int maxMillTime = 60;//最大时间
+    private int maxMillTime = 120;//最大时间
     private Camera mCamera;
     private SurfaceHolder holder;
     private static final int FRONT = 1;//前置摄像头标记
@@ -248,7 +248,7 @@ public class RecordVideoActivity extends BaseActivity implements
             Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
             sendBroadcast(localIntent);
             Intent intent = new Intent();
-            intent.putExtra("vodeofile", videoFile + "");
+            intent.putExtra("videofile", videoFile + "");
             setResult(1, intent);
             finish();
 //            Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -256,6 +256,7 @@ public class RecordVideoActivity extends BaseActivity implements
 //            intent.setDataAndType(Uri.parse(bpath), "video/*");
 //            startActivity(intent);
         }
+
     }
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {

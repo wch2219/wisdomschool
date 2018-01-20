@@ -1,5 +1,6 @@
 package com.dlwx.wisdomschool.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -43,7 +44,7 @@ public class RecordListBean {
         this.body = body;
     }
 
-    public static class BodyBean {
+    public static class BodyBean implements Serializable{
         /**
          * class_name :
          * create_time : 2018-01-04 15:39:28
@@ -75,7 +76,8 @@ public class RecordListBean {
         private List<String> imgs;
         private List<?> person_sign;
         private List<?> quality_sign;
-
+        private List<PinglunHuifu> pinglun_huifu;
+        private PraiseBean praise;
         public String getClass_name() {
             return class_name;
         }
@@ -187,5 +189,99 @@ public class RecordListBean {
         public void setQuality_sign(List<?> quality_sign) {
             this.quality_sign = quality_sign;
         }
+
+        public List<PinglunHuifu> getPinglun_huifu() {
+            return pinglun_huifu;
+        }
+
+        public void setPinglun_huifu(List<PinglunHuifu> pinglun_huifu) {
+            this.pinglun_huifu = pinglun_huifu;
+        }
+
+        public PraiseBean getPraise() {
+            return praise;
+        }
+
+        public void setPraise(PraiseBean praise) {
+            this.praise = praise;
+        }
+
+        public class PraiseBean implements Serializable{
+            private int is_praise;
+            private int num;
+
+            public int getIs_praise() {
+                return is_praise;
+            }
+
+            public void setIs_praise(int is_praise) {
+                this.is_praise = is_praise;
+            }
+
+            public int getNum() {
+                return num;
+            }
+
+            public void setNum(int num) {
+                this.num = num;
+            }
+        }
+        public static class PinglunHuifu implements Serializable{
+            private String content;
+            private String hf_name;
+            private String hfid;
+            private String pl_name;
+            private String plid;
+            private String my_id;
+
+            public String getMy_id() {
+                return my_id;
+            }
+
+            public void setMy_id(String my_id) {
+                this.my_id = my_id;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public String getHf_name() {
+                return hf_name;
+            }
+
+            public void setHf_name(String hf_name) {
+                this.hf_name = hf_name;
+            }
+
+            public String getHfid() {
+                return hfid;
+            }
+
+            public void setHfid(String hfid) {
+                this.hfid = hfid;
+            }
+
+            public String getPl_name() {
+                return pl_name;
+            }
+
+            public void setPl_name(String pl_name) {
+                this.pl_name = pl_name;
+            }
+
+            public String getPlid() {
+                return plid;
+            }
+
+            public void setPlid(String plid) {
+                this.plid = plid;
+            }
+        }
+
     }
 }

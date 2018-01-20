@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/repair_date_other"
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/transparent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             >
+
+            <Button
+                android:id="@+id/repair_date_sel_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="取消"
+                android:textColor="@color/blue"
+                android:background="@android:color/transparent"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/repair_date_sel_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:textColor="@color/blue"
+                android:text="确定"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+
+            android:orientation="horizontal"
+            >
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="0dp"
+                android:theme="@android:style/Theme.Holo.Light"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                >
+            </DatePicker>
+
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:datePickerMode="spinner"
+                android:theme="@android:style/Theme.Holo.Light"
+                android:visibility="visible"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

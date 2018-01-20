@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_marginTop="20dp"
     android:layout_height="wrap_content">
     <!--学校发送的-->
@@ -11,10 +11,10 @@
             />
     <!--我发送的消息-->
              <include
-            layout="@layout/item_home_mysend"
+            layout="@layout/item_home_right"
             />
     <!--我接收的-->
         <include
-            layout="@layout/item_home_discuss"
+            layout="@layout/item_home_left"
             />
 </LinearLayout>

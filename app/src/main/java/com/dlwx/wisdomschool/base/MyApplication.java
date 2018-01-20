@@ -8,15 +8,21 @@ import android.support.multidex.MultiDex;
 import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.baselib.utiles.SpUtiles;
 import com.dlwx.wisdomschool.utiles.ResouseString;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
+import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.util.NetUtils;
 import com.lzy.okgo.OkGo;
 import com.tencent.bugly.Bugly;
 import com.tencent.smtt.sdk.TbsDownloader;
+
+import java.util.List;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -45,7 +51,47 @@ public class MyApplication extends Application {
        Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
        LogUtiles.LogI(Token);
         Bugly.init(getApplicationContext(), "567efebd79", false);
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
+        huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
     }
+    EMMessageListener msgListener = new EMMessageListener() {
+
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            EMMessageBody body = messages.get(0).getBody();
+            String s = body.toString();
+            LogUtiles.LogI(s);
+            //收到消息
+
+    }
+
+
+
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+            //收到透传消息
+        }
+
+        @Override
+        public void onMessageRead(List<EMMessage> messages) {
+            //收到已读回执
+        }
+
+        @Override
+        public void onMessageDelivered(List<EMMessage> message) {
+            //收到已送达回执
+        }
+        @Override
+        public void onMessageRecalled(List<EMMessage> messages) {
+            //消息被撤回
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+            //消息状态变动
+        }
+    };
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -69,9 +115,8 @@ public class MyApplication extends Application {
         EMClient.getInstance().setDebugMode(true);
         //注册一个监听连接状态的listener
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
-        easeUI = EaseUI.getInstance();
+        EaseUI.getInstance().init(getApplicationContext(),options);
     }
-
     //实现ConnectionListener接口
     private class MyConnectionListener implements EMConnectionListener {
         @Override
@@ -103,5 +148,24 @@ public class MyApplication extends Application {
 
         }
     }
+    /**
+     * 登录环信
+     */
+    private void huanxinLogin(String username,String pwd) {
+        EMClient.getInstance().login(username,pwd,new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                LogUtiles.LogI("登录聊天服务器成功！");
+            }
 
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+            @Override
+            public void onError(int code, String message) {
+                LogUtiles.LogI("登录聊天服务器失败！");
+            }
+        });
+    }
 }

@@ -42,8 +42,6 @@ public class SeletePublishClassActivity extends BaseActivity {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     //确认
-    @BindView(R.id.tv_sendsms)
-    TextView tvSendsms;
     @BindView(R.id.lv_listcreate)
     MyListView lvListcreate;
     @BindView(R.id.tv_mycreatenum)
@@ -58,6 +56,14 @@ public class SeletePublishClassActivity extends BaseActivity {
     ImageView ivPic;
     @BindView(R.id.cb_myself)
     CheckBox cb_myself;
+    @BindView(R.id.ll_myself)
+    LinearLayout ll_myself;
+    @BindView(R.id.tv_sendsms)
+    TextView tvSendsms;
+    @BindView(R.id.tv_create)
+    TextView tvCreate;
+    @BindView(R.id.ll_add)
+    LinearLayout llAdd;
     private List<MyAllClassBean.BodyBean.CreateListBean> create_list;
     private List<MyAllClassBean.BodyBean.JoinListBean> join_list;
     private RecordScreenCreateAdapter createAdapter;
@@ -68,8 +74,14 @@ public class SeletePublishClassActivity extends BaseActivity {
         Intent intent = getIntent();
         addclass_nos = intent.getStringExtra("addclass_nos");
         createclass_nos = intent.getStringExtra("createclass_nos");
+        String tag = intent.getStringExtra("tag");
         setContentView(R.layout.activity_selete_publish_class);
         ButterKnife.bind(this);
+        if (!TextUtils.isEmpty(tag)) {
+            ll_myself.setVisibility(View.GONE);
+            tvCreate.setVisibility(View.GONE);
+            llAdd.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -131,6 +143,7 @@ public class SeletePublishClassActivity extends BaseActivity {
     private String addclass_nos;//选择的据加入班级的班级id
     private String sleteMy;//选择了我自己
     private String classnames;//选择的班级名称
+
     /**
      * 提交选择的结果
      */
@@ -138,15 +151,15 @@ public class SeletePublishClassActivity extends BaseActivity {
 
         if (cb_myself.isChecked()) {//选择了自己
             //todo
-        }else{//选择了班级
+        } else {//选择了班级
             for (int i = 0; i < create_list.size(); i++) {
                 MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
                 if (createListBean.isCheck()) {
                     if (TextUtils.isEmpty(createclass_nos)) {
                         createclass_nos = createListBean.getCnid();
                         classnames = createListBean.getClass_name();
-                    }else{
-                        createclass_nos = createclass_nos + ","+createListBean.getCnid();
+                    } else {
+                        createclass_nos = createclass_nos + "," + createListBean.getCnid();
                         classnames = classnames + "," + createListBean.getClass_name();
                     }
 
@@ -158,8 +171,8 @@ public class SeletePublishClassActivity extends BaseActivity {
                     if (TextUtils.isEmpty(addclass_nos)) {
                         addclass_nos = joinListBean.getCnid();
                         classnames = joinListBean.getClass_name();
-                    }else{
-                        addclass_nos = addclass_nos + ","+joinListBean.getCnid();
+                    } else {
+                        addclass_nos = addclass_nos + "," + joinListBean.getCnid();
                         classnames = classnames + "," + joinListBean.getClass_name();
                     }
 
@@ -168,10 +181,10 @@ public class SeletePublishClassActivity extends BaseActivity {
 
         }
         Intent intent = new Intent();
-        intent.putExtra("addclass_nos",addclass_nos);
-        intent.putExtra("createclass_nos",createclass_nos);
-        intent.putExtra("classnames",classnames);
-        setResult(101,intent);
+        intent.putExtra("addclass_nos", addclass_nos);
+        intent.putExtra("createclass_nos", createclass_nos);
+        intent.putExtra("classnames", classnames);
+        setResult(101, intent);
         finish();
     }
 
@@ -230,18 +243,18 @@ public class SeletePublishClassActivity extends BaseActivity {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-       MyAllClassBean myAllClassBean = gson.fromJson(s, MyAllClassBean.class);
+        MyAllClassBean myAllClassBean = gson.fromJson(s, MyAllClassBean.class);
         if (myAllClassBean.getCode() == 200) {
             MyAllClassBean.BodyBean body = myAllClassBean.getBody();
             create_list = body.getCreate_list();
             join_list = body.getJoin_list();
             if (!TextUtils.isEmpty(addclass_nos)) {
-                    String[] split = addclass_nos.split(",");
-                    for (int j = 0; j < split.length; j++) {
-                        for (int i = 0; i < join_list.size(); i++) {
+                String[] split = addclass_nos.split(",");
+                for (int j = 0; j < split.length; j++) {
+                    for (int i = 0; i < join_list.size(); i++) {
                         if (join_list.get(i).getCnid().equals(split[j])) {
                             join_list.get(i).setCheck(true);
-                        }else{
+                        } else {
                             join_list.get(i).setCheck(false);
                         }
                     }
@@ -251,14 +264,14 @@ public class SeletePublishClassActivity extends BaseActivity {
             if (!TextUtils.isEmpty(createclass_nos)) {
                 String[] split = createclass_nos.split(",");
                 for (int j = 0; j < split.length; j++) {
-                for (int i = 0; i < create_list.size(); i++) {
+                    for (int i = 0; i < create_list.size(); i++) {
                         if (create_list.get(i).getCnid().equals(split[j])) {
                             create_list.get(i).setCheck(true);
-                        }else{
+                        } else {
                             create_list.get(i).setCheck(false);
                         }
                     }
-                 }
+                }
             }
 
             if (create_list.size() > 2) {
@@ -289,4 +302,5 @@ public class SeletePublishClassActivity extends BaseActivity {
             Toast.makeText(ctx, myAllClassBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

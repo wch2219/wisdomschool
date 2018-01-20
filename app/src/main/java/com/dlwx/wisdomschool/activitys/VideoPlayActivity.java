@@ -39,6 +39,7 @@ public class VideoPlayActivity extends BaseActivity {
         controller.setTitle("");
         nvplayert.setController(controller);
         nvplayert.start();
+
     }
 
     @Override
@@ -53,6 +54,7 @@ public class VideoPlayActivity extends BaseActivity {
 
     @OnClick(R.id.rl_back)
     public void onViewClicked() {
+            nvplayert.releasePlayer();
         finish();
 
     }

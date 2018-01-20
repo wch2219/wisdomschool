@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.wisdomschool.R;
 
@@ -30,7 +31,7 @@ public class SendMessPicListAdapter extends BaseRecrviewAdapter {
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        Glide.with(ctx).load(images.get(position)).into( ((ViewHolder)holder).iv_pic);
+        Glide.with(ctx).load(images.get(position)).apply(new RequestOptions().centerCrop()).into( ((ViewHolder)holder).iv_pic);
         ((ViewHolder)holder).iv_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

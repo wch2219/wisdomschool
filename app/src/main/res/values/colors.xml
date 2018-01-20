@@ -18,4 +18,13 @@
     <color name="publist4">#00A392</color>
     <color name="linegreen">#17AA7F</color>
     <color name="transgreen">#aaE4F7F1</color>
+
+    <color name="sign1">#D73B48</color>
+    <color name="sign2">#ED586B</color>
+    <color name="sign3">#329DD5</color>
+    <color name="sign4">#2B5CA8</color>
+    <color name="sign5">#00A493</color>
+    <color name="sign6">#759F53</color>
+    <color name="sign7">#F28220</color>
+    <color name="sign8">#FCB934</color>
 </resources>

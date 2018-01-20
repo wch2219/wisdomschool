@@ -47,6 +47,8 @@ public class LoginInActivity extends BaseActivity {
     TextView tvRegist;
     @BindView(R.id.btn_login)
     Button btnLogin;
+    private LoginBean.BodyBean body;
+
     @Override
     protected void initView() {
         setContentView(R.layout.activity_login_in);
@@ -84,8 +86,8 @@ public class LoginInActivity extends BaseActivity {
     private void login() {
 //        etPhone.setText("18637051978");
 //        etPwd.setText("123456");
-        etPhone.setText("18625903203");
-        etPwd.setText("654321");
+//        etPhone.setText("18625903203");
+//        etPwd.setText("654321");
         String phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
 
@@ -104,7 +106,6 @@ public class LoginInActivity extends BaseActivity {
         map.put("password",pwd);
         mPreenter.fetch(map,false, HttpUrl.login,"");
     }
-
     @Override
     public void showData(String s) {
         disLoading();
@@ -112,24 +113,12 @@ public class LoginInActivity extends BaseActivity {
         Gson gson = new Gson();
         LoginBean loginBean = gson.fromJson(s, LoginBean.class);
         if (loginBean.getCode() == 200) {
-            LoginBean.BodyBean body = loginBean.getBody();
-            sp.edit().putString(SpUtiles.Token,body.getToken()).commit();
-            sp.edit().putString(SpUtiles.Nickname,body.getNickname()).commit();
-            sp.edit().putString(SpUtiles.Header_pic,body.getHeader_pic()).commit();
-            sp.edit().putString(SpUtiles.Userid,body.getUserid()).commit();
-            sp.edit().putString(SpUtiles.Telephone,body.getTelephone()).commit();
-            sp.edit().putInt(SpUtiles.TeacherOrPatriarch,body.getIsteacher()).commit();
-            MyApplication.Token = body.getToken();
-//            huanxinLogin(body.getUserid(),"123456");
-            finish();
-//                if (checked) {
-//
-//                }else{
-//                    sp.edit().putInt(SpUtiles.TeacherOrPatriarch,0).commit();
-//                }
-            startActivity(new Intent(ctx, MainActivity.class));
+            body = loginBean.getBody();
+
+            huanxinLogin(body.getUserid(), body.getUserid());
+
         }
-        Toast.makeText(ctx, loginBean.getResult(), Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -140,10 +129,24 @@ public class LoginInActivity extends BaseActivity {
         EMClient.getInstance().login(username,pwd,new EMCallBack() {//回调
             @Override
             public void onSuccess() {
+                sp.edit().putString(SpUtiles.Token, body.getToken()).commit();
+                sp.edit().putString(SpUtiles.Nickname, body.getNickname()).commit();
+                sp.edit().putString(SpUtiles.Header_pic, body.getHeader_pic()).commit();
+                sp.edit().putString(SpUtiles.Userid, body.getUserid()).commit();
+                sp.edit().putString(SpUtiles.Telephone, body.getTelephone()).commit();
+                sp.edit().putInt(SpUtiles.TeacherOrPatriarch, body.getIsteacher()).commit();
+                MyApplication.Token = body.getToken();
+                wch(body.getUserid());
                 EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();
+                EMClient.getInstance().chatManager().loadAllConversations();;
                 LogUtiles.LogI("登录聊天服务器成功！");
-
+                finish();
+//                if (checked) {
+//
+//                }else{
+//                    sp.edit().putInt(SpUtiles.TeacherOrPatriarch,0).commit();
+//                }
+                startActivity(new Intent(ctx, MainActivity.class));
 
             }
 
@@ -151,7 +154,6 @@ public class LoginInActivity extends BaseActivity {
             public void onProgress(int progress, String status) {
                     wch("pro:"+progress+"sta:"+status);
             }
-
             @Override
             public void onError(int code, String message) {
                 LogUtiles.LogI("登录聊天服务器失败！");

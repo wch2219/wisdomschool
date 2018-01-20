@@ -27,7 +27,9 @@ import com.dlwx.wisdomschool.activitys.TeacherInvitaCodeActivity;
 import com.dlwx.wisdomschool.activitys.VideoExplainActivity;
 import com.dlwx.wisdomschool.activitys.WishDomBagActivity;
 import com.dlwx.wisdomschool.adapter.MyFoodAdapter;
+import com.dlwx.wisdomschool.base.MyApplication;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+import com.hyphenate.chat.EMClient;
 import com.tencent.bugly.beta.Beta;
 
 import butterknife.BindView;
@@ -128,8 +130,15 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 break;
             case R.id.tv_aff://退出登录
                 diaShow.dismiss();
-//                EMClient.getInstance().logout(true);//退出环信登录
+                EMClient.getInstance().logout(true);//退出环信登录
                 getActivity().finish();
+                sp.edit().putString(SpUtiles.Token, "").commit();
+                sp.edit().putString(SpUtiles.Nickname, "").commit();
+                sp.edit().putString(SpUtiles.Header_pic, "").commit();
+                sp.edit().putString(SpUtiles.Userid, "").commit();
+                sp.edit().putString(SpUtiles.Telephone, "").commit();
+                sp.edit().putInt(SpUtiles.TeacherOrPatriarch, 0).commit();
+                MyApplication.Token = "";
                 startActivity(new Intent(ctx, LoginInActivity.class));
                 break;
 

@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yinglan.keyboard.HideUtil;
 
 
 /**
@@ -43,7 +44,7 @@ public abstract class BaseFragment<V,T extends Presenter<V>> extends Fragment im
         mPreenter = createPresenter();
         loading = new MyProgressLoading(ctx, R.style.DialogStyle);
         sp = ctx.getSharedPreferences(SpUtiles.SP_Mode,Context.MODE_PRIVATE);
-
+        HideUtil.init(getActivity());
         initView(view);
         initDate();
         initListener();

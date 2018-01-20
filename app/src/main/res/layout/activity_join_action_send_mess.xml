@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.activitys.JoinActionSendMessActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <include
+        layout="@layout/toolbar"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentRight="true"
+        >
+        <TextView
+            style="@style/TextSizeSmallTitleBlack"
+            android:text="发送"
+            android:textColor="@color/blue"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:id="@+id/tv_aff"
+            />
+    </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_gary_line"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="top"
+                android:maxLength="200"
+                android:maxEms="200"
+                android:hint="请编辑本次活动内容"
+                android:textSize="11sp"
+                android:padding="10dp"
+                android:background="@null"
+                />
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gv_piclist"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+        <LinearLayout
+            android:id="@+id/ll_video"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RelativeLayout
+                android:id="@+id/rl_voide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/iv_videopic"
+                    android:layout_width="80dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY"
+                    android:layout_margin="10dp"
+
+                    />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/icon_waterplay"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_anewrecord"
+                    style="@style/TextSizecontentBlack"
+                    android:textColor="@color/blue"
+                    android:text="重录"
+                    android:padding="10dp"
+                    android:layout_alignParentBottom="true"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"
+            android:id="@+id/ll_voice"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_black_line"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <ImageView
+                    style="@style/Imagesmill2pic"
+                    android:id="@+id/iv_viecoplaytype"
+                    android:src="@mipmap/icon_syyuyin"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_sec"
+                    style="@style/TextSizecontentBlack"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:text="10”"
+                    android:textColor="@color/blue" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+        </LinearLayout>
+    <!--底部-->
+
+
+    <View
+        style="@style/GaryDiveStyle"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_mp3"
+                style="@style/Imagesmillpic"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_ltyuyin" />
+
+            <ImageView style="@style/Imagesmillpic"
+                android:id="@+id/iv_addpic"
+                android:src="@mipmap/icon_lttupian"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                />
+
+            <ImageView style="@style/Imagesmillpic"
+                android:id="@+id/iv_face"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_ltxiaolian"
+                android:layout_marginLeft="20dp"
+                />
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="1dp"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:layout_gravity="center_vertical"
+                >
+                <ImageView
+                    android:id="@+id/iv_hind"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:visibility="gone"
+                    android:src="@mipmap/icon_wdxiala"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/emojicon_menu_container"
+            ></FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:id="@+id/rl_record"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -28,6 +28,10 @@ public class EmoSwichUtiles {
      * @param source 原始的字符串
      */
         public static void toSwich(Context ctx, TextView tv,String source){
+            if (source == null) {
+
+                return;
+            }
             SpannableString spannString= new SpannableString(source);
             //表情正则
             Pattern compile = Pattern.compile("ee_\\d{1,2}");

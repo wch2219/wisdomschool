@@ -19,6 +19,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -66,6 +67,11 @@
         <service
             android:name="com.hyphenate.chat.EMChatService"
             android:exported="true" />
+
+        <activity
+            android:name="com.hyphenate.easeui.ui.EaseShowBigImageActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name="com.hyphenate.chat.EMJobService"
             android:exported="true"
@@ -87,11 +93,13 @@
         <activity
             android:name=".base.MainActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activitys.SplashActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -112,6 +120,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.ClassDescActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.BookBagFileDescActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
@@ -337,7 +349,6 @@
         <activity
             android:name=".activitys.PublishUpPicActivity"
             android:launchMode="singleTop"
-
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.PublishCompleteActivity"
@@ -454,7 +465,9 @@
             android:name=".activitys.RecordVideoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activitys.VideoPlayActivity" />
-        <activity android:name=".activitys.MyRecordVideoListActivity"></activity>
+        <activity android:name=".activitys.MyRecordVideoListActivity" />
+        <activity android:name=".activitys.AddActionActivity" />
+        <activity android:name=".activitys.JoinActionSendMessActivity"></activity>
     </application>
 
 </manifest>

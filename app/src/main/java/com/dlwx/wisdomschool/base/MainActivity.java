@@ -20,6 +20,7 @@ import com.dlwx.wisdomschool.fragments.ClassFragment;
 import com.dlwx.wisdomschool.fragments.HomeFragment;
 import com.dlwx.wisdomschool.fragments.MyFragment;
 import com.dlwx.wisdomschool.fragments.RecordFragment;
+import com.dlwx.wisdomschool.interfac.SoftKeyBoard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener,SoftKeyBoard.SoftKeyBoardListener{
     @BindView(R.id.bottom_navigation_container)
     BottomNavigationView bottomNavigationContainer;
     private List<Fragment> fragments = new ArrayList<>();
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @Override
     protected void initListener() {
-
+        SoftKeyBoard.setSoftKeyBoardListener(this);
     }
 
     @Override
@@ -114,4 +115,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         transaction.commitAllowingStateLoss();
         lastFragment = fragment;
     }
+
+    @Override
+    public void showorhind(int i) {
+        bottomNavigationContainer.setVisibility(i);
+    }
+
+
 }

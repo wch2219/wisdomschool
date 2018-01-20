@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
@@ -15,7 +16,10 @@ import com.dlwx.wisdomschool.activitys.AgeWeeklyActivity;
 import com.dlwx.wisdomschool.activitys.SendNotifiActivity;
 import com.dlwx.wisdomschool.adapter.HomeItmeAdapter;
 import com.dlwx.wisdomschool.adapter.HomeTitleAdapter;
+import com.dlwx.wisdomschool.bean.HomeListBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -23,10 +27,16 @@ import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
  * 首页
@@ -74,10 +84,21 @@ public class HomeFragment extends BaseFragment {
         rvAcross.setLayoutManager(manager);
         titleAdapter = new HomeTitleAdapter(ctx, strs);
         rvAcross.setAdapter(titleAdapter);
-        LinearLayoutManager itemManager = new LinearLayoutManager(ctx);
+        LinearLayoutManager itemManager = new LinearLayoutManager(ctx,LinearLayout.VERTICAL,false);
         rvRecyclerview.setLayoutManager(itemManager);
-        homeItmeAdapter = new HomeItmeAdapter(ctx);
-        rvRecyclerview.setAdapter(homeItmeAdapter);
+
+    }
+
+    @Override
+    public void onResume() {
+        getDataList();
+        super.onResume();
+    }
+
+    private void getDataList() {
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        mPreenter.fetch(map,true, HttpUrl.HomeList,HttpUrl.HomeList+Token);
     }
 
     @Override
@@ -101,7 +122,7 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
-        homeItmeAdapter.setOnItemClickListener(titAdapter);
+
     }
 
     @Override
@@ -134,4 +155,19 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        HomeListBean homeListBean = gson.fromJson(s, HomeListBean.class);
+        if (homeListBean.getCode() == 200) {
+            List<HomeListBean.BodyBean> body = homeListBean.getBody();
+            homeItmeAdapter = new HomeItmeAdapter(ctx,body);
+            rvRecyclerview.setAdapter(homeItmeAdapter);
+
+        }else{
+            Toast.makeText(ctx, homeListBean.getResult(), Toast.LENGTH_SHORT).show();
+        }
+    }
 }

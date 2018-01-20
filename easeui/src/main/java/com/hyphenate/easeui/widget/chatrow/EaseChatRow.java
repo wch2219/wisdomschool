@@ -2,6 +2,8 @@ package com.hyphenate.easeui.widget.chatrow;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
@@ -18,7 +21,6 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.model.styles.EaseMessageListItemStyle;
-import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
 import com.hyphenate.easeui.widget.EaseImageView;
@@ -110,7 +112,7 @@ public abstract class EaseChatRow extends LinearLayout {
      * @param position
      */
     public void setUpView(EMMessage message, int position,
-            MessageListItemClickListener itemClickListener,
+            EaseChatMessageList.MessageListItemClickListener itemClickListener,
                           EaseChatRowActionCallback itemActionCallback,
                           EaseMessageListItemStyle itemStyle) {
         this.message = message;
@@ -143,13 +145,26 @@ public abstract class EaseChatRow extends LinearLayout {
             }
         }
         if(userAvatarView != null) {
-            //set nickname and avatar
-            if (message.direct() == Direct.SEND) {
-                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
-            } else {
-                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
-                EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+
+            if(message.direct() == Direct.SEND){
+                SharedPreferences sp = getContext().getSharedPreferences("sp_mode",Context.MODE_PRIVATE);
+                String sendUrl=sp.getString("Header_pic","");
+                Log.i("wch","头像接收"+sendUrl);
+                Glide.with(context).load(sendUrl).into(userAvatarView);
+            }else{
+//                Glide.with(context).load(message.getStringAttribute("from_headportrait","")).into(userAvatarView);
+                Glide.with(context).load(message.getStringAttribute("from_headportrait","")).into(userAvatarView);
+                Log.i("wch","33########>"+message.getStringAttribute("from_headportrait",""));
+                usernickView.setText(message.getStringAttribute("from_username",""));
             }
+
+//            if (message.direct() == Direct.SEND) {
+//                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
+//            } else {
+//                EaseUserUtils.setUserAvatar(context, message.getFrom(), userAvatarView);
+//                EaseUserUtils.setUserNick(message.getFrom(), usernickView);
+//            }
+            //set nickname and avatar
         }
         if (EMClient.getInstance().getOptions().getRequireDeliveryAck()) {
             if(deliveredView != null){

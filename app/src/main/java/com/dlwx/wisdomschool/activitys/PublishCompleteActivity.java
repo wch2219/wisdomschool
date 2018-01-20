@@ -1,9 +1,12 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,20 +61,24 @@ public class PublishCompleteActivity extends BaseActivity {
     protected void initView() {
         setContentView(R.layout.activity_publish_complete);
         ButterKnife.bind(this);
+        WindowManager wm = (WindowManager) this
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+
         LinearLayout.LayoutParams layoutParams1 = (LinearLayout.LayoutParams) cvMorality.getLayoutParams();
-        layoutParams1.height = cvMorality.getWidth();
+        layoutParams1.height = width/2-120;
         cvMorality.setLayoutParams(layoutParams1);
 
         LinearLayout.LayoutParams layoutParams2 = (LinearLayout.LayoutParams) cvLearn.getLayoutParams();
-        layoutParams2.height = cvLearn.getWidth();
+        layoutParams2.height = width/2-120;
         cvLearn.setLayoutParams(layoutParams2);
 
         LinearLayout.LayoutParams layoutParams3 = (LinearLayout.LayoutParams) cvSports.getLayoutParams();
-        layoutParams3.height = cvSports.getWidth();
+        layoutParams3.height = width/2-120;
         cvSports.setLayoutParams(layoutParams3);
 
         LinearLayout.LayoutParams layoutParams4 = (LinearLayout.LayoutParams) cvStartwork.getLayoutParams();
-        layoutParams4.height = cvStartwork.getWidth();
+        layoutParams4.height = width/2-120;
         cvStartwork.setLayoutParams(layoutParams4);
     }
 
@@ -88,7 +95,6 @@ public class PublishCompleteActivity extends BaseActivity {
     protected void initListener() {
 
     }
-
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -143,6 +149,7 @@ public class PublishCompleteActivity extends BaseActivity {
         }
     }
 
+    @SuppressLint("WrongConstant")
     @Override
     public void showData(String s) {
         disLoading();
@@ -174,18 +181,23 @@ public class PublishCompleteActivity extends BaseActivity {
                                     break;
                             }
                         } else {
+                            int v;
                             switch (j) {
                                 case 1:
-                                    ivComplete1.setVisibility(View.VISIBLE);
+                                    v = ivComplete1.getVisibility() == 0?0:8;
+                                    ivComplete1.setVisibility(v);
                                     break;
                                 case 2:
-                                    ivComplete2.setVisibility(View.VISIBLE);
+                                    v = ivComplete2.getVisibility() == 0?0:8;
+                                    ivComplete2.setVisibility(v);
                                     break;
                                 case 3:
-                                    ivComplete3.setVisibility(View.VISIBLE);
+                                    v = ivComplete3.getVisibility() == 0?0:8;
+                                    ivComplete3.setVisibility(v);
                                     break;
                                 case 4:
-                                    ivComplete4.setVisibility(View.VISIBLE);
+                                    v = ivComplete4.getVisibility() == 0?0:8;
+                                    ivComplete4.setVisibility(v);
                                     break;
                                 default:
 
