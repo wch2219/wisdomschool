@@ -35,6 +35,7 @@ public abstract class BaseFragment<V,T extends Presenter<V>> extends Fragment im
     public T mPreenter;
     public MyProgressLoading loading;
     public SharedPreferences sp;
+    public int HttpType;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -5,9 +5,9 @@ package com.dlwx.wisdomschool.utiles;
  */
 
 public class HttpUrl {
-    private static final String BaseUrl = "http://192.168.0.199/school/index.php/Mobile/";
-    private static final String BaseUrl1 = "http://192.168.0.196/house/index.php/Mobile/";
-
+    private static final String BaseUrl = "http://39.107.74.235/school/index.php/Mobile/";
+    private static final String BaseUrl1 = "http://39.107.74.235/school/index.php/Mobile/";
+    private static final String WebUrl = "http://39.107.74.235/school/";
 
     public static final String get_teacher_code = BaseUrl + "Register/get_teacher_code";//获取教师邀请码
     public static final String check_teacher_code = BaseUrl + "Register/check_teacher_code";//教师邀请码验证
@@ -55,9 +55,14 @@ public class HttpUrl {
     public static final String EightSign = BaseUrl1 + "sign/number_of_labels";//8个综合素质标签完成的数量
     public static final String Add_group = BaseUrl + "Easemob/add_group";//创建环信群时保存群信息
     public static final String Grouplist = BaseUrl + "Easemob/get_grouplist";//获取群列表
-    public static final String ActionTitle = BaseUrl1 + "Public/theme";//活动主题
+    public static final String ActionTitle = BaseUrl + "Public/themelist";//活动主题
     public static final String Publish_inves = BaseUrl + "Investigation/publish_inves";//发布调查
     public static final String HomeList = BaseUrl + "Investigation/Investigation_list";//首页列表
     public static final String ActionDesc = BaseUrl + "Investigation/activity_info";//老师发表的活动详情
     public static final String JoinAction = BaseUrl + "Investigation/add_activity_pinglun";//参与活动
+    public static final String ActionDianzan = BaseUrl + "Investigation/zan_cancelzan";//给参与活动的记录点赞/取消点赞
+    public static final String ActionPinglun = BaseUrl + "Investigation/pingjia_activity";//去评价参与活动的记录
+    public static final String Situation = BaseUrl + "Investigation/situation";//查看阅读情况1查看数据 2点击阅读）
+    public static final String AgeWeek = BaseUrl1 + "Magazine/age_magazine";//年龄周刊列表
+    public static String VoideUrl = WebUrl + "web/video_strategy.html";//视频wenb
 }

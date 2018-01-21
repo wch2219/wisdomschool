@@ -96,8 +96,8 @@ public class RecordListAdapter extends BaseFastAdapter {
 
         }else{
             vh.rl_viceo.setVisibility(View.VISIBLE);
-            String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getVoice());
-            vh.tv_viceotime.setText(time);
+//            String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getVoice());
+//            vh.tv_viceotime.setText(time);
         }
 
 //        标签

@@ -8,14 +8,21 @@
     tools:context="com.dlwx.wisdomschool.activitys.VideoExplainActivity">
 
 
-    <include
-        layout="@layout/toolbar"
-        />
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <ListView
-        android:id="@+id/lv_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+    <!--<include-->
+        <!--layout="@layout/toolbar"-->
+        <!--/>-->
+    <!--<View-->
+        <!--style="@style/GaryDiveStyle"-->
+        <!--/>-->
+    <!--<ListView-->
+        <!--android:id="@+id/lv_list"-->
+        <!---->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"></ListView>-->
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/webview"
+            ></WebView>
+
 </LinearLayout>

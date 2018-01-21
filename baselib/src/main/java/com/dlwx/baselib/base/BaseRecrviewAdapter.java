@@ -14,6 +14,8 @@ import android.view.ViewGroup;
  */
 public abstract class BaseRecrviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public Context ctx;
+    public View mHeaderView;
+
     public BaseRecrviewAdapter(Context ctx) {
         this.ctx = ctx;
     }
@@ -32,6 +34,7 @@ public abstract class BaseRecrviewAdapter extends RecyclerView.Adapter<RecyclerV
     public void toast(Object o, View parent){
 
     }
+
     public OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {

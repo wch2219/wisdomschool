@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.CircleImageView;
@@ -193,7 +194,7 @@ public class ClassDescActivity extends BaseActivity {
         if (classDescBean.getCode() == 200) {
             super.showData(s);
             ClassDescBean.BodyBean body = classDescBean.getBody();
-            Glide.with(ctx).load(body.getClass_pic()).into(ivHead);//班徽
+            Glide.with(ctx).load(body.getClass_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(ivHead);//班徽
             tvClassName.setText(body.getClass_name());//班级名称
             tvScoolName.setText(body.getSchool_name());//学校名称
             tvClassmember.setText("班级号：" + body.getClass_no());//班级号

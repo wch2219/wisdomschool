@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassFileActivity;
@@ -54,7 +55,7 @@ public class MeAddCLassAdapter extends BaseFastAdapter {
             vh.tv_cansenmess.setVisibility(View.GONE);
             vh.ll_apply.setVisibility(View.GONE);
         }
-        Glide.with(ctx).load(bodyBean.getClass_pic()).into(vh.iv_pic);
+        Glide.with(ctx).load(bodyBean.getClass_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(vh.iv_pic);
         vh.tv_classnumber.setText(bodyBean.getClass_no());
         vh.tv_classname.setText(bodyBean.getClass_name());
         vh.tv_classmember.setText(bodyBean.getTotal_user());

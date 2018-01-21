@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.UploadPicUtiles;
@@ -226,7 +227,7 @@ public class PersionMessActivity extends BaseActivity {
                 sp.edit().putString(SpUtiles.Exten_code,info.getExten_code()).commit();
                 exten_code = info.getExten_code();
                 MyApplication.Token = info.getToken();
-                Glide.with(ctx).load(info.getHeader_pic()).into(ivHead);//头像
+                Glide.with(ctx).load(info.getHeader_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(ivHead);//头像
                 tvName.setText(info.getNickname());//昵称
                 tvSchname.setText(info.getSchool_name());//学校名称
                 tvPhone.setText(info.getTelephone());//手机号

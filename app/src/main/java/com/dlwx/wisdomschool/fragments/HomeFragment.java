@@ -12,10 +12,12 @@ import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.AddActionActivity;
 import com.dlwx.wisdomschool.activitys.AgeWeeklyActivity;
 import com.dlwx.wisdomschool.activitys.SendNotifiActivity;
 import com.dlwx.wisdomschool.adapter.HomeItmeAdapter;
 import com.dlwx.wisdomschool.adapter.HomeTitleAdapter;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.HomeListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
@@ -42,7 +44,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
  * 首页
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements HomeItmeAdapter.ItemOnClickListener, BaseRecrviewAdapter.OnItemClickListener {
     @BindView(R.id.rv_across)
     RecyclerView rvAcross;
     @BindView(R.id.rv_recyclerview)
@@ -55,6 +57,7 @@ public class HomeFragment extends BaseFragment {
     private HomeTitleAdapter titleAdapter;
     private HomeItmeAdapter homeItmeAdapter;
     private String[] strs;
+    private List<HomeListBean.BodyBean> body;
 
     @Override
     public int getLayoutID() {
@@ -76,6 +79,7 @@ public class HomeFragment extends BaseFragment {
             flbtnEdit.setVisibility(View.GONE);
         }
     }
+
     @Override
     protected void initDate() {
         strs = ctx.getResources().getStringArray(R.array.hometitle);
@@ -84,7 +88,7 @@ public class HomeFragment extends BaseFragment {
         rvAcross.setLayoutManager(manager);
         titleAdapter = new HomeTitleAdapter(ctx, strs);
         rvAcross.setAdapter(titleAdapter);
-        LinearLayoutManager itemManager = new LinearLayoutManager(ctx,LinearLayout.VERTICAL,false);
+        LinearLayoutManager itemManager = new LinearLayoutManager(ctx, LinearLayout.VERTICAL, false);
         rvRecyclerview.setLayoutManager(itemManager);
 
     }
@@ -96,9 +100,10 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getDataList() {
-        Map<String,String> map = new HashMap<>();
-        map.put("token",Token);
-        mPreenter.fetch(map,true, HttpUrl.HomeList,HttpUrl.HomeList+Token);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        HttpType = 1;
+        mPreenter.fetch(map, true, HttpUrl.HomeList, HttpUrl.HomeList + Token);
     }
 
     @Override
@@ -112,6 +117,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(2000);
+                getDataList();
 
             }
         });
@@ -138,7 +144,7 @@ public class HomeFragment extends BaseFragment {
 
     @OnClick(R.id.flbtn_edit)
     public void onViewClicked() {
-        startActivity(new Intent(ctx,SendNotifiActivity.class));
+        startActivity(new Intent(ctx, SendNotifiActivity.class));
 
     }
 
@@ -149,8 +155,8 @@ public class HomeFragment extends BaseFragment {
         @Override
         public void setOnClick(int position) {
             //TODO
-            Intent intent = new Intent(ctx,AgeWeeklyActivity.class);
-            intent.putExtra("age",strs[position]);
+            Intent intent = new Intent(ctx, AgeWeeklyActivity.class);
+            intent.putExtra("age", position+1+"");
             startActivity(intent);
         }
     };
@@ -160,14 +166,79 @@ public class HomeFragment extends BaseFragment {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        HomeListBean homeListBean = gson.fromJson(s, HomeListBean.class);
-        if (homeListBean.getCode() == 200) {
-            List<HomeListBean.BodyBean> body = homeListBean.getBody();
-            homeItmeAdapter = new HomeItmeAdapter(ctx,body);
-            rvRecyclerview.setAdapter(homeItmeAdapter);
+        if (HttpType == 1) {
+            HomeListBean homeListBean = gson.fromJson(s, HomeListBean.class);
+            if (homeListBean.getCode() == 200) {
+                body = homeListBean.getBody();
+                homeItmeAdapter = new HomeItmeAdapter(ctx, body);
+                rvRecyclerview.setAdapter(homeItmeAdapter);
+                homeItmeAdapter.setItemOnClickListener(this);
+                homeItmeAdapter.setOnItemClickListener(this);
+            } else {
+                Toast.makeText(ctx, homeListBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
+        } else if (HttpType == 2) {//已阅
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
 
-        }else{
-            Toast.makeText(ctx, homeListBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * 条目点击
+     *
+     * @param position
+     */
+    @Override
+    public void setOnClick(int position) {
+        HomeListBean.BodyBean bodyBean = body.get(position);
+        int theme = bodyBean.getTheme();
+        Intent intent;
+        switch (theme) {
+            case 1://班级通知
+
+                break;
+            case 2://群组讨论
+
+                break;
+            case 3://调查问卷
+
+                break;
+            case 4://视频实时纪录
+
+                break;
+            case 5://活动收集
+                intent = new Intent(ctx, AddActionActivity.class);
+                intent.putExtra("id", bodyBean.getId());
+                intent.putExtra("issend",bodyBean.getIs_send());
+                ctx.startActivity(intent);
+                break;
+            case 6://布置作业
+
+                break;
+            case 7://文章
+
+                break;
+            case 10://周刊
+
+                break;
+        }
+    }
+
+    /**
+     * 是否阅读
+     *
+     * @param id
+     */
+    @Override
+    public void clickYue(String id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        map.put("id", id);
+        HttpType = 2;
+        map.put("type", "2");
+        mPreenter.fetch(map, true, HttpUrl.Situation, "");
     }
 }

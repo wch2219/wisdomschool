@@ -131,6 +131,25 @@
                         android:text="10”"
                         android:textColor="@color/blue" />
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/ll_url"
+                    >
+                    <ImageView
+                        style="@style/ImagehomeItempic2"
+                        android:src="@mipmap/icon_lianjie"
+                        />
+                    <TextView
+                        style="@style/TextSizecontentBlack"
+                        android:layout_gravity="center_vertical"
+                        android:text="点击打开"
+                        android:layout_marginLeft="10dp"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -150,37 +169,55 @@
                     android:id="@+id/tv_rightdate"
                     android:layout_weight="1"
                     />
+
                 <LinearLayout
-                    android:id="@+id/ll_looknumandyueright"
+
                     android:layout_width="wrap_content"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:id="@+id/ll_looknumandyueright"
                     >
-                    <ImageView
-                        android:id="@+id/iv_look"
-                        style="@style/Imagesmill2pic"
-                        android:src="@mipmap/icon_yanjingb"
-
-                        />
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0/0"
-                        android:layout_marginLeft="5dp"
-                        />
-                    <ImageView
-                        android:layout_marginLeft="5dp"
-                        style="@style/Imagesmill2pic"
-                        android:src="@mipmap/icon_syliaotian"
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_lookdicusright"
+                        >
 
-                        />
-                    <TextView
+                        <ImageView
+                            style="@style/Imagesmillpic"
+                            android:layout_width="wrap_content"
+                            android:src="@mipmap/icon_yanjingb" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0/0"
+                            android:id="@+id/tv_yuenum"
+                            android:layout_marginLeft="5dp"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0/12"
-                        android:layout_marginLeft="5dp"
-                        />
+                        android:orientation="horizontal"
+                        android:id="@+id/ll_haveread"
+                        android:visibility="gone"
+                        >
+                        <ImageView
+                            android:id="@+id/iv_messdiscuss"
+                            style="@style/Imagesmill2pic"
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="5dp"
+
+                            android:src="@mipmap/icon_yue" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1/12"
+                            android:layout_marginLeft="5dp"
+                            />
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>

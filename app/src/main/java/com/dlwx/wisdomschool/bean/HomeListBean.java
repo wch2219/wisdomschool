@@ -79,6 +79,24 @@ public class HomeListBean {
         private String user_read;
         private String userid;
         private List<String> content_pic;
+        private String teacher_isyue;
+        private String parent_isyue;
+
+        public String getParent_isyue() {
+            return parent_isyue;
+        }
+
+        public void setParent_isyue(String parent_isyue) {
+            this.parent_isyue = parent_isyue;
+        }
+
+        public String getTeacher_isyue() {
+            return teacher_isyue;
+        }
+
+        public void setTeacher_isyue(String teacher_isyue) {
+            this.teacher_isyue = teacher_isyue;
+        }
 
         public String getClass_name() {
             return class_name;

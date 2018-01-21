@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                >
+                <android.support.v7.widget.CardView
+                    android:layout_width="wrap_content"
+                    app:cardCornerRadius="10dp"
+
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_leftHead"
+                        style="@style/ImagehomeItempic"
+
+                        android:src="@mipmap/icon_zhucetouxiang" />
+
+                </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TextSizecontentBlack"
+                    android:text="092(李老师)"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_type"
+                style="@style/TextSizeSmallTitleBlack"
+                android:text="办活动"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/blue1"
+                android:layout_marginLeft="20dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="20dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_typeleft"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="3dp"
+                    android:src="@mipmap/icon_actionshouji"
+                    />
+
+                <TextView
+                    android:id="@+id/contentleft"
+                    android:layout_marginLeft="5dp"
+                    style="@style/TextSizecontentBlack"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/iv_viecoplaytype"
+                    android:layout_toRightOf="@+id/iv_viecoplaytype"
+                    />
+            </LinearLayout>
+
+            <com.dlwx.baselib.view.MyGridView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/gv_piclistleft"
+                android:verticalSpacing="3dp"
+                android:horizontalSpacing="3dp"
+                android:layout_margin="10dp"
+                ></com.dlwx.baselib.view.MyGridView>
+            <RelativeLayout
+                android:id="@+id/rl_voide"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/iv_videoleft"
+
+                    android:layout_marginTop="5dp"
+                    />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/icon_waterplay" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                android:id="@+id/ll_voiceleft"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:visibility="visible"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_black_line"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        style="@style/Imagesmill2pic"
+                        android:id="@+id/iv_viecoplaytype"
+                        android:src="@mipmap/icon_syyuyin"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_sec"
+                        style="@style/TextSizecontentBlack"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:text="10”"
+                        android:textColor="@color/blue" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="20dp"
+                >
+                <TextView
+                    android:id="@+id/tv_endime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="距离活动结束：2018.06.07 16：51"
+                    android:layout_weight="1"
+                    android:textSize="11sp"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2018.06.07 16：51"
+                    android:textSize="11sp"
+                    />
+            </LinearLayout>
+            <View
+                style="@style/GaryDiveStyle"
+                />
+
+        </LinearLayout>
+
+</LinearLayout>

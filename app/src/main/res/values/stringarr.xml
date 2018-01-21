@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="hometitle">
+        <item>父母自修</item>
+        <item>婚恋</item>
         <item>0岁</item>
         <item>1岁</item>
-        <item>2岁</item>
-        <item>3岁</item>
-        <item>4岁</item>
-        <item>5岁</item>
-        <item>6岁</item>
-        <item>7岁</item>
-        <item>8岁</item>
-        <item>9岁</item>
-        <item>10岁</item>
-        <item>11岁</item>
-        <item>12岁</item>
-        <item>13岁</item>
-        <item>14岁</item>
-        <item>15岁</item>
-        <item>17岁</item>
-        <item>18岁</item>
-        <item>19岁</item>
+        <item>幼儿园上</item>
+        <item>幼儿园下</item>
+        <item>小学上</item>
+        <item>小学下</item>
+        <item>初中</item>
+        <item>高中</item>
+        <item>大学</item>
+
 
     </string-array>
     <string-array name="my_food">

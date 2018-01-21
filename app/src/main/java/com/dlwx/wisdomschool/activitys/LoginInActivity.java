@@ -1,6 +1,8 @@
 package com.dlwx.wisdomschool.activitys;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -58,6 +60,8 @@ public class LoginInActivity extends BaseActivity {
     @Override
     protected void initData() {
         tvTitle.setText(R.string.Login);
+        etPhone.setText("18637051978");
+        etPwd.setText("123456");
     }
 
     @Override
@@ -114,7 +118,7 @@ public class LoginInActivity extends BaseActivity {
         LoginBean loginBean = gson.fromJson(s, LoginBean.class);
         if (loginBean.getCode() == 200) {
             body = loginBean.getBody();
-
+            showLoading();
             huanxinLogin(body.getUserid(), body.getUserid());
 
         }
@@ -140,7 +144,8 @@ public class LoginInActivity extends BaseActivity {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();;
                 LogUtiles.LogI("登录聊天服务器成功！");
-                finish();
+                    handler.sendEmptyMessage(1);
+
 //                if (checked) {
 //
 //                }else{
@@ -153,11 +158,31 @@ public class LoginInActivity extends BaseActivity {
             @Override
             public void onProgress(int progress, String status) {
                     wch("pro:"+progress+"sta:"+status);
+
             }
             @Override
             public void onError(int code, String message) {
                 LogUtiles.LogI("登录聊天服务器失败！");
+                handler.sendEmptyMessage(2);
             }
         });
     }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+             switch (msg.what){
+                        case 1:
+                            disLoading();
+                            finish();
+                            Toast.makeText(ctx, "登录成功", Toast.LENGTH_SHORT).show();
+                            break;
+                            
+                            case 2:
+                                disLoading();
+                                Toast.makeText(ctx, "登录失败，请重新登录", Toast.LENGTH_SHORT).show();
+                                break;
+                    }
+            
+        }
+    };
 }

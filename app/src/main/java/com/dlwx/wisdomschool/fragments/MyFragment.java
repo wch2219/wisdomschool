@@ -11,6 +11,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
@@ -93,6 +95,17 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         }
         lvList.setHeaderDividersEnabled(true);
         lvList.setAdapter(new MyFoodAdapter(ctx, foodarr,pics));
+    }
+
+    @Override
+    public void onResume() {
+        String nickName = sp.getString(SpUtiles.Nickname, "");
+        String headpic = sp.getString(SpUtiles.Header_pic, "");
+        headvh.tv_name.setText(nickName);
+        String extencode = sp.getString(SpUtiles.Exten_code, "");
+        Glide.with(ctx).load(headpic).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(headvh.iv_head);
+        Glide.with(ctx).load(extencode).apply(new RequestOptions().error(R.mipmap.icon_wdwdewm)).into(headvh.iv_code);
+        super.onResume();
     }
 
     @Override

@@ -261,7 +261,7 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
             public void run() {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
-                    view.requestFocus();
+//                    view.requestFocus();
                     imm.showSoftInput(view, 0);
                 }
             }

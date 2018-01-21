@@ -105,6 +105,7 @@
                             android:src="@mipmap/icon_wdwdxitong"
                             />
                             <TextView
+                                android:id="@+id/tv_remindlook"
                                 style="@style/TextSizecontentBlack"
                                 android:textSize="10sp"
                                 android:text="提醒查看"
@@ -156,33 +157,6 @@
             android:layout_height="wrap_content">
 
         </ListView>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-        <RelativeLayout
-            android:id="@+id/rl_bottm"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
 
-            >
-            <CheckBox
-                android:id="@+id/cb_all"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 全选"
-                android:layout_marginLeft="10dp"
-                android:button="@drawable/selete_check"
-                />
-                <TextView
-                    android:id="@+id/tv_onekey"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="@color/blue"
-                    android:text="一键提醒"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    />
-        </RelativeLayout>
+
 </LinearLayout>

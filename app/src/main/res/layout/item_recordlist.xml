@@ -3,7 +3,7 @@
     xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/ll_list"
         android:layout_width="match_parent"
@@ -105,6 +105,7 @@
             <RelativeLayout
                 android:id="@+id/rl_voide"
                 android:layout_margin="10dp"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -129,6 +130,7 @@
             android:id="@+id/rl_viceo"
             android:layout_width="100dp"
             android:layout_margin="10dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_black_line"
             android:orientation="horizontal"
@@ -193,6 +195,34 @@
                     android:layout_marginLeft="10dp"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:id="@+id/ll_start"
+                android:layout_alignParentRight="true"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ee_27"
+                    />
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:text="评星"
+                    android:textColor="@color/garytext"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    />
+            </LinearLayout>
             <!--评价-->
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -200,7 +230,7 @@
                 android:orientation="horizontal"
                 android:padding="5dp"
                 android:id="@+id/ll_comment"
-                android:layout_alignParentRight="true"
+
                 >
                 <ImageView
                     android:layout_width="20dp"
@@ -209,11 +239,12 @@
                     />
                 <TextView
                     style="@style/TextSizecontentBlack"
-                    android:text="评论"
+                    android:text="评价"
                     android:textColor="@color/garytext"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     />
+            </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
             <com.dlwx.baselib.view.MyListView

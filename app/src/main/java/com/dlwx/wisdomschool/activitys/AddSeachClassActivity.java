@@ -207,7 +207,7 @@ public class AddSeachClassActivity extends BaseActivity {
                 case R.id.tv_oneself:
                     Map<String,String> map = new HashMap<>();
 
-                    map.put("urid",sp.getString(SpUtiles.Nickname,""));
+                    map.put("urid",sp.getString(SpUtiles.Userid,""));
                     joinClass(map);
                     break;
                 case R.id.tv_patriarch:

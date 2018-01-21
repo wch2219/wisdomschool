@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.multidex.MultiDex;
+import android.text.TextUtils;
 
 import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.baselib.utiles.SpUtiles;
@@ -52,7 +53,9 @@ public class MyApplication extends Application {
        LogUtiles.LogI(Token);
         Bugly.init(getApplicationContext(), "567efebd79", false);
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
-        huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
+        if (!TextUtils.isEmpty(Token)) {
+            huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
+        }
     }
     EMMessageListener msgListener = new EMMessageListener() {
 

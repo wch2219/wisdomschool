@@ -27,15 +27,4 @@ public class MyListView extends ListView{
 
         super.onMeasure(widthMeasureSpec, height);
     }
-    private int count;
-
-    @Override
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-        invalidate();
-    }
 }

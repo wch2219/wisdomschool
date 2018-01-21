@@ -343,10 +343,10 @@ public class SendNotifiActivity extends BaseActivity implements VoiceRecordOrPla
             return;
         }
 
-        if (images.size() == 0) {
-            Toast.makeText(ctx, "请先选择图片", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (images.size() == 0) {
+//            Toast.makeText(ctx, "请先选择图片", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         showLoading();
         //上传图片语音
         if (!TextUtils.isEmpty(voiceFile)) {//先判断是否有语音,有语音先上传语音
