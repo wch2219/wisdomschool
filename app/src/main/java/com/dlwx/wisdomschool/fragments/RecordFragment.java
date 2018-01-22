@@ -199,6 +199,13 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void downOnRefresh() {
+        page =1;
+        getDataList();
+    }
+
+    @Override
+    public void loadmore() {
+        page++;
         getDataList();
     }
 
@@ -292,12 +299,13 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                     case R.id.rb_all:
                         popuSceer.dismiss();
                         type = "";
-
+                        page =1;
                         getDataList();
                         break;
                     case R.id.rb_myself:
                         popuSceer.dismiss();
                         type = "1";
+                        page =1;
                         getDataList();
                         break;
                 }
@@ -400,6 +408,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             tv_classseach.setText(createListBean.getClass_name());
             diashow.dismiss();
             type = "";
+            page = 1;
             getDataList();
         }
     };
@@ -418,6 +427,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             vhDia.cb_check.setChecked(false);
             diashow.dismiss();
             type = "";
+            page = 1;
             tv_classseach.setText(joinListBean.getClass_name());
             getDataList();
         }
@@ -443,6 +453,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         diashow.dismiss();
         type = "1";
         class_no = "";
+        page = 1;
         tv_classseach.setText("仅自己可见");
         getDataList();
     }
@@ -513,6 +524,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 
         class_no = "";
         type = "";
+        page = 1;
         diashow.dismiss();
         getDataList();
     }
@@ -580,7 +592,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             this.ll_close = (LinearLayout) rootView.findViewById(R.id.ll_close);
         }
     }
-
+    private int page = 1;
     /**
      * 拉取数据
      */
@@ -590,6 +602,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         map.put("token", Token);
         map.put("type", type);
         map.put("class_no", class_no);
+        map.put("page",page+"");
         mPreenter.fetch(map, true, HttpUrl.Growthrecord, HttpUrl.Growthrecord + Token + type + class_no);
     }
 
