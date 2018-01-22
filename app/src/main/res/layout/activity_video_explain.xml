@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/rl_webroot"
     tools:context="com.dlwx.wisdomschool.activitys.VideoExplainActivity">
 
-
-    <!--<include-->
-        <!--layout="@layout/toolbar"-->
-        <!--/>-->
-    <!--<View-->
-        <!--style="@style/GaryDiveStyle"-->
-        <!--/>-->
-    <!--<ListView-->
-        <!--android:id="@+id/lv_list"-->
-        <!---->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"></ListView>-->
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/webview"
             ></WebView>
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/progress_bar"
+        />
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:id="@+id/back"
+        />
 
-</LinearLayout>
+</RelativeLayout>

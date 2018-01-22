@@ -65,4 +65,5 @@ public class HttpUrl {
     public static final String Situation = BaseUrl + "Investigation/situation";//查看阅读情况1查看数据 2点击阅读）
     public static final String AgeWeek = BaseUrl1 + "Magazine/age_magazine";//年龄周刊列表
     public static String VoideUrl = WebUrl + "web/video_strategy.html";//视频wenb
+    public static final String AgeWeekWeb = WebUrl + "web/weekly_classify.html";
 }

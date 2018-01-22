@@ -19,6 +19,7 @@ import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.ActionDescBean;
+import com.dlwx.wisdomschool.bean.PinglunContetBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.dlwx.wisdomschool.utiles.LookPic;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -155,7 +156,7 @@ public class AddActionAdapter extends BaseRecrviewAdapter {
         }
         vh.tv_praisenum.setText("赞("+pinglunBean.getZan_num()+")");
         //评论列表
-            final List<ActionDescBean.BodyBean.PinglunBean.PinglunContetBean> pinglun = pinglunBean.getPinglun();
+            final List<PinglunContetBean> pinglun = pinglunBean.getPinglun();
             if (pinglun != null) {
             vh.lv_comment.setAdapter(new ActionCommentListAdapter(ctx,pinglun));
         }

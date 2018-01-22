@@ -217,7 +217,7 @@ public class ActionDescBean {
             this.pinglun = pinglun;
         }
 
-        public static class PinglunBean {
+        public  class PinglunBean {
             /**
              * content_img : ["http://192.168.0.199/school//Uploads/5a6338c01dcd6x250.jpg","http://192.168.0.199/school//Uploads/5a6338c0ce3b6x250.jpg","http://192.168.0.199/school//Uploads/5a6338c192268x250.jpg","http://192.168.0.199/school//Uploads/5a6338c258370x250.jpg","http://192.168.0.199/school//Uploads/5a6338c3040d9x250.jpg"]
              * header_pic : http://192.168.0.199/school//Uploads/5a571b612756cx250.jpg
@@ -332,35 +332,7 @@ public class ActionDescBean {
                 this.pinglun = pinglun;
             }
 
-            public static class PinglunContetBean{
-                    private String nickname;
-                    private String pingjia;
-                    private int star_num;
 
-                public String getNickname() {
-                    return nickname;
-                }
-
-                public void setNickname(String nickname) {
-                    this.nickname = nickname;
-                }
-
-                public String getPingjia() {
-                    return pingjia;
-                }
-
-                public void setPingjia(String pingjia) {
-                    this.pingjia = pingjia;
-                }
-
-                public int getStar_num() {
-                    return star_num;
-                }
-
-                public void setStar_num(int star_num) {
-                    this.star_num = star_num;
-                }
-            }
         }
     }
 }

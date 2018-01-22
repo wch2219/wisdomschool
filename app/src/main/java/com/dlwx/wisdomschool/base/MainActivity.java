@@ -16,10 +16,10 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.BottomNavigationViewHelper;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.fragments.ChatFragment;
-import com.dlwx.wisdomschool.fragments.ClassFragment;
 import com.dlwx.wisdomschool.fragments.HomeFragment;
 import com.dlwx.wisdomschool.fragments.MyFragment;
 import com.dlwx.wisdomschool.fragments.RecordFragment;
+import com.dlwx.wisdomschool.fragments.WorkFragment;
 import com.dlwx.wisdomschool.interfac.SoftKeyBoard;
 
 import java.util.ArrayList;
@@ -43,7 +43,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void initData() {
 //        AmapUtils.initialization(ctx);
         fragments.add(new HomeFragment());
-        fragments.add(new ClassFragment());
+        fragments.add(new WorkFragment());
+//        fragments.add(new ClassFragment());
         fragments.add(new RecordFragment());
         fragments.add(new ChatFragment());
         fragments.add(new MyFragment());
@@ -76,19 +77,21 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             case R.id.item_home://首页
                 changeFragment(0);
                 break;
-                 case R.id.item_class://首页
+            case R.id.item_work://作业
                 changeFragment(1);
                 break;
-                 case R.id.item_record://首页
+//                 case R.id.item_class://班级
+//                changeFragment(2);
+//                break;
+                 case R.id.item_record://成长纪录
                 changeFragment(2);
                 break;
-                 case R.id.item_chat://首页
+                 case R.id.item_chat://聊天
                 changeFragment(3);
                 break;
-                 case R.id.item_my://首页
+                 case R.id.item_my://我的
                 changeFragment(4);
                 break;
-
         }
         return true;
     }
@@ -104,7 +107,6 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
             transaction.hide(lastFragment);
 //            transaction.remove(lastFragment);
         }
-
         fragment = fragments.get(i);
         // fragment不能重复添加 // 添加过 显示 没有添加过 就隐藏
         if (fragment.isAdded()) {

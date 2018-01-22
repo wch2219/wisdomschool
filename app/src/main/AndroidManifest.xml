@@ -467,7 +467,8 @@
         <activity android:name=".activitys.VideoPlayActivity" />
         <activity android:name=".activitys.MyRecordVideoListActivity" />
         <activity android:name=".activitys.AddActionActivity" />
-        <activity android:name=".activitys.JoinActionSendMessActivity"></activity>
+        <activity android:name=".activitys.JoinActionSendMessActivity" />
+        <activity android:name=".activitys.WebUrlActivity"></activity>
     </application>
 
 </manifest>

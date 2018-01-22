@@ -9,11 +9,18 @@ import android.webkit.JavascriptInterface;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.dlwx.baselib.R;
 
 /**
  * Created by Administrator on 2017/4/17/017.
@@ -21,16 +28,23 @@ import android.widget.Toast;
 
 public class LoadWEBUtiles {
     private Context ctx;
-    private String LoginUrl = "https://login.m.taobao.com/login.htm?tpl_redirect_url=https%3A%2F%2Fuland.taobao.com%2Fcoupon%2Fedetail%3Fe%3DirueqkzFMb4GQASttHIRqSm47PUpUPKNINgbbcFjeXS8WrnxDkeYTabS5XLebz9sg%252BbQWDpqZ6EhU280YHnNnr9fwBwwUiqlM7kvoPUmKIIIdKZiLzMdZ%252FSs4zOlZ4se";
-    public LoadWEBUtiles(Context ctx) {
+    private RelativeLayout webParentView;
+    private View mErrorView; //加载错误的视图
+    public LoadWEBUtiles(Context ctx,RelativeLayout webParentView) {
         super();
         this.ctx = ctx;
+        this.webParentView = webParentView;
+        initErrorPage();
     }
     /**
      * 用来控制字体大小
      */
     private int fontSize = 1;
     public void setListViewData(String url, WebView webView, final ProgressBar progress) {
+        if (url == null) {
+
+            return;
+        }
         Log.i("wch",url);
 //        //执行JavaScript脚本
 //        webView.getSettings().setJavaScriptEnabled(true);
@@ -59,6 +73,11 @@ public class LoadWEBUtiles {
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                showErrorPage();//显示错误页面
+            }
         });
 
 
@@ -69,6 +88,9 @@ public class LoadWEBUtiles {
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                if (textView != null) {
+                    textView.setText(view.getTitle());
+                }
                 //通过代码让ProgressBar显示出来
                 if (progress != null) {
                     //对ProgressBar设置加载进度的参数
@@ -108,10 +130,24 @@ public class LoadWEBUtiles {
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
                 return super.onJsPrompt(view, url, message, defaultValue, result);
             }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
+              LogUtiles.LogI("onReceivedTitle:title ------>" + title);
+                if (title.contains("404")){
+                    showErrorPage();
+                }
+            }
         });
 
 
     }
+    private TextView textView;
+    public void setTitle(TextView tvTitle) {
+        this.textView = tvTitle;
+    }
+
     class JSInterface {
         Handler handler = new Handler();
 
@@ -130,4 +166,23 @@ public class LoadWEBUtiles {
 
         Toast.makeText(ctx, "sadasdas", Toast.LENGTH_SHORT).show();
     }
+
+    /**
+     * 显示自定义错误提示页面，用一个View覆盖在WebView
+     */
+    private void showErrorPage() {
+        webParentView.removeAllViews(); //移除加载网页错误时，默认的提示信息
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        webParentView.addView(mErrorView, 0, layoutParams); //添加自定义的错误提示的View
+    }
+
+    /***
+     * 显示加载失败时自定义的网页
+     */
+    private void initErrorPage() {
+        if (mErrorView == null) {
+            mErrorView = View.inflate(ctx, R.layout.layout_loadweb_error, null);
+        }
+    }
+
 }

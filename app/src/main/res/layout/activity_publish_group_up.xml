@@ -33,9 +33,18 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentRight="true"
             >
-
+            <TextView
+                android:id="@+id/tv_aff"
+                style="@style/TextSizeSmallTitleBlack"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="发送"
+                android:textColor="@color/blue" />
         </RelativeLayout>
     </RelativeLayout>
+
+
     <View
         style="@style/GaryDiveStyle"
         />
@@ -246,14 +255,7 @@
             android:layout_marginLeft="20dp"
             />
 
-        <TextView
-            android:id="@+id/tv_aff"
-            style="@style/TextSizeSmallTitleBlack"
-            android:layout_centerVertical="true"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:text="发送"
-            android:textColor="@color/blue" />
+
 
         <View
                 android:layout_width="wrap_content"

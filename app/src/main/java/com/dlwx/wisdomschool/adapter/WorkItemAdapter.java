@@ -2,16 +2,21 @@ package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
@@ -20,23 +25,26 @@ import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddActionActivity;
 import com.dlwx.wisdomschool.activitys.LookReadActivity;
+import com.dlwx.wisdomschool.activitys.WebUrlActivity;
 import com.dlwx.wisdomschool.bean.HomeListBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.dlwx.wisdomschool.utiles.LookPic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Administrator on 2017/12/15/015.
  */
 
-public class HomeItmeAdapter extends BaseRecrviewAdapter {
+public class WorkItemAdapter extends BaseRecrviewAdapter {
     private List<HomeListBean.BodyBean> body;
     private int LeftViewType = 2;
     private int RightViewType = 1;
 
-    public HomeItmeAdapter(Context ctx, List<HomeListBean.BodyBean> body) {
+    public WorkItemAdapter(Context ctx, List<HomeListBean.BodyBean> body) {
         super(ctx);
         this.body = body;
     }
@@ -111,6 +119,37 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
                     Glide.with(ctx).load(R.mipmap.icon_zhoukan).into(holderleft.iv_typeleft);
                     break;
                 case 7://文章
+                    Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                    Matcher matcher = compile.matcher(bodyBean.getContent());
+                    while(matcher.find()){
+                        String group = matcher.group();
+                        bodyBean.setTexturl(group);
+                        // 设置setWebChromeClient对象
+                        WebView webView = new WebView(ctx);
+                        webView.setWebChromeClient(new WebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                holderleft.tv_urltitle.setText(title);
+                                super.onReceivedTitle(view, title);
+                            }
+                            @Override
+                            public void onReceivedIcon(WebView view, Bitmap icon) {
+                                super.onReceivedIcon(view, icon);
+
+                                holderleft.iv_urlpic.setImageBitmap(icon);
+                            }
+                        });
+                        //此处省略N行代码
+                        webView.loadUrl(group);
+                        webView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                view.loadUrl(url);
+                                return true;
+                            }
+                        });
+                    }
+
                     holderleft.tv_joinaction.setVisibility(View.GONE);
                     holderleft.ll_yue.setVisibility(View.VISIBLE);
                     holderleft.ll_url.setVisibility(View.VISIBLE);
@@ -200,12 +239,30 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
                 }
             });
 
+            /**
+             * 点击文章链接跳转
+             */
+            holderleft.ll_url.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextUtils.isEmpty(bodyBean.getTexturl())) {
+                        Toast.makeText(ctx, "错误的链接地址", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                        Intent intent  = new Intent(ctx, WebUrlActivity.class);
+                        intent.putExtra("url","www.baidu.com");
+
+                        ctx.startActivity(intent);
+                }
+            });
+
         } else if (holder instanceof ViewHolderRight) {
 
-            ViewHolderRight holderRight = (ViewHolderRight) holder;
+            final ViewHolderRight holderRight = (ViewHolderRight) holder;
             Glide.with(ctx).load(bodyBean.getHeader_pic()).into(holderRight.iv_righttitpic);
             holderRight.tv_rightname.setText(bodyBean.getClass_name());
             holderRight.tv_title.setText(bodyBean.getTheme_name());
+            EmoSwichUtiles.toSwich(ctx, holderRight.tv_content, bodyBean.getContent());
             int theme = bodyBean.getTheme();
             switch (theme) {
                 case 1://班级通知
@@ -239,7 +296,37 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
                     holderRight.ll_url.setVisibility(View.GONE);
                     break;
                 case 7://文章
+                    Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                    Matcher matcher = compile.matcher(bodyBean.getContent());
+                    while(matcher.find()){
+                        String group = matcher.group();
+                        bodyBean.setTexturl(group);
+                        // 设置setWebChromeClient对象
+                        WebView webView = new WebView(ctx);
+                        webView.setWebChromeClient(new WebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                holderRight.tv_urltitle.setText(title);
+                                super.onReceivedTitle(view, title);
+                            }
+                            @Override
+                            public void onReceivedIcon(WebView view, Bitmap icon) {
+                                super.onReceivedIcon(view, icon);
+                                holderRight.iv_urlpic.setImageBitmap(icon);
+                            }
+                        });
+                        //此处省略N行代码
+                        webView.loadUrl(group);
+                        webView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                view.loadUrl(url);
+                                return true;
+                            }
+                        });
+                    }
                     holderRight.ll_url.setVisibility(View.VISIBLE);
+                    holderRight.ll_voice.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_wenzhang).into(holderRight.iv_type);
                     holderRight.ll_looknumandyueright.setVisibility(View.VISIBLE);
                     break;
@@ -250,10 +337,12 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
                     break;
             }
 
-            EmoSwichUtiles.toSwich(ctx, holderRight.tv_content, bodyBean.getContent());
+            //http://(.)*com
+
+
             holderRight.tv_yuenum.setText(bodyBean.getTeacher_isyue());
             final List<String> content_pic = bodyBean.getContent_pic();
-            //突破片的数量
+            //图片的数量
             if (content_pic.size() == 1) {
 
                 holderRight.gv_piclist.setNumColumns(1);
@@ -313,6 +402,23 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
                     onItemClickListener.setOnClick(position);
                 }
             });
+
+            /**
+             * 点击文章链接跳转
+             */
+            holderRight.ll_url.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextUtils.isEmpty(bodyBean.getTexturl())) {
+                        Toast.makeText(ctx, "错误的链接地址", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Intent intent  = new Intent(ctx, WebUrlActivity.class);
+                    intent.putExtra("url",bodyBean.getTexturl());
+                    intent.putExtra("isback",true);
+                    ctx.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -356,6 +462,8 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
         public LinearLayout ll_yue;
         public TextView tv_yueType;
         public LinearLayout ll_url;
+        public ImageView iv_urlpic;
+        public TextView tv_urltitle;
         public ViewHolderleft(View rootView) {
             super(rootView);
             this.rootView = rootView;
@@ -375,9 +483,9 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
             this.ll_yue = (LinearLayout) rootView.findViewById(R.id.ll_yue);
             this.ll_url = (LinearLayout) rootView.findViewById(R.id.ll_url);
             this.tv_yueType = (TextView) rootView.findViewById(R.id.tv_yueType);
-
+            this.iv_urlpic = rootView.findViewById(R.id.iv_urlpic);
+            this.tv_urltitle = rootView.findViewById(R.id.tv_urltitle);
         }
-
     }
 
     private class ViewHolderRight extends RecyclerView.ViewHolder {
@@ -400,6 +508,8 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
         public LinearLayout ll_lookdicusright;
         public LinearLayout ll_url;
         public TextView tv_yuenum;
+        public ImageView iv_urlpic;
+        public TextView tv_urltitle;
         public ViewHolderRight(View rootView) {
             super(rootView);
             this.rootView = rootView;
@@ -420,6 +530,9 @@ public class HomeItmeAdapter extends BaseRecrviewAdapter {
             this.ll_lookdicusright = (LinearLayout) rootView.findViewById(R.id.ll_lookdicusright);
             this.ll_url = (LinearLayout) rootView.findViewById(R.id.ll_url);
             this.tv_yuenum = rootView.findViewById(R.id.tv_yuenum);
+
+            this.iv_urlpic = rootView.findViewById(R.id.iv_urlpic);
+            this.tv_urltitle = rootView.findViewById(R.id.tv_urltitle);
         }
 
     }

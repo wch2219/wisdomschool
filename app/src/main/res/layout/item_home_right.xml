@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:id="@+id/ll_right"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="WebViewLayout">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -27,9 +29,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -67,7 +66,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_toEndOf="@+id/iv_viecoplaytype"
                         android:layout_toRightOf="@+id/iv_viecoplaytype"
-                        android:text="@string/homeitemtestright" />
+                         />
                 </LinearLayout>
 
                 <com.dlwx.baselib.view.MyGridView
@@ -103,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/ll_voice"
                 android:layout_marginLeft="10dp"
                 android:orientation="horizontal">
@@ -132,26 +131,32 @@
                         android:textColor="@color/blue" />
                 </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/ll_url"
-                    >
-                    <ImageView
-                        style="@style/ImagehomeItempic2"
-                        android:src="@mipmap/icon_lianjie"
-                        />
-                    <TextView
-                        style="@style/TextSizecontentBlack"
-                        android:layout_gravity="center_vertical"
-                        android:text="点击打开"
-                        android:layout_marginLeft="10dp"
-                        />
-                </LinearLayout>
-            </LinearLayout>
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                   android:padding="5dp"
+                android:id="@+id/ll_url"
+                >
+                <ImageView
+                    android:id="@+id/iv_urlpic"
+                    style="@style/ImagehomeItempic2"
+                    android:src="@mipmap/icon_lianjie"
+                    />
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_gravity="center_vertical"
+                    android:text="点击打开"
+                    android:lines="2"
+                    android:gravity="center_vertical"
+                    android:ellipsize="end"
+                    android:id="@+id/tv_urltitle"
+                    android:layout_marginLeft="10dp"
+                    />
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
@@ -237,4 +242,5 @@
             />
 
     </android.support.v7.widget.CardView>
+
 </LinearLayout>

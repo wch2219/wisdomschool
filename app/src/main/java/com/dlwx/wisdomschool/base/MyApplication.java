@@ -54,7 +54,7 @@ public class MyApplication extends Application {
         Bugly.init(getApplicationContext(), "567efebd79", false);
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
         if (!TextUtils.isEmpty(Token)) {
-            huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
+//            huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
         }
     }
     EMMessageListener msgListener = new EMMessageListener() {

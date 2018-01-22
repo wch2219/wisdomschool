@@ -122,7 +122,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="100dp"
@@ -152,10 +152,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginLeft="10dp"
+                    android:padding="5dp"
                     android:id="@+id/ll_url"
                     >
                     <ImageView
+                        android:id="@+id/iv_urlpic"
                         style="@style/ImagehomeItempic2"
                         android:src="@mipmap/icon_lianjie"
                         />
@@ -163,8 +164,13 @@
                         style="@style/TextSizecontentBlack"
                         android:layout_gravity="center_vertical"
                         android:text="点击打开"
+                        android:lines="2"
+                        android:gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:id="@+id/tv_urltitle"
                         android:layout_marginLeft="10dp"
                         />
+
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -81,6 +81,15 @@ public class HomeListBean {
         private List<String> content_pic;
         private String teacher_isyue;
         private String parent_isyue;
+        private String texturl;
+
+        public String getTexturl() {
+            return texturl;
+        }
+
+        public void setTexturl(String texturl) {
+            this.texturl = texturl;
+        }
 
         public String getParent_isyue() {
             return parent_isyue;

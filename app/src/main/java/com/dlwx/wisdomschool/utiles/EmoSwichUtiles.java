@@ -9,6 +9,7 @@ import android.text.SpannableString;
 import android.text.style.ImageSpan;
 import android.widget.TextView;
 
+import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.wisdomschool.R;
 
 import java.io.InputStream;
@@ -37,22 +38,38 @@ public class EmoSwichUtiles {
             Pattern compile = Pattern.compile("ee_\\d{1,2}");
             Matcher matcher = compile.matcher(source);
             while (matcher.find()) {
-                //当前匹配到的开始位置和结束位置
-                int start = matcher.start();
-                int end = matcher.end();
-                //获得与当前字符名字相同的资源文件id
-                int drawable = getResId(matcher.group(),R.drawable.class);
-                //获得控件的字体大小
-                int size = (int) tv.getTextSize();
-                //把资源文件转换为Bitmap
-                Resources r = ctx.getResources();
-                InputStream is = r.openRawResource(drawable);
-                BitmapDrawable bmpDraw = new BitmapDrawable(is);
-                Bitmap bit = bmpDraw.getBitmap();
-                //压缩bitmap
-                Bitmap scaleBitmap = Bitmap.createScaledBitmap(bit, size, size, true);
-                ImageSpan span = new ImageSpan(ctx, scaleBitmap);
-                spannString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                try{
+
+                    String group = matcher.group();
+                    String[] split = group.split("_");
+                    Integer integer = Integer.valueOf(split[1]);
+                    if (integer >35) {
+                        group = "ee_1";
+                    }
+                    if (integer == 0) {
+                        group = "ee_1";
+                    }
+                    //当前匹配到的开始位置和结束位置
+                    int start = matcher.start();
+                    int end = matcher.end();
+                    //获得与当前字符名字相同的资源文件id
+                    int drawable = getResId(group,R.drawable.class);
+                    //获得控件的字体大小
+                    int size = (int) tv.getTextSize();
+                    //把资源文件转换为Bitmap
+                    Resources r = ctx.getResources();
+                    InputStream is = r.openRawResource(drawable);
+                    BitmapDrawable bmpDraw = new BitmapDrawable(is);
+                    Bitmap bit = bmpDraw.getBitmap();
+                    //压缩bitmap
+                    Bitmap scaleBitmap = Bitmap.createScaledBitmap(bit, size, size, true);
+                    ImageSpan span = new ImageSpan(ctx, scaleBitmap);
+                    spannString.setSpan(span, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                }catch (Exception e){
+                    LogUtiles.LogI(e.getMessage());
+                }
+
             }
             //显示
             tv.setText(spannString);

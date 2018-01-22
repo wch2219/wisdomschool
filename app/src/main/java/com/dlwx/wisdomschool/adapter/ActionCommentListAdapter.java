@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.bean.ActionDescBean;
+import com.dlwx.wisdomschool.bean.PinglunContetBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 
 import java.util.List;
@@ -19,8 +19,8 @@ import java.util.List;
  */
 
 public class ActionCommentListAdapter extends BaseFastAdapter {
-    private List<ActionDescBean.BodyBean.PinglunBean.PinglunContetBean> pinglun;
-    public ActionCommentListAdapter(Context ctx, List<ActionDescBean.BodyBean.PinglunBean.PinglunContetBean> pinglun) {
+    private List<PinglunContetBean> pinglun;
+    public ActionCommentListAdapter(Context ctx, List<PinglunContetBean> pinglun) {
         super(ctx);
         this.pinglun = pinglun;
     }
@@ -40,7 +40,7 @@ public class ActionCommentListAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        ActionDescBean.BodyBean.PinglunBean.PinglunContetBean pinglunContetBean = pinglun.get(position);
+       PinglunContetBean pinglunContetBean = pinglun.get(position);
 
             vh.ll_hf.setVisibility(View.GONE);
 

@@ -1,74 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/rl_webroot"
     tools:context="com.dlwx.wisdomschool.activitys.AgeWeeklyActivity">
+
         <WebView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/webview"
             ></WebView>
-
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-    <!--<include-->
-        <!--layout="@layout/toolbar"-->
-        <!--/>-->
-        <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_marginLeft="120dp"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_height="?attr/actionBarSize">-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:background="@drawable/shape_black_line"-->
-
-                <!--&gt;-->
-                <!--<ImageView-->
-                    <!--style="@style/Imagesmillpic"-->
-                    <!--android:layout_gravity="center_vertical"-->
-                    <!--android:layout_marginLeft="10dp"-->
-                    <!--android:src="@mipmap/icon_cjbjsousuo"-->
-                    <!--/>-->
-                    <!--<EditText-->
-                        <!--android:id="@+id/et_seach"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:background="@null"-->
-                        <!--/>-->
-            <!--</LinearLayout>-->
-
-        <!--</RelativeLayout>-->
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_shape"-->
-                    <!--style="@style/Imagesmillpic"-->
-                    <!--android:layout_marginTop="20dp"-->
-                    <!--android:src="@mipmap/icon_huodonggd"-->
-                    <!--android:layout_marginRight="10dp"-->
-                    <!--android:layout_alignParentRight="true"-->
-                     <!--/>-->
-    <!--</RelativeLayout>-->
-    <!--<View-->
-        <!--style="@style/GaryDiveStyle"-->
-        <!--/>-->
-    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:id="@+id/refreshLayout"-->
-        <!---->
-        <!--app:srlEnablePreviewInEditMode="true"-->
-        <!--android:layout_height="match_parent">-->
-        <!--<ListView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/lv_list"-->
-            <!--&gt;</ListView>-->
-    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
-</LinearLayout>
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:id="@+id/progress_bar"
+            />
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:id="@+id/back"
+            />
+</RelativeLayout>

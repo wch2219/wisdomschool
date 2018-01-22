@@ -80,12 +80,12 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
     private AddActionAdapter addActionAdapter;
     private List<ActionDescBean.BodyBean.PinglunBean> pinglun;
     private ActionDescBean.BodyBean body;
-    private String issend;
+    private int issend;
     @Override
     protected void initView() {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
-        issend = intent.getStringExtra("issend");
+        issend = intent.getIntExtra("issend",1);
         setContentView(R.layout.activity_add_action);
         ButterKnife.bind(this);
         //初始化表情
@@ -105,7 +105,7 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
                 etContent.append(spannableString);
             }
         });
-        if ("1".equals(issend)) {//发布方隐藏底部
+        if (issend ==  1) {//发布方隐藏底部
             tvJoinaction.setVisibility(View.GONE);
         }
 
@@ -158,13 +158,10 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
                 }
                 emojiconMenuContainer.setVisibility(View.GONE);
                 inputhind(etContent);
-
                 submit(content);
                 break;
         }
     }
-
-
     private void showPopuBottom() {
         View view = LayoutInflater.from(ctx).inflate(R.layout.popu_actiondesc, null);
         ViewHolderJoin viewHolderJoin = new ViewHolderJoin(view);

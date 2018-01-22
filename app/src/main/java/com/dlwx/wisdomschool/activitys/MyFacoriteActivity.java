@@ -35,7 +35,7 @@ public class MyFacoriteActivity extends BaseActivity {
         initTabBar(toolBar);
         LinearLayoutManager itemManager = new LinearLayoutManager(ctx);
         rvRecyclerview.setLayoutManager(itemManager);
-//        rvRecyclerview.setAdapter(new HomeItmeAdapter(ctx));
+//        rvRecyclerview.setAdapter(new WorkItemAdapter(ctx));
     }
 
     @Override
