@@ -14,13 +14,15 @@ import com.dlwx.wisdomschool.R;
  */
 
 public class GradeAnalyzeAllListAdapter extends BaseFastAdapter {
-    public GradeAnalyzeAllListAdapter(Context ctx) {
+    private String [] yearstrs;
+    public GradeAnalyzeAllListAdapter(Context ctx,String [] yearstrs) {
         super(ctx);
+        this.yearstrs = yearstrs;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return yearstrs.length;
     }
 
     @Override
@@ -34,7 +36,7 @@ public class GradeAnalyzeAllListAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-        vh.tv_name.setText("2017年成绩分析");
+        vh.tv_name.setText(yearstrs[position]+"年成绩分析");
         return convertView;
     }
 

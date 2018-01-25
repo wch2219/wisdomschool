@@ -16,9 +16,11 @@ import com.dlwx.wisdomschool.R;
  */
 
 public class DifficultyExamAdapter extends BaseFastAdapter {
-    private int [] pics = {R.mipmap.icon_nandua,R.mipmap.icon_nandub,R.mipmap.icon_nanduc,R.mipmap.icon_nandud,R.mipmap.icon_nandue,};
-    public DifficultyExamAdapter(Context ctx) {
+    private int [] pics = {R.mipmap.icon_nandua,R.mipmap.icon_nandub,R.mipmap.icon_nanduc,R.mipmap.icon_nandud,R.mipmap.icon_nandue};
+    private String name;
+    public DifficultyExamAdapter(Context ctx,String name) {
         super(ctx);
+        this.name = name;
     }
 
     @Override
@@ -36,7 +38,7 @@ public class DifficultyExamAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
-        vh.tv_name.setText("0岁以下");
+        vh.tv_name.setText(name);
         Glide.with(ctx).load(pics[position]).into(vh.iv_pic);
         return convertView;
     }

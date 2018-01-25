@@ -6,11 +6,11 @@
         android:title="首页" />
 <item
     android:id="@+id/item_work"
-    android:icon="@drawable/selete_buttom_home"
+    android:icon="@drawable/selete_buttom_work"
     android:title="作业" />
 <!--<item-->
     <!--android:id="@+id/item_class"-->
-    <!--android:icon="@drawable/selete_buttom_class"-->
+   <!--android:icon="@drawable/selete_buttom_work"-->
     <!--android:title="班级" />-->
 <item
     android:id="@+id/item_record"
@@ -24,5 +24,4 @@
     android:id="@+id/item_my"
     android:icon="@drawable/selete_buttom_my"
     android:title="我的" />
-
 </menu>

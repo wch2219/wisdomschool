@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ExamageListBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class PatriarchExamStageAdapter extends BaseFastAdapter {
-    public PatriarchExamStageAdapter(Context ctx) {
+    private List<ExamageListBean.BodyBean> body;
+    public PatriarchExamStageAdapter(Context ctx,List<ExamageListBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 22;
+        return body.size();
     }
 
     @Override
@@ -34,13 +39,8 @@ public class PatriarchExamStageAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-        if (position <=19) {
-            vh.tv_name.setText(position+"岁阶段考试");
-        }else if (position == 20){
-            vh.tv_name.setText("离婚考试");
-        }else{
-            vh.tv_name.setText("结婚考试");
-        }
+        ExamageListBean.BodyBean bodyBean = body.get(position);
+        vh.tv_name.setText(bodyBean.getName());
 
         return convertView;
     }

@@ -57,13 +57,19 @@ public class HttpUrl {
     public static final String Grouplist = BaseUrl + "Easemob/get_grouplist";//获取群列表
     public static final String ActionTitle = BaseUrl + "Public/themelist";//活动主题
     public static final String Publish_inves = BaseUrl + "Investigation/publish_inves";//发布调查
-    public static final String HomeList = BaseUrl + "Investigation/Investigation_list";//首页列表
+    public static final String WorkList = BaseUrl + "Investigation/Investigation_list";//作业列表
     public static final String ActionDesc = BaseUrl + "Investigation/activity_info";//老师发表的活动详情
     public static final String JoinAction = BaseUrl + "Investigation/add_activity_pinglun";//参与活动
     public static final String ActionDianzan = BaseUrl + "Investigation/zan_cancelzan";//给参与活动的记录点赞/取消点赞
     public static final String ActionPinglun = BaseUrl + "Investigation/pingjia_activity";//去评价参与活动的记录
     public static final String Situation = BaseUrl + "Investigation/situation";//查看阅读情况1查看数据 2点击阅读）
     public static final String AgeWeek = BaseUrl1 + "Magazine/age_magazine";//年龄周刊列表
-    public static String VoideUrl = WebUrl + "web/video_strategy.html";//视频wenb
+    public static final String VoideUrl = WebUrl + "web/video_strategy.html";//视频wenb
     public static final String AgeWeekWeb = WebUrl + "web/weekly_classify.html";
+    public static final String UpExcle = BaseUrl + "Score/addscore";//上传成绩单excel
+    public static final String HomeList = BaseUrl + "magazine/magazine_article";//首页周刊列表 + 首页文章列表
+    public static final String Examagelist = BaseUrl + "Exam/agelist";//阶段考试列表
+    public static final String Examexamlist = BaseUrl + "Exam/examlist";//家长考试试题列表
+    public static final String ExamSubmit = BaseUrl + "Exam/show_zhengshu";//答题结束显示证书
+    public static final String Zhengshu = BaseUrl + "Exam/allzhengshu";//我的证书
 }

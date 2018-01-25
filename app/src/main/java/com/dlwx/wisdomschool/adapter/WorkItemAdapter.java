@@ -26,7 +26,7 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddActionActivity;
 import com.dlwx.wisdomschool.activitys.LookReadActivity;
 import com.dlwx.wisdomschool.activitys.WebUrlActivity;
-import com.dlwx.wisdomschool.bean.HomeListBean;
+import com.dlwx.wisdomschool.bean.WorkListBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.dlwx.wisdomschool.utiles.LookPic;
 
@@ -40,11 +40,11 @@ import java.util.regex.Pattern;
  */
 
 public class WorkItemAdapter extends BaseRecrviewAdapter {
-    private List<HomeListBean.BodyBean> body;
+    private List<WorkListBean.BodyBean> body;
     private int LeftViewType = 2;
     private int RightViewType = 1;
 
-    public WorkItemAdapter(Context ctx, List<HomeListBean.BodyBean> body) {
+    public WorkItemAdapter(Context ctx, List<WorkListBean.BodyBean> body) {
         super(ctx);
         this.body = body;
     }
@@ -67,7 +67,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        final HomeListBean.BodyBean bodyBean = body.get(position);
+        final WorkListBean.BodyBean bodyBean = body.get(position);
 
         if (holder instanceof ViewHolderleft) {
             final ViewHolderleft holderleft = (ViewHolderleft) holder;
@@ -424,7 +424,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        HomeListBean.BodyBean bodyBean = body.get(position);
+        WorkListBean.BodyBean bodyBean = body.get(position);
         int is_send = bodyBean.getIs_send();
         return is_send == LeftViewType ? LeftViewType : RightViewType;
 //        return 1;

@@ -72,7 +72,9 @@ public class ClassAllStuActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if ("999".equals(classid)) {
             startActivity(new Intent(ctx,GradeActivity.class));
+        }
     }
 
     private void getData() {

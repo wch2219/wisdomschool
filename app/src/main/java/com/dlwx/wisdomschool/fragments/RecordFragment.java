@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
-import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AllPicActivity;
@@ -44,6 +43,7 @@ import com.dlwx.wisdomschool.adapter.RecordListAdapter;
 import com.dlwx.wisdomschool.adapter.RecordScreenAddAdapter;
 import com.dlwx.wisdomschool.adapter.RecordScreenCreateAdapter;
 import com.dlwx.wisdomschool.bean.BackResultBean;
+import com.dlwx.wisdomschool.bean.MessageEvent;
 import com.dlwx.wisdomschool.bean.MyAllClassBean;
 import com.dlwx.wisdomschool.bean.PublishUpPiccheckBean;
 import com.dlwx.wisdomschool.bean.RecordListBean;
@@ -54,6 +54,8 @@ import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.dlwx.wisdomschool.views.PolaroidResizeLinearLayout;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,19 +164,22 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                 switch (scrollState) {
                     //空閒狀態
                     case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
-                      LogUtiles.LogI("lege"+ "空閒狀態");
+//                      LogUtiles.LogI("lege"+ "空閒狀態");
                         SlideCancelLoadPic.pauseRequestsListener.isPause(false);
                         recordListAdapter.notifyDataSetChanged();
+                        EventBus.getDefault().post(new MessageEvent(false));
                         break;
                     //滑動狀態
                     case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
                         SlideCancelLoadPic.pauseRequestsListener.isPause(true);
-                        LogUtiles.LogI("lege"+ "滑動狀態");
+//                        LogUtiles.LogI("lege"+ "滑動狀態");
+                        EventBus.getDefault().post(new MessageEvent(false));
                         break;
                     //慣性
                     case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
-                        LogUtiles.LogI("lege"+  "慣性");
+//                        LogUtiles.LogI("lege"+  "慣性");
                         SlideCancelLoadPic.pauseRequestsListener.isPause(true);
+                        EventBus.getDefault().post(new MessageEvent(false));
                         break;
                     default:
                         break;

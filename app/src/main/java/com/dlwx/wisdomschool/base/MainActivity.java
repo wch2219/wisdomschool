@@ -15,12 +15,17 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.BottomNavigationViewHelper;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.MessageEvent;
 import com.dlwx.wisdomschool.fragments.ChatFragment;
 import com.dlwx.wisdomschool.fragments.HomeFragment;
 import com.dlwx.wisdomschool.fragments.MyFragment;
 import com.dlwx.wisdomschool.fragments.RecordFragment;
 import com.dlwx.wisdomschool.fragments.WorkFragment;
 import com.dlwx.wisdomschool.interfac.SoftKeyBoard;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,5 +128,30 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         bottomNavigationContainer.setVisibility(i);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+    //接收事件
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void fresh(MessageEvent messageEvent) {
+//
+//        if (messageEvent.b) {
+//
+//            LogUtiles.LogI("MessageEvent -----------------> MainActivity");
+//            Animation animation = AnimationUtils.loadAnimation(ctx, R.anim.out_anim);
+//            bottomNavigationContainer.setAnimation(animation);
+//        }else{
+//            Animation animation = AnimationUtils.loadAnimation(ctx, R.anim.enter_anim);
+//            bottomNavigationContainer.setAnimation(animation);
+//            wch("huadong");
+//        }
+    }
 }

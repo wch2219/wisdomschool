@@ -26,20 +26,23 @@ public class ChoiceDifficultyExamActivity extends BaseActivity implements Adapte
     Toolbar toolBar;
     @BindView(R.id.lv_list)
     ListView lvList;
+    private String age;
+    private String name;
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        age = intent.getStringExtra("age");
+        name = intent.getStringExtra("name");
         setContentView(R.layout.activity_choice_difficulty_exam);
         ButterKnife.bind(this);
     }
-
     @Override
     protected void initData() {
         initTabBar(toolBar);
         tvTitle.setText("考试难度");
-        lvList.setAdapter(new DifficultyExamAdapter(ctx));
+        lvList.setAdapter(new DifficultyExamAdapter(ctx,name));
     }
-
     @Override
     protected void initListener() {
         lvList.setOnItemClickListener(this);
@@ -52,6 +55,9 @@ public class ChoiceDifficultyExamActivity extends BaseActivity implements Adapte
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            startActivity(new Intent(ctx,StartExamActivity.class));
+        Intent intent = new Intent(ctx, StartExamActivity.class);
+        intent.putExtra("age",age);
+        intent.putExtra("rank",i);
+        startActivity(intent);
     }
 }

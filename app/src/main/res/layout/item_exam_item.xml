@@ -17,6 +17,7 @@
             <TextView
                style="@style/TextSizeSmallTitleBlack"
                 android:textColor="@color/black"
+                android:id="@+id/tv_name"
                 android:text="A、关于五岁孩子的教育"
                 android:layout_marginLeft="10dp"
                 />

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_head"
             style="@style/ImagehomeItempic"
             android:src="@mipmap/icon_zhucetouxiang"
             />
@@ -26,6 +27,7 @@
         <TextView
             style="@style/TextSizecontentBlack"
             android:text="@string/app_name"
+            android:id="@+id/tv_title"
             android:layout_marginLeft="5dp"
             android:textStyle="bold"
             />
@@ -37,15 +39,28 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/shape_black_line"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv_pic"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:scaleType="fitXY"
-                android:layout_margin="5dp"
-                android:src="@mipmap/icon_homeitem"
-                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    android:layout_margin="5dp"
+                    android:src="@mipmap/icon_homeitem"
+                    />
+                    <ImageView
+                        android:id="@+id/iv_isvideo"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@mipmap/icon_breviary"
+                        android:layout_centerInParent="true"
+                        />
+            </RelativeLayout>
+
             <TextView
+                android:id="@+id/tv_content"
                 style="@style/TextSizecontentBlack"
                 android:padding="5dp"
                 android:text="@string/homeitemtest"
@@ -63,24 +78,26 @@
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
                     android:text="@string/date"
-                    android:id="@+id/tv_leftdate"
+                    android:id="@+id/tv_date"
                     android:layout_weight="1"
                     />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:id="@+id/ll_looknum"
                     >
                     <ImageView
                         style="@style/Imagesmill2pic"
-                        android:src="@mipmap/icon_yanjing"
+                        android:layout_width="wrap_content"
 
-                        />
+                        android:src="@mipmap/icon_yanjing" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:text="6453258"
+                        android:id="@+id/tv_looknum"
                         />
                 </LinearLayout>
 

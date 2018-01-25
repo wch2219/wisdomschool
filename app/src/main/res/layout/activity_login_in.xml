@@ -49,6 +49,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@null"
                     />
+
         </LinearLayout>
         <View
             style="@style/BlueDiveStyle"

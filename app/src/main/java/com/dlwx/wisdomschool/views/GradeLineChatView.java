@@ -60,7 +60,7 @@ public class GradeLineChatView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         //绘制竖向的分数
-        int meanH = (practicalH-150)/ (verticalstrs.length);//把高度平均分成一百份，
+        int meanH = (practicalH-120)/ (verticalstrs.length);//把高度平均分成一百份，
         TPaint.setColor(Color.GRAY);//设置字体画笔颜色
         TPaint.setAntiAlias(true);
         TPaint.setTextSize(25);

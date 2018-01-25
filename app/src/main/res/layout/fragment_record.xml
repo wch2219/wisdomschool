@@ -60,7 +60,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:gravity="center_horizontal"
-        android:background="@mipmap/icon_czjlsuzhitisheng"
+        android:background="@mipmap/icon_czjlsuzhitisheng1"
         >
         <TextView
             style="@style/TextSizeTitleBlack"

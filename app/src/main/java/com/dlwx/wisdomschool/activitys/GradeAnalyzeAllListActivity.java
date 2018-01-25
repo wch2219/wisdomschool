@@ -12,6 +12,8 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.GradeAnalyzeAllListAdapter;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,9 +27,13 @@ public class GradeAnalyzeAllListActivity extends BaseActivity implements Adapter
     Toolbar toolBar;
     @BindView(R.id.lv_list)
     ListView lvList;
+    private String[] yearstrs;
+    private String cnid;
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        cnid = intent.getStringExtra("cnid");
         setContentView(R.layout.activity_grade_analyze_all_list);
         ButterKnife.bind(this);
     }
@@ -36,7 +42,14 @@ public class GradeAnalyzeAllListActivity extends BaseActivity implements Adapter
     protected void initData() {
         tvTitle.setText("成绩分析");
         initTabBar(toolBar);
-        lvList.setAdapter(new GradeAnalyzeAllListAdapter(ctx));
+        Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        wch(year);
+        yearstrs = new String[5];
+        for (int i = year; i>=year-4 ; i--) {
+            yearstrs[year-(i)] = i+"";
+        }
+        lvList.setAdapter(new GradeAnalyzeAllListAdapter(ctx, yearstrs));
     }
 
     @Override
@@ -51,6 +64,7 @@ public class GradeAnalyzeAllListActivity extends BaseActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx,YearAllStuGardAnalyzeActivity.class));
+        String yearstr = yearstrs[i];
+        startActivity(new Intent(ctx,YearAllStuGardAnalyzeActivity.class).putExtra("year",yearstr).putExtra("cnid",cnid));
     }
 }

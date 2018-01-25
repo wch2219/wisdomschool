@@ -11,6 +11,13 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.PatriarchExamStageAdapter;
+import com.dlwx.wisdomschool.bean.ExamageListBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +35,7 @@ public class PatriarchExamActivity extends BaseActivity implements AdapterView.O
     TextView tvCertificate;
     @BindView(R.id.lv_list)
     ListView lvList;
+    private List<ExamageListBean.BodyBean> body;
 
     @Override
     protected void initView() {
@@ -39,7 +47,9 @@ public class PatriarchExamActivity extends BaseActivity implements AdapterView.O
     protected void initData() {
         tvTitle.setText("阶段考试");
         initTabBar(toolBar);
-        lvList.setAdapter(new PatriarchExamStageAdapter(ctx));
+        Map<String,String> map = new HashMap<>();
+        mPreenter.fetch(map, true,HttpUrl.Examagelist,HttpUrl.Examagelist);
+
     }
 
     @Override
@@ -60,6 +70,23 @@ public class PatriarchExamActivity extends BaseActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            startActivity(new Intent(ctx,ChoiceDifficultyExamActivity.class));
+        ExamageListBean.BodyBean bodyBean = body.get(i);
+        Intent intent = new Intent(ctx, ChoiceDifficultyExamActivity.class);
+        intent.putExtra("age",bodyBean.getEnid());
+        intent.putExtra("name",bodyBean.getName());
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        ExamageListBean examageListBean = gson.fromJson(s, ExamageListBean.class);
+        if (examageListBean.getCode() == 200) {
+            body = examageListBean.getBody();
+            lvList.setAdapter(new PatriarchExamStageAdapter(ctx, body));
+        }
     }
 }

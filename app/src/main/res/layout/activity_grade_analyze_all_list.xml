@@ -9,6 +9,9 @@
     <include
         layout="@layout/toolbar"
         />
+    <View
+        style="@style/GaryDiveStyle"
+        />
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/lv_list"

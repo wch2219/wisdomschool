@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ClassListBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class SeleteClassAdapter extends BaseFastAdapter {
-    public SeleteClassAdapter(Context ctx) {
+    private List<ClassListBean.BodyBean> body;
+    public SeleteClassAdapter(Context ctx,List<ClassListBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return body.size();
     }
 
     @Override
@@ -34,7 +39,8 @@ public class SeleteClassAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-        vh.tv_name.setText("一年级二班");
+        ClassListBean.BodyBean bodyBean = body.get(position);
+        vh.tv_name.setText(bodyBean.getClass_name());
         return convertView;
     }
 

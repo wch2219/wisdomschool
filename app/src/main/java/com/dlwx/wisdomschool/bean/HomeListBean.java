@@ -1,18 +1,18 @@
 package com.dlwx.wisdomschool.bean;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2018/1/20/020.
+ * Created by Administrator on 2018/1/24/024.
  */
 
-public class HomeListBean {
+public class HomelistBean {
+
 
     /**
-     * body : [{"class_name":"阿坝","classid":"8","content":"班级通知","content_pic":["http://192.168.0.199/school//Uploads/20161227/5862031a174f9.png","http://192.168.0.199/school//Uploads/20161230/586621896d4bbx1000.jpg","http://192.168.0.199/school//Uploads/20161228/586335db7f3f8x1000.jpg"],"content_voice":"http://192.168.0.199/school//Uploads/Videos/5863334ed4bfd.mp4","createdtime":"2018年01月18日 14:47","header_pic":"http://192.168.0.199/school//Uploads/20161227/5862023a2cab4.png","id":"5","is_del":"2","is_send":2,"nickname":"汤文艳","theme":"1","theme_endtime":"0","theme_name":"班级通知","user_read":"7,8","userid":"1"},{"class_name":"阿坝","classid":"8","content":"这是内容","content_pic":["http://192.168.0.199/school//Uploads/20161227/58620202136c7.png","http://192.168.0.199/school//Uploads/20161228/5863277d657d2x1000.jpg"],"content_voice":"","createdtime":"2018年01月20日 14:20","header_pic":"http://192.168.0.199/school//Uploads/20161227/5862023a2cab4.png","id":"8","is_del":"2","is_send":2,"nickname":"叶明轩","theme":"5","theme_endtime":"0","theme_name":"活动收集","userid":"2"},{"class_name":"阿坝","classid":"8","content":"就咯喔ee_11","content_pic":["http://192.168.0.199/school//Uploads/5a62de7e7e1f9x250.png","http://192.168.0.199/school//Uploads/5a62de7ede34cx250.png","http://192.168.0.199/school//Uploads/5a62de7f4eeaax250.jpg","http://192.168.0.199/school//Uploads/5a62de80293f1x250.jpg"],"content_voice":"http://192.168.0.199/school//Uploads/Videos/5a62dfbb7b803.amr","createdtime":"2018年01月20日 14:20","header_pic":"http://192.168.0.199/school//Uploads/5a571b612756cx250.jpg","id":"9","is_del":"2","is_send":1,"nickname":"只是","theme":"5","theme_endtime":"","theme_name":"活动收集","userid":"3"}]
      * code : 200
      * result : 获取成功
+     * body : [{"id":"1","title":"视频标题","pic":"","video":"http://39.107.74.235/school//Uploads/Videos/20180123/5a66e77181c6b.mp4","view_num":"0","createdtime":"2018/01/23 10:47","is_article":"1"},{"id":"2","title":"图文标题","pic":"http://39.107.74.235/school//Uploads/5a66de2b0418fx250.png","video":"","view_num":"0","createdtime":"2018/01/23 10:50","is_article":"1"},{"id":"1","title":"二胎时代，想一碗水端平到底有多难？9大难题及解决之道，二宝家庭比看！","pic":"http://39.107.74.235/school//Uploads/5a658377e91dex250.png","video":"二宝养育经","view_num":"146","createdtime":"2018/01/08 17:10","is_article":"2"},{"id":"3","title":"一个月后期末考，这份语数外复习攻略，让孩子每科至少涨10分~","pic":"http://39.107.74.235/school//Uploads/5a66e7a1e14b7x250.png","video":"备战期末考","view_num":"4","createdtime":"2018/01/08 17:38","is_article":"2"}]
      */
 
     private int code;
@@ -43,116 +43,32 @@ public class HomeListBean {
         this.body = body;
     }
 
-    public static class BodyBean implements Serializable{
+    public static class BodyBean {
         /**
-         * class_name : 阿坝
-         * classid : 8
-         * content : 班级通知
-         * content_pic : ["http://192.168.0.199/school//Uploads/20161227/5862031a174f9.png","http://192.168.0.199/school//Uploads/20161230/586621896d4bbx1000.jpg","http://192.168.0.199/school//Uploads/20161228/586335db7f3f8x1000.jpg"]
-         * content_voice : http://192.168.0.199/school//Uploads/Videos/5863334ed4bfd.mp4
-         * createdtime : 2018年01月18日 14:47
-         * header_pic : http://192.168.0.199/school//Uploads/20161227/5862023a2cab4.png
-         * id : 5
-         * is_del : 2
-         * is_send : 2
-         * nickname : 汤文艳
-         * theme : 1
-         * theme_endtime : 0
-         * theme_name : 班级通知
-         * user_read : 7,8
-         * userid : 1
+         * id : 1
+         * title : 视频标题
+         * pic :
+         * video : http://39.107.74.235/school//Uploads/Videos/20180123/5a66e77181c6b.mp4
+         * view_num : 0
+         * createdtime : 2018/01/23 10:47
+         * is_article : 1
          */
 
-        private String class_name;
-        private String classid;
-        private String content;
-        private String content_voice;
-        private String createdtime;
-        private String header_pic;
         private String id;
-        private String is_del;
-        private int is_send;
-        private String nickname;
-        private int theme;
-        private String theme_endtime;
-        private String theme_name;
-        private String user_read;
-        private String userid;
-        private List<String> content_pic;
-        private String teacher_isyue;
-        private String parent_isyue;
-        private String texturl;
+        private String title;
+        private String pic;
+        private String video;
+        private String view_num;
+        private String createdtime;
+        private String is_article;
+        private String url;
 
-        public String getTexturl() {
-            return texturl;
+        public String getUrl() {
+            return url;
         }
 
-        public void setTexturl(String texturl) {
-            this.texturl = texturl;
-        }
-
-        public String getParent_isyue() {
-            return parent_isyue;
-        }
-
-        public void setParent_isyue(String parent_isyue) {
-            this.parent_isyue = parent_isyue;
-        }
-
-        public String getTeacher_isyue() {
-            return teacher_isyue;
-        }
-
-        public void setTeacher_isyue(String teacher_isyue) {
-            this.teacher_isyue = teacher_isyue;
-        }
-
-        public String getClass_name() {
-            return class_name;
-        }
-
-        public void setClass_name(String class_name) {
-            this.class_name = class_name;
-        }
-
-        public String getClassid() {
-            return classid;
-        }
-
-        public void setClassid(String classid) {
-            this.classid = classid;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getContent_voice() {
-            return content_voice;
-        }
-
-        public void setContent_voice(String content_voice) {
-            this.content_voice = content_voice;
-        }
-
-        public String getCreatedtime() {
-            return createdtime;
-        }
-
-        public void setCreatedtime(String createdtime) {
-            this.createdtime = createdtime;
-        }
-
-        public String getHeader_pic() {
-            return header_pic;
-        }
-
-        public void setHeader_pic(String header_pic) {
-            this.header_pic = header_pic;
+        public void setUrl(String url) {
+            this.url = url;
         }
 
         public String getId() {
@@ -163,76 +79,52 @@ public class HomeListBean {
             this.id = id;
         }
 
-        public String getIs_del() {
-            return is_del;
+        public String getTitle() {
+            return title;
         }
 
-        public void setIs_del(String is_del) {
-            this.is_del = is_del;
+        public void setTitle(String title) {
+            this.title = title;
         }
 
-        public int getIs_send() {
-            return is_send;
+        public String getPic() {
+            return pic;
         }
 
-        public void setIs_send(int is_send) {
-            this.is_send = is_send;
+        public void setPic(String pic) {
+            this.pic = pic;
         }
 
-        public String getNickname() {
-            return nickname;
+        public String getVideo() {
+            return video;
         }
 
-        public void setNickname(String nickname) {
-            this.nickname = nickname;
+        public void setVideo(String video) {
+            this.video = video;
         }
 
-        public int getTheme() {
-            return theme;
+        public String getView_num() {
+            return view_num;
         }
 
-        public void setTheme(int theme) {
-            this.theme = theme;
+        public void setView_num(String view_num) {
+            this.view_num = view_num;
         }
 
-        public String getTheme_endtime() {
-            return theme_endtime;
+        public String getCreatedtime() {
+            return createdtime;
         }
 
-        public void setTheme_endtime(String theme_endtime) {
-            this.theme_endtime = theme_endtime;
+        public void setCreatedtime(String createdtime) {
+            this.createdtime = createdtime;
         }
 
-        public String getTheme_name() {
-            return theme_name;
+        public String getIs_article() {
+            return is_article;
         }
 
-        public void setTheme_name(String theme_name) {
-            this.theme_name = theme_name;
-        }
-
-        public String getUser_read() {
-            return user_read;
-        }
-
-        public void setUser_read(String user_read) {
-            this.user_read = user_read;
-        }
-
-        public String getUserid() {
-            return userid;
-        }
-
-        public void setUserid(String userid) {
-            this.userid = userid;
-        }
-
-        public List<String> getContent_pic() {
-            return content_pic;
-        }
-
-        public void setContent_pic(List<String> content_pic) {
-            this.content_pic = content_pic;
+        public void setIs_article(String is_article) {
+            this.is_article = is_article;
         }
     }
 }

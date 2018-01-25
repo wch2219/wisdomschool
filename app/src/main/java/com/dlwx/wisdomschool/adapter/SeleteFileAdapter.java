@@ -49,6 +49,8 @@ public class SeleteFileAdapter extends BaseFastAdapter {
 
         }else if (filetype == 3) {//txt
             Glide.with(ctx).load(R.mipmap.icon_txt).into(vh.iv_pic);
+        }else if (filetype == 5) {
+            Glide.with(ctx).load(R.mipmap.excel).into(vh.iv_pic);
         }else{
             Glide.with(ctx).load(R.mipmap.icon_word).into(vh.iv_pic);
         }

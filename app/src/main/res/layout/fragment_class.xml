@@ -11,18 +11,7 @@
         android:visibility="gone"
         android:orientation="vertical"
         >
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/iv_add"
-                style="@style/Imagesmillpic"
-                android:src="@mipmap/icon_cj"
-                android:layout_margin="10dp"
-                android:layout_alignParentRight="true"
-                />
 
-        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -65,27 +54,8 @@
             android:orientation="vertical"
             android:layout_height="match_parent">
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/iv_addpatriarch"
-                    style="@style/Imagesmillpic"
-                    android:src="@mipmap/icon_cj"
-                    android:layout_margin="10dp"
-                    android:layout_alignParentRight="true"
-                    />
-                <TextView
-                    style="@style/TextSizeSmallTitleBlack"
-                    android:text="班级"
-                    android:textColor="@color/black"
-                   android:layout_centerHorizontal="true"
-                    android:padding="10dp"
-                    />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/rl_entrypatriarch"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -100,7 +70,7 @@
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@mipmap/icon_cjwu"
                         />
                         <TextView
                             android:layout_width="wrap_content"

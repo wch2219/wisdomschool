@@ -15,7 +15,6 @@
        <RelativeLayout
            android:layout_width="wrap_content"
            android:layout_height="?attr/actionBarSize"
-           android:layout_marginTop="20dp"
            android:padding="10dp"
            android:id="@+id/rl_share"
            android:layout_alignParentRight="true"
@@ -48,6 +47,7 @@
             <TextView
                 style="@style/TextSizecontentBlack"
                 android:text="8题"
+                android:id="@+id/tv_duinum"
                 android:textColor="@color/blue"
                 />
             <TextView
@@ -57,6 +57,7 @@
             <TextView
                 style="@style/TextSizecontentBlack"
                 android:text="80"
+                android:id="@+id/tv_grade"
                 android:textSize="18sp"
                 android:textColor="@color/blue"
                 />
@@ -65,10 +66,102 @@
                 android:text="分"
                 />
         </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_margin="50dp"
+        android:id="@+id/rl_pic"
+        android:layout_gravity="center"
+
+        android:background="@mipmap/icon_bg">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="8sp"
+           android:id="@+id/tv_number"
+            android:layout_marginTop="60dp"
+           android:layout_marginLeft="190dp"
+            android:text="编号"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            >
             <ImageView
-                android:id="@+id/iv_pic"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@mipmap/icon_certifi"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/icon_zhengshu"
+
                 />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp"
+                >
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:layout_width="60dp"
+                    android:gravity="center_horizontal"
+                    android:text="高飞"
+                    android:id="@+id/tv_name"
+                    />
+                <TextView
+                    style="@style/TextSizecontentBlack"
+                    android:text="同志:"
+
+                    android:typeface="serif"
+
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="60dp"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                android:text="\t恭喜您通过本次阶段性学习与考试，获得"
+                />
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="8"
+                    android:id="@+id/tv_xing"
+                    android:textSize="11sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="星证书以资鼓励。"
+                    android:textSize="8sp"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="8sp"
+                android:text="在培养孩子的过程中，需要您有持续学习的动力愿您讷讷感一如既往的陪伴孩子共同成长"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </LinearLayout>

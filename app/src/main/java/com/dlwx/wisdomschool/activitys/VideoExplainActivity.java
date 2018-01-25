@@ -1,10 +1,8 @@
 package com.dlwx.wisdomschool.activitys;
 
-import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -23,7 +21,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 视频讲解
  */
-public class VideoExplainActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class VideoExplainActivity extends BaseActivity  {
 
     @BindView(R.id.webview)
     WebView webView;
@@ -71,11 +69,6 @@ public class VideoExplainActivity extends BaseActivity implements AdapterView.On
         return new Presenter(this);
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx, VideoDescActivity.class));
-    }
 
     @OnClick(R.id.back)
     public void onViewClicked() {

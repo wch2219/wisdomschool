@@ -40,6 +40,7 @@ public class GradeManageActivity extends BaseActivity
     @BindView(R.id.lv_list)
     ExpandableListView lvList;
     private List<ClassListBean.BodyBean> body;
+    private ClassListBean classListBean;
 
     @Override
     protected void initView() {
@@ -87,16 +88,16 @@ public class GradeManageActivity extends BaseActivity
     }
     @OnClick(R.id.ll_create)
     public void onViewClicked() {
-
-            startActivity(new Intent(ctx,SeleteClassActivity.class));
+        Intent intent = new Intent(ctx, SeleteClassActivity.class);
+        intent.putExtra("classlist",classListBean);
+        startActivity(intent);
     }
-
     @Override
     public void showData(String s) {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        ClassListBean classListBean = gson.fromJson(s, ClassListBean.class);
+        classListBean = gson.fromJson(s, ClassListBean.class);
         if (classListBean.getCode() == 200) {
             body = classListBean.getBody();
             if (body != null | body.size() != 0) {

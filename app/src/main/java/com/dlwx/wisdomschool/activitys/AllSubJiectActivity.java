@@ -78,7 +78,6 @@ public class AllSubJiectActivity extends BaseActivity implements AdapterView.OnI
         intent.putExtra("irid",irid);
         intent.putExtra("classid",classid);
         startActivity(intent);
-//        startActivity(new Intent(ctx,GradeActivity.class));
     }
 
     /**

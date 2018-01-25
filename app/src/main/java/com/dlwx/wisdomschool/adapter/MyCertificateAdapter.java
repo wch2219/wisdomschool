@@ -8,19 +8,24 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.ZhengshuListBean;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/19/019.
  */
 
 public class MyCertificateAdapter extends BaseFastAdapter {
-    public MyCertificateAdapter(Context ctx) {
+    private List<ZhengshuListBean.BodyBean> body;
+    public MyCertificateAdapter(Context ctx, List<ZhengshuListBean.BodyBean> body) {
         super(ctx);
+        this.body = body;
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return body.size();
     }
 
     @Override
@@ -34,9 +39,8 @@ public class MyCertificateAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-
-            vh.tv_name.setText(position+"岁考试证书");
-
+        ZhengshuListBean.BodyBean bodyBean = body.get(position);
+        vh.tv_name.setText(bodyBean.getName()+"证书");
         return convertView;
     }
 

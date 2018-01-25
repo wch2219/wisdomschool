@@ -119,6 +119,7 @@ public class ClassDescActivity extends BaseActivity {
     private String classid;
     private List<ClassDescBean.BodyBean.AddUserBean> add_user;
     private List<ClassDescBean.BodyBean.AddTeacherBean> add_teacher;
+    private ClassDescBean.BodyBean.CreateTeacherBean create_teacher;
 
     @Override
     protected void initView() {
@@ -204,7 +205,7 @@ public class ClassDescActivity extends BaseActivity {
             } else {
                 swCheck.setChecked(false);
             }
-            ClassDescBean.BodyBean.CreateTeacherBean create_teacher = body.getCreate_teacher();
+            create_teacher = body.getCreate_teacher();
             add_teacher = body.getAdd_teacher();
             classDescTeachAdapter = new ClassDescTeachAdapter(ctx, create_teacher, add_teacher);
             gvList.setAdapter(classDescTeachAdapter);
@@ -224,8 +225,15 @@ public class ClassDescActivity extends BaseActivity {
     private AdapterView.OnItemClickListener teachOnItemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            if (i == 0) {//我的
-                startActivity(new Intent(ctx, PersionMessActivity.class));
+
+            if (i == 0) {//创建班级的老师
+                String userid = create_teacher.getUserid();
+                if (sp.getString(SpUtiles.Userid,"").equals(userid)) {//自己创建的班级
+                    //
+                    startActivity(new Intent(ctx, PersionMessActivity.class));
+                }else{
+                    Toast.makeText(ClassDescActivity.this, "缺少jcid", Toast.LENGTH_SHORT).show();
+                }
             } else if (i == add_teacher.size() + 1) {//最后一个添加教师
                 startActivity(new Intent(ctx, InviteTeachActivity.class).putExtra("classid", classid));
 
@@ -251,11 +259,16 @@ public class ClassDescActivity extends BaseActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             if (add_user.size() > 3) {
-                if (i == 3) {
+                if (i == 3) {//添加成员
                     startActivity(new Intent(ctx, MyClassMemberActivity.class));
                 } else {
                     String jcid = add_user.get(i).getJcid();
-                    skipMemberMess(jcid);
+                    String userid = add_user.get(i).getUserid();
+                    if (sp.getString(SpUtiles.Userid,"").equals(userid)) {//自己点击了自己
+                        startActivity(new Intent(ctx, PersionMessActivity.class));
+                    }else{//查看其他成员信息
+                        skipMemberMess(jcid);
+                    }
                 }
             } else if (add_user.size() > 0) {
                 if (i == add_user.size()) {
@@ -412,7 +425,6 @@ public class ClassDescActivity extends BaseActivity {
                 break;
         }
     }
-
     /**
      * 解散班级提示
      */
@@ -473,7 +485,6 @@ public class ClassDescActivity extends BaseActivity {
         }
 
     }
-
     public static class ViewHolderClassId {
         public View rootView;
         public TextView tv_current;

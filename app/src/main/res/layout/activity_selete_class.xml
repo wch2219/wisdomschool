@@ -9,12 +9,16 @@
     <include
         layout="@layout/toolbar"
         />
+    <View
+        style="@style/GaryDiveStyle"
+        />
     <LinearLayout
         android:id="@+id/ll_createclass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:visibility="gone"
         >
         <TextView
                 style="@style/TextSizecontentBlack"

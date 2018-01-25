@@ -6,17 +6,12 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -24,7 +19,6 @@ import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassDescActivity;
-import com.dlwx.wisdomschool.activitys.GradeManageActivity;
 import com.dlwx.wisdomschool.activitys.MyJoinClassDescActivity;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 
@@ -41,15 +35,10 @@ import butterknife.Unbinder;
  */
 
 public class ClassFragment extends BaseFragment implements AdapterView.OnItemClickListener {
-    @BindView(R.id.iv_add)
-    ImageView ivAdd;
     @BindView(R.id.tv_create)
     TextView tvCreate;
     @BindView(R.id.tv_add)
     TextView tvAdd;
-    @BindView(R.id.iv_addpatriarch)
-    ImageView iv_addpatriarch;
-
     @BindView(R.id.fl_class)
     FrameLayout flClass;
     @BindView(R.id.ll_teach)
@@ -112,33 +101,7 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
         return new Presenter(this);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private void showGradePopu() {
-        View popuView = LayoutInflater.from(ctx).inflate(R.layout.popu_grademanage, null);
-        TextView tv_grademanage = popuView.findViewById(R.id.tv_grademanage);
-        final PopupWindow popupWindow = new PopupWindow(popuView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-        lp.alpha = 0.7f; //0.0-1.0
-        getActivity().getWindow().setAttributes(lp);
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
-                lp.alpha = 1f; //0.0-1.0
-                getActivity().getWindow().setAttributes(lp);
-            }
-        });
-        popupWindow.showAsDropDown(ivAdd, -10, 10, Gravity.RIGHT);
-        tv_grademanage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ctx, GradeManageActivity.class));
-                popupWindow.dismiss();
-            }
-        });
-    }
+
 
     private Fragment fragment;
     private FragmentTransaction transaction;
@@ -172,15 +135,9 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @OnClick({R.id.iv_add, R.id.iv_addpatriarch, R.id.tv_create, R.id.tv_add, R.id.btn_addclasspatriarch, R.id.btn_createpatriarch})
+    @OnClick({R.id.tv_create, R.id.tv_add, R.id.btn_addclasspatriarch, R.id.btn_createpatriarch})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_add:
-                showGradePopu();
-                break;
-            case R.id.iv_addpatriarch:
-                showGradePopu();
-                break;
             case R.id.tv_create://我创建的班级(老师)
                 tvCreate.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 tvAdd.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//加粗

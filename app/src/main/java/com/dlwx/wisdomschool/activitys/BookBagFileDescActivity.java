@@ -88,6 +88,7 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
     private MyPopuWindow popuWindow;
     private List<Image> images;
     private List<Image> mp3s;
+    private boolean ischose;
 
     @Override
     protected void initView() {
@@ -95,20 +96,17 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
         name = intent.getStringExtra("name");
         cfid = intent.getStringExtra("cfid");
         classid = intent.getStringExtra("classid");
-
+        ischose = intent.getBooleanExtra("ischose", false);
         setContentView(R.layout.activity_page_file_desc);
         ButterKnife.bind(this);
         ll_bottom.setVisibility(View.GONE);
-
     }
-
     @Override
     protected void initData() {
         tvTitle.setText(name);
         initTabBar(toolBar);
         getData("");
     }
-
     @Override
     protected void initListener() {
         initrefresh(smallLabel, true);
@@ -130,11 +128,17 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
 
         });
     }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         final ClassFileBean.BodyBean.ListBean listBean = fileList.get(i);
         int type = listBean.getType();
+        if (ischose) {
+           Intent intent = new Intent();
+            intent.putExtra("ufid",listBean.getCfid());
+            setResult(102,intent);
+            finish();
+            return;
+        }
         if (type == 3 || type == 4) {
             DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
                 @Override
@@ -155,7 +159,6 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
             playUtils.showPopu(ablvList, mp3s, i);
         }
     }
-
     /**
      * 长按编辑删除
      *
@@ -178,23 +181,19 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
         }
         getData(seach);
     }
-
     @Override
     public void downOnRefresh() {
         getData("");
     }
-
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
     }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @OnClick(R.id.iv_add)
     public void onViewClicked() {
         showPopu();
     }
-
     /**
      * 获取当前文件下的列表
      */
@@ -205,8 +204,6 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
         map.put("name", seach);
         map.put("type", type);
         mPreenter.fetch(map, true, HttpUrl.getBookBag, HttpUrl.getBookBag + Token + type + seach);
-
-
     }
 
     private String type;

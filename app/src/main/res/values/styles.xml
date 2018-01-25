@@ -136,8 +136,6 @@
     <style name="AnimationPopuAp">
         <item name="android:windowEnterAnimation">@anim/enter_anim_popu</item>
         <item name="android:windowExitAnimation">@anim/out_anim_popu</item>
-        <item name="android:windowEnterAnimation">@anim/enter_anim</item>
-        <item name="android:windowExitAnimation">@anim/out_anim</item>
     </style>
 
 

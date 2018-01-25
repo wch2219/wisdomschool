@@ -28,7 +28,6 @@ import com.dlwx.wisdomschool.adapter.SeleteFileAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -83,6 +82,10 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
             switch (msg.what) {
                 case 1:
                     disLoading();
+//                    Collections.sort(images, new FileComparator());
+//                    Collections.sort(mp3s, new FileComparator());
+//                    Collections.sort(pics, new FileComparator());
+//                    Collections.sort(docs, new FileComparator());
                     lvList.setAdapter(new SeleteFileAdapter(ctx, images));
                     break;
             }
@@ -92,7 +95,7 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     protected void initListener() {
-            lvList.setOnItemClickListener(this);
+        lvList.setOnItemClickListener(this);
     }
 
     @Override
@@ -149,15 +152,19 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
             popuWindow.dismiss();
             switch (view.getId()) {
                 case R.id.tv_allfile:
+                    imageList = images;
                     lvList.setAdapter(new SeleteFileAdapter(ctx, images));
                     break;
                 case R.id.tv_documentfile:
+                    imageList = docs;
                     lvList.setAdapter(new SeleteFileAdapter(ctx, docs));
                     break;
                 case R.id.tv_picfile:
+                    imageList = pics;
                     lvList.setAdapter(new SeleteFileAdapter(ctx, pics));
                     break;
                 case R.id.tv_voicefile:
+                    imageList = mp3s;
                     lvList.setAdapter(new SeleteFileAdapter(ctx, mp3s));
                     break;
 
@@ -165,22 +172,30 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
         }
     }
 
+    private List<Image> imageList = new ArrayList<>();
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i == 0) {
+            Intent intent = new Intent(ctx, WishDomBagActivity.class);
+            intent.putExtra("ischose", true);
+            startActivityForResult(intent, 102);
+        } else {
+            Image image = images.get(i - 1);
+            int filetype = image.getFiletype();
 
-        Image image = images.get(i-1);
-        int filetype = image.getFiletype();
+            wch(filetype + image.getPath());
 
-        wch(filetype+image.getPath());
-
-        back(image.getPath(),image.getSize(),image.getFiletype());
+            back(image.getPath(), image.getSize(), image.getFiletype());
+        }
     }
-    private void back(String path,String size,int filetype){
+
+    private void back(String path, String size, int filetype) {
         Intent intent = new Intent();
-        intent.putExtra("path",path);
-        intent.putExtra("size",size);
-        intent.putExtra("filetype",filetype);
-        setResult(101,intent);
+        intent.putExtra("path", path);
+        intent.putExtra("size", size);
+        intent.putExtra("filetype", filetype);
+        setResult(101, intent);
         finish();
     }
 
@@ -235,16 +250,14 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
                 image.setFiletype(4);
                 images.add(image);
                 docs.add(image);
-            }
-            else if (type.contains("docx")) {
+            } else if (type.contains("docx")) {
                 image.setPath(path);
                 image.setName(name);
                 image.setSize(size);
                 image.setFiletype(4);
                 images.add(image);
                 docs.add(image);
-            }
-            else if (type.contains("jpg")) {
+            } else if (type.contains("jpg")) {
                 image.setPath(path);
                 image.setName(name);
                 image.setFiletype(1);
@@ -264,10 +277,7 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
         }
         wch("群补文件" + images.size());
         cursor.close();
-        Collections.sort(images, new FileComparator());
-        Collections.sort(mp3s, new FileComparator());
-        Collections.sort(pics, new FileComparator());
-        Collections.sort(docs, new FileComparator());
+//
         handler.sendEmptyMessage(1);
     }
 
@@ -281,6 +291,23 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
             } else {
                 return -1;
             }
+
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+         switch (requestCode){
+                    case 102:
+                        String ufid = data.getStringExtra("ufid");
+                        Intent intent = new Intent();
+                        intent.putExtra("ufid",ufid);
+                        setResult(101,intent);
+                        finish();
+                        break;
+                }
     }
 }

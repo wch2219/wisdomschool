@@ -9,119 +9,130 @@
     <include
         layout="@layout/toolbar"
         />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+    <View
+        style="@style/GaryDiveStyle"
+        />
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        >
-        <TextView
-            style="@style/TextSizecontentBlack"
-            android:text="学生姓名："
-
-            />
-        <EditText
-            android:id="@+id/et_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="请输入学生姓名"
-            android:textSize="13sp"
-
-            />
-
-    </LinearLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        >
-        <TextView
-            style="@style/TextSizecontentBlack"
-            android:text="考试时间："
-
-            />
-        <TextView
-            android:id="@+id/tv_data"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="请选择考试时间"
-            android:textSize="13sp"
-
-            />
-
-    </LinearLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        >
-        <TextView
-            style="@style/TextSizecontentBlack"
-            android:text="考试成绩："
-            android:layout_weight="1"
-            />
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="点击加号可增加一科考试"
-            android:textSize="13sp"
-            />
-
-    </LinearLayout>
-    <View
-        style="@style/GaryDiveStyle"
-        />
-        <com.dlwx.baselib.view.MyListView
-            android:layout_width="match_parent"
             android:id="@+id/lv_list"
-            android:layout_margin="10dp"
-            android:layout_height="wrap_content">
 
-        </com.dlwx.baselib.view.MyListView>
-            <TextView
-                android:id="@+id/tv_addgrade"
-                style="@style/TextSizecontentBlack"
-                android:layout_width="match_parent"
-                android:padding="10dp"
-                android:text="+增加一科成绩"
-                android:gravity="center"
-                />
-            <View
-                style="@style/GaryDiveStyle"
-                />
+            ></ListView>
 
-                <Button
-                    android:id="@+id/btn_save"
-                    style="@style/ButtonLoginStyles"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/shape_class_btn"
-                    android:text="保存发布"
-                    android:layout_marginTop="20dp"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="40dp"
-                    />
-        </LinearLayout>
 
-    </ScrollView>
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--&gt;-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="10dp"-->
+        <!--&gt;-->
+        <!--<TextView-->
+            <!--style="@style/TextSizecontentBlack"-->
+            <!--android:text="学生姓名："-->
+
+            <!--/>-->
+        <!--<EditText-->
+            <!--android:id="@+id/et_name"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:hint="请输入学生姓名"-->
+            <!--android:textSize="13sp"-->
+
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+    <!--<View-->
+        <!--style="@style/GaryDiveStyle"-->
+        <!--/>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="10dp"-->
+        <!--&gt;-->
+        <!--<TextView-->
+            <!--style="@style/TextSizecontentBlack"-->
+            <!--android:text="考试时间："-->
+
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_data"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:hint="请选择考试时间"-->
+            <!--android:textSize="13sp"-->
+
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+    <!--<View-->
+        <!--style="@style/GaryDiveStyle"-->
+        <!--/>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="10dp"-->
+        <!--&gt;-->
+        <!--<TextView-->
+            <!--style="@style/TextSizecontentBlack"-->
+            <!--android:text="考试成绩："-->
+            <!--android:layout_weight="1"-->
+            <!--/>-->
+        <!--<TextView-->
+
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@null"-->
+            <!--android:hint="点击加号可增加一科考试"-->
+            <!--android:textSize="13sp"-->
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+    <!--<View-->
+        <!--style="@style/GaryDiveStyle"-->
+        <!--/>-->
+        <!--<com.dlwx.baselib.view.MyListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:id="@+id/lv_list"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:layout_height="wrap_content">-->
+
+        <!--</com.dlwx.baselib.view.MyListView>-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_addgrade"-->
+                <!--style="@style/TextSizecontentBlack"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:padding="10dp"-->
+                <!--android:text="+增加一科成绩"-->
+                <!--android:gravity="center"-->
+                <!--/>-->
+            <!--<View-->
+                <!--style="@style/GaryDiveStyle"-->
+                <!--/>-->
+
+                <!--<Button-->
+                    <!--android:id="@+id/btn_save"-->
+                    <!--style="@style/ButtonLoginStyles"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:background="@drawable/shape_class_btn"-->
+                    <!--android:text="保存发布"-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:layout_height="30dp"-->
+                    <!--android:layout_marginBottom="40dp"-->
+                    <!--/>-->
+        <!--</LinearLayout>-->
+
+    <!--</ScrollView>-->
 
 </LinearLayout>

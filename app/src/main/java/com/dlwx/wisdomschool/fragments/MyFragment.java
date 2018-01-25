@@ -16,6 +16,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.ClassManageActivity;
 import com.dlwx.wisdomschool.activitys.FeedbackActivity;
 import com.dlwx.wisdomschool.activitys.LoginInActivity;
 import com.dlwx.wisdomschool.activitys.MyFacoriteActivity;
@@ -63,7 +64,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         headvh = new ViewHolder(headView);
         lvList.addHeaderView(headView);
     }
+
     private int[] pics;
+
     @Override
     protected void initDate() {
         teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
@@ -71,20 +74,23 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             foodarr = getResources().getStringArray(R.array.my_food);
             headvh.tv_schoolname.setText(R.string.schoolname);
             headvh.tv_name.setText("老师");
-            pics = new int[]{R.mipmap.icon_wdwdshijian
-                    ,R.mipmap.icon_wdwdxitong
-                    ,R.mipmap.icon_wdwdfankui
-                    ,R.mipmap.icon_wdwdjsyqm
-                    ,R.mipmap.icon_wdwdshenqing
-                    ,R.mipmap.icon_wdwdbanben
-                    ,R.mipmap.icon_wdwdshezhi
-                    ,R.mipmap.icon_wdwdtuichu
+            pics = new int[]{
+                    R.mipmap.icon_wdbanji,
+                    R.mipmap.icon_wdwdshijian
+                    , R.mipmap.icon_wdwdxitong
+                    , R.mipmap.icon_wdwdfankui
+                    , R.mipmap.icon_wdwdjsyqm
+                    , R.mipmap.icon_wdwdshenqing
+                    , R.mipmap.icon_wdwdbanben
+                    , R.mipmap.icon_wdwdshezhi
+                    , R.mipmap.icon_wdwdtuichu
             };
-        }else{//家长
+        } else {//家长
             foodarr = getResources().getStringArray(R.array.my_food_patriarch);
             headvh.tv_schoolname.setText("");
             headvh.tv_name.setText("家长");
             pics = new int[]{
+                    R.mipmap.icon_wdbanji,
                     R.mipmap.icon_wdwdkaoshi,
                     R.mipmap.icon_wdwdxitong,
                     R.mipmap.icon_wdwdfankui,
@@ -94,7 +100,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             };
         }
         lvList.setHeaderDividersEnabled(true);
-        lvList.setAdapter(new MyFoodAdapter(ctx, foodarr,pics));
+        lvList.setAdapter(new MyFoodAdapter(ctx, foodarr, pics));
     }
 
     @Override
@@ -114,6 +120,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         headvh.ll_favorite.setOnClickListener(this);
         headvh.ll_wishbag.setOnClickListener(this);
         headvh.ll_video.setOnClickListener(this);
+
         lvList.setOnItemClickListener(this);
     }
 
@@ -127,16 +134,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
 
         switch (view.getId()) {
             case R.id.my_mess://个人信息
-                startActivity(new Intent(ctx,PersionMessActivity.class));
+                startActivity(new Intent(ctx, PersionMessActivity.class));
                 break;
             case R.id.ll_favorite://收藏夹
-                startActivity(new Intent(ctx,MyFacoriteActivity.class));
+                startActivity(new Intent(ctx, MyFacoriteActivity.class));
                 break;
             case R.id.ll_wishbag://智慧书包
-                startActivity(new Intent(ctx,WishDomBagActivity.class));
+                startActivity(new Intent(ctx, WishDomBagActivity.class));
                 break;
             case R.id.ll_video://视频讲解
-                startActivity(new Intent(ctx,VideoExplainActivity.class));
+                startActivity(new Intent(ctx, VideoExplainActivity.class));
                 break;
             case R.id.tv_close:
                 diaShow.dismiss();
@@ -161,56 +168,63 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (teacherOrPatriarch == 1) {
-        switch (i) {
-            case 1://设置工作时间
-                startActivity(new Intent(ctx,SetWorkTimeActivity.class));
-                break;
-            case 2://系统通知S
-                startActivity(new Intent(ctx,SysNotifitionActivity.class));
-                break;
-            case 3://反馈建议
-                startActivity(new Intent(ctx,FeedbackActivity.class));
-                break;
-            case 4://生成教师邀请码
-                startActivity(new Intent(ctx,TeacherInvitaCodeActivity.class));
-                break;
-            case 5://申请学校培训
-                startActivity(new Intent(ctx,SchoolTrainActivity.class));
-                break;
-            case 6://版本信息
-                Beta.checkUpgrade();
-                break;
-            case 7://设置
-                startActivity(new Intent(ctx,SettActivity.class));
-                break;
-            case 8://退出登录
-
-                showDia();
-                break;
-        }
-        }else{//家长
             switch (i) {
-                case 1://家长考试
-                    startActivity(new Intent(ctx,PatriarchExamActivity.class));
+                case 1://班级
+                    startActivity(new Intent(ctx, ClassManageActivity.class));
                     break;
-                case 2://系统通知
-                    startActivity(new Intent(ctx,SysNotifitionActivity.class));
+                case 2://设置工作时间
+                    startActivity(new Intent(ctx, SetWorkTimeActivity.class));
                     break;
-                case 3://反馈建议
-                    startActivity(new Intent(ctx,FeedbackActivity.class));
-                    break;
-                case 4://版本信息
-                    break;
-                case 5://设置
-                    startActivity(new Intent(ctx,SettActivity.class));
-                    break;
-                case 6://退出登录
 
+                case 3://系统通知S
+                    startActivity(new Intent(ctx, SysNotifitionActivity.class));
+                    break;
+                case 4://反馈建议
+                    startActivity(new Intent(ctx, FeedbackActivity.class));
+                    break;
+                case 5://生成教师邀请码
+                    startActivity(new Intent(ctx, TeacherInvitaCodeActivity.class));
+                    break;
+                case 6://申请学校培训
+                    startActivity(new Intent(ctx, SchoolTrainActivity.class));
+                    break;
+                case 7://版本信息
+                    Beta.checkUpgrade();
+                    break;
+                case 8://设置
+                    startActivity(new Intent(ctx, SettActivity.class));
+                    break;
+                case 9://退出登录
+
+                    showDia();
+                    break;
+            }
+        } else {//家长
+            switch (i) {
+                case 1://班级
+                    startActivity(new Intent(ctx,ClassManageActivity.class));
+                    break;
+                case 2://家长考试
+                    startActivity(new Intent(ctx, PatriarchExamActivity.class));
+                    break;
+                case 3://系统通知
+                    startActivity(new Intent(ctx, SysNotifitionActivity.class));
+                    break;
+                case 4://反馈建议
+                    startActivity(new Intent(ctx, FeedbackActivity.class));
+                    break;
+                case 5://版本信息
+                    break;
+                case 6://设置+++++++++
+                    startActivity(new Intent(ctx, SettActivity.class));
+                    break;
+                case 7://退出登录
                     showDia();
                     break;
             }
         }
     }
+
     /**
      * 退出登录
      */
@@ -218,12 +232,11 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         View view = LayoutInflater.from(ctx).inflate(R.layout.dia_back, null);
         builder.setView(view);
-       ViewHolderDia vh = new ViewHolderDia(view);
+        ViewHolderDia vh = new ViewHolderDia(view);
         vh.tv_close.setOnClickListener(this);
         vh.tv_aff.setOnClickListener(this);
         diaShow = builder.show();
     }
-
 
 
     private class ViewHolderDia {
@@ -238,6 +251,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         }
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -254,6 +268,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         public LinearLayout ll_favorite;
         public LinearLayout ll_wishbag;
         public LinearLayout ll_video;
+
 
         public ViewHolder(View rootView) {
             this.rootView = rootView;

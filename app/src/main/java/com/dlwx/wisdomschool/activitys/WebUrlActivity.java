@@ -36,12 +36,14 @@ public class WebUrlActivity extends BaseActivity {
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
     private boolean isback;
+    private boolean unTitle;
 
     @Override
     protected void initView() {
         Intent intent = getIntent();
         String url = intent.getStringExtra("url");
         isback = intent.getBooleanExtra("isback", false);
+        unTitle = intent.getBooleanExtra("unTitle", false);
         setContentView(R.layout.activity_web_url);
         ButterKnife.bind(this);
         LoadWEBUtiles webUtiles = new LoadWEBUtiles(this, rl_webroot);
@@ -51,7 +53,10 @@ public class WebUrlActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        initTabBar(toolBar);
+        if (unTitle)
+            toolBar.setVisibility(View.GONE);
+        else
+            initTabBar(toolBar);
     }
 
     @Override

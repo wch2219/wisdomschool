@@ -35,10 +35,7 @@ import com.dlwx.wisdomschool.utiles.LookPic;
 import com.dlwx.wisdomschool.utiles.MediaPlayUtils;
 import com.dlwx.wisdomschool.utiles.UpFileUtiles;
 import com.google.gson.Gson;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.PostRequest;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.io.File;
@@ -354,24 +351,23 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
     private int tag = 0;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (data == null) {
             return;
         }
         switch (requestCode) {
             case 2:
-
-                ArrayList<String> images = data.getStringArrayListExtra("images");
-                upPic(images);
+                ArrayList<Image> seletepiclist = data.getParcelableArrayListExtra("images");
+                upPic(seletepiclist);
                 break;
             case 101:
+                String ufid = data.getStringExtra("ufid");
                 final String filepath = data.getStringExtra("path");
-                String[] split = filepath.split("/");
-                final String filename = split[split.length - 1];
+
                 final int filetype = data.getIntExtra("filetype", 0);
-                final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
+
                 showLoading();
-                tag = 0;
+
                 UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                     @Override
                     public void success(Response<String> response) {
@@ -380,7 +376,11 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                         if (upPicBean.getCode() == 200) {
                             if (tag == 0) {
                                 tag = 1;
+                                String[] split = filepath.split("/");
+                                final String filename = split[split.length - 1];
                                 int fileid = upPicBean.getBody().getFileid();
+                                final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
+
                                 Map<String, String> map = new HashMap<>();
                                 map.put("token", Token);
                                 map.put("classid", classid);
@@ -400,43 +400,52 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                         }
                     }
                 });
+
+                if (!TextUtils.isEmpty(ufid)) {//从智慧书包上传
+                    Map<String, String> map = new HashMap<>();
+                    map.put("token", Token);
+                    map.put("classid", classid);
+                    map.put("ufid", ufid);
+                    UpFileUtiles.addfile(ctx, map);
+                    tag = 1;
+                    return;
+                }
                 UpFileUtiles.TYPE = 1;
                 File file = new File(filepath);
-                wch("类型："+filetype+"\n"+"size:"+size);
-                UpFileUtiles.start(ctx, file, filetype + "", size);
+                tag = 0;
+                UpFileUtiles.start(ctx, file, filetype + "", 0);
                 break;
         }
     }
-
-    /**
-     * 多图上传
-     *
-     * @param images
-     */
-    private void upPic(ArrayList<String> images) {
-        showLoading();
-        List<File> lists = new ArrayList<>();
-        for (int i = 0; i < images.size(); i++) {
-            lists.add(new File(images.get(i)));
+    private int pos = -1;
+    private String imgs;
+    private void upPic(final ArrayList<Image> seletepiclist) {
+        pos++;
+        if (pos >= images.size()) {
+            //图片上传完成
+//           UpFileUtiles.start(ctx, file, filetype + "", 0);
+            return;
         }
-        wch(lists.size());
-        PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
-        for (int i = 0; i < images.size(); i++) {
-            post.params("file" + i, lists.get(i));
-        }
-        post.execute(new StringCallback() {
+        UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
             @Override
-            public void onSuccess(Response<String> response) {
-                wch(response.body());
+            public void success(Response<String> response) {
                 disLoading();
-//                getFileList();
-            }
-
-            @Override
-            public void onError(Response<String> response) {
-                disLoading();
+                Gson gson = new Gson();
+                UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
+                if (upPicBean.getCode() == 200) {
+                    if (TextUtils.isEmpty(imgs)) {
+                        imgs = upPicBean.getBody().getFileid() + "";
+                    } else {
+                        imgs = imgs + "," + upPicBean.getBody().getFileid();
+                    }
+                    upPic(seletepiclist);
+                } else {
+                    Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        UpFileUtiles.start(ctx, new File(seletepiclist.get(pos).getPath()), "1", 0);
+
     }
 }
 

@@ -9,12 +9,4 @@
         <include
             layout="@layout/item_school_notifi"
             />
-    <!--我发送的消息-->
-             <include
-            layout="@layout/item_home_right"
-            />
-    <!--我接收的-->
-        <include
-            layout="@layout/item_home_left"
-            />
 </LinearLayout>

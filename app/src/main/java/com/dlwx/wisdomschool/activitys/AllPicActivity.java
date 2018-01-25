@@ -79,7 +79,8 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
     private AllPicAdapter allPicAdapter;
     private int MAXLenth = 9;//选择的最大长度
     private int current;//当前选择数量
-    private ArrayList<String> seletepiclist = new ArrayList<>();//存放选中图片的路径
+    private ArrayList<Image> seletepiclist = new ArrayList<>();//存放选中图片的路径
+
     private PicViewPAgeAdapter picViewPAgeAdapter;
     private int currnum;
 
@@ -113,8 +114,13 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATE_TAKEN));
             //获取图片的详细信息
             String desc = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DESCRIPTION));
+            String size = cursor
+                    .getString(cursor
+                            .getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE));
             image.setDate(aLong);
             image.setPath(path);
+            image.setSize(size);
+            image.setFiletype(1);
             images.add(image);
         }
         Collections.sort(images, new FileComparator());
@@ -180,7 +186,7 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                     boolean check1 = image.isCheck();
                     if (check1) {
                         current++;
-                        seletepiclist.add(image.getPath());
+                        seletepiclist.add(image);
                     }
                 }
                 if (current <= MAXLenth) {
@@ -199,7 +205,6 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                         images.get(pos).setCheck(false);
                         Toast.makeText(ctx, "当前最多只能选择"+MAXLenth+"张图片", Toast.LENGTH_SHORT).show();
                     }
-
                 }
                 allPicAdapter.notifyDataSetChanged();
             }
@@ -251,8 +256,8 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                     return;
                 }
                 Intent intent = new Intent();
-              intent.putStringArrayListExtra("images",seletepiclist);
-              setResult(2,intent);
+                intent.putParcelableArrayListExtra("images",seletepiclist);
+                setResult(2,intent);
               finish();
                 break;
         }

@@ -16,6 +16,8 @@
         android:id="@+id/tv_name"
         style="@style/TextSizecontentBlack"
         android:layout_gravity="center_horizontal"
-        android:text="李老师"
+        android:text=""
+        android:lines="1"
+        android:ellipsize="end"
         />
 </LinearLayout>

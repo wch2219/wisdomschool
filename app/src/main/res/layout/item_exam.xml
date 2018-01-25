@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_title"
         style="@style/TextSizeSmallTitleBlack"
         android:textColor="@color/black"
         android:text="1、关于五岁孩子的教育"
@@ -19,7 +20,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="25dp"
-        android:background="@color/gary"
+        android:background="#F3F5F2"
         android:divider="@null"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></com.dlwx.baselib.view.MyListView>

@@ -69,9 +69,12 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
     private List<ClassFileBean.BodyBean.ListBean> fileList;
     private List<Image> images;
     private List<Image> mp3s;
+    private boolean ischose;
 
     @Override
     protected void initView() {
+        Intent intent = getIntent();
+        ischose = intent.getBooleanExtra("ischose", false);
         setContentView(R.layout.activity_wish_dom_bag);
         ButterKnife.bind(this);
     }
@@ -158,10 +161,16 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
         switch (type) {
             case 1://图片
                 //大图显示
-                LookPic.showPic(ctx,tvTitle,images,i);
+                if (ischose) {
+                    intent = new Intent();
+                   intent.putExtra("ufid",listBean.getCfid());
+                   setResult(102,intent);
+                   finish();
+                }else{
+                    LookPic.showPic(ctx,tvTitle,images,i);
+                }
                 break;
             case 2://MP3
-
                 MediaPlayUtils playUtils = new MediaPlayUtils(ctx);
                 playUtils.showPopu(lv_list,mp3s,i);
                 break;
@@ -171,12 +180,12 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
             case 4://doc
                 readFile(listBean);
                 break;
-
             case 99:
                 intent = new Intent(ctx, BookBagFileDescActivity.class);
                 intent.putExtra("name", listBean.getName());
                 intent.putExtra("cfid", listBean.getCfid());
-                startActivity(intent);
+                intent.putExtra("ischose",true);
+                startActivityForResult(intent,102);
                 break;
         }
     }
@@ -312,7 +321,6 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
         }
         switch (requestCode) {
             case 2:
-
                 ArrayList<String> images = data.getStringArrayListExtra("images");
                 upPic(images);
                 break;
@@ -340,7 +348,6 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
                                 map.put("fileid", fileid + "");
                                 map.put("size", size + "");
                                 addfile(ctx,map);
-
                             } else {
                                 disLoading();
                                 Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -357,10 +364,17 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
                 wch("类型：" + filetype + "\n" + "size:" + size);
                 UpFileUtiles.start(ctx, file, filetype + "", size);
                 break;
+            case 102:
+                String ufid = data.getStringExtra("ufid");
+                Intent intent = new Intent();
+                intent.putExtra("ufid",ufid);
+                setResult(102,intent);
+                finish();
+                break;
         }
     }
 
-    private   void addfile(final Context ctx, Map<String,String> map){
+    private void addfile(final Context ctx, Map<String,String> map){
         Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
         PostRequest<String> post = OkGo.<String>post(HttpUrl.BookBagAddFile);
         while (iterator.hasNext()){
@@ -379,6 +393,9 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
             }
         });
     }
+
+
+
     /**
      * 多图上传
      *

@@ -1,12 +1,13 @@
 package com.dlwx.wisdomschool.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2018/1/3/003.
  */
 
-public class ClassListBean {
+public class ClassListBean implements Serializable{
 
     /**
      * body : [{"class_name":"call","class_no":"984012","class_pic":"http://192.168.0.199/school/Uploads/5a4c41486cf51.png","cnid":"9","isadd":2,"ischeck":1,"teacher_name":"0","total_user":"0","userid":"3"},{"class_name":"阿坝","class_no":"225212","class_pic":"http://192.168.0.199/school/Uploads/5a4c405a83215.png","cnid":"8","isadd":2,"ischeck":1,"teacher_name":"0","total_user":"0","userid":"3"},{"class_name":"1二班","class_no":"222325","class_pic":"http://192.168.0.199/school/Uploads/5a4c3e1e63a8b.png","cnid":"7","isadd":2,"ischeck":1,"teacher_name":"0","total_user":"0","userid":"3"}]
@@ -42,7 +43,7 @@ public class ClassListBean {
         this.body = body;
     }
 
-    public static class BodyBean {
+    public static class BodyBean implements Serializable{
         /**
          * class_name : call
          * class_no : 984012

@@ -1,4 +1,5 @@
 package com.dlwx.wisdomschool.fragments;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
+import com.dlwx.wisdomschool.activitys.ClassDescActivity;
 import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -43,6 +45,7 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
+    private List<ClassListBean.BodyBean> body;
 
     @Override
     public int getLayoutID() {
@@ -110,22 +113,25 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        //判断可发消息还是不可发消息
+        ClassListBean.BodyBean bodyBean = body.get(i);
+        Intent intent = new Intent(ctx, ClassDescActivity.class);
+        intent.putExtra("classid",bodyBean.getCnid());
+        startActivity(intent);
     }
 
     @Override
     public void showData(String s) {
         disLoading();
-        disLoading();
         wch(s);
         Gson gson = new Gson();
         ClassListBean classListBean = gson.fromJson(s, ClassListBean.class);
         if (classListBean.getCode() == 200) {
-            List<ClassListBean.BodyBean> body = classListBean.getBody();
-            if (body != null |body.size() != 0) {
+            body = classListBean.getBody();
+            if (body != null | body.size() != 0) {
                 llNoentry.setVisibility(View.VISIBLE);
                 llEntry.setVisibility(View.GONE);
-                MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx,body);
+                MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx, body);
                 lvList.setAdapter(meCreateCLassAdapter);
             }else{
                 llEntry.setVisibility(View.VISIBLE);

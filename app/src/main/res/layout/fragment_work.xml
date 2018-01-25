@@ -1,42 +1,103 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dlwx.wisdomschool.fragments.WorkFragment">
+        <TextView
+            style="@style/TextSizeTitleBlack"
+            android:layout_gravity="center_horizontal"
+            android:text="作业"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            />
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
         style="@style/GaryDiveStyle"
         />
+        <RelativeLayout
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
-            android:id="@+id/refreshLayout"
-            app:srlEnablePreviewInEditMode="true"
-            android:layout_height="match_parent">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_recyclerview"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            >
+            <LinearLayout
+                android:id="@+id/ll_essay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                >
+            <ImageView
+                style="@style/ImageLogoSize"
+                android:src="@mipmap/icon_zyjiazhang"
+                />
+                <TextView
+                    style="@style/TextSizeSmallTitleBlack"
+                    android:text="家长作业"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="8dp"
+                    android:layout_gravity="center_horizontal"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        >
+        <LinearLayout
+            android:id="@+id/ll_stuwork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <ImageView
+                style="@style/ImageLogoSize"
+                android:src="@mipmap/icon_zyxuesheng"
 
-    </android.support.v7.widget.RecyclerView>
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-    </LinearLayout>
-    <Button
-        android:id="@+id/flbtn_edit"
-        android:layout_width="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:background="@mipmap/icon_bianxie"
-        android:layout_height="50dp" />
-</RelativeLayout>
+                />
+            <TextView
+                style="@style/TextSizeSmallTitleBlack"
+                android:text="学生作业"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"
+        >
+        <LinearLayout
+            android:id="@+id/ll_habit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            >
+            <ImageView
+                style="@style/ImageLogoSize"
+                android:src="@mipmap/icon_zyxiguan"
+
+                />
+            <TextView
+                style="@style/TextSizeSmallTitleBlack"
+                android:text="习惯养成"
+                android:textColor="@color/black"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center_horizontal"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

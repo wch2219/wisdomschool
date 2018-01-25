@@ -60,7 +60,7 @@ public class LoginInActivity extends BaseActivity {
     @Override
     protected void initData() {
         tvTitle.setText(R.string.Login);
-        etPhone.setText("18637051978");
+        etPhone.setText("18638656863");
         etPwd.setText("123456");
     }
 
@@ -88,10 +88,7 @@ public class LoginInActivity extends BaseActivity {
         }
     }
     private void login() {
-//        etPhone.setText("18637051978");
-//        etPwd.setText("123456");
-//        etPhone.setText("18625903203");
-//        etPwd.setText("654321");
+
         String phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
 

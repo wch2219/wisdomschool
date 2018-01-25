@@ -1,13 +1,13 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.net.Uri;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
+import android.widget.VideoView;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.views.MyNiceVideoPlayer;
-import com.dlwx.wisdomschool.views.MyTxVideoPlayerController;
-import com.xiao.nicevideoplayer.NiceVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,11 +18,12 @@ import butterknife.OnClick;
  */
 public class VideoPlayActivity extends BaseActivity {
 
-    @BindView(R.id.nvplayert)
-    MyNiceVideoPlayer nvplayert;
     @BindView(R.id.rl_back)
     RelativeLayout rl_back;
+    @BindView(R.id.videoview)
+    VideoView videoview;
     private String path;
+    private Uri mVideoUri;
 
     @Override
     protected void initView() {
@@ -33,13 +34,14 @@ public class VideoPlayActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        nvplayert.setPlayerType(NiceVideoPlayer.TYPE_IJK); // or NiceVideoPlayer.TYPE_NATIVE
-        nvplayert.setUp(path, null);
-        MyTxVideoPlayerController controller = new MyTxVideoPlayerController(this);
-        controller.setTitle("");
-        nvplayert.setController(controller);
-        nvplayert.start();
+        //添加播放控制条,还是自定义好点
+        videoview.setMediaController(new MediaController(this));
+        // 播放在线视频
+        mVideoUri = Uri.parse(path);
+        videoview.setVideoPath(mVideoUri.toString());
 
+        videoview.start();
+        videoview.requestFocus();
     }
 
     @Override
@@ -54,9 +56,13 @@ public class VideoPlayActivity extends BaseActivity {
 
     @OnClick(R.id.rl_back)
     public void onViewClicked() {
-            nvplayert.releasePlayer();
+//            nvplayert.releasePlayer();
+        if (videoview.isPlaying()) {
+            videoview.stopPlayback();
+        }
         finish();
 
     }
+
 }
 
