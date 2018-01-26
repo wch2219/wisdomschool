@@ -19,7 +19,6 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassManageActivity;
 import com.dlwx.wisdomschool.activitys.FeedbackActivity;
 import com.dlwx.wisdomschool.activitys.LoginInActivity;
-import com.dlwx.wisdomschool.activitys.MyFacoriteActivity;
 import com.dlwx.wisdomschool.activitys.PatriarchExamActivity;
 import com.dlwx.wisdomschool.activitys.PersionMessActivity;
 import com.dlwx.wisdomschool.activitys.SchoolTrainActivity;
@@ -75,7 +74,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             headvh.tv_schoolname.setText(R.string.schoolname);
             headvh.tv_name.setText("老师");
             pics = new int[]{
-                    R.mipmap.icon_wdbanji,
+
                     R.mipmap.icon_wdwdshijian
                     , R.mipmap.icon_wdwdxitong
                     , R.mipmap.icon_wdwdfankui
@@ -90,7 +89,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             headvh.tv_schoolname.setText("");
             headvh.tv_name.setText("家长");
             pics = new int[]{
-                    R.mipmap.icon_wdbanji,
                     R.mipmap.icon_wdwdkaoshi,
                     R.mipmap.icon_wdwdxitong,
                     R.mipmap.icon_wdwdfankui,
@@ -136,8 +134,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             case R.id.my_mess://个人信息
                 startActivity(new Intent(ctx, PersionMessActivity.class));
                 break;
-            case R.id.ll_favorite://收藏夹
-                startActivity(new Intent(ctx, MyFacoriteActivity.class));
+            case R.id.ll_favorite://我的班级
+                startActivity(new Intent(ctx, ClassManageActivity.class));
+//                startActivity(new Intent(ctx, MyFacoriteActivity.class));
                 break;
             case R.id.ll_wishbag://智慧书包
                 startActivity(new Intent(ctx, WishDomBagActivity.class));
@@ -169,56 +168,52 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         if (teacherOrPatriarch == 1) {
             switch (i) {
-                case 1://班级
-                    startActivity(new Intent(ctx, ClassManageActivity.class));
-                    break;
-                case 2://设置工作时间
+
+                case 1://设置工作时间
                     startActivity(new Intent(ctx, SetWorkTimeActivity.class));
                     break;
 
-                case 3://系统通知S
+                case 2://系统通知S
                     startActivity(new Intent(ctx, SysNotifitionActivity.class));
                     break;
-                case 4://反馈建议
+                case 3://反馈建议
                     startActivity(new Intent(ctx, FeedbackActivity.class));
                     break;
-                case 5://生成教师邀请码
+                case 4://生成教师邀请码
                     startActivity(new Intent(ctx, TeacherInvitaCodeActivity.class));
                     break;
-                case 6://申请学校培训
+                case 5://申请学校培训
                     startActivity(new Intent(ctx, SchoolTrainActivity.class));
                     break;
-                case 7://版本信息
+                case 6://版本信息
                     Beta.checkUpgrade();
                     break;
-                case 8://设置
+                case 7://设置
                     startActivity(new Intent(ctx, SettActivity.class));
                     break;
-                case 9://退出登录
+                case 8://退出登录
 
                     showDia();
                     break;
             }
         } else {//家长
             switch (i) {
-                case 1://班级
-                    startActivity(new Intent(ctx,ClassManageActivity.class));
-                    break;
-                case 2://家长考试
+
+                case 1://家长考试
                     startActivity(new Intent(ctx, PatriarchExamActivity.class));
                     break;
-                case 3://系统通知
+                case 2://系统通知
                     startActivity(new Intent(ctx, SysNotifitionActivity.class));
                     break;
-                case 4://反馈建议
+                case 3://反馈建议
                     startActivity(new Intent(ctx, FeedbackActivity.class));
                     break;
-                case 5://版本信息
+                case 4://版本信息
                     break;
-                case 6://设置+++++++++
+                case 5://设置+++++++++
                     startActivity(new Intent(ctx, SettActivity.class));
                     break;
-                case 7://退出登录
+                case 6://退出登录
                     showDia();
                     break;
             }

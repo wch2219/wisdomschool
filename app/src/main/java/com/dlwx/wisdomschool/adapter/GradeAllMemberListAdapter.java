@@ -8,43 +8,41 @@ import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.bean.AllXuekeBean;
+import com.dlwx.wisdomschool.bean.ClassDescBean;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/12/19/019.
+ * Created by Administrator on 2018/1/26/026.
  */
 
-public class YearAllStuAnalyzeAdapter extends BaseFastAdapter {
-    private List<AllXuekeBean.BodyBean> body;
-    public YearAllStuAnalyzeAdapter(Context ctx,List<AllXuekeBean.BodyBean> body) {
+public class GradeAllMemberListAdapter extends BaseFastAdapter {
+    private List<ClassDescBean.BodyBean.AddUserBean> add_user;
+    public GradeAllMemberListAdapter(Context ctx,List<ClassDescBean.BodyBean.AddUserBean> add_user) {
         super(ctx);
-        this.body = body;
+        this.add_user = add_user;
     }
 
     @Override
     public int getCount() {
-        return body.size();
+        return add_user.size();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
-            convertView = LayoutInflater.from(ctx).inflate(R.layout.item_allsubject, null);
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.item_all_member, null);
             vh = new ViewHolder(convertView);
             convertView.setTag(vh);
         }else{
             vh = (ViewHolder) convertView.getTag();
-
         }
-        AllXuekeBean.BodyBean bodyBean = body.get(position);
-        vh.tv_name.setText(bodyBean.getXueke_name());
+        vh.tv_name.setText(add_user.get(position).getJoin_role());
         return convertView;
     }
 
-    private class ViewHolder {
+   private class ViewHolder {
         public View rootView;
         public TextView tv_name;
 

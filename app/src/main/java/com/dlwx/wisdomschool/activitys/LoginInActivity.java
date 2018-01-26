@@ -60,7 +60,7 @@ public class LoginInActivity extends BaseActivity {
     @Override
     protected void initData() {
         tvTitle.setText(R.string.Login);
-        etPhone.setText("18638656863");
+        etPhone.setText("18637051978");
         etPwd.setText("123456");
     }
 
@@ -130,25 +130,7 @@ public class LoginInActivity extends BaseActivity {
         EMClient.getInstance().login(username,pwd,new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-                sp.edit().putString(SpUtiles.Token, body.getToken()).commit();
-                sp.edit().putString(SpUtiles.Nickname, body.getNickname()).commit();
-                sp.edit().putString(SpUtiles.Header_pic, body.getHeader_pic()).commit();
-                sp.edit().putString(SpUtiles.Userid, body.getUserid()).commit();
-                sp.edit().putString(SpUtiles.Telephone, body.getTelephone()).commit();
-                sp.edit().putInt(SpUtiles.TeacherOrPatriarch, body.getIsteacher()).commit();
-                MyApplication.Token = body.getToken();
-                wch(body.getUserid());
-                EMClient.getInstance().groupManager().loadAllGroups();
-                EMClient.getInstance().chatManager().loadAllConversations();;
-                LogUtiles.LogI("登录聊天服务器成功！");
-                    handler.sendEmptyMessage(1);
-
-//                if (checked) {
-//
-//                }else{
-//                    sp.edit().putInt(SpUtiles.TeacherOrPatriarch,0).commit();
-//                }
-                startActivity(new Intent(ctx, MainActivity.class));
+                loginSucc();
 
             }
 
@@ -160,10 +142,40 @@ public class LoginInActivity extends BaseActivity {
             @Override
             public void onError(int code, String message) {
                 LogUtiles.LogI("登录聊天服务器失败！");
-                handler.sendEmptyMessage(2);
+                LogUtiles.LogI("code:"+code+"message:"+message);
+
+                if (code == 200) {
+                    loginSucc();
+                }else{
+                    handler.sendEmptyMessage(2);
+                }
             }
         });
     }
+
+    private void loginSucc() {
+        sp.edit().putString(SpUtiles.Token, body.getToken()).commit();
+        sp.edit().putString(SpUtiles.Nickname, body.getNickname()).commit();
+        sp.edit().putString(SpUtiles.Header_pic, body.getHeader_pic()).commit();
+        sp.edit().putString(SpUtiles.Userid, body.getUserid()).commit();
+        sp.edit().putString(SpUtiles.Telephone, body.getTelephone()).commit();
+        sp.edit().putInt(SpUtiles.TeacherOrPatriarch, body.getIsteacher()).commit();
+        MyApplication.Token = body.getToken();
+        wch(body.getUserid());
+        EMClient.getInstance().groupManager().loadAllGroups();
+        EMClient.getInstance().chatManager().loadAllConversations();
+        ;
+        LogUtiles.LogI("登录聊天服务器成功！");
+        handler.sendEmptyMessage(1);
+
+//                if (checked) {
+//
+//                }else{
+//                    sp.edit().putInt(SpUtiles.TeacherOrPatriarch,0).commit();
+//                }
+        startActivity(new Intent(ctx, MainActivity.class));
+    }
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {

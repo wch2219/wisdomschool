@@ -193,7 +193,6 @@ public class ClassDescActivity extends BaseActivity {
     private void classdesc(String s, Gson gson) {
         ClassDescBean classDescBean = gson.fromJson(s, ClassDescBean.class);
         if (classDescBean.getCode() == 200) {
-            super.showData(s);
             ClassDescBean.BodyBean body = classDescBean.getBody();
             Glide.with(ctx).load(body.getClass_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(ivHead);//班徽
             tvClassName.setText(body.getClass_name());//班级名称
@@ -213,7 +212,6 @@ public class ClassDescActivity extends BaseActivity {
             tv_allsize.setText("查看全部" + add_user.size() + "名成员");
             classDescMemberAdapter = new ClassDescMemberAdapter(ctx, add_user);
             gvListmeber.setAdapter(classDescMemberAdapter);
-
         } else {
             Toast.makeText(ctx, classDescBean.getResult(), Toast.LENGTH_SHORT).show();
         }
@@ -314,6 +312,7 @@ public class ClassDescActivity extends BaseActivity {
                 startActivity(new Intent(ctx, ClassHistoryNewsActivitry.class));
                 break;
             case R.id.ll_growup://智慧成长
+                startActivity(new Intent(ctx,RecordActivity.class));
                 break;
             case R.id.ll_file://班级文件
                 intent = new Intent(ctx, ClassFileActivity.class);

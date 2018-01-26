@@ -32,15 +32,24 @@ public class ClassDescTeachAdapter extends BaseFastAdapter {
 
     @Override
     public int getCount() {
-        if (create_teacher != null) {
-            if (add_teacher != null) {
-                if (add_teacher.size() > 2) {
-                    return 4;
+        if (isAddmember) {
+            if (create_teacher != null) {
+                if (add_teacher != null) {
+                    if (add_teacher.size() > 2) {
+                        return 4;
+                    }
                 }
+                return add_teacher.size() + 2;
             }
-
-            return add_teacher.size() + 2;
-
+        } else {
+            if (create_teacher != null) {
+                if (add_teacher != null) {
+                    if (add_teacher.size() > 3) {
+                        return 4;
+                    }
+                }
+                return add_teacher.size() + 1;
+            }
         }
         return 0;
     }
@@ -56,37 +65,65 @@ public class ClassDescTeachAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
         }
         if (create_teacher != null) {
-            if (add_teacher.size() > 2) {
-                if (position == 3) {
-                    Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
-                    vh.tv_name.setText("添加教师");
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
-                } else if (position == 0) {
-                    Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
-                    vh.tv_name.setText(create_teacher.getNickname());
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+            if (isAddmember) {
+                if (add_teacher.size() > 2) {
+                    if (position == 3) {
+                        Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
+                        vh.tv_name.setText("添加教师");
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
+                    } else if (position == 0) {
+                        Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(create_teacher.getNickname());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    } else {
+                        ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position);
+                        Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(addTeacherBean.getJoin_role());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    }
                 } else {
-                    ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position);
-                    Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
-                    vh.tv_name.setText(addTeacherBean.getJoin_role());
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    if (position == add_teacher.size() + 1) {
+                        Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
+                        vh.tv_name.setText("添加教师");
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
+                    } else if (position == 0) {
+                        Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(create_teacher.getNickname());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    } else {
+                        ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position - 1);
+                        Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(addTeacherBean.getJoin_role());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    }
                 }
             }else{
-                if (position == add_teacher.size() + 1) {
-                    Glide.with(ctx).load(R.mipmap.icon_bjxxtianji).into(vh.iv_pic);
-                    vh.tv_name.setText("添加教师");
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.garytext));
-                } else if (position == 0) {
-                    Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
-                    vh.tv_name.setText(create_teacher.getNickname());
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+
+                if (add_teacher.size() > 3) {
+                    if (position == 0) {
+                        Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(create_teacher.getNickname());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    } else {
+                        ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position);
+                        Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(addTeacherBean.getJoin_role());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    }
                 } else {
-                    ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position-1);
-                    Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
-                    vh.tv_name.setText(addTeacherBean.getJoin_role());
-                    vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                   if (position == 0) {
+                        Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(create_teacher.getNickname());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    } else {
+                        ClassDescBean.BodyBean.AddTeacherBean addTeacherBean = add_teacher.get(position - 1);
+                        Glide.with(ctx).load(addTeacherBean.getHeader_pic()).into(vh.iv_pic);
+                        vh.tv_name.setText(addTeacherBean.getJoin_role());
+                        vh.tv_name.setTextColor(ctx.getResources().getColor(R.color.black));
+                    }
                 }
             }
+
         } else {
             Glide.with(ctx).load(create_teacher.getHeader_pic()).into(vh.iv_pic);
             vh.tv_name.setText(create_teacher.getNickname());
@@ -95,6 +132,12 @@ public class ClassDescTeachAdapter extends BaseFastAdapter {
 
 
         return convertView;
+    }
+
+    private boolean isAddmember = true;
+
+    public void setIsAddMember(boolean b) {
+        this.isAddmember = b;
     }
 
     private class ViewHolder {

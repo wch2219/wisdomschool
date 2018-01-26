@@ -33,7 +33,7 @@
             <ImageView
                 android:id="@+id/iv_head"
                 style="@style/ImagehomeItempic"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_bjxxtianjiachenggong" />
 
         </RelativeLayout>
     </LinearLayout>
@@ -79,9 +79,10 @@
             style="@style/TextSizecontentBlack"
             android:layout_weight="1"
             android:text="私聊" />
+
         <ImageView
             style="@style/Imagesmill2pic"
-            android:src="@mipmap/ic_launcher"
-            />
+            android:layout_height="16dp"
+            android:src="@mipmap/icon_canyufasong" />
     </LinearLayout>
 </LinearLayout>

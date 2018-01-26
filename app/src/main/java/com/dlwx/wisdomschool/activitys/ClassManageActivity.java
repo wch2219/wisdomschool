@@ -45,7 +45,7 @@ public class ClassManageActivity extends BaseActivity {
     @Override
     protected void initData() {
         initTabBar(toolBar);
-        tvTitle.setText("班级管理");
+        tvTitle.setText("我的班级");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.fl_classactivity, new ClassFragment());
         fragmentTransaction.commitAllowingStateLoss();

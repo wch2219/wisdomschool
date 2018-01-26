@@ -10,10 +10,19 @@ import android.widget.TextView;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.adapter.YearAllStuAnalyzeAdapter;
+import com.dlwx.wisdomschool.adapter.GradeAllMemberListAdapter;
+import com.dlwx.wisdomschool.bean.ClassDescBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
  * 某人全部成绩分析
@@ -26,9 +35,12 @@ public class SomeOneAllGradeAnalyzeActivity extends BaseActivity implements Adap
     Toolbar toolBar;
     @BindView(R.id.lv_list)
     ListView lvList;
+    private String cnid;
+    private List<ClassDescBean.BodyBean.AddUserBean> add_user;
 
     @Override
     protected void initView() {
+        cnid = getIntent().getStringExtra("cnid");
         setContentView(R.layout.activity_grade_analyze_all_list);
         ButterKnife.bind(this);
     }
@@ -37,7 +49,11 @@ public class SomeOneAllGradeAnalyzeActivity extends BaseActivity implements Adap
     protected void initData() {
         tvTitle.setText("成绩分析");
         initTabBar(toolBar);
-        lvList.setAdapter(new YearAllStuAnalyzeAdapter(ctx));
+//        lvList.setAdapter(new YearAllStuAnalyzeAdapter(ctx));
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        map.put("classid", cnid);
+        mPreenter.fetch(map, true, HttpUrl.classdesc, HttpUrl.classdesc + cnid + Token);
     }
 
     @Override
@@ -52,6 +68,21 @@ public class SomeOneAllGradeAnalyzeActivity extends BaseActivity implements Adap
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx,GradeAnalyzeMapActivity.class));
+        ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(i);
+        Intent intent = new Intent(ctx, GradeAnalyzeMapActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        ClassDescBean classDescBean = gson.fromJson(s, ClassDescBean.class);
+        if (classDescBean.getCode() == 200) {
+            ClassDescBean.BodyBean body = classDescBean.getBody();
+            add_user = body.getAdd_user();
+            lvList.setAdapter(new GradeAllMemberListAdapter(ctx, add_user));
+        }
     }
 }

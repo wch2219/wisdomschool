@@ -60,6 +60,12 @@
 
             </LinearLayout>
         </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
         <View
             style="@style/GaryDiveStyle"
             android:layout_marginTop="20dp"
@@ -144,4 +150,5 @@
     <View
         style="@style/GaryDiveStyle"
         />
+    </LinearLayout>
 </LinearLayout>

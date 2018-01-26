@@ -16,7 +16,6 @@
 
     </string-array>
     <string-array name="my_food">
-        <item>班级管理</item>
         <item>设置工作时间</item>
         <item>系统通知</item>
         <item>反馈建议</item>
@@ -27,7 +26,6 @@
         <item>退出登录</item>
     </string-array>
     <string-array name="my_food_patriarch">
-        <item>班级管理</item>
         <item>家长考试</item>
         <item>系统通知</item>
         <item>反馈建议</item>

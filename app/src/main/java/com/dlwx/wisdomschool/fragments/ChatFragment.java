@@ -45,7 +45,6 @@ public class ChatFragment extends BaseFragment {
     @Override
     protected void initDate() {
         PrivateChatFragment privateChatFragment = new PrivateChatFragment();
-
         fragments.add(privateChatFragment);
         fragments.add(new GroupChatFragment());
         changeFragment(0);

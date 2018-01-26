@@ -1,13 +1,14 @@
 package com.dlwx.wisdomschool.activitys;
 
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.fragments.WorkFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +21,9 @@ public class ClassHistoryNewsActivitry extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.tool_bar)
     Toolbar toolBar;
-    @BindView(R.id.ll_entry)
-    LinearLayout llEntry;
-    @BindView(R.id.rev_view)
-    RecyclerView revView;
+    @BindView(R.id.fl_hismess)
+    FrameLayout flHismess;
+
 
     @Override
     protected void initView() {
@@ -33,13 +33,15 @@ public class ClassHistoryNewsActivitry extends BaseActivity {
 
     @Override
     protected void initData() {
-        tvTitle.setText("消息");
+        toolBar.setBackgroundResource(android.R.color.transparent);
         initTabBar(toolBar);
     }
 
     @Override
     protected void initListener() {
-
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fl_hismess,new WorkFragment());
+        fragmentTransaction.commit();
     }
 
     @Override

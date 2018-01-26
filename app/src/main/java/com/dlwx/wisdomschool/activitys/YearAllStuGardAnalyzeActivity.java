@@ -12,7 +12,7 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.YearAllStuAnalyzeAdapter;
-import com.dlwx.wisdomschool.bean.GradeYearBean;
+import com.dlwx.wisdomschool.bean.AllXuekeBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 
@@ -38,7 +38,7 @@ public class YearAllStuGardAnalyzeActivity extends BaseActivity implements Adapt
     ListView lvList;
     private String year;
     private String cnid;
-    private List<GradeYearBean.BodyBean> body;
+    private List<AllXuekeBean.BodyBean> body;
 
     @Override
     protected void initView() {
@@ -69,7 +69,7 @@ public class YearAllStuGardAnalyzeActivity extends BaseActivity implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx,SomeOneAllGradeAnalyzeActivity.class));
+        startActivity(new Intent(ctx,SomeOneAllGradeAnalyzeActivity.class).putExtra("cnid",cnid));
     }
 
     @Override
@@ -77,12 +77,12 @@ public class YearAllStuGardAnalyzeActivity extends BaseActivity implements Adapt
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        GradeYearBean gradeYearBean = gson.fromJson(s, GradeYearBean.class);
-        if (gradeYearBean.getCode() == 200) {
-            body = gradeYearBean.getBody();
-            lvList.setAdapter(new YearAllStuAnalyzeAdapter(ctx));
+        AllXuekeBean allXuekeBean = gson.fromJson(s, AllXuekeBean.class);
+        if (allXuekeBean.getCode() == 200) {
+            body = allXuekeBean.getBody();
+            lvList.setAdapter(new YearAllStuAnalyzeAdapter(ctx,body));
         }else{
-            Toast.makeText(ctx, gradeYearBean.getResult(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, allXuekeBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -91,6 +91,6 @@ public class YearAllStuGardAnalyzeActivity extends BaseActivity implements Adapt
         map.put("token",Token);
         map.put("classid",cnid);
         map.put("year",year);
-        mPreenter.fetch(map,true, HttpUrl.GetScore_record,HttpUrl.GetScore_record+Token+year+cnid);
+        mPreenter.fetch(map,true, HttpUrl.All_Xueke,HttpUrl.All_Xueke+Token+year+cnid);
     }
 }

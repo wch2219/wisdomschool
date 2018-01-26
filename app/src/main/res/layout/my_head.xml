@@ -86,12 +86,12 @@
             <ImageView
                 style="@style/ImagehomeItempic"
                 android:layout_gravity="center_horizontal"
-                android:src="@mipmap/icon_wdwdshoucang"
+                android:src="@mipmap/icon_wdbanji"
                 />
             <TextView
                 android:layout_gravity="center_horizontal"
                 style="@style/TextSizecontentBlack"
-                android:text="收藏夹"
+                android:text="我的班级"
                 android:layout_marginTop="3dp"
                 />
         </LinearLayout>

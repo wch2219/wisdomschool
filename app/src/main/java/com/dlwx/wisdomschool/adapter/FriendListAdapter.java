@@ -10,18 +10,22 @@ import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.baselib.view.CircleImageView;
 import com.dlwx.wisdomschool.R;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/12/29/029.
  */
 
 public class FriendListAdapter extends BaseFastAdapter {
-    public FriendListAdapter(Context ctx) {
+    private List<String> usernames;
+    public FriendListAdapter(Context ctx,List<String> usernames) {
         super(ctx);
+        this.usernames = usernames;
     }
 
     @Override
     public int getCount() {
-        return 5;
+        return usernames.size();
     }
 
     @Override
@@ -34,6 +38,8 @@ public class FriendListAdapter extends BaseFastAdapter {
         }else{
             vh = (ViewHolder) convertView.getTag();
         }
+        String s = usernames.get(position);
+        vh.tv_name.setText(s);
         return convertView;
     }
 

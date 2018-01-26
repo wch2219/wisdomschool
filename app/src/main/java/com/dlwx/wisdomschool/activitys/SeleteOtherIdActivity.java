@@ -74,7 +74,6 @@ public class SeleteOtherIdActivity extends BaseActivity implements AdapterView.O
         setResult(1,intent);
         finish();
     }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         named = seleteOtherIdAdapter.strs[i];

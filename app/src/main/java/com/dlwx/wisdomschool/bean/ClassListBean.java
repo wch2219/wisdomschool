@@ -65,6 +65,15 @@ public class ClassListBean implements Serializable{
         private String teacher_name;
         private String total_user;
         private String userid;
+        private int  is_guanli;
+
+        public int getIs_guanli() {
+            return is_guanli;
+        }
+
+        public void setIs_guanli(int is_guanli) {
+            this.is_guanli = is_guanli;
+        }
 
         public String getClass_name() {
             return class_name;

@@ -6,9 +6,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.activitys.GradeManageActivity">
-    <include
-        layout="@layout/toolbar"
-        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/toolbar"
+            />
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:text="模版"
+                android:id="@+id/btn_downtemplate"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_blue_line"
+                />
+    </RelativeLayout>
+
     <View
         style="@style/GaryDiveStyle"
         />

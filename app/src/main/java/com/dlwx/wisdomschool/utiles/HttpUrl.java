@@ -72,4 +72,6 @@ public class HttpUrl {
     public static final String Examexamlist = BaseUrl + "Exam/examlist";//家长考试试题列表
     public static final String ExamSubmit = BaseUrl + "Exam/show_zhengshu";//答题结束显示证书
     public static final String Zhengshu = BaseUrl + "Exam/allzhengshu";//我的证书
+    public static final String DownExcMoban = "http://39.107.74.235/school/static/ScoreImport.xlsx ";//成绩模版
+    public static final String All_Xueke = BaseUrl + "Score/all_xueke";//成绩分析-获取该年份下所有学科
 }

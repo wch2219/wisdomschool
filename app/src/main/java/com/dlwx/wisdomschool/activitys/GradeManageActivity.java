@@ -3,6 +3,7 @@ package com.dlwx.wisdomschool.activitys;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,9 +14,11 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassGradeAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,8 @@ public class GradeManageActivity extends BaseActivity
     LinearLayout llCreate;
     @BindView(R.id.lv_list)
     ExpandableListView lvList;
+    @BindView(R.id.btn_downtemplate)
+    Button btn_downtemplate;
     private List<ClassListBean.BodyBean> body;
     private ClassListBean classListBean;
 
@@ -70,7 +75,19 @@ public class GradeManageActivity extends BaseActivity
         return new Presenter(this);
     }
 
-
+    private void readFile(String path){
+        DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
+            @Override
+            public void back(File file) {
+                Intent intent = new Intent(ctx,ReadWordActivity.class);
+                wch("下载文件"+file);
+                intent.putExtra("path",file+"");
+                intent.putExtra("filename","模版");
+                startActivity(intent);
+            }
+        });
+        DownFileSave.down(ctx,path);
+    }
     @Override
     public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i1, long l) {
         ClassListBean.BodyBean bodyBean = body.get(i);
@@ -86,11 +103,19 @@ public class GradeManageActivity extends BaseActivity
         }
         return true;
     }
-    @OnClick(R.id.ll_create)
-    public void onViewClicked() {
-        Intent intent = new Intent(ctx, SeleteClassActivity.class);
-        intent.putExtra("classlist",classListBean);
-        startActivity(intent);
+    @OnClick({R.id.ll_create,R.id.btn_downtemplate})
+    public void onViewClicked(View view) {
+        switch (view.getId()){
+                   case R.id.ll_create:
+                       Intent intent = new Intent(ctx, SeleteClassActivity.class);
+                       intent.putExtra("classlist",classListBean);
+                       startActivity(intent);
+                       break;
+                       case R.id.btn_downtemplate:
+                          readFile(HttpUrl.DownExcMoban);
+                           break;
+               }
+
     }
     @Override
     public void showData(String s) {

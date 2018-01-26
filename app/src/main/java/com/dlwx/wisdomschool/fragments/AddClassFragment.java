@@ -12,6 +12,7 @@ import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
 import com.dlwx.wisdomschool.activitys.ClassDescActivity;
+import com.dlwx.wisdomschool.activitys.MyJoinClassDescActivity;
 import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -115,11 +116,17 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //判断可发消息还是不可发消息
         ClassListBean.BodyBean bodyBean = body.get(i);
-        Intent intent = new Intent(ctx, ClassDescActivity.class);
-        intent.putExtra("classid",bodyBean.getCnid());
-        startActivity(intent);
-    }
+        if (bodyBean.getIs_guanli() == 1) {//可以管理班级，2不可以管理
+            Intent intent = new Intent(ctx, ClassDescActivity.class);
+            intent.putExtra("classid",bodyBean.getCnid());
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(ctx, MyJoinClassDescActivity.class);
+            intent.putExtra("classid",bodyBean.getCnid());
+            startActivity(intent);
+        }
 
+    }
     @Override
     public void showData(String s) {
         disLoading();

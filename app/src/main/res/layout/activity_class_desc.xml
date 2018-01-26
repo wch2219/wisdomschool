@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     android:id="@+id/ll_root"
     android:orientation="vertical"
+
     tools:context="com.dlwx.wisdomschool.activitys.ClassDescActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:background="@color/blue"
@@ -37,13 +39,23 @@
             android:layout_marginTop="20dp"
            android:layout_marginRight="10dp"
             android:id="@+id/iv_back"
-            android:src="@mipmap/icon_fenxianglan"
+            android:src="@mipmap/icon_huodonggdbaise"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/blue"
+            />
     <ScrollView
         android:layout_width="match_parent"
         android:scrollbars="none"
+        android:background="@color/white"
         android:layout_height="wrap_content">
 
 
@@ -280,4 +292,5 @@
                 />
     </LinearLayout>
     </ScrollView>
+    </RelativeLayout>
 </LinearLayout>

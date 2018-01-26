@@ -30,5 +30,13 @@
         <com.dlwx.wisdomschool.views.GradeLineChatView
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:visibility="gone"
             />
+
+    <com.dlwx.wisdomschool.views.LineChartView
+        android:id="@+id/lineView"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        app:labelTextSize="10dp"
+        app:titleTextSize="20dp" />
 </LinearLayout>

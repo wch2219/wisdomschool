@@ -13,7 +13,11 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ChatActivity;
 import com.dlwx.wisdomschool.adapter.FriendListAdapter;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.exceptions.HyphenateException;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +32,7 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
     @BindView(R.id.lv_list)
     ListView lvList;
     Unbinder unbinder;
+    private List<String> usernames;
 
     @Override
     public int getLayoutID() {
@@ -41,12 +46,18 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
 
     @Override
     protected void initDate() {
-        lvList.setAdapter(new FriendListAdapter(ctx));
+
 //        try {
 //            List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
 //        } catch (HyphenateException e)  {
 //            e.printStackTrace();
 //        }
+        try {
+            usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+            lvList.setAdapter(new FriendListAdapter(ctx, usernames));
+        } catch (HyphenateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -63,9 +74,9 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
         super.onDestroyView();
         unbinder.unbind();
     }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID, "娜娜"));;
+
+        startActivity(new Intent(ctx, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,usernames.get(i) ));;
     }
 }

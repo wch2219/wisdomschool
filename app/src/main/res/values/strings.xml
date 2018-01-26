@@ -26,10 +26,10 @@
     <string name="classfile">\t班级文件</string>
     <string name="classfiles">班级文件</string>
     <string name="classmess">\t班级消息</string>
-    <string name="sendnotification">发通知</string>
-    <string name="discussion">开讨论</string>
-    <string name="survey">做调查</string>
-    <string name="activity">办活动</string>
+    <string name="sendnotification">班级通知</string>
+    <string name="discussion">学生作业</string>
+    <string name="survey">家长作业</string>
+    <string name="activity">习惯养成</string>
     <string name="classdesc">智慧成长</string>
     <string name="membersinvite">成员邀请</string>
     <string name="membersshare">成员分享</string>
