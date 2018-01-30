@@ -30,8 +30,16 @@
     <View
         style="@style/GaryDiveStyle"
         />
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lv_list"
+        />
+    <View
+        style="@style/GaryDiveStyle"
+        />
     <TextView
-        android:id="@+id/tv_oneself"
+        android:id="@+id/tv_myself"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="以自己的身份加入"
@@ -40,6 +48,7 @@
         android:textColor="@color/black"
         android:textSize="13sp"
         />
+
     <View
         style="@style/GaryDiveStyle"
         />

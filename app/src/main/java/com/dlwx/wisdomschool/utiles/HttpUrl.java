@@ -15,6 +15,7 @@ public class HttpUrl {
     public static final String setnewpassword = BaseUrl + "Register/setnewpassword";//忘记密码
     public static final String register = BaseUrl + "Register/addtelephone";//注册
     public static final String UploadFile = BaseUrl + "Mobile/uploadFile";//上传图片
+    public static final String UploadAll = BaseUrl + "Mobile/uploadFile_all";//上传图片
     public static final String createclass = BaseUrl + "Classroom/createclass";//创建班级
     public static final String Classroom = BaseUrl + "Classroom/index";//我创建的班级/我加入的班级
     public static final String classdesc = BaseUrl + "Classroom/myclass";//班级详情
@@ -67,11 +68,16 @@ public class HttpUrl {
     public static final String VoideUrl = WebUrl + "web/video_strategy.html";//视频wenb
     public static final String AgeWeekWeb = WebUrl + "web/weekly_classify.html";
     public static final String UpExcle = BaseUrl + "Score/addscore";//上传成绩单excel
-    public static final String HomeList = BaseUrl + "magazine/magazine_article";//首页周刊列表 + 首页文章列表
+    public static final String HomeList = BaseUrl + "Magazine/age_magazine";//首页周刊列表 + 首页文章列表
     public static final String Examagelist = BaseUrl + "Exam/agelist";//阶段考试列表
     public static final String Examexamlist = BaseUrl + "Exam/examlist";//家长考试试题列表
     public static final String ExamSubmit = BaseUrl + "Exam/show_zhengshu";//答题结束显示证书
     public static final String Zhengshu = BaseUrl + "Exam/allzhengshu";//我的证书
     public static final String DownExcMoban = "http://39.107.74.235/school/static/ScoreImport.xlsx ";//成绩模版
     public static final String All_Xueke = BaseUrl + "Score/all_xueke";//成绩分析-获取该年份下所有学科
+    public static final String GetScore_Tab = BaseUrl + "Score/all_score_table";//成绩分析-显示某年某人某科成绩走势图
+    public static final String Verify = BaseUrl + "Mobile/verify";//发短信页面图形验证码
+    public static final String SmsAuth = BaseUrl + "Register/sms";//发验证码接口
+    public static final String FeedBack = BaseUrl + "Public/view";//反馈建议
+    public static final String MyHisId = BaseUrl + "Classroom/myrole";//我使用过的角色
 }

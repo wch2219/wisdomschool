@@ -134,8 +134,6 @@ public class SeletePublishClassActivity extends BaseActivity {
                 addAdapter = new RecordScreenAddAdapter(ctx, join_list, addNum);
                 lvListadd.setAdapter(addAdapter);
                 break;
-
-
         }
     }
 
@@ -180,6 +178,7 @@ public class SeletePublishClassActivity extends BaseActivity {
             }
 
         }
+        wch(classnames);
         Intent intent = new Intent();
         intent.putExtra("addclass_nos", addclass_nos);
         intent.putExtra("createclass_nos", createclass_nos);

@@ -26,6 +26,7 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassFileAdapter;
 import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.ClassFileBean;
+import com.dlwx.wisdomschool.bean.MorePicBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -54,7 +55,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 智慧书包
  */
-public class WishDomBagActivity extends BaseActivity implements AdapterView.OnItemClickListener{
+public class WishDomBagActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -117,6 +118,7 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
         vh.tv_uppic.setOnClickListener(this);
         vh.tv_upfile.setOnClickListener(this);
         vh.tv_new.setOnClickListener(this);
+
     }
 
     @Override
@@ -130,11 +132,11 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
             case R.id.tv_upfile:
                 startActivityForResult(new Intent(ctx, SeleteFileActivity.class), 101);
                 break;
-            case R.id.tv_addfile:
-                showDia();
-                break;
             case R.id.tv_close:
                 diaShow.dismiss();
+                break;
+            case R.id.tv_new:
+               showDia();
                 break;
             case R.id.tv_create:
                 String filename = vhDia.et_filename.getText().toString().trim();
@@ -163,16 +165,16 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
                 //大图显示
                 if (ischose) {
                     intent = new Intent();
-                   intent.putExtra("ufid",listBean.getCfid());
-                   setResult(102,intent);
-                   finish();
-                }else{
-                    LookPic.showPic(ctx,tvTitle,images,i);
+                    intent.putExtra("ufid", listBean.getCfid());
+                    setResult(102, intent);
+                    finish();
+                } else {
+                    LookPic.showPic(ctx, tvTitle, images, i);
                 }
                 break;
             case 2://MP3
                 MediaPlayUtils playUtils = new MediaPlayUtils(ctx);
-                playUtils.showPopu(lv_list,mp3s,i);
+                playUtils.showPopu(lv_list, mp3s, i);
                 break;
             case 3://txt
                 readFile(listBean);
@@ -184,24 +186,26 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
                 intent = new Intent(ctx, BookBagFileDescActivity.class);
                 intent.putExtra("name", listBean.getName());
                 intent.putExtra("cfid", listBean.getCfid());
-                intent.putExtra("ischose",true);
-                startActivityForResult(intent,102);
+                intent.putExtra("ischose", true);
+                startActivityForResult(intent, 102);
                 break;
         }
     }
-    private void readFile(final ClassFileBean.BodyBean.ListBean listBean){
+
+    private void readFile(final ClassFileBean.BodyBean.ListBean listBean) {
         DownFileSave.setDownFIleBack(new DownFileSave.DownFIleBack() {
             @Override
             public void back(File file) {
-                Intent intent = new Intent(ctx,ReadWordActivity.class);
-                wch("下载文件"+file);
-                intent.putExtra("path",file+"");
-                intent.putExtra("filename",listBean.getName());
+                Intent intent = new Intent(ctx, ReadWordActivity.class);
+                wch("下载文件" + file);
+                intent.putExtra("path", file + "");
+                intent.putExtra("filename", listBean.getName());
                 startActivity(intent);
             }
         });
-        DownFileSave.down(ctx,listBean.getFile_pic());
+        DownFileSave.down(ctx, listBean.getFile_pic());
     }
+
     private void showDia() {
         View view = LayoutInflater.from(ctx).inflate(R.layout.dia_wishbag, null);
         vhDia = new ViewHolderDia(view);
@@ -212,7 +216,6 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
         vhDia.tv_close.setOnClickListener(this);
         vhDia.tv_create.setOnClickListener(this);
     }
-
 
 
     private class ViewHolderpopu {
@@ -347,7 +350,7 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
                                 map.put("type", filetype + "");
                                 map.put("fileid", fileid + "");
                                 map.put("size", size + "");
-                                addfile(ctx,map);
+                                addfile(ctx, map);
                             } else {
                                 disLoading();
                                 Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -367,17 +370,17 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
             case 102:
                 String ufid = data.getStringExtra("ufid");
                 Intent intent = new Intent();
-                intent.putExtra("ufid",ufid);
-                setResult(102,intent);
+                intent.putExtra("ufid", ufid);
+                setResult(102, intent);
                 finish();
                 break;
         }
     }
 
-    private void addfile(final Context ctx, Map<String,String> map){
+    private void addfile(final Context ctx, Map<String, String> map) {
         Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
         PostRequest<String> post = OkGo.<String>post(HttpUrl.BookBagAddFile);
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Map.Entry<String, String> next = iterator.next();
             post.params(next.getKey(), next.getValue());
         }
@@ -393,37 +396,68 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
             }
         });
     }
-
-
-
     /**
      * 多图上传
      *
-     * @param images
+     * @param
      */
-    private void upPic(ArrayList<String> images) {
-        showLoading();
-        List<File> lists = new ArrayList<>();
+    private void upPic(final ArrayList<String> images) {
+        loading.show();
+        PostRequest<String> post = OkGo.<String>post(HttpUrl.UploadAll);
         for (int i = 0; i < images.size(); i++) {
-            lists.add(new File(images.get(i)));
-        }
-        wch(lists.size());
-        PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
-        for (int i = 0; i < images.size(); i++) {
-            post.params("file" + i, lists.get(i));
+            post.params(i + "", new File(images.get(i)));
         }
         post.execute(new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
-                wch(response.body());
-                disLoading();
-//                getFileList();
+                loading.dismiss();
+                wch(response);
+                Gson gson = new Gson();
+                MorePicBean morePicBean = gson.fromJson(response.body(), MorePicBean.class);
+                if (morePicBean.getCode() == 200) {
+                    List<MorePicBean.BodyBean> body = morePicBean.getBody();
+                    upPicMore(body);
+                }
+                Toast.makeText(ctx, morePicBean.getResult(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(Response<String> response) {
-                disLoading();
+                loading.dismiss();
             }
         });
+    }
+
+    private int pos = 0;
+
+    private void upPicMore(final List<MorePicBean.BodyBean> body) {
+
+        MorePicBean.BodyBean bodyBean = body.get(pos);
+        OkGo.<String>post(HttpUrl.AddFile)
+                .params("token", Token)
+                .params("name", bodyBean.getName())
+                .params("type", "1")
+                .params("fileid", bodyBean.getId())
+                .params("size", bodyBean.getSize())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        pos++;
+                        if (pos == body.size()) {
+                            pos = 0;
+                            getFileList();
+                            Toast.makeText(ctx, "上传完成", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            upPicMore(body);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        upPicMore(body);
+                    }
+                });
+
     }
 }

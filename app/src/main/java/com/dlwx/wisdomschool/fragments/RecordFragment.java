@@ -807,6 +807,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                 startActivity(intent);
                 break;
             case 2://图片
+
                 ArrayList<String> images = data.getStringArrayListExtra("images");
                 intent = new Intent(ctx, PublishGroupUpActivity.class);
                 intent.putStringArrayListExtra("images", images);

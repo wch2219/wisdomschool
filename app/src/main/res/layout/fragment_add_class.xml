@@ -10,9 +10,7 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/refreshLayout"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:visibility="gone"
             android:layout_width="match_parent"

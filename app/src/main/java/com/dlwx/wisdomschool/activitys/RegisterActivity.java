@@ -17,6 +17,7 @@ import com.dlwx.baselib.utiles.CountDownUtiles;
 import com.dlwx.baselib.utiles.VerificationCodeUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.BackResultBean;
+import com.dlwx.wisdomschool.bean.PicAuthBean;
 import com.dlwx.wisdomschool.utiles.AuthWindow;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
@@ -50,6 +51,8 @@ public class RegisterActivity extends BaseActivity {
     Button btnRegister;
     private VerificationCodeUtiles codeUtiles;
     private String role;
+    private PicAuthBean picAuthBean;
+    private PicAuthBean.BodyBean picAuthBeanBody;
 
     @Override
     protected void initView() {
@@ -79,6 +82,7 @@ public class RegisterActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.tv_auth:
                 if (tvAuth.getText().equals("获取验证码") || tvAuth.getText().equals("重新发送"))
+                    HttpType = 2;
                 getAuth();
                 break;
             case R.id.iv_pwd:
@@ -125,6 +129,7 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(ctx, R.string.editpwd, Toast.LENGTH_SHORT).show();
             return;
         }
+        HttpType = 1;
         Map<String,String> map = new HashMap<>();
         map.put("role",role);
         map.put("telephone",phone);
@@ -134,29 +139,41 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void showData(String s) {
+
         disLoading();
         Gson gson = new Gson();
-        BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
-        if (backResultBean.getCode() == 200) {
-            finish();
-        }
-        Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
-    }
+        if (HttpType == 1) {
 
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                finish();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+        }else if(HttpType == 2){
+            PicAuthBean picAuthBean = gson.fromJson(s, PicAuthBean.class);
+            if (picAuthBean.getCode() == 200) {
+                picAuthBeanBody = picAuthBean.getBody();
+                AuthWindow authWindow = new AuthWindow(ctx);
+                authWindow.startShowPopu(ctx, tvAuth, picAuthBeanBody.getImgurl(), picAuthBeanBody.getImgname());
+                authWindow.setAuthListener(authListener);
+            }else{
+                Toast.makeText(ctx, picAuthBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private String  phone;
     /**
      * 获取图片验证码
      */
     private void getAuth() {
-       String phone = etPhone.getText().toString().trim();
+       phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             vibrator.vibrate(50);
 
             Toast.makeText(ctx, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        AuthWindow authWindow = new AuthWindow(ctx);
-        authWindow.startShowPopu(ctx, tvAuth, "");
-        authWindow.setAuthListener(authListener);
+        mPreenter.fetch(new HashMap<String, String>(),false,HttpUrl.Verify,"");
     }
     /**
      * 输入图形验证码后返回的数据
@@ -167,8 +184,8 @@ public class RegisterActivity extends BaseActivity {
             if (!TextUtils.isEmpty(auth)) {
                 CountDownUtiles countDownUtiles = new CountDownUtiles(tvAuth);
                 if (tvAuth.getText().equals("获取验证码") || tvAuth.getText().equals("重新发送")) {
-//                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 0, countDownUtiles,imgname,auth);
-//                    codeUtiles.sendVerificationCode("", loading);
+                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 0, countDownUtiles,picAuthBeanBody.getImgname(),auth);
+                    codeUtiles.sendVerificationCode(HttpUrl.SmsAuth, loading);
                 }
             }
         }

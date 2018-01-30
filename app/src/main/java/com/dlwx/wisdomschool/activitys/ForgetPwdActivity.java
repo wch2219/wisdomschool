@@ -11,8 +11,10 @@ import android.widget.Toast;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.CountDownUtiles;
+import com.dlwx.baselib.utiles.VerificationCodeUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.BackResultBean;
+import com.dlwx.wisdomschool.bean.PicAuthBean;
 import com.dlwx.wisdomschool.utiles.AuthWindow;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
@@ -44,6 +46,8 @@ public class ForgetPwdActivity extends BaseActivity {
     EditText etAffpwd;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+    private PicAuthBean.BodyBean picAuthBeanBody;
+    private String phone;
 
     @Override
     protected void initView() {
@@ -113,7 +117,7 @@ public class ForgetPwdActivity extends BaseActivity {
             etAffpwd.setText("");
             return;
         }
-
+        HttpType = 1;
         Map<String,String> map =  new HashMap<>();
         map.put("telephone",phone);
         map.put("password",pwd);
@@ -126,29 +130,42 @@ public class ForgetPwdActivity extends BaseActivity {
         disLoading();
         wch(s);
         Gson gson = new Gson();
-        BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
-        if (backResultBean.getCode() == 200) {
-            finish();
-        }
-        Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+        if (HttpType == 1) {
 
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                finish();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+        }else if(HttpType == 2){
+            PicAuthBean picAuthBean = gson.fromJson(s, PicAuthBean.class);
+            if (picAuthBean.getCode() == 200) {
+                picAuthBeanBody = picAuthBean.getBody();
+                AuthWindow authWindow = new AuthWindow(ctx);
+                authWindow.startShowPopu(ctx, tvAuth, picAuthBeanBody.getImgurl(), picAuthBeanBody.getImgname());
+                authWindow.setAuthListener(authListener);
+            }else{
+                Toast.makeText(ctx, picAuthBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
+        }
     }
+
     /**
      * 获取图片验证码
      */
     private void getAuth() {
-        String phone = etPhone.getText().toString().trim();
+        phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             vibrator.vibrate(50);
 
             Toast.makeText(ctx, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        AuthWindow authWindow = new AuthWindow(ctx);
-        authWindow.startShowPopu(ctx, tvAuth, "");
-        authWindow.setAuthListener(authListener);
+        HttpType = 2;
+        mPreenter.fetch(new HashMap<String, String>(),false,HttpUrl.Verify,"");
     }
 
+    private VerificationCodeUtiles codeUtiles;
     /**
      * 输入图形验证码后返回的数据
      */
@@ -158,8 +175,8 @@ public class ForgetPwdActivity extends BaseActivity {
             if (!TextUtils.isEmpty(auth)) {
                 CountDownUtiles countDownUtiles = new CountDownUtiles(tvAuth);
                 if (tvAuth.getText().equals("获取验证码") || tvAuth.getText().equals("重新发送")) {
-//                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 0, countDownUtiles,imgname,auth);
-//                    codeUtiles.sendVerificationCode("", loading);
+                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 1, countDownUtiles,picAuthBeanBody.getImgname(),auth);
+                    codeUtiles.sendVerificationCode(HttpUrl.SmsAuth, loading);
                 }
             }
         }

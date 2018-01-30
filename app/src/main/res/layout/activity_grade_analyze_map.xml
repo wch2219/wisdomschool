@@ -26,17 +26,15 @@
             android:layout_marginTop="20dp"
             android:text="近期成绩报表"
             />
-
-        <com.dlwx.wisdomschool.views.GradeLineChatView
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+        <com.dlwx.wisdomschool.views.LineChartView
+            android:id="@+id/line_chart_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:visibility="gone"
-            />
+            android:layout_height="300dp"/>
 
-    <com.dlwx.wisdomschool.views.LineChartView
-        android:id="@+id/lineView"
-        android:layout_width="350dp"
-        android:layout_height="300dp"
-        app:labelTextSize="10dp"
-        app:titleTextSize="20dp" />
+    </HorizontalScrollView>
+
 </LinearLayout>

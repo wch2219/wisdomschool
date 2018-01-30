@@ -11,19 +11,16 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.LoadWEBUtiles;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.utiles.HttpUrl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.dlwx.wisdomschool.base.MyApplication.Token;
-
 /**
  * 0到19岁周刊
  */
 public class AgeWeeklyActivity extends BaseActivity {
-    private String age;
+    private String url;
     @BindView(R.id.webview)
     WebView webView;
     @BindView(R.id.back)
@@ -35,14 +32,14 @@ public class AgeWeeklyActivity extends BaseActivity {
     @Override
     protected void initView() {
         Intent intent = getIntent();
-        age = intent.getStringExtra("age");
+        url = intent.getStringExtra("url");
         setContentView(R.layout.activity_age_weekly);
         ButterKnife.bind(this);
     }
 
     @Override
     protected void initData() {
-        String url = HttpUrl.AgeWeekWeb+"?age="+age+"&token="+Token;
+
         LoadWEBUtiles webUtiles = new LoadWEBUtiles(ctx,rl_webroot);
         webUtiles.setListViewData(url,webView,progress_bar);
     }

@@ -135,7 +135,7 @@ public class AddClassFragment extends BaseFragment implements AdapterView.OnItem
         ClassListBean classListBean = gson.fromJson(s, ClassListBean.class);
         if (classListBean.getCode() == 200) {
             body = classListBean.getBody();
-            if (body != null | body.size() != 0) {
+            if ( body.size() != 0) {
                 llNoentry.setVisibility(View.VISIBLE);
                 llEntry.setVisibility(View.GONE);
                 MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx, body);

@@ -26,9 +26,13 @@ public class AuthWindow extends PopupWindow{
     private static View paren;
     private static ViewHolder vh;
     private static Context ctx;
-    public  void startShowPopu(Context ctxs, View parent,String imgurl) {
+    private String imageName;
+    private String imgurl;
+    public  void startShowPopu(Context ctxs, View parent,String imgurl,String imageName) {
         paren = parent;
         ctx = ctxs;
+        this.imageName = imageName;
+        this.imgurl = imgurl;
         Glide.with(ctx).load(imgurl).into(vh.iv_imgauth);
 
         this.showAtLocation(paren, Gravity.CENTER, 0, 0);
@@ -67,6 +71,14 @@ public class AuthWindow extends PopupWindow{
            String auth = vh.et_imgauth.getText().toString().trim();
            if (TextUtils.isEmpty(auth)) {
                Toast.makeText(ctx, "请输入图形验证码", Toast.LENGTH_SHORT).show();
+               return;
+           }
+           String[] split = imgurl.split("/");
+           String s = split[split.length - 1];
+           if (!imageName.equals(s)) {
+               Toast.makeText(ctx, "验证码错误，请重新输入", Toast.LENGTH_SHORT).show();
+               vh.et_imgauth.setText("");
+
                return;
            }
            if (authListener != null) {

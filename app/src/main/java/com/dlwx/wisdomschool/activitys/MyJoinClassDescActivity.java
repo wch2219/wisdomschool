@@ -153,7 +153,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
                 showPopuClassId();
                 break;
             case R.id.ll_lookstudentgrade://查看学生成绩
-                startActivity(new Intent(ctx, LookStudentGradeActivity.class));
+                startActivity(new Intent(ctx, LookStudentGradeActivity.class).putExtra("classid",classid));
                 break;
             case R.id.rl_lookall://查看全部成员
 

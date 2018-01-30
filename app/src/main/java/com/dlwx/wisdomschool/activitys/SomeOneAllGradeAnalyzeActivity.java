@@ -37,10 +37,16 @@ public class SomeOneAllGradeAnalyzeActivity extends BaseActivity implements Adap
     ListView lvList;
     private String cnid;
     private List<ClassDescBean.BodyBean.AddUserBean> add_user;
+    private String year;
+    private String xuekeid;
 
     @Override
     protected void initView() {
-        cnid = getIntent().getStringExtra("cnid");
+        Intent intent = getIntent();
+        year = intent.getStringExtra("year");
+        cnid = intent.getStringExtra("cnid");
+        xuekeid = intent.getStringExtra("xuekeid");
+
         setContentView(R.layout.activity_grade_analyze_all_list);
         ButterKnife.bind(this);
     }
@@ -70,6 +76,7 @@ public class SomeOneAllGradeAnalyzeActivity extends BaseActivity implements Adap
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(i);
         Intent intent = new Intent(ctx, GradeAnalyzeMapActivity.class);
+        intent.putExtra("cnid",cnid).putExtra("year",year).putExtra("xuekeid",xuekeid).putExtra("userid",addUserBean.getUserid()).putExtra("name",addUserBean.getJoin_role());
         startActivity(intent);
     }
 

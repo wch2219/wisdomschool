@@ -14,7 +14,7 @@ import com.dlwx.wisdomschool.R;
  */
 
 public class SeleteOtherIdAdapter extends BaseFastAdapter {
-    public String [] strs = {"爸爸","妈妈","爷爷","奶奶","姥姥，姥爷"};
+    public String [] strs = {"爸爸","妈妈","爷爷","奶奶","姥姥","姥爷"};
     public SeleteOtherIdAdapter(Context ctx) {
         super(ctx);
     }
@@ -39,13 +39,16 @@ public class SeleteOtherIdAdapter extends BaseFastAdapter {
         }else{
             vh.tv_name.setBackgroundResource(R.color.gary);
         }
+        vh.tv_name.setText(strs[position]);
         return convertView;
     }
     private int pos;
-    private void setCheck(int pos){
+    public void setCheck(int pos){
         this.pos = pos;
         notifyDataSetChanged();
     }
+
+
     private class ViewHolder {
         public View rootView;
         public TextView tv_name;

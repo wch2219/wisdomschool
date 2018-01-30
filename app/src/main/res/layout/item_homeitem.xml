@@ -5,8 +5,78 @@
     android:orientation="vertical"
     android:layout_marginTop="20dp"
     android:layout_height="wrap_content">
-    <!--学校发送的-->
-        <include
-            layout="@layout/item_school_notifi"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+           android:padding="10dp"
+            >
+            <ImageView
+                style="@style/ImagehomeItembigpic"
+                android:id="@+id/iv_pic"
+                />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        style="@style/TextSizecontentBlack"
+                        android:lineSpacingExtra="3dp"
+                       android:maxLines="2"
+                        android:layout_weight="1"
+                        android:id="@+id/tv_title"
+                        android:ellipsize="end"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:id="@+id/tv_type"
+                            />
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="15dp"
+                            android:src="@mipmap/icon_zhoukanliuyan"
+                            />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11sp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/tv_messnum"
+                                />
+
+                         <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                             android:layout_marginLeft="10dp"
+                             android:layout_gravity="center_vertical"
+                            android:src="@mipmap/icon_zhoukanzan"
+                            />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="11sp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
+                                android:id="@+id/tv_praisenum"
+                                />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+            
+        </LinearLayout>
 </LinearLayout>

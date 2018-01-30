@@ -1,6 +1,7 @@
 package com.dlwx.wisdomschool.activitys;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
@@ -74,6 +75,7 @@ public class ClassManageActivity extends BaseActivity {
         final PopupWindow popupWindow = new PopupWindow(popuView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.7f; //0.0-1.0
        getWindow().setAttributes(lp);

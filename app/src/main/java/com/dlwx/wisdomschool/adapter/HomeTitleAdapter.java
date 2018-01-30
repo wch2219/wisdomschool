@@ -1,20 +1,20 @@
 package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.dlwx.baselib.base.BaseRecrviewAdapter;
+import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
 
 /**
  * Created by Administrator on 2017/12/15/015.
  */
 
-public class HomeTitleAdapter extends BaseRecrviewAdapter {
+public class HomeTitleAdapter extends BaseFastAdapter {
     private String[] strs;
 
     public HomeTitleAdapter(Context ctx, String[] strs) {
@@ -23,35 +23,37 @@ public class HomeTitleAdapter extends BaseRecrviewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(ctx).inflate(R.layout.item_hometitle, null);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder)holder).tv_name.setText(strs[position]);
-        ((ViewHolder)holder).rootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onItemClickListener.setOnClick(position);
-            }
-        });
-
-    }
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return strs.length;
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder vh;
+        if (convertView == null) {
+
+            convertView = LayoutInflater.from(ctx).inflate(R.layout.item_hometitle, null);
+            vh = new ViewHolder(convertView);
+            convertView.setTag(vh);
+        } else {
+            vh = (ViewHolder) convertView.getTag();
+
+        }
+        vh.tv_name.setText(strs[position]);
+        return convertView;
+    }
+
+
+    private class ViewHolder {
         public View rootView;
         public TextView tv_name;
+        public ImageView iv_pic;
 
         public ViewHolder(View rootView) {
-            super(rootView);
+
             this.rootView = rootView;
             this.tv_name = (TextView) rootView.findViewById(R.id.tv_name);
+            this.iv_pic = rootView.findViewById(R.id.iv_pic);
         }
 
     }

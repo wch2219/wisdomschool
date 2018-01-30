@@ -29,7 +29,7 @@ import com.dlwx.baselib.view.MyPopuWindow;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassFileAdapter;
 import com.dlwx.wisdomschool.bean.ClassFileBean;
-import com.dlwx.wisdomschool.bean.MorePicUpBean;
+import com.dlwx.wisdomschool.bean.MorePicBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -225,20 +225,20 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
     private void fileList(String s, Gson gson) {
         ClassFileBean classFileBean = gson.fromJson(s, ClassFileBean.class);
         if (classFileBean.getCode() == 200) {
-            long totalsize = 1073741824;
+            long totalsize = 1048576;
             ClassFileBean.BodyBean body = classFileBean.getBody();
-            long use_size = body.getUse_size();
+            double use_size = body.getUse_size();
             progressbar.setMax((int) totalsize);
             progressbar.setProgress((int) (use_size));
-            long m = use_size / 1024;
-            long mm = use_size % 1024;
+            double m = use_size / 1024;
+            double mm = use_size % 1024;
             wch(mm);
-            long g = m / 1024;
-            long gg = m % 1024;
+            double g = m / 1024;
+            double gg = m % 1024;
             if (g > 0) {
-                tvSize.setText(g + "." + gg + "G/1G");
+                tvSize.setText(g + "G/1G");
             } else if (m > 0) {
-                tvSize.setText(m + "." + mm + "M/1G");
+                tvSize.setText(m + "M/1G");
             } else {
                 tvSize.setText(use_size + "KB/1G");
             }
@@ -391,38 +391,63 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
     /**
      * 多图上传
      *
-     * @param images
+     * @param
      */
-    private void upPic(ArrayList<String> images) {
-        showLoading();
-        List<File> lists = new ArrayList<>();
+    private void upPic(final  ArrayList<String> images) {
+        loading.show();
+        PostRequest<String> post = OkGo.<String>post(HttpUrl.UploadAll);
         for (int i = 0; i < images.size(); i++) {
-            lists.add(new File(images.get(i)));
-            wch(images);
-        }
-        wch(lists.size());
-        PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
-        for (int i = 0; i < images.size(); i++) {
-            post.params("file" + i, lists.get(i));
+            post.params(i+"",new File(images.get(i)));
         }
         post.execute(new StringCallback() {
             @Override
             public void onSuccess(Response<String> response) {
+                loading.dismiss();
+                wch(response);
                 Gson gson = new Gson();
-                MorePicUpBean morePicUpBean = gson.fromJson(response.body(), MorePicUpBean.class);
-                if (morePicUpBean.getCode() == 200) {
-                    MorePicUpBean.BodyBean body = morePicUpBean.getBody();
-
-                } else {
-                    Toast.makeText(ctx, morePicUpBean.getResult(), Toast.LENGTH_SHORT).show();
+                MorePicBean morePicBean = gson.fromJson(response.body(), MorePicBean.class);
+                if (morePicBean.getCode() == 200) {
+                    List<MorePicBean.BodyBean> body = morePicBean.getBody();
+                    upPicMore(body);
                 }
-//                getFileList();
+                Toast.makeText(ctx, morePicBean.getResult(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(Response<String> response) {
-                disLoading();
+                loading.dismiss();
             }
         });
+    }
+    private int pos = 0;
+    private void upPicMore(final List<MorePicBean.BodyBean> body){
+
+        MorePicBean.BodyBean bodyBean = body.get(pos);
+        OkGo.<String>post(HttpUrl.AddFile)
+                .params("token",Token)
+                .params("name",bodyBean.getName())
+                .params("type","1")
+                .params("fileid",bodyBean.getId())
+                .params("size",bodyBean.getSize())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        pos ++;
+                        if (pos == body.size()) {
+                            pos = 0;
+                            getData("");
+                            Toast.makeText(ctx, "上传完成", Toast.LENGTH_SHORT).show();
+                            return;
+                        }else{
+                            upPicMore(body);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        upPicMore(body);
+                    }
+                });
+
     }
 }

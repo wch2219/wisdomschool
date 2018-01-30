@@ -6,10 +6,12 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.FindClassBean;
+import com.dlwx.wisdomschool.bean.MyHisIdBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
@@ -100,7 +103,10 @@ public class AddSeachClassActivity extends BaseActivity {
                 checkClass();
                 break;
             case R.id.btn_addclass:
-                showPopu();
+
+                getHisId();
+
+
                 break;
             case R.id.tv_kefu:
 
@@ -108,6 +114,17 @@ public class AddSeachClassActivity extends BaseActivity {
 
         }
     }
+
+    /**
+     * 获取历史身份
+     */
+    private void getHisId() {
+        HttpType = 3;
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        mPreenter.fetch(map,false,HttpUrl.MyHisId,"");
+    }
+
     /**
      * 查找班级
      */
@@ -133,12 +150,18 @@ public class AddSeachClassActivity extends BaseActivity {
 
 
             checkClass(s, gson);
-        }else {
+        }else if(HttpType == 2){
             BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
             if (backResultBean.getCode() == 200) {
                 finish();
             }
             Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+        }else{
+            MyHisIdBean myHisIdBean = gson.fromJson(s, MyHisIdBean.class);
+            if (myHisIdBean.getCode() == 200) {
+                List<MyHisIdBean.BodyBean> body = myHisIdBean.getBody();
+                showPopu(body);
+            }
         }
     }
     private void checkClass(String s, Gson gson) {
@@ -163,7 +186,7 @@ public class AddSeachClassActivity extends BaseActivity {
             Toast.makeText(ctx, findClassBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
-    private void showPopu() {
+    private void showPopu(final List<MyHisIdBean.BodyBean> body) {
         View view = LayoutInflater.from(ctx).inflate(R.layout.popu_addclass, null);
         ViewHolder vh = new ViewHolder(view);
         popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -178,48 +201,57 @@ public class AddSeachClassActivity extends BaseActivity {
             }
         });
         popupWindow.showAtLocation(tv_kefu, Gravity.BOTTOM, 0, 0);
-
+        vh.lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Map<String,String> map = new HashMap<>();
+                popupWindow.dismiss();
+                map.put("urid",body.get(position).getUrid());
+                joinClass(map);
+            }
+        });
     }
 
-    private class ViewHolder implements View.OnClickListener {
+    private class ViewHolder implements View.OnClickListener{
         public View rootView;
         public ImageView iv_close;
-        public TextView tv_oneself;
+        public ListView lv_list;
         public TextView tv_patriarch;
-
+        public TextView tv_myself;
         public ViewHolder(View rootView) {
             this.rootView = rootView;
             this.iv_close = (ImageView) rootView.findViewById(R.id.iv_close);
-            this.tv_oneself = (TextView) rootView.findViewById(R.id.tv_oneself);
-            this.tv_patriarch = (TextView) rootView.findViewById(R.id.tv_patriarch);
+            this.lv_list = rootView.findViewById(R.id.lv_list);
+            this.tv_patriarch = rootView.findViewById(R.id.tv_patriarch);
+            this.tv_myself = rootView.findViewById(R.id.tv_myself);
             this.iv_close.setOnClickListener(this);
-            this.tv_oneself.setOnClickListener(this);
             this.tv_patriarch.setOnClickListener(this);
+            this.tv_myself.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            popupWindow.dismiss();
+
             switch (view.getId()) {
                 case R.id.iv_close:
-
-                    break;
-                case R.id.tv_oneself:
-                    Map<String,String> map = new HashMap<>();
-
-                    map.put("urid",sp.getString(SpUtiles.Userid,""));
-                    joinClass(map);
+                    popupWindow.dismiss();
                     break;
                 case R.id.tv_patriarch:
+                    popupWindow.dismiss();
                     Intent intent = new Intent(ctx,SeleteOtherIdActivity.class);
                     intent.putExtra("title","设置姓名和称呼");
                     startActivityForResult(intent,1);
+                    break;
+                case R.id.tv_myself:
+                    popupWindow.dismiss();
+                    Map<String,String> map = new HashMap<>();
+                    map.put("student_name",sp.getString(SpUtiles.Nickname,""));
+                    joinClass(map);
                     break;
 
             }
         }
     }
-
     /**
      * 加入班级
      * @param map

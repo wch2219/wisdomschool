@@ -1,36 +1,221 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.fragments.HomeFragment">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_across"
-        android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_height="40dp">
-    </android.support.v7.widget.RecyclerView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        style="@style/GaryDiveStyle"
-        />
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:layout_width="match_parent"
         android:id="@+id/refreshLayout"
-        app:srlEnablePreviewInEditMode="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:srlEnablePreviewInEditMode="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_recyclerview"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-        </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                >
+
+                <TextView
+                    style="@style/TextSizeTitleBlack"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="首页"
+                    android:textColor="@color/black" />
+
+                <View
+                    style="@style/GaryDiveStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                </com.youth.banner.Banner>
+
+                <com.dlwx.baselib.view.MyGridView
+                    android:id="@+id/gv_list"
+                    android:numColumns="4"
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.dlwx.baselib.view.MyGridView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/blue" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        style="@style/ImagehomeItempic"
+                        android:src="@mipmap/icon_record" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_black_line"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Imagesmill2pic"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/icon_yisuisousuo" />
+
+                        <EditText
+                            android:id="@+id/et_seach"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:background="@null"
+                            android:hint="请输入您要搜索的文章"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_seach"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/blue"
+                        android:text="查询"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/blue" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll_type1"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="类型" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:src="@mipmap/icon_wdxiala" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll_type2"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="类别" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:src="@mipmap/icon_wdxiala" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll_age"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="年龄段" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:src="@mipmap/icon_wdxiala" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/ll_time"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            style="@style/TextSizecontentBlack"
+                            android:text="发布时间" />
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:src="@mipmap/icon_wdxiala" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View style="@style/GaryDiveStyle" />
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              >
+            </android.support.v7.widget.RecyclerView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
 </LinearLayout>

@@ -5,11 +5,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
+import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassDescActivity;
 import com.dlwx.wisdomschool.activitys.CreateClassActivity;
@@ -41,11 +42,11 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     @BindView(R.id.ll_createentry)
     RelativeLayout llCreateentry;
     @BindView(R.id.rl_noentry)
-    RelativeLayout rlNoentry;
+    LinearLayout rlNoentry;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.lv_list)
-    ListView lvList;
+    MyListView lvList;
     Unbinder unbinder;
     Unbinder unbinder1;
     private List<ClassListBean.BodyBean> body;

@@ -19,10 +19,10 @@ import java.util.ArrayList;
  */
 
 public class SendMessPicListAdapter extends BaseRecrviewAdapter {
-    private ArrayList<String> images;
+    private ArrayList<String> imagesStr;
     public SendMessPicListAdapter(Context ctx,ArrayList<String> images) {
         super(ctx);
-        this.images = images;
+        this.imagesStr = images;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -31,7 +31,7 @@ public class SendMessPicListAdapter extends BaseRecrviewAdapter {
     }
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        Glide.with(ctx).load(images.get(position)).apply(new RequestOptions().centerCrop()).into( ((ViewHolder)holder).iv_pic);
+        Glide.with(ctx).load(imagesStr.get(position)).apply(new RequestOptions().centerCrop()).into( ((ViewHolder)holder).iv_pic);
         ((ViewHolder)holder).iv_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +41,7 @@ public class SendMessPicListAdapter extends BaseRecrviewAdapter {
     }
     @Override
     public int getItemCount() {
-        return images.size();
+        return imagesStr.size();
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder{

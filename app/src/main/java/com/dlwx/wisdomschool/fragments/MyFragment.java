@@ -21,7 +21,6 @@ import com.dlwx.wisdomschool.activitys.FeedbackActivity;
 import com.dlwx.wisdomschool.activitys.LoginInActivity;
 import com.dlwx.wisdomschool.activitys.PatriarchExamActivity;
 import com.dlwx.wisdomschool.activitys.PersionMessActivity;
-import com.dlwx.wisdomschool.activitys.SchoolTrainActivity;
 import com.dlwx.wisdomschool.activitys.SetWorkTimeActivity;
 import com.dlwx.wisdomschool.activitys.SettActivity;
 import com.dlwx.wisdomschool.activitys.SysNotifitionActivity;
@@ -79,7 +78,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                     , R.mipmap.icon_wdwdxitong
                     , R.mipmap.icon_wdwdfankui
                     , R.mipmap.icon_wdwdjsyqm
-                    , R.mipmap.icon_wdwdshenqing
+
                     , R.mipmap.icon_wdwdbanben
                     , R.mipmap.icon_wdwdshezhi
                     , R.mipmap.icon_wdwdtuichu
@@ -134,7 +133,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
             case R.id.my_mess://个人信息
                 startActivity(new Intent(ctx, PersionMessActivity.class));
                 break;
-            case R.id.ll_favorite://我的班级
+            case R.id.ll_favorite://我的收藏 》》》》我的班级
                 startActivity(new Intent(ctx, ClassManageActivity.class));
 //                startActivity(new Intent(ctx, MyFacoriteActivity.class));
                 break;
@@ -182,16 +181,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 case 4://生成教师邀请码
                     startActivity(new Intent(ctx, TeacherInvitaCodeActivity.class));
                     break;
-                case 5://申请学校培训
-                    startActivity(new Intent(ctx, SchoolTrainActivity.class));
-                    break;
-                case 6://版本信息
+//                case 5://申请学校培训
+//                    startActivity(new Intent(ctx, SchoolTrainActivity.class));
+//                    break;
+                case 5://版本信息
                     Beta.checkUpgrade();
                     break;
-                case 7://设置
+                case 6://设置
                     startActivity(new Intent(ctx, SettActivity.class));
                     break;
-                case 8://退出登录
+                case 7://退出登录
 
                     showDia();
                     break;

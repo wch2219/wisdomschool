@@ -69,7 +69,8 @@ public class YearAllStuGardAnalyzeActivity extends BaseActivity implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        startActivity(new Intent(ctx,SomeOneAllGradeAnalyzeActivity.class).putExtra("cnid",cnid));
+        AllXuekeBean.BodyBean bodyBean = body.get(i);
+        startActivity(new Intent(ctx,SomeOneAllGradeAnalyzeActivity.class).putExtra("cnid",cnid).putExtra("year",year).putExtra("xuekeid",bodyBean.getXuekeid()));
     }
 
     @Override

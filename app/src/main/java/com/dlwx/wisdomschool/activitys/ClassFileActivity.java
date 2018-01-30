@@ -28,6 +28,7 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassFileAdapter;
 import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.ClassFileBean;
+import com.dlwx.wisdomschool.bean.MorePicBean;
 import com.dlwx.wisdomschool.bean.UpPicBean;
 import com.dlwx.wisdomschool.utiles.DownFileSave;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
@@ -35,10 +36,15 @@ import com.dlwx.wisdomschool.utiles.LookPic;
 import com.dlwx.wisdomschool.utiles.MediaPlayUtils;
 import com.dlwx.wisdomschool.utiles.UpFileUtiles;
 import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.PostRequest;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +108,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void downOnRefresh() {
-        getFileList();
+//        getFileList();
     }
 
     @Override
@@ -204,20 +210,28 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
     private void fileList(String s, Gson gson) {
         ClassFileBean classFileBean = gson.fromJson(s, ClassFileBean.class);
         if (classFileBean.getCode() == 200) {
-            long totalsize = 1073741824;
+            double totalsize = 1048576;
             ClassFileBean.BodyBean body = classFileBean.getBody();
-            long use_size = body.getUse_size();
+            double use_size = body.getUse_size();
+            double m = use_size / 1024;
+            wch(use_size);
+            double g = m / 1024;
+
             progressbar.setMax((int) totalsize);
-            progressbar.setProgress((int) (use_size));
-            long m = use_size / 1024;
-            long mm = use_size % 1024;
-            wch(mm);
-            long g = m / 1024;
-            long gg = m % 1024;
-            if (g > 0) {
-                tvSize.setText(g + "." + gg + "G/1G");
+            double ceil = Math.ceil(use_size);
+            progressbar.setProgress((int) ceil);
+            if (g > 0.5) {
+                BigDecimal bigDec = new java.math.BigDecimal(g);
+                double total = bigDec.setScale(2, java.math.BigDecimal.ROUND_HALF_UP)
+                        .doubleValue();
+                DecimalFormat df = new DecimalFormat("0.00");
+                tvSize.setText(df.format(total)  + "G/1G");
             } else if (m > 0) {
-                tvSize.setText(m + "." + mm + "M/1G");
+                BigDecimal bigDec = new java.math.BigDecimal(m);
+                double total = bigDec.setScale(2, java.math.BigDecimal.ROUND_HALF_UP)
+                        .doubleValue();
+                DecimalFormat df = new DecimalFormat("0.00");
+                tvSize.setText(df.format(total) + "M/1G");
             } else {
                 tvSize.setText(use_size + "KB/1G");
             }
@@ -357,7 +371,7 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
         }
         switch (requestCode) {
             case 2:
-                ArrayList<Image> seletepiclist = data.getParcelableArrayListExtra("images");
+                ArrayList<Image> seletepiclist = data.getParcelableArrayListExtra("imagesPar");
                 upPic(seletepiclist);
                 break;
             case 101:
@@ -380,7 +394,6 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                                 final String filename = split[split.length - 1];
                                 int fileid = upPicBean.getBody().getFileid();
                                 final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
-
                                 Map<String, String> map = new HashMap<>();
                                 map.put("token", Token);
                                 map.put("classid", classid);
@@ -417,34 +430,62 @@ public class ClassFileActivity extends BaseActivity implements AdapterView.OnIte
                 break;
         }
     }
-    private int pos = -1;
-    private String imgs;
     private void upPic(final ArrayList<Image> seletepiclist) {
-        pos++;
-        if (pos >= images.size()) {
-            //图片上传完成
-//           UpFileUtiles.start(ctx, file, filetype + "", 0);
-            return;
+        loading.show();
+        PostRequest<String> post = OkGo.<String>post(HttpUrl.UploadAll);
+        for (int i = 0; i < seletepiclist.size(); i++) {
+            post.params(i+"",new File(seletepiclist.get(i).getPath()));
         }
-        UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
+        post.execute(new StringCallback() {
             @Override
-            public void success(Response<String> response) {
-                disLoading();
+            public void onSuccess(Response<String> response) {
+                loading.dismiss();
+                wch(response);
                 Gson gson = new Gson();
-                UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
-                if (upPicBean.getCode() == 200) {
-                    if (TextUtils.isEmpty(imgs)) {
-                        imgs = upPicBean.getBody().getFileid() + "";
-                    } else {
-                        imgs = imgs + "," + upPicBean.getBody().getFileid();
-                    }
-                    upPic(seletepiclist);
-                } else {
-                    Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
+                MorePicBean morePicBean = gson.fromJson(response.body(), MorePicBean.class);
+                if (morePicBean.getCode() == 200) {
+                    List<MorePicBean.BodyBean> body = morePicBean.getBody();
+                    upPicMore(body);
                 }
+                Toast.makeText(ctx, morePicBean.getResult(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Response<String> response) {
+                loading.dismiss();
             }
         });
-        UpFileUtiles.start(ctx, new File(seletepiclist.get(pos).getPath()), "1", 0);
+    }
+    private int pos = 0;
+    private void upPicMore(final List<MorePicBean.BodyBean> body){
+
+        MorePicBean.BodyBean bodyBean = body.get(pos);
+        OkGo.<String>post(HttpUrl.AddFile)
+                .params("token",Token)
+                .params("classid",classid)
+                .params("name",bodyBean.getName())
+                .params("type","1")
+                .params("fileid",bodyBean.getId())
+                .params("size",bodyBean.getSize())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        pos ++;
+                        if (pos == body.size()) {
+                            pos = 0;
+                            getFileList();
+                            Toast.makeText(ctx, "上传完成", Toast.LENGTH_SHORT).show();
+                            return;
+                        }else{
+                            upPicMore(body);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        upPicMore(body);
+                    }
+                });
 
     }
 }

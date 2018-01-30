@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 public  class Image implements Parcelable ,Comparable<Image>{
     private long date;
     private String path;
-    public String name;
+    private String name;
     private int oldposition;
     private boolean check;
     private String size;

@@ -255,8 +255,14 @@ public class AllPicActivity extends BaseActivity implements AdapterView.OnItemCl
                     Toast.makeText(ctx, "请先选择图片", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                ArrayList<String> images = new ArrayList<>();
+                for (int i = 0; i < seletepiclist.size(); i++) {
+                    wch(seletepiclist.get(i).getPath());
+                    images.add(seletepiclist.get(i).getPath());
+                }
                 Intent intent = new Intent();
-                intent.putParcelableArrayListExtra("images",seletepiclist);
+                intent.putParcelableArrayListExtra("imagesPar",seletepiclist);
+                intent.putStringArrayListExtra("images",images);
                 setResult(2,intent);
               finish();
                 break;

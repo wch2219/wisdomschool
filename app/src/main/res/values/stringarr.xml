@@ -2,16 +2,14 @@
 <resources>
     <string-array name="hometitle">
         <item>父母自修</item>
-        <item>婚恋</item>
-        <item>0岁</item>
-        <item>1岁</item>
-        <item>幼儿园上</item>
-        <item>幼儿园下</item>
-        <item>小学上</item>
-        <item>小学下</item>
-        <item>初中</item>
-        <item>高中</item>
-        <item>大学</item>
+        <item>亲子专栏</item>
+        <item>教育机构</item>
+        <item>书城</item>
+        <item>在线教育</item>
+        <item>视频</item>
+        <item>问答</item>
+        <item>星级考试</item>
+
 
 
     </string-array>
@@ -20,7 +18,6 @@
         <item>系统通知</item>
         <item>反馈建议</item>
         <item>生成教师邀请码</item>
-        <item>申请学校培训</item>
         <item>版本信息</item>
         <item>设置</item>
         <item>退出登录</item>

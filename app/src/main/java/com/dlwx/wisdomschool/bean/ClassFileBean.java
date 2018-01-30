@@ -48,14 +48,14 @@ public class ClassFileBean {
          * use_size : 775.00
          */
 
-        private long use_size;
+        private double use_size;
         private List<ListBean> list;
 
-        public long getUse_size() {
+        public double getUse_size() {
             return use_size;
         }
 
-        public void setUse_size(long use_size) {
+        public void setUse_size(double use_size) {
             this.use_size = use_size;
         }
 

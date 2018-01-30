@@ -141,17 +141,13 @@ public class ClassDescActivity extends BaseActivity {
             tvTeach1.setVisibility(View.GONE);
             rlLookall.setVisibility(View.VISIBLE);
         }
-
         register();
     }
-
     @Override
     protected void initData() {
         initTabBar(toolBar);
         toolBar.setBackgroundResource(R.color.blue);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.icon_jiantoubaise);
-
-
     }
 
     @Override

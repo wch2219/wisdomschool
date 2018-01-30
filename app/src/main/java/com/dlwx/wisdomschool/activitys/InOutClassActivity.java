@@ -129,6 +129,10 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     }
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (body == null) {
+
+            return;
+        }
         if (b) {
             for (int j = 0; j < body.size(); j++) {
                 ClassAppliListeBean.BodyBean bodyBean1 = body.get(j);

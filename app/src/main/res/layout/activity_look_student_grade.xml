@@ -9,6 +9,9 @@
     <include
         layout="@layout/toolbar"
         />
+    <View
+        style="@style/GaryDiveStyle"
+        />
     <LinearLayout
         android:id="@+id/ll_graderanking"
         android:layout_width="match_parent"

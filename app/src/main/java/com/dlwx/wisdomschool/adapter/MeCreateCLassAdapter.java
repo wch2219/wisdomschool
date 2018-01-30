@@ -14,6 +14,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ClassFileActivity;
+import com.dlwx.wisdomschool.activitys.ClassHistoryNewsActivitry;
+import com.dlwx.wisdomschool.activitys.InviteMemberActivity;
 import com.dlwx.wisdomschool.bean.ClassListBean;
 import com.ruffian.library.RTextView;
 
@@ -58,6 +60,18 @@ public class MeCreateCLassAdapter extends BaseFastAdapter {
                 Intent intent = new Intent(ctx, ClassFileActivity.class);
                 intent.putExtra("classid",bodyBean.getCnid());
                 ctx.startActivity(intent);
+            }
+        });
+        vh.tv_mess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctx.startActivity(new Intent(ctx, ClassHistoryNewsActivitry.class));
+            }
+        });
+        vh.tv_invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctx.startActivity(new Intent(ctx, InviteMemberActivity.class));
             }
         });
 //        if (position == 2) {

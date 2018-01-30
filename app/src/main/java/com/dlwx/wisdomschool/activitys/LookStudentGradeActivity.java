@@ -9,9 +9,6 @@ import android.widget.TextView;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.bean.ClassDescBean;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,16 +26,18 @@ public class LookStudentGradeActivity extends BaseActivity {
     LinearLayout llGraderanking;
     @BindView(R.id.ll_gradeanalyze)
     LinearLayout llGradeanalyze;
+    private String classid;
 
     @Override
     protected void initView() {
+        classid = getIntent().getStringExtra("classid");
         setContentView(R.layout.activity_look_student_grade);
         ButterKnife.bind(this);
     }
 
     @Override
     protected void initData() {
-        tvTitle.setText("高飞成绩");
+        tvTitle.setText("学生成绩");
         initTabBar(toolBar);
     }
 
@@ -55,10 +54,10 @@ public class LookStudentGradeActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_graderanking:
-                startActivity(new Intent(ctx,GradeRankingActivity.class));
+                startActivity(new Intent(ctx,GradeRankingActivity.class).putExtra("cnid",classid));
                 break;
             case R.id.ll_gradeanalyze:
-                startActivity(new Intent(ctx,GradeAnalyzeAllListActivity.class));
+                startActivity(new Intent(ctx,GradeAnalyzeAllListActivity.class).putExtra("cnid",classid));
                 break;
         }
     }

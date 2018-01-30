@@ -23,6 +23,7 @@ public class SeleteHeadDiautils extends AlertDialog.Builder implements View.OnCl
     public SeleteHeadDiautils(Context context) {
         super(context);
         this.ctx = context;
+        this.setCancelable(true);
     }
 
     public SeleteHeadDiautils(Context context, int themeResId) {
