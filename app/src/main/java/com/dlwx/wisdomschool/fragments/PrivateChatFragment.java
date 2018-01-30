@@ -54,9 +54,11 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
 //        }
         try {
             usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+            wch(usernames.size());
             lvList.setAdapter(new FriendListAdapter(ctx, usernames));
         } catch (HyphenateException e) {
             e.printStackTrace();
+            wch(e.getErrorCode());
         }
     }
 

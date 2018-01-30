@@ -50,8 +50,10 @@ public class WillShareMemberActivity extends BaseActivity implements AdapterView
     protected void initData() {
             initTabBar(toolBar);
             tvTitle.setText("要分享的成员");
-        willSHareMemberAdapter = new WillSHareMemberAdapter(ctx, add_user);
-        gvList.setAdapter(willSHareMemberAdapter);
+        if (add_user != null) {
+            willSHareMemberAdapter = new WillSHareMemberAdapter(ctx, add_user);
+            gvList.setAdapter(willSHareMemberAdapter);
+        }
     }
 
     @Override

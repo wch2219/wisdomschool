@@ -254,7 +254,8 @@ public class ClassDescActivity extends BaseActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             if (add_user.size() > 3) {
                 if (i == 3) {//添加成员
-                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+//                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+                    startActivity(new Intent(ctx, InviteMemberActivity.class));
                 } else {
                     String jcid = add_user.get(i).getJcid();
                     String userid = add_user.get(i).getUserid();
@@ -266,13 +267,15 @@ public class ClassDescActivity extends BaseActivity {
                 }
             } else if (add_user.size() > 0) {
                 if (i == add_user.size()) {
-                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+//                    startActivity(new Intent(ctx, MyClassMemberActivity.class));
+                    startActivity(new Intent(ctx, InviteMemberActivity.class));
                 } else {
                     String jcid = add_user.get(i).getJcid();
                     skipMemberMess(jcid);
                 }
             } else {
-                startActivity(new Intent(ctx, MyClassMemberActivity.class));
+//                startActivity(new Intent(ctx, MyClassMemberActivity.class));
+                startActivity(new Intent(ctx, InviteMemberActivity.class));
             }
         }
     };

@@ -117,8 +117,32 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
     @Override
     protected void initListener() {
 //        titleAdapter.setOnItemClickListener(titAdapter);
+        gvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ctx, "正在开发ing.....", Toast.LENGTH_SHORT).show();
+                switch (position) {
+                    case 0://父母自修
+                        break;
+                    case 1://亲子专栏
+                        break;
+                    case 2://教育机构
+                        break;
+                    case 3://书城
+                        break;
+                    case 4://在线教育
+                        break;
+                    case 5://视频
+                        break;
+                    case 6://问答
+                        break;
+                    case 7://星级考试
+                        break;
+                }
+            }
+        });
     }
-
+    
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -133,7 +157,7 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
 
 
     /**
-     * 头部条目点击事件
+     * 条目点击事件
      */
     private BaseRecrviewAdapter.OnItemClickListener titAdapter = new BaseRecrviewAdapter.OnItemClickListener() {
         @Override
@@ -209,7 +233,7 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
                     Toast.makeText(ctx, "搜索内容不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                map.put("seach",seach);
+                map.put("seach", seach);
                 getData(map);
                 break;
         }

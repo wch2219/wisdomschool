@@ -27,6 +27,7 @@
 
         <Switch
             android:id="@+id/swich"
+            android:checked="true"
             style="@style/switchstyle" />
 
     </LinearLayout>

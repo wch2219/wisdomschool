@@ -9,7 +9,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:id="@+id/ll_entry"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="match_parent">
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="13sp"
-                                    android:text="选个来年喜人来沟通吧"
+                                    android:text="选个喜欢的人来沟通吧"
                                     />
                         </LinearLayout>
                 </LinearLayout>

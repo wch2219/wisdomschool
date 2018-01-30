@@ -66,19 +66,19 @@ public class PublishCompleteActivity extends BaseActivity {
         int width = wm.getDefaultDisplay().getWidth();
 
         LinearLayout.LayoutParams layoutParams1 = (LinearLayout.LayoutParams) cvMorality.getLayoutParams();
-        layoutParams1.height = width/2-120;
+        layoutParams1.height = width / 2 - 120;
         cvMorality.setLayoutParams(layoutParams1);
 
         LinearLayout.LayoutParams layoutParams2 = (LinearLayout.LayoutParams) cvLearn.getLayoutParams();
-        layoutParams2.height = width/2-120;
+        layoutParams2.height = width / 2 - 120;
         cvLearn.setLayoutParams(layoutParams2);
 
         LinearLayout.LayoutParams layoutParams3 = (LinearLayout.LayoutParams) cvSports.getLayoutParams();
-        layoutParams3.height = width/2-120;
+        layoutParams3.height = width / 2 - 120;
         cvSports.setLayoutParams(layoutParams3);
 
         LinearLayout.LayoutParams layoutParams4 = (LinearLayout.LayoutParams) cvStartwork.getLayoutParams();
-        layoutParams4.height = width/2-120;
+        layoutParams4.height = width / 2 - 120;
         cvStartwork.setLayoutParams(layoutParams4);
     }
 
@@ -95,6 +95,7 @@ public class PublishCompleteActivity extends BaseActivity {
     protected void initListener() {
 
     }
+
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -118,10 +119,12 @@ public class PublishCompleteActivity extends BaseActivity {
                 break;
         }
     }
+
     private int seleteTagId;
     private String seleteTagName;
+
     private void skipActivity(int tagid) {
-        Intent intent = new Intent(ctx,AllPicActivity.class);
+        Intent intent = new Intent(ctx, AllPicActivity.class);
         if (body != null) {
             for (int i = 0; i < body.size(); i++) {
                 if (tagid == body.get(i)) {
@@ -158,52 +161,28 @@ public class PublishCompleteActivity extends BaseActivity {
         PublishUpPiccheckBean publishUpPiccheckBean = gson.fromJson(s, PublishUpPiccheckBean.class);
         if (publishUpPiccheckBean.getCode() == 200) {
             body = publishUpPiccheckBean.getBody();
+            tvSuccessNum.setText("恭喜您，已经成功完成" + (4 - body.size()) + "个综合素质纪录啦");
             if (body != null) {
                 for (int i = 0; i < body.size(); i++) {
-                    for (int j = 1; j < 5; j++) {
-                        Integer integer = body.get(i);
-                        if (j == i) {
-                            switch (i) {
-                                case 1:
-                                    ivComplete1.setVisibility(View.GONE);
-                                    break;
-                                case 2:
-                                    ivComplete2.setVisibility(View.GONE);
-                                    break;
-                                case 3:
-                                    ivComplete3.setVisibility(View.GONE);
-                                    break;
-                                case 4:
-                                    ivComplete4.setVisibility(View.GONE);
-                                    break;
-                                default:
 
-                                    break;
-                            }
-                        } else {
-                            int v;
-                            switch (j) {
-                                case 1:
-                                    v = ivComplete1.getVisibility() == 0?0:8;
-                                    ivComplete1.setVisibility(v);
-                                    break;
-                                case 2:
-                                    v = ivComplete2.getVisibility() == 0?0:8;
-                                    ivComplete2.setVisibility(v);
-                                    break;
-                                case 3:
-                                    v = ivComplete3.getVisibility() == 0?0:8;
-                                    ivComplete3.setVisibility(v);
-                                    break;
-                                case 4:
-                                    v = ivComplete4.getVisibility() == 0?0:8;
-                                    ivComplete4.setVisibility(v);
-                                    break;
-                                default:
+                    Integer integer = body.get(i);
+                    switch (integer) {
+                        case 1:
+                            ivComplete1.setVisibility(View.GONE);
+                            break;
+                        case 2:
+                            ivComplete2.setVisibility(View.GONE);
+                            break;
+                        case 3:
+                            ivComplete3.setVisibility(View.GONE);
+                            break;
+                        case 4:
+                            ivComplete4.setVisibility(View.GONE);
 
-                                    break;
-                            }
-                        }
+                            break;
+                        default:
+
+                            break;
                     }
                 }
             } else {
@@ -217,15 +196,16 @@ public class PublishCompleteActivity extends BaseActivity {
         if (data == null) {
             return;
         }
-         switch (requestCode){
-                    case 2:
-                        ArrayList<String> images = data.getStringArrayListExtra("images");
-                        Intent intent = new Intent(ctx,PublishGroupUpActivity.class);
-                        intent.putExtra("tagId",seleteTagId+"");
-                        intent.putExtra("tagname",seleteTagName);
-                        startActivity(intent);
-                        finish();
-                        break;
-                }
+        switch (requestCode) {
+            case 2:
+                ArrayList<String> images = data.getStringArrayListExtra("images");
+                Intent intent = new Intent(ctx, PublishGroupUpActivity.class);
+                intent.putExtra("tagId", seleteTagId + "");
+                intent.putExtra("tagname", seleteTagName);
+                intent.putStringArrayListExtra("images",images);
+                startActivity(intent);
+                finish();
+                break;
+        }
     }
 }

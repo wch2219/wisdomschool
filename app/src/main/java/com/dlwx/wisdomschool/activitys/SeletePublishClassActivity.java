@@ -146,9 +146,11 @@ public class SeletePublishClassActivity extends BaseActivity {
      * 提交选择的结果
      */
     private void submit() {
-
+        createclass_nos = "";
+        addclass_nos = "";
         if (cb_myself.isChecked()) {//选择了自己
             //todo
+            classnames = "仅自己可见";
         } else {//选择了班级
             for (int i = 0; i < create_list.size(); i++) {
                 MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(i);
@@ -168,7 +170,11 @@ public class SeletePublishClassActivity extends BaseActivity {
                 if (joinListBean.isCheck()) {
                     if (TextUtils.isEmpty(addclass_nos)) {
                         addclass_nos = joinListBean.getCnid();
-                        classnames = joinListBean.getClass_name();
+                        if (TextUtils.isEmpty(classnames)) {
+                            classnames = joinListBean.getClass_name();
+                        }else{
+                            classnames = classnames + "," + joinListBean.getClass_name();
+                        }
                     } else {
                         addclass_nos = addclass_nos + "," + joinListBean.getCnid();
                         classnames = classnames + "," + joinListBean.getClass_name();
@@ -253,8 +259,6 @@ public class SeletePublishClassActivity extends BaseActivity {
                     for (int i = 0; i < join_list.size(); i++) {
                         if (join_list.get(i).getCnid().equals(split[j])) {
                             join_list.get(i).setCheck(true);
-                        } else {
-                            join_list.get(i).setCheck(false);
                         }
                     }
                 }
@@ -266,8 +270,6 @@ public class SeletePublishClassActivity extends BaseActivity {
                     for (int i = 0; i < create_list.size(); i++) {
                         if (create_list.get(i).getCnid().equals(split[j])) {
                             create_list.get(i).setCheck(true);
-                        } else {
-                            create_list.get(i).setCheck(false);
                         }
                     }
                 }

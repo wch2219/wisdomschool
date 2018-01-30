@@ -117,6 +117,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
     private ArrayList<String> images = new ArrayList<>();
     private SendMessPicListAdapter sendMessPicListAdapter;
     private String voiceFile;//语音文件
+    private String classnames;
 
     @Override
     protected void initView() {
@@ -310,7 +311,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
      * 发布
      */
     private void submit() {
-        if (TextUtils.isEmpty(class_nos)) {
+        if (TextUtils.isEmpty(classnames)) {
             Toast.makeText(ctx, "请选择班级", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -394,36 +395,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         UpFileUtiles.start(ctx, new File(images.get(pos)), "1", 0);
 
     }
-    //    /**
-//     * 多图上传
-//     *
-//     * @param images
-//     */
-//    private void upPic(ArrayList<String> images) {
-//        showLoading();
-//        List<File> lists = new ArrayList<>();
-//        for (int i = 0; i < images.size(); i++) {
-//            lists.add(new File(images.get(i)));
-//        }
-//        wch(lists.size());
-//        PostRequest post = OkGo.<String>post(HttpUrl.UploadFile);
-//        for (int i = 0; i < images.size(); i++) {
-//            post.params("file" + i, lists.get(i));
-//        }
-//        post.execute(new StringCallback() {
-//            @Override
-//            public void onSuccess(Response<String> response) {
-//                wch(response.body());
-//                disLoading();
-////                getFileList();
-//            }
-//
-//            @Override
-//            public void onError(Response<String> response) {
-//                disLoading();
-//            }
-//        });
-//    }
     private String imgs;//图片id
     private String video;//视频id
     private String voice;//语音id
@@ -515,10 +486,16 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                 });
                 break;
             case 101://选择的班级
-                createclass_nos = data.getStringExtra("createclass_nos");
-                addclass_nos = data.getStringExtra("addclass_nos");
-                String classnames = data.getStringExtra("classnames");
-                class_nos = createclass_nos + "," + addclass_nos;
+                classnames = data.getStringExtra("classnames");
+                if ("仅自己可见".equals(classnames)) {
+                    class_nos = "";
+                }else{
+
+                    createclass_nos = data.getStringExtra("createclass_nos");
+                    addclass_nos = data.getStringExtra("addclass_nos");
+                    class_nos = createclass_nos + "," + addclass_nos;
+                }
+                wch(classnames);
                 tv_classnames.setText(classnames);
                 break;
 

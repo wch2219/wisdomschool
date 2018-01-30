@@ -23,6 +23,7 @@ import com.dlwx.wisdomschool.bean.FindClassBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,10 +103,11 @@ public class MemberShareActivity extends BaseActivity {
                 checkClass();
                 break;
             case R.id.ll_sharemember:
-                startActivityForResult(new Intent(ctx,WillShareMemberActivity.class),1);
+                Intent intent = new Intent(ctx, WillShareMemberActivity.class);
+                intent.putExtra("add_user", (Serializable) add_user);
+                startActivityForResult(intent,1);
                 break;
             case R.id.ll_class:
-
                 break;
         }
     }

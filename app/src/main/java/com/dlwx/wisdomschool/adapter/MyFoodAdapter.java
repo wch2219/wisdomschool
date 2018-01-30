@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
 
@@ -40,7 +39,7 @@ public class MyFoodAdapter extends BaseFastAdapter {
             vh = (ViewHolder) convertView.getTag();
 
         }
-        Glide.with(ctx).load(pics[position]).into(vh.iv_pic);
+        vh.iv_pic.setImageResource(pics[position]);
         vh.tv_name.setText(foodarr[position]);
         return convertView;
     }

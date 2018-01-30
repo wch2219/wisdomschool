@@ -112,7 +112,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     private ViewHolderDia vhDia;
     private RecordListAdapter recordListAdapter;
     private PopupWindow popushare;
-    private List<RecordListBean.BodyBean> recordList;
+    private List<RecordListBean.BodyBean> recordList = new ArrayList<>();
 
     @Override
     public int getLayoutID() {
@@ -126,13 +126,15 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     protected void initDate() {
+        recordListAdapter = new RecordListAdapter(ctx, recordList, tvSendsms);
+        lv_list.setAdapter(recordListAdapter);
         getDataList();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void initListener() {
-        initrefresh(refreshLayout, false);
+        initrefresh(refreshLayout, true);
         poresize.setOnResizeRelativeListener(new PolaroidResizeLinearLayout.OnResizeRelativeListener() {
             @Override
             public void OnResizeRelative(int w, int h, int oldw, int oldh) {
@@ -205,6 +207,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void downOnRefresh() {
         page =1;
+        recordList.clear();
         getDataList();
     }
 
@@ -305,12 +308,14 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                         popuSceer.dismiss();
                         type = "";
                         page =1;
+                        recordList.clear();
                         getDataList();
                         break;
                     case R.id.rb_myself:
                         popuSceer.dismiss();
                         type = "1";
                         page =1;
+                        recordList.clear();
                         getDataList();
                         break;
                 }
@@ -414,6 +419,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             diashow.dismiss();
             type = "";
             page = 1;
+            recordList.clear();
             getDataList();
         }
     };
@@ -433,6 +439,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             diashow.dismiss();
             type = "";
             page = 1;
+            recordList.clear();
             tv_classseach.setText(joinListBean.getClass_name());
             getDataList();
         }
@@ -459,6 +466,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         type = "1";
         class_no = "";
         page = 1;
+        recordList.clear();
         tv_classseach.setText("仅自己可见");
         getDataList();
     }
@@ -504,6 +512,8 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
                 change();
                 break;
             case R.id.ll_allrecord://查看全部成长纪录
+                recordList.clear();
+                tv_classseach.setText("全部成长纪录");
                 allRecord();
                 break;
 
@@ -530,6 +540,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         class_no = "";
         type = "";
         page = 1;
+        recordList.clear();
         diashow.dismiss();
         getDataList();
     }
@@ -647,6 +658,7 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
             BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
             if (backResultBean.getCode() == 200) {
                 //todo 评论  回复
+                recordList.clear();
                 getDataList();
             }
             Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -671,9 +683,8 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
     private void recordList(String s, Gson gson) {
         RecordListBean recordListBean = gson.fromJson(s, RecordListBean.class);
         if (recordListBean.getCode() == 200) {
-            recordList = recordListBean.getBody();
-            recordListAdapter = new RecordListAdapter(ctx, recordList, tvSendsms);
-            lv_list.setAdapter(recordListAdapter);
+            recordList.addAll(recordListBean.getBody());
+            recordListAdapter.notifyDataSetChanged();
             recordListAdapter.setWindowListener(this);
         } else {
             Toast.makeText(ctx, recordListBean.getResult(), Toast.LENGTH_SHORT).show();

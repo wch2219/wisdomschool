@@ -45,8 +45,8 @@ public class RecordScreenCreateAdapter extends BaseFastAdapter {
         }
         MyAllClassBean.BodyBean.CreateListBean createListBean = create_list.get(position);
         Glide.with(ctx).load(createListBean.getClass_pic()).into(vh.iv_pic);
-        vh.tv_classnumber.setText(createListBean.getClass_name());
-        vh.tv_classnum.setText(createListBean.getClass_no());
+        vh.tv_classnumber.setText(createListBean.getClass_no());
+        vh.tv_classnum.setText(createListBean.getClass_name());
         vh.tv_classmember.setText(createListBean.getTotal_user());
         vh.cb_check.setChecked(createListBean.isCheck());
         return convertView;
