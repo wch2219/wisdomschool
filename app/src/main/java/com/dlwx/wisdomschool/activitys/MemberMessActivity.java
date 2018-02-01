@@ -3,6 +3,7 @@ package com.dlwx.wisdomschool.activitys;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,11 +13,13 @@ import android.widget.Toast;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.MermberMessBean;
 import com.dlwx.wisdomschool.utiles.GlideuploadUtils;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
+import com.hyphenate.easeui.EaseConstant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,11 +63,13 @@ public class MemberMessActivity extends BaseActivity {
     private String jcid;
     private MermberMessBean.BodyBean body;
     private String classid;
+    private String userid;
 
     @Override
     protected void initView() {
         jcid = getIntent().getStringExtra("jcid");
         classid = getIntent().getStringExtra("classid");
+        userid = getIntent().getStringExtra("userid");
         setContentView(R.layout.activity_member_mess);
         ButterKnife.bind(this);
         register();
@@ -115,15 +120,30 @@ public class MemberMessActivity extends BaseActivity {
                 startActivity(new Intent(ctx, RemarkMessActivity.class));
                 break;
             case R.id.ll_clearclass://请出班级
+                deletemember();
                 break;
             case R.id.iv_phone://给他打电话
                     call(body.getTelephone());
                 break;
             case R.id.iv_sendmess://发送私聊
-                Toast.makeText(ctx, "发送私聊", Toast.LENGTH_SHORT).show();
+                intent = new Intent(ctx, ChatActivity.class);
+                intent.putExtra("title",body.getJoin_role());
+                intent.putExtra(EaseConstant.EXTRA_USER_ID, userid);
+                intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                startActivity(intent);
                 break;
-
         }
+    }
+
+    /**
+     * 请出班级
+     */
+    private void deletemember() {
+        HttpType = 2;
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        map.put("jcid",jcid);
+        mPreenter.fetch(map,true,HttpUrl.DeleteMember,"");
     }
 
     /**
@@ -133,7 +153,12 @@ public class MemberMessActivity extends BaseActivity {
         HttpType = 1;
         Map<String, String> map = new HashMap<>();
         map.put("token", Token);
-        map.put("jcid", jcid);
+        if (!TextUtils.isEmpty(jcid)) {
+
+            map.put("jcid", jcid);
+        }else{
+            map.put("userid",userid);
+        }
         mPreenter.fetch(map, true, HttpUrl.LookMemberMess, null);
     }
 
@@ -144,6 +169,13 @@ public class MemberMessActivity extends BaseActivity {
         if (HttpType == 1) {
 
             mermbermess(s);
+        }else{
+            Gson gson = new Gson();
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                finish();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
 

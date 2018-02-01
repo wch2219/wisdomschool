@@ -32,10 +32,12 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
  */
 
 public class MyApplication extends Application {
+    public static final String BuglyAppID = "567efebd79";//bug  版本更新
     public static String classnames;
     private static MyApplication instance;
     public static EaseUI easeUI;
     public static String Token;
+
     public static MyApplication getInstance() {
         return instance;
     }
@@ -48,27 +50,56 @@ public class MyApplication extends Application {
         instance = this;
         classnames = ResouseString.classnames;
         easeUIInit();
-        SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode,MODE_PRIVATE);
-       Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
-       LogUtiles.LogI(Token);
-        Bugly.init(getApplicationContext(), "567efebd79", false);
+        SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode, MODE_PRIVATE);
+        Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
+        LogUtiles.LogI(Token);
+        Bugly.init(getApplicationContext(), BuglyAppID, false);
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
         if (!TextUtils.isEmpty(Token)) {
 //            huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
         }
     }
+
     EMMessageListener msgListener = new EMMessageListener() {
 
         @Override
         public void onMessageReceived(List<EMMessage> messages) {
-            EMMessageBody body = messages.get(0).getBody();
-            String s = body.toString();
-            LogUtiles.LogI(s);
-            //收到消息
-
-    }
 
 
+            String username = null;
+            for (EMMessage message : messages) {
+                // group message
+                if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
+                    username = message.getTo();
+                    EMMessageBody body = message.getBody();
+                } else {
+                    // single chat message
+                    username = message.getFrom();
+                }
+            }
+//            Intent inten = null;
+//            inten = new Intent(getApplicationContext(), ChatActivity.class);
+//            inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+//            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, inten, 0);
+//            //获取NotificationManager实例
+//            NotificationManager notifyManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+//            //实例化NotificationCompat.Builde并设置相关属性
+//            NotificationCompat.Builder builder = new NotificationCompat.Builder(   getApplicationContext())
+//                    //设置小图标
+//                    .setSmallIcon(R.mipmap.ic_launcher)
+//                    //设置通知标题
+//
+//                    .setContentTitle(username)
+//                    .setContentIntent(pi)
+//                    //设置通知内容
+//                    .setContentText(mess);
+//            builder.setDefaults(Notification.DEFAULT_ALL);
+//            //设置通知时间，默认为系统发出通知的时间，通常不用设置
+//            //.setWhen(System.currentTimeMillis());
+//            //通过builder.build()方法生成Notification对象,并发送通知,id=1
+//            notifyManager.notify(1, builder.build());
+
+        }
 
 
         @Override
@@ -85,6 +116,7 @@ public class MyApplication extends Application {
         public void onMessageDelivered(List<EMMessage> message) {
             //收到已送达回执
         }
+
         @Override
         public void onMessageRecalled(List<EMMessage> messages) {
             //消息被撤回
@@ -95,11 +127,13 @@ public class MyApplication extends Application {
             //消息状态变动
         }
     };
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
+
     /**
      * 环信初始化
      */
@@ -118,13 +152,15 @@ public class MyApplication extends Application {
         EMClient.getInstance().setDebugMode(true);
         //注册一个监听连接状态的listener
         EMClient.getInstance().addConnectionListener(new MyConnectionListener());
-        EaseUI.getInstance().init(getApplicationContext(),options);
+        EaseUI.getInstance().init(getApplicationContext(), options);
     }
+
     //实现ConnectionListener接口
     private class MyConnectionListener implements EMConnectionListener {
         @Override
         public void onConnected() {
         }
+
         @Override
         public void onDisconnected(final int error) {
             runOnUiThread(new Runnable() {
@@ -151,11 +187,12 @@ public class MyApplication extends Application {
 
         }
     }
+
     /**
      * 登录环信
      */
-    private void huanxinLogin(String username,String pwd) {
-        EMClient.getInstance().login(username,pwd,new EMCallBack() {//回调
+    private void huanxinLogin(String username, String pwd) {
+        EMClient.getInstance().login(username, pwd, new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 LogUtiles.LogI("登录聊天服务器成功！");
@@ -165,6 +202,7 @@ public class MyApplication extends Application {
             public void onProgress(int progress, String status) {
 
             }
+
             @Override
             public void onError(int code, String message) {
                 LogUtiles.LogI("登录聊天服务器失败！");

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,6 +121,7 @@ public class ClassDescActivity extends BaseActivity {
     private List<ClassDescBean.BodyBean.AddUserBean> add_user;
     private List<ClassDescBean.BodyBean.AddTeacherBean> add_teacher;
     private ClassDescBean.BodyBean.CreateTeacherBean create_teacher;
+    private String userid;
 
     @Override
     protected void initView() {
@@ -194,6 +196,13 @@ public class ClassDescActivity extends BaseActivity {
             tvClassName.setText(body.getClass_name());//班级名称
             tvScoolName.setText(body.getSchool_name());//学校名称
             tvClassmember.setText("班级号：" + body.getClass_no());//班级号
+            if (!TextUtils.isEmpty(body.getApply_user_num())) {
+
+                tv_number.setText(body.getApply_user_num());
+                tv_number.setVisibility(View.VISIBLE);
+            }else{
+                tv_number.setVisibility(View.GONE);
+            }
             Glide.with(ctx).load(body.getClass_qrcode()).into(ivQrcode);//班级二维码
             if (body.getIs_teacher_open() == 1) {//1任课老师消息互见，2不互见
                 swCheck.setChecked(true);
@@ -226,13 +235,17 @@ public class ClassDescActivity extends BaseActivity {
                     //
                     startActivity(new Intent(ctx, PersionMessActivity.class));
                 }else{
-                    Toast.makeText(ClassDescActivity.this, "缺少jcid", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(ctx, MemberMessActivity.class);
+                    intent.putExtra("userid", create_teacher.getUserid());
+                    intent.putExtra("classid", classid);
+                    startActivity(intent);
                 }
             } else if (i == add_teacher.size() + 1) {//最后一个添加教师
                 startActivity(new Intent(ctx, InviteTeachActivity.class).putExtra("classid", classid));
 
             } else {//其他成员的
                 String jcid = add_teacher.get(i - 1).getJcid();
+                userid = add_user.get(i - 1).getUserid();
                 skipMemberMess(jcid);
             }
         }
@@ -242,9 +255,9 @@ public class ClassDescActivity extends BaseActivity {
         Intent intent = new Intent(ctx, MemberMessActivity.class);
         intent.putExtra("jcid", jcid);
         intent.putExtra("classid", classid);
+        intent.putExtra("userid", userid);
         startActivity(intent);
     }
-
     ;
     /**
      * 成员
@@ -258,7 +271,7 @@ public class ClassDescActivity extends BaseActivity {
                     startActivity(new Intent(ctx, InviteMemberActivity.class));
                 } else {
                     String jcid = add_user.get(i).getJcid();
-                    String userid = add_user.get(i).getUserid();
+                   userid = add_user.get(i).getUserid();
                     if (sp.getString(SpUtiles.Userid,"").equals(userid)) {//自己点击了自己
                         startActivity(new Intent(ctx, PersionMessActivity.class));
                     }else{//查看其他成员信息
@@ -271,6 +284,7 @@ public class ClassDescActivity extends BaseActivity {
                     startActivity(new Intent(ctx, InviteMemberActivity.class));
                 } else {
                     String jcid = add_user.get(i).getJcid();
+                    userid = add_user.get(i).getUserid();
                     skipMemberMess(jcid);
                 }
             } else {

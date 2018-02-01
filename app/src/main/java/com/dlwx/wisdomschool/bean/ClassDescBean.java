@@ -71,10 +71,28 @@ public class ClassDescBean implements Serializable{
         private String true_classname;
         private String total_user;
         private String is_tel_find;
+        private String apply_user_num;
+        private String inclass_parent_name;
         private int is_teacher_open;
         private CreateTeacherBean create_teacher;
         private List<AddTeacherBean> add_teacher;
         private List<AddUserBean> add_user;
+
+        public String getInclass_parent_name() {
+            return inclass_parent_name;
+        }
+
+        public void setInclass_parent_name(String inclass_parent_name) {
+            this.inclass_parent_name = inclass_parent_name;
+        }
+
+        public String getApply_user_num() {
+            return apply_user_num;
+        }
+
+        public void setApply_user_num(String apply_user_num) {
+            this.apply_user_num = apply_user_num;
+        }
 
         public String getCnid() {
             return cnid;

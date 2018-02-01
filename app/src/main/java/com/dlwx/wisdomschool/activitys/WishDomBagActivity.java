@@ -123,14 +123,14 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
 
     @Override
     public void onClick(View v) {
-
+        popupWindow.dismiss();
         switch (v.getId()) {
             case R.id.tv_uppic:
                 startActivityForResult(new Intent(ctx, AllPicActivity.class), 2);
 
                 break;
             case R.id.tv_upfile:
-                startActivityForResult(new Intent(ctx, SeleteFileActivity.class), 101);
+                startActivityForResult(new Intent(ctx, SeleteFileActivity.class).putExtra("isbag",true), 101);
                 break;
             case R.id.tv_close:
                 diaShow.dismiss();
@@ -433,7 +433,7 @@ public class WishDomBagActivity extends BaseActivity implements AdapterView.OnIt
     private void upPicMore(final List<MorePicBean.BodyBean> body) {
 
         MorePicBean.BodyBean bodyBean = body.get(pos);
-        OkGo.<String>post(HttpUrl.AddFile)
+        OkGo.<String>post(HttpUrl.BookBagAddFile)
                 .params("token", Token)
                 .params("name", bodyBean.getName())
                 .params("type", "1")

@@ -6,18 +6,20 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ChatActivity;
-import com.dlwx.wisdomschool.adapter.FriendListAdapter;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.exceptions.HyphenateException;
+import com.hyphenate.easeui.widget.EaseConversationList;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,13 +28,14 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrivateChatFragment extends BaseFragment implements AdapterView.OnItemClickListener{
+public class PrivateChatFragment extends BaseFragment implements AdapterView.OnItemClickListener {
     @BindView(R.id.ll_entry)
     LinearLayout llEntry;
-    @BindView(R.id.lv_list)
-    ListView lvList;
+    @BindView(R.id.list)
+    EaseConversationList lvList;
     Unbinder unbinder;
-    private List<String> usernames;
+    private List<EMConversation> emConversations;
+
 
     @Override
     public int getLayoutID() {
@@ -47,19 +50,36 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
     @Override
     protected void initDate() {
 
-//        try {
-//            List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
-//        } catch (HyphenateException e)  {
-//            e.printStackTrace();
-//        }
-        try {
-            usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
-            wch(usernames.size());
-            lvList.setAdapter(new FriendListAdapter(ctx, usernames));
-        } catch (HyphenateException e) {
-            e.printStackTrace();
-            wch(e.getErrorCode());
+    }
+
+    @Override
+    public void onResume() {
+        emConversations = new ArrayList<>();
+        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+//初始化，参数为会话列表集合
+        Iterator<Map.Entry<String, EMConversation>> iterator = conversations.entrySet().iterator();
+        while (iterator.hasNext()) {
+            emConversations.add(iterator.next().getValue());
         }
+
+        //删除包含 群聊和聊天室 的会话
+        for (int i = 0; i < emConversations.size(); i++) {
+            EMConversation emConversation = emConversations.get(i);
+            EMConversation.EMConversationType type = emConversation.getType();
+            if (type == EMConversation.EMConversationType.GroupChat) {
+                emConversations.remove(i);
+            }else if (type == EMConversation.EMConversationType.ChatRoom) {
+                emConversations.remove(i);
+            }
+        }
+
+        if (conversations.size() > 0) {
+            llEntry.setVisibility(View.GONE);
+        }
+        lvList.init(emConversations);
+//刷新列表
+        lvList.refresh();
+        super.onResume();
     }
 
     @Override
@@ -71,14 +91,22 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
     protected Presenter createPresenter() {
         return new Presenter(this);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        startActivity(new Intent(ctx, ChatActivity.class).putExtra(EaseConstant.EXTRA_USER_ID,usernames.get(i) ));;
+        EMConversation emConversation = emConversations.get(i);
+        String userid = emConversation.conversationId();
+        String to_username = emConversation.getLastMessage().getStringAttribute("from_username", "");
+        Intent intent = new Intent(ctx, ChatActivity.class);
+        intent.putExtra("title",to_username);
+        intent.putExtra(EaseConstant.EXTRA_USER_ID, userid);
+        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+        startActivity(intent);
     }
 }

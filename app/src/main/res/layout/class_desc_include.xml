@@ -123,16 +123,17 @@
             android:layout_weight="1"
             android:text="@string/inout"
             />
+
         <TextView
             android:id="@+id/tv_number"
-
             android:layout_width="20dp"
-            android:text="5"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:background="@drawable/shape_circle_number"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_height="20dp" />
+            android:background="@drawable/shape_circle_number"
+            android:gravity="center"
+            android:text="5"
+            android:visibility="gone"
+            android:textColor="@color/white" />
         <ImageView
             style="@style/Imagesmill3pic"
             android:layout_gravity="center_vertical"
@@ -219,6 +220,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:visibility="gone"
         android:orientation="horizontal"
         >
         <ImageView

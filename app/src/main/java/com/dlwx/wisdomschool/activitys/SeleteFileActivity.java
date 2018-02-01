@@ -52,13 +52,17 @@ public class SeleteFileActivity extends BaseActivity implements AdapterView.OnIt
     private List<Image> docs = new ArrayList<>();
     private List<Image> pics = new ArrayList<>();
     private List<Image> mp3s = new ArrayList<>();
+    private boolean isbag;
 
     @Override
     protected void initView() {
+        isbag = getIntent().getBooleanExtra("isbag", false);
         setContentView(R.layout.activity_selete_file);
         ButterKnife.bind(this);
         View headView = LayoutInflater.from(ctx).inflate(R.layout.head_seletefile, null);
-        lvList.addHeaderView(headView);
+        if (!isbag) {
+            lvList.addHeaderView(headView);
+        }
     }
 
     @Override

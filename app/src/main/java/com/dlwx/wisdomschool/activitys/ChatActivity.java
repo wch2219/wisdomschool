@@ -1,9 +1,11 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseActivity;
@@ -28,6 +30,8 @@ public class ChatActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.iv_persionmanage)
     ImageView ivPersionmanage;
+    @BindView(R.id.rl_allmember)
+    RelativeLayout rlAllmember;
     private String title;
 
     @Override
@@ -36,7 +40,11 @@ public class ChatActivity extends BaseActivity {
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         //聊天人或群id
-       String toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
+        String toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
+        int isGroup = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, 2);
+        if (isGroup == 1) {
+            rlAllmember.setVisibility(View.GONE);
+        }
         //参数为要添加的好友的username和添加理由
         try {
             EMClient.getInstance().contactManager().addContact(toChatUsername, "添加");
@@ -51,11 +59,13 @@ public class ChatActivity extends BaseActivity {
 
         getSupportFragmentManager().beginTransaction().add(R.id.rl_chat, chatFragment).commit();
     }
+
     @Override
     protected void initData() {
         initTabBar(toolBar);
         tvTitle.setText(title);
     }
+
     @Override
     protected void initListener() {
     }
@@ -72,5 +82,12 @@ public class ChatActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

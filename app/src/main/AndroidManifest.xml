@@ -64,7 +64,7 @@
         <!-- 设置环信应用的AppKey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="1161170306178203#zhihuijiaxiao" />
+            android:value="1175180131178939#zhihuijiaxiao" />
         <!-- 声明SDK所需的service SDK核心功能 -->
         <service
             android:name="com.hyphenate.chat.EMChatService"

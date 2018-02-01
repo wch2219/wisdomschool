@@ -80,4 +80,6 @@ public class HttpUrl {
     public static final String SmsAuth = BaseUrl + "Register/sms";//发验证码接口
     public static final String FeedBack = BaseUrl + "Public/view";//反馈建议
     public static final String MyHisId = BaseUrl + "Classroom/myrole";//我使用过的角色
+    public static final String DeleteMember = BaseUrl + "Classroom/deluser";//请出班级
+    public static final String ChangeClassId = BaseUrl + "Classroom/edit_myrole";//修改我这班级中的身份
 }

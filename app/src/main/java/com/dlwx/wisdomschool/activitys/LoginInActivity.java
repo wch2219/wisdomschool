@@ -117,10 +117,9 @@ public class LoginInActivity extends BaseActivity {
             body = loginBean.getBody();
             showLoading();
             huanxinLogin(body.getUserid(), body.getUserid());
-
+        }else{
+            Toast.makeText(ctx, loginBean.getResult(), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     /**

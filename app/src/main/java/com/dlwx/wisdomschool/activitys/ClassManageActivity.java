@@ -19,6 +19,7 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.fragments.ClassFragment;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +46,10 @@ public class ClassManageActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+       int teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
+        if (teacherOrPatriarch != 1) {
+            rlAdd.setVisibility(View.GONE);
+        }
         initTabBar(toolBar);
         tvTitle.setText("我的班级");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

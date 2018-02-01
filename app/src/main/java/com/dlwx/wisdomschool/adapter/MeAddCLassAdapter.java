@@ -13,8 +13,12 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.ChatActivity;
 import com.dlwx.wisdomschool.activitys.ClassFileActivity;
+import com.dlwx.wisdomschool.activitys.ClassHistoryNewsActivitry;
+import com.dlwx.wisdomschool.activitys.InviteMemberActivity;
 import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.hyphenate.easeui.EaseConstant;
 import com.ruffian.library.RTextView;
 
 import java.util.List;
@@ -68,6 +72,29 @@ public class MeAddCLassAdapter extends BaseFastAdapter {
                 intent.putExtra("classid",bodyBean.getCnid());
                 ctx.startActivity(intent);
 
+            }
+        });
+        vh.tv_mess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ctx.startActivity(new Intent(ctx, ClassHistoryNewsActivitry.class));
+            }
+        });
+
+        vh.tv_invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int is_guanli = bodyBean.getIs_guanli();
+                if (is_guanli == 1) {//邀请
+
+                    ctx.startActivity(new Intent(ctx, InviteMemberActivity.class).putExtra("classid",bodyBean.getCnid()));
+                }else{//联系老师
+                    Intent intent = new Intent(ctx, ChatActivity.class);
+                    intent.putExtra("title",bodyBean.getTeacher_name());
+                    intent.putExtra(EaseConstant.EXTRA_USER_ID, bodyBean.getUserid());
+                    intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+                    ctx.startActivity(intent);
+                }
             }
         });
         return convertView;

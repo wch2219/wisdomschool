@@ -24,6 +24,7 @@ import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassDescMemberAdapter;
 import com.dlwx.wisdomschool.adapter.ClassDescTeachAdapter;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.ClassDescBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
@@ -91,6 +92,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
     private ClassDescBean.BodyBean.CreateTeacherBean create_teacher;
     private List<ClassDescBean.BodyBean.AddTeacherBean> add_teacher;
     private List<ClassDescBean.BodyBean.AddUserBean> add_user;
+    private ClassDescBean.BodyBean body;
 
     @Override
     protected void initView() {
@@ -104,7 +106,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
     @Override
     protected void initData() {
         initTabBar(toolBar);
-        tvTitle.setText("班级详情");
+//        tvTitle.setText("班级详情");
         toolBar.setBackgroundResource(R.color.blue);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.icon_jiantoubaise);
         getClassDesc();
@@ -140,7 +142,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
                 showPopuBack();
                 break;
             case R.id.ll_groupup://智慧成长
-                startActivity(new Intent(ctx,RecordActivity.class));
+                startActivity(new Intent(ctx, RecordActivity.class));
                 break;
             case R.id.ll_classfile://班级文件
                 startActivity(new Intent(ctx, ClassFileActivity.class).putExtra("classid", classid));
@@ -153,7 +155,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
                 showPopuClassId();
                 break;
             case R.id.ll_lookstudentgrade://查看学生成绩
-                startActivity(new Intent(ctx, LookStudentGradeActivity.class).putExtra("classid",classid));
+                startActivity(new Intent(ctx, LookStudentGradeActivity.class).putExtra("classid", classid));
                 break;
             case R.id.rl_lookall://查看全部成员
 
@@ -173,11 +175,11 @@ public class MyJoinClassDescActivity extends BaseActivity {
             String userid = create_teacher.getUserid();
             intent.putExtra("classid", classid);
             if (i == 0) {
-            intent.putExtra("tag", 0);
+                intent.putExtra("tag", 0);
                 intent.putExtra("userid", create_teacher.getUserid());
-            }else{
-                intent.putExtra("jcid",add_teacher.get(i-1).getJcid());
-                intent.putExtra("tag",1);
+            } else {
+                intent.putExtra("jcid", add_teacher.get(i - 1).getJcid());
+                intent.putExtra("tag", 1);
             }
             startActivity(intent);
         }
@@ -212,6 +214,12 @@ public class MyJoinClassDescActivity extends BaseActivity {
         Gson gson = new Gson();
         if (HttpType == 1) {//班级详情
             classdesc(s, gson);
+        } else if (HttpType == 2) {
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                getClassDesc();
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -219,13 +227,13 @@ public class MyJoinClassDescActivity extends BaseActivity {
         ClassDescBean classDescBean = gson.fromJson(s, ClassDescBean.class);
         if (classDescBean.getCode() == 200) {
             super.showData(s);
-            ClassDescBean.BodyBean body = classDescBean.getBody();
+            body = classDescBean.getBody();
             Glide.with(ctx).load(body.getClass_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(ivHead);//班徽
             tvClassName.setText(body.getClass_name());//班级名称
             tvScoolName.setText(body.getSchool_name());//学校名称
             tvClassmember.setText("班级号：" + body.getClass_no());//班级号
             Glide.with(ctx).load(body.getClass_qrcode()).into(ivQrcode);//班级二维码
-
+            tvIdname.setText(body.getInclass_parent_name());
             create_teacher = body.getCreate_teacher();
             add_teacher = body.getAdd_teacher();
             classDescTeachAdapter = new ClassDescTeachAdapter(ctx, create_teacher, add_teacher);
@@ -262,7 +270,7 @@ public class MyJoinClassDescActivity extends BaseActivity {
         viewHolderPopu.tv_otherid.setOnClickListener(this);
         viewHolderPopu.tv_close.setOnClickListener(this);
         popupWindow.showAtLocation(tvClassmember, Gravity.BOTTOM, 0, 0);
-
+        viewHolderPopu.tv_current.setText(body.getInclass_parent_name());
     }
 
     /**
@@ -299,7 +307,8 @@ public class MyJoinClassDescActivity extends BaseActivity {
                 break;
             case R.id.tv_otherid://选择其他身份
                 popupWindow.dismiss();
-                startActivity(new Intent(ctx, SeleteOtherIdActivity.class));
+                startActivityForResult(new Intent(ctx, SeleteOtherIdActivity.class), 1);
+
                 break;
 
             case R.id.tv_close://关闭弹窗
@@ -339,5 +348,25 @@ public class MyJoinClassDescActivity extends BaseActivity {
             this.tv_close = (TextView) rootView.findViewById(R.id.tv_close);
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        switch (requestCode) {
+            case 1:
+                String name = data.getStringExtra("name");
+                String named = data.getStringExtra("named");//称呼
+                Map<String,String> map = new HashMap<>();
+                map.put("student_name",name);
+                map.put("role_identity",named);
+                map.put("token",Token);
+                map.put("cid",classid);
+                HttpType = 2;
+                mPreenter.fetch(map,false,HttpUrl.ChangeClassId,"");
+                break;
+        }
     }
 }

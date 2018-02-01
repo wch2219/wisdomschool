@@ -312,7 +312,7 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
     }
     private int tag = 0;
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (data == null) {
             return;
         }
@@ -322,13 +322,13 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                 upPic(images);
                 break;
             case 101:
+                String ufid = data.getStringExtra("ufid");
                 final String filepath = data.getStringExtra("path");
-                String[] split = filepath.split("/");
-                final String filename = split[split.length - 1];
-                final int filetype = data.getIntExtra("filetype",0);
-                final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
+
+                final int filetype = data.getIntExtra("filetype", 0);
+
                 showLoading();
-               tag = 0;
+
                 UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                     @Override
                     public void success(Response<String> response) {
@@ -337,29 +337,45 @@ public class PageFileDescActivity extends BaseActivity implements AdapterView.On
                         if (upPicBean.getCode() == 200) {
                             if (tag == 0) {
                                 tag = 1;
+                                String[] split = filepath.split("/");
+                                final String filename = split[split.length - 1];
                                 int fileid = upPicBean.getBody().getFileid();
-                                Map<String,String> map = new HashMap<>();
-                                map.put("token",Token);
-                                map.put("classid",classid);
+                                final int size = Integer.valueOf(data.getStringExtra("size")) / 1024;
+                                Map<String, String> map = new HashMap<>();
+                                map.put("token", Token);
+                                map.put("classid", classid);
+                                map.put("name", filename);
                                 map.put("folderid",cfid);
-                                map.put("name",filename);
-                                map.put("type",filetype+"");
-                                map.put("fileid",fileid+"");
-                                map.put("size",size+"");
-                                UpFileUtiles.addfile(ctx,map);
-                            }else{
-                                   disLoading();
-                                 getData("");
+                                map.put("type", filetype + "");
+                                map.put("fileid", fileid + "");
+                                map.put("size", size + "");
+                                UpFileUtiles.addfile(ctx, map);
+                            } else {
+                                disLoading();
+                                Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
+                               getData("");
                             }
-                        }else{
+                        } else {
                             disLoading();
+                            Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                if (!TextUtils.isEmpty(ufid)) {//从智慧书包上传
+                    Map<String, String> map = new HashMap<>();
+                    map.put("token", Token);
+                    map.put("classid", classid);
+                    map.put("folderid",cfid);
+                    map.put("ufid", ufid);
+                    UpFileUtiles.addfile(ctx, map);
+                    tag = 1;
+                    return;
+                }
                 UpFileUtiles.TYPE = 1;
                 File file = new File(filepath);
-                UpFileUtiles.start(ctx,file,filetype+"",size);
+                tag = 0;
+                UpFileUtiles.start(ctx, file, filetype + "", 0);
                 break;
         }
     }

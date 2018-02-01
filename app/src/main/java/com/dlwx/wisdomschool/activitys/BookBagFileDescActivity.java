@@ -308,7 +308,7 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
                     startActivityForResult(new Intent(ctx, AllPicActivity.class), 2);
                     break;
                 case R.id.tv_upfile:
-                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class), 101);
+                    startActivityForResult(new Intent(ctx, SeleteFileActivity.class).putExtra("isbag",true), 101);
                     break;
             }
         }
@@ -423,10 +423,11 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
     private void upPicMore(final List<MorePicBean.BodyBean> body){
 
         MorePicBean.BodyBean bodyBean = body.get(pos);
-        OkGo.<String>post(HttpUrl.AddFile)
+        OkGo.<String>post(HttpUrl.BookBagAddFile)
                 .params("token",Token)
                 .params("name",bodyBean.getName())
                 .params("type","1")
+                .params("folderid",cfid)
                 .params("fileid",bodyBean.getId())
                 .params("size",bodyBean.getSize())
                 .execute(new StringCallback() {
@@ -442,7 +443,6 @@ public class BookBagFileDescActivity extends BaseActivity implements AdapterView
                             upPicMore(body);
                         }
                     }
-
                     @Override
                     public void onError(Response<String> response) {
                         upPicMore(body);

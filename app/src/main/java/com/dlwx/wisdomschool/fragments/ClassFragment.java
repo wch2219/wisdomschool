@@ -18,17 +18,25 @@ import android.widget.TextView;
 import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
-import com.dlwx.wisdomschool.activitys.ClassDescActivity;
+import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
 import com.dlwx.wisdomschool.activitys.MyJoinClassDescActivity;
+import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
+import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
+import static com.dlwx.wisdomschool.base.MyApplication.Token;
 
 /**
  * 班级
@@ -58,6 +66,7 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
     Unbinder unbinder;
     private List<Fragment> fragments = new ArrayList<>();
     private int teacherOrPatriarch;
+    private List<ClassListBean.BodyBean> body;
 
     @Override
     public int getLayoutID() {
@@ -87,13 +96,40 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
 //            lvListpatriarch.setAdapter(meaddCLassAdapter);
 //            lvListpatriarch.setOnItemClickListener(this);
 //            ivAdd.setVisibility(View.GONE);
+            getClassList();
         }
 
     }
-
+    /**
+     * 获取班级列表
+     */
+    private void getClassList() {
+        Map<String,String> map = new HashMap<>();
+        map.put("token",Token);
+        map.put("type","2");
+        mPreenter.fetch(map,true, HttpUrl.Classroom,HttpUrl.Classroom+Token+"1");
+    }
     @Override
     protected void initListener() {
+        lvListpatriarch.setOnItemClickListener(this);
+    }
 
+    @Override
+    public void showData(String s) {
+        disLoading();
+        wch(s);
+        Gson gson = new Gson();
+        ClassListBean classListBean = gson.fromJson(s, ClassListBean.class);
+        if (classListBean.getCode() == 200) {
+            body = classListBean.getBody();
+            if ( body.size() != 0) {
+
+                MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx, body);
+                lvListpatriarch.setAdapter(meCreateCLassAdapter);
+            }else{
+            }
+
+        }
     }
 
     @Override
@@ -150,18 +186,21 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
                 changeFragment(1);
                 break;
             case R.id.btn_addclasspatriarch://加入班级（家长）
+                startActivity(new Intent(ctx, AddSeachClassActivity.class));
                 break;
             case R.id.btn_createpatriarch://加入班级（家长）
+                startActivity(new Intent(ctx, AddSeachClassActivity.class));
                 break;
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if (i == 2) {//可发消息
-            startActivity(new Intent(ctx, ClassDescActivity.class));
-        }else{//不可发消息
-            startActivity(new Intent(ctx, MyJoinClassDescActivity.class));
-        }
+//        if (i == 2) {//可发消息
+//            startActivity(new Intent(ctx, ClassDescActivity.class));
+//        }else{//不可发消息
+//        }
+        ClassListBean.BodyBean bodyBean = body.get(i);
+        startActivity(new Intent(ctx, MyJoinClassDescActivity.class).putExtra("classid",bodyBean.getCnid()));
     }
 }

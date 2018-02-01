@@ -12,6 +12,7 @@ import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassAllMemberAdapter;
 import com.dlwx.wisdomschool.bean.ClassDescBean;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 
 import java.util.List;
 
@@ -59,9 +60,15 @@ public class LookAllMemberActivity extends BaseActivity implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         String jcid = add_user.get(i).getJcid();
-        Intent intent = new Intent(ctx, MemberMessActivity.class);
-        intent.putExtra("jcid",jcid);
-        intent.putExtra("classid",classid);
-        startActivity(intent);
+        String userid = add_user.get(i).getUserid();
+        if (userid.equals(sp.getString(SpUtiles.Userid,""))) {
+            startActivity(new Intent(ctx,PersionMessActivity.class));
+        }else{
+            Intent intent = new Intent(ctx, MemberMessActivity.class);
+            intent.putExtra("jcid",jcid);
+            intent.putExtra("classid",classid);
+            startActivity(intent);
+        }
+
     }
 }

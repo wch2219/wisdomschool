@@ -1,7 +1,9 @@
 package com.hyphenate.easeui.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
 
+import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMChatRoom;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -103,7 +106,8 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
         EMConversation conversation = getItem(position);
         // get username or group id
         String username = conversation.conversationId();
-        
+        String from = conversation.getLastMessage().getFrom();
+
         if (conversation.getType() == EMConversationType.GroupChat) {
             String groupId = conversation.conversationId();
             if(EaseAtMessageHelper.get().hasAtMeMsg(groupId)){
@@ -121,9 +125,31 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             holder.name.setText(room != null && !TextUtils.isEmpty(room.getName()) ? room.getName() : username);
             holder.motioned.setVisibility(View.GONE);
         }else {
-            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-            EaseUserUtils.setUserNick(username, holder.name);
-            holder.motioned.setVisibility(View.GONE);
+//            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+//            EaseUserUtils.setUserNick(username, holder.name);
+//            holder.motioned.setVisibility(View.GONE);
+
+            if(conversation.getLastMessage()!=null){
+                SharedPreferences sp = getContext().getSharedPreferences("sp_mode",Context.MODE_PRIVATE);
+                String sendUrl=sp.getString("Header_pic","");
+                String userId = sp.getString("UserId", "");
+                Log.i("CCC","from:"+conversation.getLastMessage().getFrom()+"--userid--"+userId);
+                if (conversation.getLastMessage().getFrom().equals(userId)) {
+                    Glide.with(getContext()).load(conversation.getLastMessage().getStringAttribute("to_headportrait", "")).into(holder.avatar);
+                    holder.name
+                            .setText(conversation.getLastMessage().getStringAttribute("to_username", ""));
+                }
+                else {
+                    Glide.with(getContext()).load(conversation.getLastMessage().getStringAttribute("from_headportrait", "")).into(holder.avatar);
+                    holder.name
+
+                            .setText(conversation.getLastMessage().getStringAttribute("from_username", ""));
+                }
+                holder.motioned.setVisibility(View.GONE);
+            }
+
+
+
         }
 
         EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
