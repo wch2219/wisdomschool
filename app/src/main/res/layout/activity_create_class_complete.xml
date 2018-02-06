@@ -166,6 +166,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_height="30dp"
             android:text="更多邀请方式"
+            android:visibility="gone"
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_class_btn"
 

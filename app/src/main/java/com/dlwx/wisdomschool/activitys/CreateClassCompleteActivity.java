@@ -42,6 +42,7 @@ public class CreateClassCompleteActivity extends BaseActivity {
     private String classcode;//班级号
     private String classname;
     private String filepath;
+    private String classid;
 
     @Override
     protected void initView() {
@@ -49,6 +50,7 @@ public class CreateClassCompleteActivity extends BaseActivity {
         classcode = intent.getStringExtra("classcode");
         classname = intent.getStringExtra("classname");
         filepath = intent.getStringExtra("filepath");
+        classid = intent.getStringExtra("classid");
         setContentView(R.layout.activity_create_class_complete);
         ButterKnife.bind(this);
     }
@@ -76,7 +78,7 @@ public class CreateClassCompleteActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_inclass://进入班级
-                startActivity(new Intent(ctx, ClassDescActivity.class));
+                startActivity(new Intent(ctx, ClassDescActivity.class).putExtra("classid",classid));
                 break;
             case R.id.ll_QQ://从QQ邀请
                 break;

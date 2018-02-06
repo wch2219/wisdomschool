@@ -66,6 +66,15 @@ public class ClassListBean implements Serializable{
         private String total_user;
         private String userid;
         private int  is_guanli;
+        private String apply_str;
+
+        public String getApply_str() {
+            return apply_str;
+        }
+
+        public void setApply_str(String apply_str) {
+            this.apply_str = apply_str;
+        }
 
         public int getIs_guanli() {
             return is_guanli;

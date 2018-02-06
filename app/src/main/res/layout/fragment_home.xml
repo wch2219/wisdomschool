@@ -77,7 +77,7 @@
 
                     <ImageView
                         style="@style/ImagehomeItempic"
-                        android:src="@mipmap/icon_record" />
+                        android:src="@mipmap/icon_homewenzhang" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

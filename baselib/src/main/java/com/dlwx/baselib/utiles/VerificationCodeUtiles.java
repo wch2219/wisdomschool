@@ -47,7 +47,11 @@ public class VerificationCodeUtiles {
                         Gson gson = new Gson();
                         smsAuthBean = gson.fromJson(response.body(),SmsAuthBean.class);
                         if (smsAuthBean.getCode() == 200) {
+                            String code = smsAuthBean.getBody().getCode();
                             utiles.startCountDown();
+                            if (smsCodeBackListener != null) {
+                                smsCodeBackListener.backCode(code);
+                            }
                         }
                         Toast.makeText(ctx, smsAuthBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
@@ -61,6 +65,12 @@ public class VerificationCodeUtiles {
                 });
 
         }
+    private SmsCodeBackListener smsCodeBackListener;
+    public interface SmsCodeBackListener{
+        void backCode(String code);
+    }
 
-
+    public void setSmsCodeBackListener(SmsCodeBackListener smsCodeBackListener) {
+        this.smsCodeBackListener = smsCodeBackListener;
+    }
 }

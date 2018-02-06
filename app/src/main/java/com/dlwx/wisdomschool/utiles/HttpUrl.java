@@ -82,4 +82,11 @@ public class HttpUrl {
     public static final String MyHisId = BaseUrl + "Classroom/myrole";//我使用过的角色
     public static final String DeleteMember = BaseUrl + "Classroom/deluser";//请出班级
     public static final String ChangeClassId = BaseUrl + "Classroom/edit_myrole";//修改我这班级中的身份
+    public static final String GroupMemberList = BaseUrl + "Easemob/show_alluser";//群成员列表
+    public static final String GroupDeleteMember = BaseUrl + "Easemob/del_user";//删除群内成员
+    public static final String DeleteGroup = BaseUrl + "Easemob/del_group";//解散群聊
+    public static final String Group_addUser = BaseUrl + "Easemob/add_user";//群添加成员
+    public static final String getAllClassMember = BaseUrl + "Classroom/get_all_class_user";//班级以及所有成员显示
+    public static final String TuiClass = BaseUrl + "User/tuiclass";//家长申请退出班级
+    public static final String SysMess = BaseUrl + "message/message_list";//系统消息
 }

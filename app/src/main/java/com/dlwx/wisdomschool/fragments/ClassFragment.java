@@ -22,9 +22,11 @@ import com.dlwx.wisdomschool.activitys.AddSeachClassActivity;
 import com.dlwx.wisdomschool.activitys.MyJoinClassDescActivity;
 import com.dlwx.wisdomschool.adapter.MeAddCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,8 +61,8 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
     ListView lvListpatriarch;
     @BindView(R.id.btn_createpatriarch)
     Button btnCreatepatriarch;
-    @BindView(R.id.ll_noentrypatriarch)
-    LinearLayout llNoentrypatriarch;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.ll_patriarch)
     LinearLayout llPatriarch;
     Unbinder unbinder;
@@ -80,6 +82,13 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
 
     @Override
     protected void initDate() {
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
         if (teacherOrPatriarch == 1) {
             fragments.add(new CreateClassFragment());
@@ -91,15 +100,29 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
             llTeach.setVisibility(View.GONE);
             llPatriarch.setVisibility(View.VISIBLE);
             rlEntrypatriarch.setVisibility(View.GONE);
-            llNoentrypatriarch.setVisibility(View.VISIBLE);
-//            MeAddCLassAdapter meaddCLassAdapter = new MeAddCLassAdapter(ctx);
-//            lvListpatriarch.setAdapter(meaddCLassAdapter);
-//            lvListpatriarch.setOnItemClickListener(this);
-//            ivAdd.setVisibility(View.GONE);
+            refreshLayout.setVisibility(View.VISIBLE);
+            initrefresh(refreshLayout,true);
             getClassList();
+            ListenerUtile.setAggressJoinClassListener(new ListenerUtile.AggressJoinClassListener() {
+                @Override
+                public void agree() {
+                    getClassList();
+                }
+            });
         }
-
     }
+
+    @Override
+    public void onPause() {
+        ListenerUtile.aggressJoinClassListener = null;
+        super.onPause();
+    }
+
+    @Override
+    public void downOnRefresh() {
+        getClassList();
+    }
+
     /**
      * 获取班级列表
      */
@@ -112,6 +135,7 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
     @Override
     protected void initListener() {
         lvListpatriarch.setOnItemClickListener(this);
+
     }
 
     @Override
@@ -123,10 +147,13 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
         if (classListBean.getCode() == 200) {
             body = classListBean.getBody();
             if ( body.size() != 0) {
-
+                rlEntrypatriarch.setVisibility(View.GONE);
+                refreshLayout.setVisibility(View.VISIBLE);
                 MeAddCLassAdapter meCreateCLassAdapter = new MeAddCLassAdapter(ctx, body);
                 lvListpatriarch.setAdapter(meCreateCLassAdapter);
             }else{
+                rlEntrypatriarch.setVisibility(View.VISIBLE);
+                refreshLayout.setVisibility(View.GONE);
             }
 
         }
@@ -196,10 +223,6 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        if (i == 2) {//可发消息
-//            startActivity(new Intent(ctx, ClassDescActivity.class));
-//        }else{//不可发消息
-//        }
         ClassListBean.BodyBean bodyBean = body.get(i);
         startActivity(new Intent(ctx, MyJoinClassDescActivity.class).putExtra("classid",bodyBean.getCnid()));
     }

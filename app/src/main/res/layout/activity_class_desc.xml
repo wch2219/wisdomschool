@@ -89,13 +89,11 @@
                 android:id="@+id/tv_className"
                 android:layout_gravity="center_horizontal"
                 style="@style/TextSizeSmallTitleBlack"
-                android:text="@string/classname0"
                 />
              <TextView
                 android:id="@+id/tv_scoolName"
                 style="@style/TextSizecontentBlack"
                  android:textColor="@color/white"
-                android:text="@string/schoolname"
                 />
             <TextView
                 android:id="@+id/tv_classmember"
@@ -103,7 +101,6 @@
                 android:layout_alignBottom="@+id/linearLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:text="班级号：12"
                 android:textColor="@color/white" />
         </LinearLayout>
             <ImageView

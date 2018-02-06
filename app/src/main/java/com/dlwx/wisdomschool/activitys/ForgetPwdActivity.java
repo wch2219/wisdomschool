@@ -111,6 +111,12 @@ public class ForgetPwdActivity extends BaseActivity {
             Toast.makeText(ctx, "请输入您的确认密码", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!auth.equals(SmsCode)) {
+            Toast.makeText(this, "验证码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+            etAuth.setText("");
+            return;
+        }
+
         if (!pwd.equals(affpwd)) {
             Toast.makeText(ctx, "两次密码不一致,请重新输入", Toast.LENGTH_SHORT).show();
             etPwd.setText("");
@@ -177,6 +183,12 @@ public class ForgetPwdActivity extends BaseActivity {
                 if (tvAuth.getText().equals("获取验证码") || tvAuth.getText().equals("重新发送")) {
                     codeUtiles = new VerificationCodeUtiles(ctx, phone, 1, countDownUtiles,picAuthBeanBody.getImgname(),auth);
                     codeUtiles.sendVerificationCode(HttpUrl.SmsAuth, loading);
+                    codeUtiles.setSmsCodeBackListener(new VerificationCodeUtiles.SmsCodeBackListener() {
+                        @Override
+                        public void backCode(String code) {
+                            SmsCode = code;
+                        }
+                    });
                 }
             }
         }
@@ -186,4 +198,6 @@ public class ForgetPwdActivity extends BaseActivity {
             getAuth();
         }
     };
+
+    private String SmsCode;
 }

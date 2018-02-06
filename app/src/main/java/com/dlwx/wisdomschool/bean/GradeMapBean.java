@@ -48,7 +48,6 @@ public class GradeMapBean {
          * sort : 1
          * score : 98.00
          */
-
         private String irid;
         private String sort;
         private double score;

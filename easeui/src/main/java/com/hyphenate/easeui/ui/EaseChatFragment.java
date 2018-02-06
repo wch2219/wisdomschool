@@ -108,10 +108,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     static final int ITEM_PICTURE = 2;
     static final int ITEM_LOCATION = 3;
     
-    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
-    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
+    protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture};//, R.string.attach_location
+    protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector};
+    //,R.drawable.ease_chat_location_selector
+    protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE };//, ITEM_LOCATION
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
@@ -592,6 +592,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
 
     @Override
     public void onCmdMessageReceived(List<EMMessage> messages) {
+        Log.i("wch","收到消息");
 
     }
 
@@ -746,8 +747,6 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         EMMessage message = EMMessage.createFileSendMessage(filePath, toChatUsername);
         sendMessage(message);
     }
-    
-    
     protected void sendMessage(EMMessage message){
         if (message == null) {
             return;
@@ -762,8 +761,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             message.setAttribute("from_username", sp.getString("nickname",""));
             //对方的信息，一般上个界面传值传过来
 //            message.setAttribute("to_user_id", getArguments().getString("to_user_id", ""));
-            message.setAttribute("to_headportrait", getArguments().getString("to_headportrait", ""));
-            message.setAttribute("to_username", getArguments().getString("to_username", ""));
+            String otherHeader_pic = sp.getString("otherHeader_pic", "");
+            message.setAttribute("to_headportrait", otherHeader_pic);
+            String othernickname = sp.getString("othernickname", "");
+            message.setAttribute("to_username", othernickname);
         } catch (Exception e) {
 
         }

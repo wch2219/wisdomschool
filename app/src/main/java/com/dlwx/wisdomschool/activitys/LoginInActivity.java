@@ -1,10 +1,13 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dlwx.baselib.base.ActivityManage;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.baselib.utiles.LogUtiles;
@@ -26,11 +30,14 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 
 public class LoginInActivity extends BaseActivity {
     @BindView(R.id.tv_title)
@@ -50,9 +57,11 @@ public class LoginInActivity extends BaseActivity {
     @BindView(R.id.btn_login)
     Button btnLogin;
     private LoginBean.BodyBean body;
+    private boolean isshow;
 
     @Override
     protected void initView() {
+        isshow = getIntent().getBooleanExtra("isshow", false);
         setContentView(R.layout.activity_login_in);
         ButterKnife.bind(this);
     }
@@ -60,12 +69,45 @@ public class LoginInActivity extends BaseActivity {
     @Override
     protected void initData() {
         tvTitle.setText(R.string.Login);
-        etPhone.setText("18637051978");
-        etPwd.setText("123456");
+//        etPhone.setText("18637051978");
+//        etPwd.setText("123456");
+        if (isshow) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+            builder.setTitle("登录提示");
+            builder.setMessage("当前帐号已在其他设备登录，请选择重新登录或者退出");
+            builder.setPositiveButton("重新登陆", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+                }
+            });
+            builder.setCancelable(false);
+            builder.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    ActivityManage.getInstance().exit();
+                }
+            });
+            builder.show();
+        }
     }
 
     @Override
     protected void initListener() {
+    }
+
+    @Override
+    protected void onResume() {
+        //判断帐号是否为空，不为空则表示注册完成后立即登录
+        String account = sp.getString(SpUtiles.Account, "");
+        if (!TextUtils.isEmpty(account)) {
+            etPhone.setText(account);
+            etPwd.setText(sp.getString(SpUtiles.PasswordWord,""));
+            login();
+        }
+        super.onResume();
     }
 
     @Override
@@ -159,11 +201,16 @@ public class LoginInActivity extends BaseActivity {
         sp.edit().putString(SpUtiles.Userid, body.getUserid()).commit();
         sp.edit().putString(SpUtiles.Telephone, body.getTelephone()).commit();
         sp.edit().putInt(SpUtiles.TeacherOrPatriarch, body.getIsteacher()).commit();
+        //登录成功后把帐号密码清空
+        sp.edit().putString(SpUtiles.Account,"").commit();
+        sp.edit().putString(SpUtiles.PasswordWord,"").commit();
         MyApplication.Token = body.getToken();
         wch(body.getUserid());
         EMClient.getInstance().groupManager().loadAllGroups();
         EMClient.getInstance().chatManager().loadAllConversations();
-        ;
+        Set<String> tags = new HashSet<>();
+        tags.add(body.getUserid());
+        JPushInterface.setTags(getApplicationContext(),1,tags);
         LogUtiles.LogI("登录聊天服务器成功！");
         handler.sendEmptyMessage(1);
 
@@ -193,4 +240,13 @@ public class LoginInActivity extends BaseActivity {
             
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            ActivityManage.getInstance().exit();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

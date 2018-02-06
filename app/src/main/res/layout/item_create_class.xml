@@ -102,7 +102,7 @@
             android:textColor="@color/white"
             android:text="高飞爸爸，高飞二人提出申请"
             android:layout_weight="1"
-
+            android:id="@+id/tv_apply"
             android:textSize="11sp"
              />
 

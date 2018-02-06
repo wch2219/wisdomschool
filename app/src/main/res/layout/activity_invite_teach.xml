@@ -33,27 +33,4 @@
             android:textSize="11sp"
             android:background="@drawable/shape_class_btn"
             />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="将成员任命为任课老师"
-        android:textSize="13sp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-
-        />
-        <ImageView
-            android:id="@+id/iv_appoint"
-            style="@style/ImageuppicSize"
-            android:src="@mipmap/ss33"
-            android:scaleType="fitXY"
-            android:layout_margin="10dp"
-            />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="高飞爸爸"
-        android:textSize="13sp"
-        android:layout_marginLeft="10dp"
-        />
 </LinearLayout>

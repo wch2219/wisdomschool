@@ -13,7 +13,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             ></FrameLayout>
-
+        <View
+            style="@style/GaryDiveStyle"
+            />
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation_container"
             style="@style/AppTheme"

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginLeft="40dp"
+        >
+        <CheckBox
+            android:id="@+id/cb_check"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:button="@null"
+            android:background="@drawable/selete_check"
+            />
+        <ImageView
+            style="@style/ImagehomeItempic"
+            android:id="@+id/iv_pic"
+            android:layout_marginLeft="10dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            >
+            <TextView
+                style="@style/TextSizecontentBlack"
+                android:id="@+id/tv_name"
+                android:layout_gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

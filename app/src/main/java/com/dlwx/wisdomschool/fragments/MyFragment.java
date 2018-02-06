@@ -70,7 +70,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
         teacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
         if (teacherOrPatriarch == 1) {//老师
             foodarr = getResources().getStringArray(R.array.my_food);
-            headvh.tv_schoolname.setText(R.string.schoolname);
+            headvh.tv_schoolname.setText(sp.getString(SpUtiles.SchoolName,""));
             headvh.tv_name.setText("老师");
             pics = new int[]{
 

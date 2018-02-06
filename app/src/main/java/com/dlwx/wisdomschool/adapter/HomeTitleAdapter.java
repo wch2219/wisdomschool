@@ -16,10 +16,11 @@ import com.dlwx.wisdomschool.R;
 
 public class HomeTitleAdapter extends BaseFastAdapter {
     private String[] strs;
-
-    public HomeTitleAdapter(Context ctx, String[] strs) {
+    private  int [] pics;
+    public HomeTitleAdapter(Context ctx, String[] strs, int [] pics) {
         super(ctx);
         this.strs = strs;
+        this.pics = pics;
     }
 
     @Override
@@ -40,6 +41,7 @@ public class HomeTitleAdapter extends BaseFastAdapter {
 
         }
         vh.tv_name.setText(strs[position]);
+        vh.iv_pic.setImageResource(pics[position]);
         return convertView;
     }
 

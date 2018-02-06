@@ -10,15 +10,32 @@
         android:orientation="horizontal"
         android:padding="10dp"
         >
+        <RelativeLayout
+            android:layout_width="45dp"
+            android:layout_height="45dp">
+
         <ImageView
             android:id="@+id/iv_pic"
-            style="@style/Imagesmill2pic"
+            style="@style/ImagehomeItempic"
             android:src="@mipmap/icon_zhucetouxiang"
             />
+            <TextView
+                android:id="@+id/tv_unreadnum"
+                android:background="@drawable/shape_cirdot_red"
+                android:layout_width="20dp"
+                android:text="0"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:layout_height="20dp"
+                />
+        </RelativeLayout>
         <TextView
             android:id="@+id/tv_name"
             style="@style/TextSizecontentBlack"
             android:text="一年级八班班级群"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             />
             <RelativeLayout
@@ -30,7 +47,7 @@
                     android:textSize="11sp"
                     android:textColor="@color/garytext"
                     android:text="(30)"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="3dp"
                     android:layout_alignParentBottom="true"
                     />

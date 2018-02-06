@@ -15,6 +15,7 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.MermberMessBean;
 import com.dlwx.wisdomschool.utiles.GlideuploadUtils;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 import com.hyphenate.easeui.EaseConstant;
 
@@ -84,6 +85,8 @@ public class MyJoinClassPersionMessActivity extends BaseActivity {
     public void onViewClicked() {
         Intent intent = new Intent(ctx,ChatActivity.class);
         intent.putExtra("title",body.getJoin_role());
+        intent.putExtra(SpUtiles.OtherHeadPic,body.getHeader_pic());
+        intent.putExtra(SpUtiles.OtherNickName,body.getJoin_role());
         intent.putExtra(EaseConstant.EXTRA_USER_ID, userid);
         intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         startActivity(intent);

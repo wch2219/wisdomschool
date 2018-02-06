@@ -194,16 +194,18 @@ public class MyJoinClassDescActivity extends BaseActivity {
             //tag == 1是自己 0是其他成员或老师
             ClassDescBean.BodyBean.AddUserBean addUserBean = add_user.get(i);
             String userid = addUserBean.getUserid();
-            Intent intent = new Intent(ctx, MyJoinClassPersionMessActivity.class);
-            if (sp.getString(SpUtiles.Userid, "").equals(userid)) {//自己
-                intent.putExtra("tag", 1);
-            } else {
-                intent.putExtra("tag", 0);
-            }
-            intent.putExtra("jcid", addUserBean.getJcid());
-            intent.putExtra("classid", classid);
 
-            startActivity(intent);
+            if (sp.getString(SpUtiles.Userid, "").equals(userid)) {//自己
+                Intent intent = new Intent(ctx,PersionMessActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(ctx, MyJoinClassPersionMessActivity.class);
+                intent.putExtra("tag", 0);
+                intent.putExtra("jcid", addUserBean.getJcid());
+                intent.putExtra("classid", classid);
+                startActivity(intent);
+            }
+
         }
     };
 
@@ -300,7 +302,10 @@ public class MyJoinClassDescActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.tv_backclass://申请退出班级
                 popupWindow.dismiss();
-                startActivity(new Intent(ctx, ApplyBackClassActivity.class));
+                Intent intent = new Intent(ctx, ApplyBackClassActivity.class);
+                intent.putExtra("body",body);
+
+                startActivity(intent);
                 break;
             case R.id.tv_current://选择当前身份
                 popupWindow.dismiss();

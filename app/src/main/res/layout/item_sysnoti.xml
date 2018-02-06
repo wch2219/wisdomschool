@@ -14,6 +14,7 @@
             style="@style/TextSizeSmallTitleBlack"
             android:textColor="@color/black"
             android:text="系统提醒"
+            android:id="@+id/tv_titrle"
             android:layout_weight="1"
             />
         <TextView
@@ -21,6 +22,7 @@
             android:layout_height="wrap_content"
             android:text="12月20日  13:22"
             android:textSize="11sp"
+            android:id="@+id/tv_date"
             android:layout_gravity="center_vertical"
             />
 
@@ -28,6 +30,7 @@
     <TextView
         style="@style/TextSizecontentBlack"
         android:layout_marginTop="10dp"
+        android:id="@+id/tv_content"
         android:textColor="@color/garytext"
         android:text="您已经成功加入了【一年级八班】"
         />

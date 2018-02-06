@@ -159,6 +159,7 @@ public class PersionMessActivity extends BaseActivity {
                             int fileid = upPicBean.getBody().getFileid();
                             Glide.with(ctx).load(upPicBean.getBody().getFile()).into(ivHead);
                             sp.edit().putString(SpUtiles.Header_pic,upPicBean.getBody().getFile()).commit();
+
                             Map<String,String> map = new HashMap<>();
                             map.put("header_pic",fileid+"");
                             changeMess(map);
@@ -225,6 +226,7 @@ public class PersionMessActivity extends BaseActivity {
                 sp.edit().putString(SpUtiles.Userid,info.getUserid()).commit();
                 sp.edit().putString(SpUtiles.Telephone,info.getTelephone()).commit();
                 sp.edit().putString(SpUtiles.Exten_code,info.getExten_code()).commit();
+                sp.edit().putString(SpUtiles.SchoolName,info.getSchool_name()).commit();
                 exten_code = info.getExten_code();
                 MyApplication.Token = info.getToken();
                 Glide.with(ctx).load(info.getHeader_pic()).apply(new RequestOptions().error(R.mipmap.icon_zhucetouxiang)).into(ivHead);//头像

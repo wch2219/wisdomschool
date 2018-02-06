@@ -24,7 +24,6 @@ import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.FindClassBean;
 import com.dlwx.wisdomschool.bean.MyHisIdBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
-import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -245,7 +244,6 @@ public class AddSeachClassActivity extends BaseActivity {
                 case R.id.tv_myself:
                     popupWindow.dismiss();
                     Map<String,String> map = new HashMap<>();
-                    map.put("student_name",sp.getString(SpUtiles.Nickname,""));
                     joinClass(map);
                     break;
 

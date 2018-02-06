@@ -60,6 +60,10 @@ public class MemberMessActivity extends BaseActivity {
     TextView tvName;
     @BindView(R.id.tv_tishi)
     TextView tvTishi;
+    @BindView(R.id.ll_send)
+    LinearLayout ll_send;
+    @BindView(R.id.ll_phone)
+    LinearLayout ll_phone;
     private String jcid;
     private MermberMessBean.BodyBean body;
     private String classid;
@@ -80,9 +84,9 @@ public class MemberMessActivity extends BaseActivity {
         tvTitle.setText("联系人信息");
         initTabBar(toolBar);
         int TeacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 0);
-        if (TeacherOrPatriarch == 1) {
-            llRemarkmess.setVisibility(View.GONE);
-        }
+//        if (TeacherOrPatriarch == 1) {
+//            llRemarkmess.setVisibility(View.GONE);
+//        }
     }
 
     @Override
@@ -104,7 +108,7 @@ public class MemberMessActivity extends BaseActivity {
 
 
     @OnClick({R.id.ll_remark, R.id.ll_jurisdiction, R.id.ll_remarkmess, R.id.ll_clearclass,
-            R.id.iv_phone,R.id.iv_sendmess})
+            R.id.ll_phone,R.id.ll_send})
     public void onViewClicked(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -122,12 +126,14 @@ public class MemberMessActivity extends BaseActivity {
             case R.id.ll_clearclass://请出班级
                 deletemember();
                 break;
-            case R.id.iv_phone://给他打电话
+            case R.id.ll_phone://给他打电话
                     call(body.getTelephone());
                 break;
-            case R.id.iv_sendmess://发送私聊
+            case R.id.ll_send://发送私聊
                 intent = new Intent(ctx, ChatActivity.class);
                 intent.putExtra("title",body.getJoin_role());
+                intent.putExtra(SpUtiles.OtherHeadPic,body.getHeader_pic());
+                intent.putExtra(SpUtiles.OtherNickName,body.getJoin_role());
                 intent.putExtra(EaseConstant.EXTRA_USER_ID, userid);
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
                 startActivity(intent);

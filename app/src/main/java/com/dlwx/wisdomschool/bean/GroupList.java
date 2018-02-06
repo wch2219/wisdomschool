@@ -55,6 +55,24 @@ public class GroupList {
         private String group_name;
         private String imgid;
         private String imgurl;
+        private String  num;
+        private String  classid;
+
+        public String getClassid() {
+            return classid;
+        }
+
+        public void setClassid(String classid) {
+            this.classid = classid;
+        }
+
+        public String getNum() {
+            return num;
+        }
+
+        public void setNum(String num) {
+            this.num = num;
+        }
 
         public String getGroupid() {
             return groupid;

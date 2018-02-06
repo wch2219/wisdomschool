@@ -16,6 +16,7 @@ import com.dlwx.wisdomschool.activitys.ClassDescActivity;
 import com.dlwx.wisdomschool.activitys.CreateClassActivity;
 import com.dlwx.wisdomschool.adapter.MeCreateCLassAdapter;
 import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -50,7 +51,6 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     Unbinder unbinder;
     Unbinder unbinder1;
     private List<ClassListBean.BodyBean> body;
-
     @Override
     public int getLayoutID() {
         return R.layout.fragment_create_class;
@@ -68,7 +68,20 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     public void onResume() {
         super.onResume();
         getClassList();
+        //老师收到通知刷新当前页面
+        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ApplyAddClassNotifitionListener() {
+            @Override
+            public void send() {
+                getClassList();
+            }
+        });
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        ListenerUtile.applyAddClassNotifitionListener = null;
+    }
+
     @Override
     public void downOnRefresh() {
         getClassList();
@@ -86,6 +99,7 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     @Override
     protected void initListener() {
         lvList.setOnItemClickListener(this);
+
     }
     @Override
     protected Presenter createPresenter() {
@@ -100,11 +114,9 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         ClassListBean.BodyBean bodyBean = body.get(i);
-
         Intent intent = new Intent(ctx, ClassDescActivity.class);
         intent.putExtra("classid",bodyBean.getCnid());
         startActivity(intent);
-
     }
     @OnClick({R.id.btn_entrycreate, R.id.btn_create})
     public void onViewClicked(View view) {
@@ -116,6 +128,11 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
                 startActivity(new Intent(ctx, CreateClassActivity.class));
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -135,4 +152,5 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
             }
         }
     }
+
 }

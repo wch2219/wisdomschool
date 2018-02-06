@@ -58,7 +58,8 @@ public abstract class BaseActivity<V,T extends Presenter<V>> extends AppCompatAc
         vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);
         loading = new MyProgressLoading(ctx, R.style.DialogStyle);
         sp = getSharedPreferences(SpUtiles.SP_Mode,MODE_PRIVATE);
-
+        ActivityManage instance = ActivityManage.getInstance();
+        instance.addActivity(this);
         initView();
         initData();
         initListener();

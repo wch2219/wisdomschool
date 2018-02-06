@@ -1,13 +1,24 @@
 package com.dlwx.wisdomschool.base;
 
+import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.baselib.utiles.SpUtiles;
+import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.ChatActivity;
+import com.dlwx.wisdomschool.activitys.LoginInActivity;
+import com.dlwx.wisdomschool.service.MyReceiver;
 import com.dlwx.wisdomschool.utiles.ResouseString;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
@@ -15,15 +26,20 @@ import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.EaseUI;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.NetUtils;
 import com.lzy.okgo.OkGo;
 import com.tencent.bugly.Bugly;
 import com.tencent.smtt.sdk.TbsDownloader;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
 
 import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -34,23 +50,19 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
 public class MyApplication extends Application {
     public static final String BuglyAppID = "567efebd79";//bug  版本更新
     public static String classnames;
-    private static MyApplication instance;
     public static EaseUI easeUI;
     public static String Token;
-
-    public static MyApplication getInstance() {
-        return instance;
-    }
-
+    public static String EXTRAS = "";
+    private SharedPreferences sp;
+    private int pos;
     @Override
     public void onCreate() {
         super.onCreate();
         OkGo.getInstance().init(this);
         TbsDownloader.needDownload(getApplicationContext(), false);
-        instance = this;
         classnames = ResouseString.classnames;
         easeUIInit();
-        SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode, MODE_PRIVATE);
+        sp = getSharedPreferences(SpUtiles.SP_Mode, MODE_PRIVATE);
         Token = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "");
         LogUtiles.LogI(Token);
         Bugly.init(getApplicationContext(), BuglyAppID, false);
@@ -58,8 +70,23 @@ public class MyApplication extends Application {
         if (!TextUtils.isEmpty(Token)) {
 //            huanxinLogin(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""),sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""));
         }
-    }
+        pos = 0;
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+        JPushInterface.setLatestNotificationNumber(this, 3);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        MyReceiver mReceiver = new MyReceiver();
+        registerReceiver(mReceiver, intentFilter);
 
+        String user_id = sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid, "");
+        if (user_id != null) {
+
+            Set<String> tags = new HashSet<>();
+            tags.add(user_id);
+            JPushInterface.setTags(getApplicationContext(), 1, tags);
+        }
+    }
     EMMessageListener msgListener = new EMMessageListener() {
 
         @Override
@@ -67,41 +94,72 @@ public class MyApplication extends Application {
 
 
             String username = null;
+            String from_username = null;
+            String to_headportrait = null;
+            String to_username = null;
+            int ChatType = 0;
             for (EMMessage message : messages) {
-                // group message
-                if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
-                    username = message.getTo();
-                    EMMessageBody body = message.getBody();
-                } else {
-                    // single chat message
-                    username = message.getFrom();
+                try {
+                    // group message
+                    if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
+                        username = message.getTo();
+                        ChatType = EaseConstant.CHATTYPE_GROUP;
+                        from_username = message.getStringAttribute("from_username");
+                        try{
+//                            if (ListenerUtile.groupChatUnReadListener != null) {
+//                                ListenerUtile.groupChatUnReadListener.groupChatList();
+//                            }
+                        }catch (Exception e){}
+                    } else {
+                        // single chat message
+                        username = message.getFrom();
+                        ChatType = EaseConstant.CHATTYPE_SINGLE;
+
+                        if (username.equals(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""))) {
+                            to_username = message.getStringAttribute("to_username");
+                            to_headportrait = message.getStringAttribute("to_headportrait");
+                        }else{
+                            to_username = message.getStringAttribute("from_username");
+                            to_headportrait = message.getStringAttribute("from_headportrait");
+                        }
+
+                    }
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
                 }
             }
-//            Intent inten = null;
-//            inten = new Intent(getApplicationContext(), ChatActivity.class);
-//            inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-//            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, inten, 0);
-//            //获取NotificationManager实例
-//            NotificationManager notifyManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-//            //实例化NotificationCompat.Builde并设置相关属性
-//            NotificationCompat.Builder builder = new NotificationCompat.Builder(   getApplicationContext())
-//                    //设置小图标
-//                    .setSmallIcon(R.mipmap.ic_launcher)
-//                    //设置通知标题
-//
-//                    .setContentTitle(username)
-//                    .setContentIntent(pi)
-//                    //设置通知内容
-//                    .setContentText(mess);
-//            builder.setDefaults(Notification.DEFAULT_ALL);
-//            //设置通知时间，默认为系统发出通知的时间，通常不用设置
-//            //.setWhen(System.currentTimeMillis());
-//            //通过builder.build()方法生成Notification对象,并发送通知,id=1
-//            notifyManager.notify(1, builder.build());
-
+            ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            String name = manager.getRunningTasks(1).get(0).topActivity.getClassName();
+            if (!name.equals(ChatActivity.class.getName())) {
+            Intent inten = null;
+            inten = new Intent(getApplicationContext(), ChatActivity.class);
+            inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            inten.putExtra("title", from_username);
+            inten.putExtra(com.dlwx.wisdomschool.utiles.SpUtiles.OtherHeadPic,to_headportrait);
+            inten.putExtra(com.dlwx.wisdomschool.utiles.SpUtiles.OtherNickName,to_username);
+            inten.putExtra(EaseConstant.EXTRA_USER_ID, username);
+            inten.putExtra(EaseConstant.EXTRA_CHAT_TYPE, ChatType);
+            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, inten, 0);
+            //获取NotificationManager实例
+            NotificationManager notifyManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            //实例化NotificationCompat.Builde并设置相关属性
+            Notification.Builder builder = new Notification.Builder(getApplicationContext())
+                    //设置小图标
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    //设置通知标题
+                    .setContentTitle("智慧家校")
+                    .setContentIntent(pi)
+                    //设置通知内容
+                    .setContentText("收到一条新消息");
+            builder.setDefaults(Notification.DEFAULT_ALL);
+            builder.setAutoCancel(true);
+            pos++;
+            //设置通知时间，默认为系统发出通知的时间，通常不用设置
+            //.setWhen(System.currentTimeMillis());
+            //通过builder.build()方法生成Notification对象,并发送通知,id=1
+            notifyManager.notify(pos, builder.build());
+            }
         }
-
-
         @Override
         public void onCmdMessageReceived(List<EMMessage> messages) {
             //收到透传消息
@@ -173,6 +231,20 @@ public class MyApplication extends Application {
                     } else if (error == EMError.USER_LOGIN_ANOTHER_DEVICE) {
                         // 显示帐号在其他设备登录
                         LogUtiles.LogI("显示帐号在其他设备登录");
+                        EMClient.getInstance().logout(true);//退出环信登录
+                        SharedPreferences sp = getSharedPreferences(SpUtiles.SP_Mode, MODE_PRIVATE);
+                        sp.edit().putString(com.dlwx.wisdomschool.utiles.SpUtiles.Token, "").commit();
+                        sp.edit().putString(com.dlwx.wisdomschool.utiles.SpUtiles.Nickname, "").commit();
+                        sp.edit().putString(com.dlwx.wisdomschool.utiles.SpUtiles.Header_pic, "").commit();
+                        sp.edit().putString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid, "").commit();
+                        sp.edit().putString(com.dlwx.wisdomschool.utiles.SpUtiles.Telephone, "").commit();
+                        sp.edit().putInt(com.dlwx.wisdomschool.utiles.SpUtiles.TeacherOrPatriarch, 0).commit();
+                        MyApplication.Token = "";
+                        Intent intent = new Intent(getApplicationContext(), LoginInActivity.class);
+                        intent.putExtra("isshow",true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                        startActivity(intent);
+
                     } else {
                         if (NetUtils.hasNetwork(getApplicationContext())) {
                             //连接不到聊天服务器

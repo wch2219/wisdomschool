@@ -13,4 +13,9 @@ public class SpUtiles {
     public static final String Userid = "UserId";
     public static final String Telephone = "Telephone";
     public static final String Exten_code = "Exten_code";//教师邀请码
+    public static final String OtherHeadPic = "otherHeader_pic";//对方的头像
+    public static final String OtherNickName = "othernickname";//对方的昵称
+    public static final String SchoolName = "schoolname";
+    public static final String Account = "account";
+    public static final String PasswordWord = "passwordword";
 }

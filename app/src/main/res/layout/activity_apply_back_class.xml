@@ -16,7 +16,6 @@
        <RelativeLayout
            android:layout_width="wrap_content"
            android:layout_height="?attr/actionBarSize"
-           android:layout_marginTop="20dp"
            android:layout_alignParentRight="true"
            >
            <TextView
@@ -44,7 +43,7 @@
         <ImageView
             android:id="@+id/iv_pic"
             style="@style/ImagehomeItempic"
-            android:src="@mipmap/ic_launcher"
+
              />
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,6 +53,7 @@
             android:layout_gravity="center_vertical"
             >
             <TextView
+                android:id="@+id/tv_classname"
                 style="@style/TextSizecontentBlack"
                 android:text="092"
                 />
@@ -103,6 +103,7 @@
             android:layout_height="80dp"
             android:background="#F6F6F6"
             android:gravity="top"
+            android:id="@+id/et_content"
             android:padding="10dp"
             android:hint="请输入退班原因不少于6字"
             android:textSize="13sp"
@@ -112,28 +113,46 @@
     <View
         style="@style/GaryDiveStyle"
         />
-    <TextView
-        style="@style/TextSizecontentBlack"
-        android:text="一不小心加错班级了"
-        android:padding="10dp"
-        />
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <TextView
-        style="@style/TextSizecontentBlack"
-        android:text="孩子转班、转学等，需要退出班级"
-        android:padding="10dp"
-        />
-    <View
-        style="@style/GaryDiveStyle"
-        />
-    <TextView
-        style="@style/TextSizecontentBlack"
-        android:text="已有我的其他班级成员再次班级"
-        android:padding="10dp"
-        />
-    <View
-        style="@style/GaryDiveStyle"
-        />
+    <RadioGroup
+        android:id="@+id/rg_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RadioButton
+            android:id="@+id/rb_cause1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="一不小心加错班级了"
+            android:padding="15dp"
+
+            />
+        <View
+            style="@style/GaryDiveStyle"
+            />
+        <RadioButton
+            android:id="@+id/rb_cause2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="孩子转班、转学等，需要退出班级"
+            android:padding="15dp"
+
+            />
+        <View
+            style="@style/GaryDiveStyle"
+            />
+        <RadioButton
+            android:id="@+id/rb_cause3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="已有我的其他班级成员再次班级"
+            android:padding="15dp"
+            />
+        <View
+            style="@style/GaryDiveStyle"
+            />
+    </RadioGroup>
 </LinearLayout>

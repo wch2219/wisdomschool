@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dlwx.baselib.base.BaseActivity;
@@ -27,8 +26,6 @@ public class InviteTeachActivity extends BaseActivity {
     Toolbar toolBar;
     @BindView(R.id.btn_userphone)
     Button btnUserphone;
-    @BindView(R.id.iv_appoint)
-    ImageView ivAppoint;
     private String classid;
 
     @Override
@@ -56,16 +53,16 @@ public class InviteTeachActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.btn_userphone, R.id.iv_appoint})
+    @OnClick({R.id.btn_userphone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_userphone:
                 finish();
                 startActivity(new Intent(ctx,InviteTeach2Activity.class).putExtra("classid",classid));
                 break;
-            case R.id.iv_appoint:
-                showDia();
-                break;
+//            case R.id.iv_appoint:
+//                showDia();
+//                break;
         }
     }
 

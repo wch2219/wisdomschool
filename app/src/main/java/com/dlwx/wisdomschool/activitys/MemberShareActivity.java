@@ -71,7 +71,7 @@ public class MemberShareActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        add_user = (List<ClassDescBean.BodyBean.AddUserBean>) getIntent().getSerializableExtra("adduser");
+//        add_user = (List<ClassDescBean.BodyBean.AddUserBean>) getIntent().getSerializableExtra("adduser");
         setContentView(R.layout.activity_member_share);
         ButterKnife.bind(this);
     }
@@ -80,7 +80,7 @@ public class MemberShareActivity extends BaseActivity {
     protected void initData() {
         initTabBar(toolBar);
         tvTitle.setText("成员分享");
-        tvNum.setText("全班"+add_user.size()+"人");
+//        tvNum.setText("全班"+add_user.size()+"人");
     }
 
     @Override

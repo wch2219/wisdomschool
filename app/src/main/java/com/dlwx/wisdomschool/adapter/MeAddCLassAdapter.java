@@ -18,6 +18,7 @@ import com.dlwx.wisdomschool.activitys.ClassFileActivity;
 import com.dlwx.wisdomschool.activitys.ClassHistoryNewsActivitry;
 import com.dlwx.wisdomschool.activitys.InviteMemberActivity;
 import com.dlwx.wisdomschool.bean.ClassListBean;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.hyphenate.easeui.EaseConstant;
 import com.ruffian.library.RTextView;
 
@@ -91,6 +92,8 @@ public class MeAddCLassAdapter extends BaseFastAdapter {
                 }else{//联系老师
                     Intent intent = new Intent(ctx, ChatActivity.class);
                     intent.putExtra("title",bodyBean.getTeacher_name());
+                    intent.putExtra(SpUtiles.OtherHeadPic,bodyBean.getTeacher_name());
+                    intent.putExtra(SpUtiles.OtherNickName,bodyBean.getTeacher_name());
                     intent.putExtra(EaseConstant.EXTRA_USER_ID, bodyBean.getUserid());
                     intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
                     ctx.startActivity(intent);

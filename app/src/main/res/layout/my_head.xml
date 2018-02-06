@@ -46,7 +46,6 @@
                 android:id="@+id/tv_schoolname"
                 style="@style/TextSizecontentBlack"
                 android:textSize="11sp"
-                android:text="@string/schoolname"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/garytext"
                 android:layout_marginTop="5dp"

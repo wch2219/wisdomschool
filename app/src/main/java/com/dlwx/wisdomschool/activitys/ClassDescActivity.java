@@ -28,6 +28,7 @@ import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.ClassDescMemberAdapter;
 import com.dlwx.wisdomschool.adapter.ClassDescTeachAdapter;
 import com.dlwx.wisdomschool.bean.ClassDescBean;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
@@ -137,6 +138,7 @@ public class ClassDescActivity extends BaseActivity {
             llTeach.setVisibility(View.VISIBLE);
             tvTeach1.setVisibility(View.VISIBLE);
             rlLookall.setVisibility(View.VISIBLE);
+
         } else {//家长
             llPatriarch.setVisibility(View.VISIBLE);
             llTeach.setVisibility(View.GONE);
@@ -156,8 +158,20 @@ public class ClassDescActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         getClassDesc();
+        //老师收到通知刷新当前页面
+        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ApplyAddClassNotifitionListener() {
+            @Override
+            public void send() {
+                getClassDesc();
+            }
+        });
     }
 
+    @Override
+    public void onPause() {
+        ListenerUtile.applyAddClassNotifitionListener = null;
+        super.onPause();
+    }
     private int HttpType;
 
     /**
@@ -245,7 +259,7 @@ public class ClassDescActivity extends BaseActivity {
 
             } else {//其他成员的
                 String jcid = add_teacher.get(i - 1).getJcid();
-                userid = add_user.get(i - 1).getUserid();
+                userid = add_teacher.get(i - 1).getUserid();
                 skipMemberMess(jcid);
             }
         }

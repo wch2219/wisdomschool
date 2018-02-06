@@ -19,6 +19,7 @@ import com.dlwx.wisdomschool.bean.ClassAppliListeBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +51,7 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     private ApplyListAdapter applyListAdapter;
     private String classid;
     private String isadd = "1";
-    private List<ClassAppliListeBean.BodyBean> body;
+    private List<ClassAppliListeBean.BodyBean> body = new ArrayList<>();
 
     @Override
     protected void initView() {
@@ -170,10 +171,11 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
     private void applyList(String s, Gson gson) {
         ClassAppliListeBean classAppliListeBean = gson.fromJson(s, ClassAppliListeBean.class);
         if (classAppliListeBean.getCode() == 200) {
-            body = classAppliListeBean.getBody();
-            if (body == null) {
-                return;
+            body.clear();
+            if (classAppliListeBean.getBody() != null) {
+                body = classAppliListeBean.getBody();
             }
+
             applyListAdapter = new ApplyListAdapter(ctx,body);
             lvList.setAdapter(applyListAdapter);
             applyListAdapter.setCloseAndAgressOnclicklistener(onclicklistener);
@@ -190,14 +192,17 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             map.put("ischeck","2");
             map.put("jcid",body.get(postion).getJcid());
             closeAndAggress(map);
+            body.remove(postion);
         }
 
         @Override
         public void aggress(int postion) {//同意
+
             Map<String,String> map = new HashMap<>();
             map.put("classid",classid);
             map.put("ischeck","1");
             map.put("jcid",body.get(postion).getJcid());
+            body.remove(postion);
             closeAndAggress(map);
         }
     };
@@ -205,8 +210,7 @@ public class InOutClassActivity extends BaseActivity implements CompoundButton.O
             map.put("token",Token);
             map.put("isadd",isadd);
             HttpType = 2;
+            applyListAdapter.notifyDataSetChanged();
             mPreenter.fetch(map,true,HttpUrl.Edit_Apply,"");
         }
-
-
 }

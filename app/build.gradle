@@ -14,13 +14,18 @@ android {
         applicationId "com.dlwx.wisdomschool"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //设置支持的SO库架构（开发者可以根据需要，选择一个或多个平台的so）
             abiFilters "armeabi", "armeabi-v7a", "x86"//, "arm64-v8a","x86_64"
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "5b64424f61524d839d2d15e8", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
         multiDexEnabled true
     }
     buildTypes {
@@ -75,4 +80,6 @@ dependencies {
     //其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.2.0
     compile 'cn.dreamtobe.kpswitch:library:1.4.2'
     implementation files('libs/tbs_sdk_thirdapp_v3.1.0.1034_43100_sharewithdownload_obfs_20170301_182143.jar')
+    implementation files('libs/jpush-android-3.1.1.jar')
+    implementation files('libs/jcore-android-1.1.9.jar')
 }

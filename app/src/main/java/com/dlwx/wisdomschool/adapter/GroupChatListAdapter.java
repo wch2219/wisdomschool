@@ -43,9 +43,21 @@ public class GroupChatListAdapter extends BaseFastAdapter {
 
         GroupList.BodyBean bodyBean = body.get(position);
         viewHolderChild.tv_name.setText(bodyBean.getGroup_name());
-            viewHolderChild.tv_num.setText("("+bodyBean.getGroupid()+")");
-        Glide.with(ctx).load(bodyBean.getImgurl()).into(viewHolderChild.iv_pic);
+            viewHolderChild.tv_num.setText("("+bodyBean.getNum()+")");
+//        try {
+//            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(bodyBean.getGroupid());
+//            int unreadMsgCount = conversation.getUnreadMsgCount();
+//            if (unreadMsgCount >0) {
+//                viewHolderChild.tv_unreadnum.setText(unreadMsgCount+"");
+//                viewHolderChild.tv_unreadnum.setVisibility(View.VISIBLE);
+//            }else{
+//                viewHolderChild.tv_unreadnum.setVisibility(View.GONE);
+//            }
 
+//    }catch (Exception e){
+//            LogUtiles.LogI(e.getMessage()+position);
+//        }
+        Glide.with(ctx).load(bodyBean.getImgurl()).into(viewHolderChild.iv_pic);
         return view;
     }
    private class ViewHolderChild {
@@ -53,12 +65,14 @@ public class GroupChatListAdapter extends BaseFastAdapter {
         public ImageView iv_pic;
         public TextView tv_name;
         public TextView tv_num;
+        public TextView tv_unreadnum;
 
         public ViewHolderChild(View rootView) {
             this.rootView = rootView;
             this.iv_pic = (ImageView) rootView.findViewById(R.id.iv_pic);
             this.tv_name = (TextView) rootView.findViewById(R.id.tv_name);
             this.tv_num = (TextView) rootView.findViewById(R.id.tv_num);
+            this.tv_unreadnum = (TextView) rootView.findViewById(R.id.tv_unreadnum);
         }
 
     }

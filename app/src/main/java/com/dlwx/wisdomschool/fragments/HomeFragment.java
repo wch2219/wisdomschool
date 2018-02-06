@@ -24,10 +24,13 @@ import com.dlwx.baselib.utiles.SetBanner;
 import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AgeWeeklyActivity;
+import com.dlwx.wisdomschool.activitys.PatriarchExamActivity;
+import com.dlwx.wisdomschool.activitys.WebUrlActivity;
 import com.dlwx.wisdomschool.adapter.HomeItemAdapter;
 import com.dlwx.wisdomschool.adapter.HomeTitleAdapter;
 import com.dlwx.wisdomschool.bean.HomelistBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
@@ -76,6 +79,7 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
     private HomeTitleAdapter titleAdapter;
     private List<HomelistBean.BodyBean.ListBean> list;
     private Map<String, String> map;
+    private PopupWindow popupWindow;
 
     @Override
     public int getLayoutID() {
@@ -91,8 +95,9 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
     protected void initDate() {
         initrefresh(refreshLayout, true);
         strs = ctx.getResources().getStringArray(R.array.hometitle);
-
-        titleAdapter = new HomeTitleAdapter(ctx, strs);
+        int [] pics = {R.mipmap.icon_home1,R.mipmap.icon_home2,R.mipmap.icon_home3,R.mipmap.icon_home4,R.mipmap.icon_home5
+            ,R.mipmap.icon_home6,R.mipmap.icon_home7,R.mipmap.icon_home8};
+        titleAdapter = new HomeTitleAdapter(ctx, strs,pics);
         gvList.setAdapter(titleAdapter);
         map = new HashMap<>();
         getData(map);
@@ -120,23 +125,46 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
         gvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ctx, "正在开发ing.....", Toast.LENGTH_SHORT).show();
+
                 switch (position) {
                     case 0://父母自修
+                        startActivity(new Intent(ctx, WebUrlActivity.class)
+                                .putExtra("unTitle",true)
+                                .putExtra("url","http://39.107.74.235/school/web/weekly_classify.html?age=1&token="+sp.getString(SpUtiles.Token,"")));
                         break;
                     case 1://亲子专栏
+                        startActivity(new Intent(ctx, WebUrlActivity.class)
+                                .putExtra("unTitle",true)
+                                .putExtra("url","http://39.107.74.235/school/web/weekly_classify.html?age=2&token="+sp.getString(SpUtiles.Token,"")));
                         break;
-                    case 2://教育机构
+                    case 2://育兒課堂
+
+                        startActivity(new Intent(ctx, WebUrlActivity.class)
+                                .putExtra("unTitle",true)
+                                .putExtra("url","http://39.107.74.235/school/web/raise_class.html?token="+sp.getString(SpUtiles.Token,"")));
                         break;
                     case 3://书城
+
+                        startActivity(new Intent(ctx, WebUrlActivity.class)
+                                .putExtra("unTitle",true)
+                                .putExtra("url","http://39.107.74.235/school/web/book_list.html?token="+sp.getString(SpUtiles.Token,"")));
                         break;
                     case 4://在线教育
+                        Toast.makeText(ctx, "功能正在开发，敬请期待...", Toast.LENGTH_SHORT).show();
                         break;
                     case 5://视频
+                        Toast.makeText(ctx, "功能正在开发，敬请期待...", Toast.LENGTH_SHORT).show();
                         break;
                     case 6://问答
+                        Toast.makeText(ctx, "功能正在开发，敬请期待...", Toast.LENGTH_SHORT).show();
                         break;
                     case 7://星级考试
+                        int anInt = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
+                        if (anInt == 1) {//老师
+                            Toast.makeText(ctx, "您的角色是老师，不用参加考试", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        startActivity(new Intent(ctx, PatriarchExamActivity.class));
                         break;
                 }
             }
@@ -154,8 +182,6 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
         super.onDestroyView();
         unbinder.unbind();
     }
-
-
     /**
      * 条目点击事件
      */
@@ -220,7 +246,7 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
                 showPopu(strs, 2);
                 break;
             case R.id.ll_age://	年龄段（1-11）
-                strs = new String[]{"1岁", "2岁", "3岁", "4岁", "5岁", "6岁", "7岁", "8岁", "9岁", "10岁", "11岁"};
+                strs = new String[]{"父母自修", "婚恋", "0岁", "1岁", "幼儿园上", "幼儿园下", "小学上", "小学下", "初中", "高中", "大学"};
                 showPopu(strs, 3);
                 break;
             case R.id.ll_time://发布时间【1倒叙（默认）2正序】
@@ -238,11 +264,19 @@ public class HomeFragment extends BaseFragment implements BaseRecrviewAdapter.On
                 break;
         }
     }
-
+    private int oldtype;
     private void showPopu(String[] strs, final int type) {
         ListView listView = new ListView(ctx);
         listView.setBackgroundColor(Color.WHITE);
-        final PopupWindow popupWindow = new PopupWindow(listView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        if (popupWindow != null) {
+            if (oldtype == type) {
+                popupWindow.dismiss();
+                oldtype = 0;
+                return;
+            }
+        }
+        oldtype = type;
+        popupWindow = new PopupWindow(listView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
         popupWindow.setOutsideTouchable(true);
         listView.setAdapter(new ArrayAdapter<String>(ctx, R.layout.simple_list_item, strs));

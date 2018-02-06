@@ -73,10 +73,16 @@
                 <!--android:layout_height="wrap_content">-->
 
             <!--</ExpandableListView>-->
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/refreshLayout"
+            >
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lv_list"
             ></ListView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 </RelativeLayout>

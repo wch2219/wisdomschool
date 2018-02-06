@@ -15,9 +15,13 @@ import com.dlwx.wisdomschool.activitys.ChatActivity;
 import com.dlwx.wisdomschool.activitys.CreateClassActivity;
 import com.dlwx.wisdomschool.adapter.GroupChatListAdapter;
 import com.dlwx.wisdomschool.bean.GroupList;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeui.EaseConstant;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +48,8 @@ public class GroupChatFragment extends BaseFragment {
     ListView lvList;
     @BindView(R.id.ll_noentry)
     LinearLayout llNoentry;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
     private List<GroupList.BodyBean> body;
 
@@ -61,9 +67,16 @@ public class GroupChatFragment extends BaseFragment {
     @Override
     protected void initDate() {
 //        lvList.setGroupIndicator(this.getResources().getDrawable(R.drawable.expandablelistviewselector));
-
+        initrefresh(refreshLayout, true);
         llEntry.setVisibility(View.VISIBLE);
         llNoentry.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void downOnRefresh() {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        mPreenter.fetch(map, true, HttpUrl.Grouplist, HttpUrl.Grouplist + Token);
     }
 
     @Override
@@ -71,9 +84,16 @@ public class GroupChatFragment extends BaseFragment {
         Map<String, String> map = new HashMap<>();
         map.put("token", Token);
         mPreenter.fetch(map, true, HttpUrl.Grouplist, HttpUrl.Grouplist + Token);
+        ListenerUtile.setGroupChatUnReadListener(new ListenerUtile.GroupChatUnReadListener() {
+            @Override
+            public void groupChatList() {
+                Map<String, String> map = new HashMap<>();
+                map.put("token", Token);
+                mPreenter.fetch(map, true, HttpUrl.Grouplist, HttpUrl.Grouplist + Token);
+            }
+        });
         super.onResume();
     }
-
 
     @Override
     protected void initListener() {
@@ -85,7 +105,16 @@ public class GroupChatFragment extends BaseFragment {
                 intent.putExtra(EaseConstant.EXTRA_USER_ID, body.get(position).getGroupid());
                 intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_GROUP);
                 intent.putExtra("title", body.get(position).getGroup_name());
+                intent.putExtra("classid", body.get(position).getClassid());
                 startActivity(intent);
+                try {
+                    EMConversation conversation = EMClient.getInstance().chatManager().getConversation(body.get(position).getGroupid());
+//指定会话消息未读数清零
+                    conversation.markAllMessagesAsRead();
+                } catch (Exception e) {
+                    wch(e.getMessage());
+                }
+
             }
         });
     }
@@ -103,11 +132,29 @@ public class GroupChatFragment extends BaseFragment {
         GroupList groupList = gson.fromJson(s, GroupList.class);
         if (groupList.getCode() == 200) {
             body = groupList.getBody();
+            if (body.size() > 0) {
+                llNoentry.setVisibility(View.VISIBLE);
+                llEntry.setVisibility(View.GONE);
+            } else {
+                llNoentry.setVisibility(View.GONE);
+                llEntry.setVisibility(View.VISIBLE);
+            }
             lvList.setAdapter(new GroupChatListAdapter(ctx, body));
 
-        }else{
+            getUnReadCount();
+
+        } else {
             Toast.makeText(ctx, groupList.getResult(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void getUnReadCount() {
+        new Thread() {
+            @Override
+            public void run() {
+
+            }
+        }.start();
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.PicAuthBean;
 import com.dlwx.wisdomschool.utiles.AuthWindow;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -76,7 +77,9 @@ public class RegisterActivity extends BaseActivity {
     protected Presenter createPresenter() {
         return new Presenter(this);
     }
+
     private boolean isshow = false;
+
     @OnClick({R.id.tv_auth, R.id.iv_pwd, R.id.btn_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -91,7 +94,7 @@ public class RegisterActivity extends BaseActivity {
                     Toast.makeText(ctx, "true", Toast.LENGTH_SHORT).show();
                     etPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     Glide.with(ctx).load(R.mipmap.icon_yanjinga).into(ivPwd);
-                }else{
+                } else {
                     isshow = true;
                     Toast.makeText(ctx, "false", Toast.LENGTH_SHORT).show();
                     etPwd.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -129,12 +132,18 @@ public class RegisterActivity extends BaseActivity {
             Toast.makeText(ctx, R.string.editpwd, Toast.LENGTH_SHORT).show();
             return;
         }
+        if (!auth.equals(SmsCode)) {
+            Toast.makeText(this, "验证码输入错误，请重新输入", Toast.LENGTH_SHORT).show();
+            etAuth.setText("");
+            return;
+        }
+
         HttpType = 1;
-        Map<String,String> map = new HashMap<>();
-        map.put("role",role);
-        map.put("telephone",phone);
-        map.put("password",pwd);
-        mPreenter.fetch(map,false, HttpUrl.register,"");
+        Map<String, String> map = new HashMap<>();
+        map.put("role", role);
+        map.put("telephone", phone);
+        map.put("password", pwd);
+        mPreenter.fetch(map, false, HttpUrl.register, "");
     }
 
     @Override
@@ -146,35 +155,41 @@ public class RegisterActivity extends BaseActivity {
 
             BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
             if (backResultBean.getCode() == 200) {
+                //注册成功后保存帐号密码，之后立即登录
+                sp.edit().putString(SpUtiles.Account, etPhone.getText().toString().trim());
+                sp.edit().putString(SpUtiles.PasswordWord, etPwd.getText().toString().trim());
                 finish();
             }
             Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
-        }else if(HttpType == 2){
+        } else if (HttpType == 2) {
             PicAuthBean picAuthBean = gson.fromJson(s, PicAuthBean.class);
             if (picAuthBean.getCode() == 200) {
                 picAuthBeanBody = picAuthBean.getBody();
                 AuthWindow authWindow = new AuthWindow(ctx);
                 authWindow.startShowPopu(ctx, tvAuth, picAuthBeanBody.getImgurl(), picAuthBeanBody.getImgname());
                 authWindow.setAuthListener(authListener);
-            }else{
+            } else {
                 Toast.makeText(ctx, picAuthBean.getResult(), Toast.LENGTH_SHORT).show();
             }
         }
     }
-    private String  phone;
+
+    private String phone;
+
     /**
      * 获取图片验证码
      */
     private void getAuth() {
-       phone = etPhone.getText().toString().trim();
+        phone = etPhone.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             vibrator.vibrate(50);
 
             Toast.makeText(ctx, "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        mPreenter.fetch(new HashMap<String, String>(),false,HttpUrl.Verify,"");
+        mPreenter.fetch(new HashMap<String, String>(), false, HttpUrl.Verify, "");
     }
+
     /**
      * 输入图形验证码后返回的数据
      */
@@ -184,8 +199,14 @@ public class RegisterActivity extends BaseActivity {
             if (!TextUtils.isEmpty(auth)) {
                 CountDownUtiles countDownUtiles = new CountDownUtiles(tvAuth);
                 if (tvAuth.getText().equals("获取验证码") || tvAuth.getText().equals("重新发送")) {
-                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 0, countDownUtiles,picAuthBeanBody.getImgname(),auth);
+                    codeUtiles = new VerificationCodeUtiles(ctx, phone, 0, countDownUtiles, picAuthBeanBody.getImgname(), auth);
                     codeUtiles.sendVerificationCode(HttpUrl.SmsAuth, loading);
+                    codeUtiles.setSmsCodeBackListener(new VerificationCodeUtiles.SmsCodeBackListener() {
+                        @Override
+                        public void backCode(String code) {
+                            SmsCode = code;
+                        }
+                    });
                 }
             }
         }
@@ -195,4 +216,5 @@ public class RegisterActivity extends BaseActivity {
             getAuth();
         }
     };
+    private String SmsCode;
 }

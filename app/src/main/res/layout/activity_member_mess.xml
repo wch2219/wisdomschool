@@ -79,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="10dp"
         >
         <TextView
@@ -111,6 +112,7 @@
         android:text="你可以将成员设置为任课老师,让他和您一起管理班级"
         android:textSize="11sp"
         android:padding="10dp"
+        android:visibility="gone"
         android:layout_gravity="center_horizontal"
         />
     <View
@@ -125,7 +127,7 @@
         style="@style/GaryDiveStyle"
         />
     <LinearLayout
-
+        android:id="@+id/ll_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -148,7 +150,7 @@
         style="@style/GaryDiveStyle"
         />
     <LinearLayout
-
+    android:id="@+id/ll_send"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -177,6 +179,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="10dp"
+        android:visibility="gone"
         >
         <TextView
             style="@style/TextSizecontentBlack"

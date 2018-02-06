@@ -124,9 +124,10 @@ public class ClassPropertyActivity extends BaseActivity {
         if (createClassSuccessBean.getCode() == 200) {
             finish();
             Intent intent = new Intent(ctx, CreateClassCompleteActivity.class);
-            intent.putExtra("classcode",createClassSuccessBean.getBody());
+            intent.putExtra("classcode",createClassSuccessBean.getBody().getClass_no());
             intent.putExtra("classname",classname);
             intent.putExtra("filepath",filepath);
+            intent.putExtra("classid",createClassSuccessBean.getBody().getClassid());
             startActivity(intent);
             finish();
         }

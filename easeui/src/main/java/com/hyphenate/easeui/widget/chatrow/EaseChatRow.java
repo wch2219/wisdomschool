@@ -157,7 +157,6 @@ public abstract class EaseChatRow extends LinearLayout {
                 Log.i("wch","33########>"+message.getStringAttribute("from_headportrait",""));
                 usernickView.setText(message.getStringAttribute("from_username",""));
             }
-
 //            if (message.direct() == Direct.SEND) {
 //                EaseUserUtils.setUserAvatar(context, EMClient.getInstance().getCurrentUser(), userAvatarView);
 //            } else {

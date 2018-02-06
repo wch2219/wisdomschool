@@ -74,8 +74,10 @@ public class Register1Activity extends BaseActivity {
         Intent intent = new Intent(ctx, RegisterActivity.class);
         switch (view.getId()) {
             case R.id.rl_teacher:
-                getTeachCode();
-
+//                getTeachCode();
+                intent.putExtra("role", "1");
+                startActivity(intent);
+                finish();
                 break;
             case R.id.rl_patriarch:
                 intent.putExtra("role", "2");

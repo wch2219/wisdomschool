@@ -2,6 +2,7 @@ package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.ClassDescActivity;
 import com.dlwx.wisdomschool.activitys.ClassFileActivity;
 import com.dlwx.wisdomschool.activitys.ClassHistoryNewsActivitry;
 import com.dlwx.wisdomschool.activitys.InviteMemberActivity;
@@ -74,17 +76,19 @@ public class MeCreateCLassAdapter extends BaseFastAdapter {
                 ctx.startActivity(new Intent(ctx, InviteMemberActivity.class));
             }
         });
-//        if (position == 2) {
-//            vh.ll_apply.setVisibility(View.VISIBLE);
-//        }else{
-//            vh.ll_apply.setVisibility(View.GONE);
-//        }
-//        vh.tv_mess.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ctx.startActivity(new Intent(ctx, ClassHistoryNewsActivitry.class));
-//            }
-//        });
+        String apply_str = bodyBean.getApply_str();
+        if (TextUtils.isEmpty(apply_str)) {
+            vh.ll_apply.setVisibility(View.GONE);
+        }else{
+            vh.ll_apply.setVisibility(View.VISIBLE);
+            vh.tv_apply.setText(apply_str);
+        }
+        vh.ll_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ctx.startActivity(new Intent(ctx, ClassDescActivity.class).putExtra("classid",bodyBean.getCnid()));
+            }
+        });
         return convertView;
     }
 
@@ -93,6 +97,7 @@ public class MeCreateCLassAdapter extends BaseFastAdapter {
         public TextView tv_classnumber;
         public TextView tv_classmember;
         public TextView  tv_classname;
+        public TextView  tv_apply;
         public RTextView tv_file;
         public RTextView tv_mess;
         public RTextView tv_invite;
@@ -105,6 +110,7 @@ public class MeCreateCLassAdapter extends BaseFastAdapter {
             this.tv_file = (RTextView) rootView.findViewById(R.id.tv_file);
             this.tv_mess = (RTextView) rootView.findViewById(R.id.tv_mess);
             this.tv_classname =  rootView.findViewById(R.id.tv_classname);
+            this.tv_apply =  rootView.findViewById(R.id.tv_apply);
             this.tv_invite = (RTextView) rootView.findViewById(R.id.tv_invite);
             this.ll_apply = rootView.findViewById(R.id.ll_apply);
             this.iv_pic = rootView.findViewById(R.id.iv_pic);

@@ -14,7 +14,7 @@ public class CreateClassSuccessBean {
 
     private int code;
     private String result;
-    private String body;
+    private Body body;
 
     public int getCode() {
         return code;
@@ -28,15 +28,35 @@ public class CreateClassSuccessBean {
         return result;
     }
 
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public String getBody() {
+    public Body getBody() {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(Body body) {
         this.body = body;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+    public class Body{
+        private String  classid;
+        private String   class_no;
+
+        public String getClassid() {
+            return classid;
+        }
+
+        public void setClassid(String classid) {
+            this.classid = classid;
+        }
+
+        public String getClass_no() {
+            return class_no;
+        }
+
+        public void setClass_no(String class_no) {
+            this.class_no = class_no;
+        }
     }
 }
