@@ -8,9 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseFastAdapter;
+import com.dlwx.baselib.utiles.LogUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.bean.GroupList;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 
 import java.util.List;
 
@@ -44,20 +48,20 @@ public class GroupChatListAdapter extends BaseFastAdapter {
         GroupList.BodyBean bodyBean = body.get(position);
         viewHolderChild.tv_name.setText(bodyBean.getGroup_name());
             viewHolderChild.tv_num.setText("("+bodyBean.getNum()+")");
-//        try {
-//            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(bodyBean.getGroupid());
-//            int unreadMsgCount = conversation.getUnreadMsgCount();
-//            if (unreadMsgCount >0) {
-//                viewHolderChild.tv_unreadnum.setText(unreadMsgCount+"");
-//                viewHolderChild.tv_unreadnum.setVisibility(View.VISIBLE);
-//            }else{
-//                viewHolderChild.tv_unreadnum.setVisibility(View.GONE);
-//            }
+        try {
+            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(bodyBean.getGroupid());
+            int unreadMsgCount = conversation.getUnreadMsgCount();
+            if (unreadMsgCount >0) {
+                viewHolderChild.tv_unreadnum.setText(unreadMsgCount+"");
+                viewHolderChild.tv_unreadnum.setVisibility(View.VISIBLE);
+            }else{
+                viewHolderChild.tv_unreadnum.setVisibility(View.GONE);
+            }
 
-//    }catch (Exception e){
-//            LogUtiles.LogI(e.getMessage()+position);
-//        }
-        Glide.with(ctx).load(bodyBean.getImgurl()).into(viewHolderChild.iv_pic);
+    }catch (Exception e){
+            LogUtiles.LogI(e.getMessage()+position);
+        }
+        Glide.with(ctx).load(bodyBean.getImgurl()).apply(new RequestOptions().centerCrop()).into(viewHolderChild.iv_pic);
         return view;
     }
    private class ViewHolderChild {
@@ -74,6 +78,5 @@ public class GroupChatListAdapter extends BaseFastAdapter {
             this.tv_num = (TextView) rootView.findViewById(R.id.tv_num);
             this.tv_unreadnum = (TextView) rootView.findViewById(R.id.tv_unreadnum);
         }
-
     }
 }

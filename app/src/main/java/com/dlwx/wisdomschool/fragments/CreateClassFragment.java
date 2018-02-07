@@ -69,17 +69,22 @@ public class CreateClassFragment extends BaseFragment implements AdapterView.OnI
         super.onResume();
         getClassList();
         //老师收到通知刷新当前页面
-        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ApplyAddClassNotifitionListener() {
+        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ClassNotifitionListener() {
             @Override
             public void send() {
                 getClassList();
+            }
+
+            @Override
+            public void agree() {
+
             }
         });
     }
     @Override
     public void onPause() {
         super.onPause();
-        ListenerUtile.applyAddClassNotifitionListener = null;
+        ListenerUtile.classNotifitionListener = null;
     }
 
     @Override

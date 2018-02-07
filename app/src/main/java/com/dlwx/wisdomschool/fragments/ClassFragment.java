@@ -103,10 +103,15 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
             refreshLayout.setVisibility(View.VISIBLE);
             initrefresh(refreshLayout,true);
             getClassList();
-            ListenerUtile.setAggressJoinClassListener(new ListenerUtile.AggressJoinClassListener() {
+            ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ClassNotifitionListener() {
                 @Override
                 public void agree() {
                     getClassList();
+                }
+
+                @Override
+                public void send() {
+
                 }
             });
         }
@@ -114,7 +119,7 @@ public class ClassFragment extends BaseFragment implements AdapterView.OnItemCli
 
     @Override
     public void onPause() {
-        ListenerUtile.aggressJoinClassListener = null;
+        ListenerUtile.classNotifitionListener = null;
         super.onPause();
     }
 

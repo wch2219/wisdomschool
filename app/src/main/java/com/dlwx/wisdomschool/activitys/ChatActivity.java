@@ -12,10 +12,8 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
-import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseChatFragment;
-import com.hyphenate.exceptions.HyphenateException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +41,7 @@ public class ChatActivity extends BaseActivity {
         ButterKnife.bind(this);
         //聊天人或群id
         toChatUsername = getIntent().getExtras().getString(EaseConstant.EXTRA_USER_ID);
+        title = getIntent().getStringExtra("title");
         int isGroup = getIntent().getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, 2);
         Intent intent = getIntent();
         String otherheadpic = intent.getStringExtra(SpUtiles.OtherHeadPic);
@@ -53,14 +52,6 @@ public class ChatActivity extends BaseActivity {
         if (isGroup == 1) {
             rlAllmember.setVisibility(View.GONE);
         }
-        //参数为要添加的好友的username和添加理由
-        try {
-            EMClient.getInstance().contactManager().addContact(toChatUsername, "添加");
-        } catch (HyphenateException e) {
-            e.printStackTrace();
-            wch(e.getMessage());
-        }
-        title = getIntent().getStringExtra("title");
         EaseChatFragment chatFragment = new EaseChatFragment();
         //传入参数
         chatFragment.setArguments(getIntent().getExtras());

@@ -59,16 +59,41 @@ public class MyReceiver extends BroadcastReceiver {
                 Gson gson = new Gson();
                 NotifitBean notifitBean = gson.fromJson(MyApplication.EXTRAS, NotifitBean.class);
                 int type = notifitBean.getType();
+//                1:同意申请加入班级，给申请人推消息
+//                2:被设置为任课老师
+//                3:请出班级
+//                4:退班申请成功
+//                5:申请加入班级，给老师推消息
+//                6:申请退出班级，给老师推消息
                 switch (type) {
                     case 1://同意入班
                         inten = new Intent(context, ClassManageActivity.class);
                         inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(inten);
                         break;
+                    case 2://2:被设置为任课老师
+                        inten = new Intent(context, ClassManageActivity.class);
+                        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(inten);
+                        break;
+                    case 3:// 3:请出班级
+                        inten = new Intent(context, ClassManageActivity.class);
+                        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(inten);
+                        break;
+                    case 4:// 3:请出班级
+                        inten = new Intent(context, ClassManageActivity.class);
+                        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(inten);
+                        break;
+
                     case 5://申请加入班级，老师收到消息
                         inten = new Intent(context, ClassManageActivity.class);
                         inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(inten);
+                        break;
+                    case 6:
+
                         break;
                 }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
@@ -109,25 +134,49 @@ public class MyReceiver extends BroadcastReceiver {
         NotifitBean notifitBean = gson.fromJson(MyApplication.EXTRAS, NotifitBean.class);
         LogUtiles.LogI(extras.toString());
         int type = notifitBean.getType();
+        //                1:同意申请加入班级，给申请人推消息
+//                2:被设置为任课老师
+//                3:请出班级
+//                4:退班申请成功
+//                5:申请加入班级，给老师推消息
+//                6:申请退出班级，给老师推消息
         switch (type) {
-            case 5://申请加入班级，老师收到消息
-                if (ListenerUtile.applyAddClassNotifitionListener != null) {
-                    try {
-                        ListenerUtile.applyAddClassNotifitionListener.send();
-                    } catch (Exception e) {
-                        LogUtiles.LogI(e.getMessage());
-                    }
-                }
-                break;
             case 1://同意入班
-                if (ListenerUtile.aggressJoinClassListener != null) {
+                if (ListenerUtile.classNotifitionListener != null) {
                     try {
-                        ListenerUtile.aggressJoinClassListener.agree();
+                        ListenerUtile.classNotifitionListener.agree();
                     } catch (Exception e) {
                         LogUtiles.LogI(e.getMessage());
                     }
                 }
                 break;
+            case 2: // 2:被设置为任课老师
+                if (ListenerUtile.classNotifitionListener != null) {
+                    try {
+                        ListenerUtile.classNotifitionListener.send();
+                    } catch (Exception e) {
+                        LogUtiles.LogI(e.getMessage());
+                    }
+                }
+                break;
+            case 3:// 3:请出班级
+                break;
+            case 4:// 4:退班申请成功
+
+                break;
+            case 5://申请加入班级，老师收到消息
+                if (ListenerUtile.classNotifitionListener != null) {
+                    try {
+                        ListenerUtile.classNotifitionListener.send();
+                    } catch (Exception e) {
+                        LogUtiles.LogI(e.getMessage());
+                    }
+                }
+                break;
+            case 6:
+
+                break;
+
         }
 
     }

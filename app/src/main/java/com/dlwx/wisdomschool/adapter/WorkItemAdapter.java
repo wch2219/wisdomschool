@@ -72,42 +72,42 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
         if (holder instanceof ViewHolderleft) {
             final ViewHolderleft holderleft = (ViewHolderleft) holder;
             Glide.with(ctx).load(bodyBean.getHeader_pic()).into(holderleft.iv_leftHead);
-            holderleft.tv_leftclassname.setText(bodyBean.getClass_name());
+            holderleft.tv_leftclassname.setText(bodyBean.getClass_name()+"("+bodyBean.getNickname()+")");
             holderleft.tv_title.setText(bodyBean.getTheme_name());
 
             int theme = bodyBean.getTheme();
             switch (theme) {
-                case 1://班级通知
-                    holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_yue.setVisibility(View.GONE);
-                    holderleft.ll_url.setVisibility(View.GONE);
-                    Glide.with(ctx).load(R.mipmap.icon_noti).into(holderleft.iv_typeleft);
-                    break;
-                case 2://群组讨论
-                    holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_yue.setVisibility(View.GONE);
-                    holderleft.ll_url.setVisibility(View.GONE);
-                    Glide.with(ctx).load(R.mipmap.icon_diss).into(holderleft.iv_typeleft);
-                    break;
-                case 3://调查问卷
-                    holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_yue.setVisibility(View.GONE);
-                    holderleft.ll_url.setVisibility(View.GONE);
-                    Glide.with(ctx).load(R.mipmap.icon_diaochawenjuan).into(holderleft.iv_typeleft);
-                    break;
-                case 4://视频实时纪录
-                    holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_yue.setVisibility(View.GONE);
-                    holderleft.ll_url.setVisibility(View.GONE);
-                    Glide.with(ctx).load(R.mipmap.icon_video).into(holderleft.iv_typeleft);
-                    break;
-                case 5://活动收集
+//                case 1://习惯养成
+//                    holderleft.tv_joinaction.setVisibility(View.GONE);
+//                    holderleft.ll_yue.setVisibility(View.GONE);
+//                    holderleft.ll_url.setVisibility(View.GONE);
+//                    Glide.with(ctx).load(R.mipmap.icon_noti).into(holderleft.iv_typeleft);
+//                    break;
+//                case 2://群组讨论
+//                    holderleft.tv_joinaction.setVisibility(View.GONE);
+//                    holderleft.ll_yue.setVisibility(View.GONE);
+//                    holderleft.ll_url.setVisibility(View.GONE);
+//                    Glide.with(ctx).load(R.mipmap.icon_diss).into(holderleft.iv_typeleft);
+//                    break;
+//                case 3://调查问卷
+//                    holderleft.tv_joinaction.setVisibility(View.GONE);
+//                    holderleft.ll_yue.setVisibility(View.GONE);
+//                    holderleft.ll_url.setVisibility(View.GONE);
+//                    Glide.with(ctx).load(R.mipmap.icon_diaochawenjuan).into(holderleft.iv_typeleft);
+//                    break;
+//                case 4://视频实时纪录
+//                    holderleft.tv_joinaction.setVisibility(View.GONE);
+//                    holderleft.ll_yue.setVisibility(View.GONE);
+//                    holderleft.ll_url.setVisibility(View.GONE);
+//                    Glide.with(ctx).load(R.mipmap.icon_video).into(holderleft.iv_typeleft);
+//                    break;
+                case 5://习惯养成
                     holderleft.tv_joinaction.setVisibility(View.VISIBLE);
                     holderleft.ll_yue.setVisibility(View.GONE);
                     holderleft.ll_url.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_actionshouji).into(holderleft.iv_typeleft);
                     break;
-                case 6://布置作业
+                case 6://老师作业
                     holderleft.tv_joinaction.setVisibility(View.GONE);
                     holderleft.ll_url.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_zuoye).into(holderleft.iv_typeleft);
@@ -118,10 +118,11 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                     holderleft.ll_url.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_zhoukan).into(holderleft.iv_typeleft);
                     break;
-                case 7://文章
+                case 7://家长作业
                     Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
                     Matcher matcher = compile.matcher(bodyBean.getContent());
                     while(matcher.find()){
+
                         String group = matcher.group();
                         bodyBean.setTexturl(group);
                         // 设置setWebChromeClient对象
@@ -139,7 +140,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                                 holderleft.iv_urlpic.setImageBitmap(icon);
                             }
                         });
-                        //此处省略N行代码
+
                         webView.loadUrl(group);
                         webView.setWebViewClient(new WebViewClient(){
                             @Override
@@ -149,10 +150,14 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                             }
                         });
                     }
-
+                    if (matcher.find()) {
+                        holderleft.ll_url.setVisibility(View.VISIBLE);
+                    }else{
+                        holderleft.ll_url.setVisibility(View.GONE);
+                    }
                     holderleft.tv_joinaction.setVisibility(View.GONE);
                     holderleft.ll_yue.setVisibility(View.VISIBLE);
-                    holderleft.ll_url.setVisibility(View.VISIBLE);
+
                     Glide.with(ctx).load(R.mipmap.icon_wenzhang).into(holderleft.iv_typeleft);
                     break;
 
@@ -176,8 +181,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 holderleft.ll_voiceleft.setVisibility(View.GONE);
             } else {
                 holderleft.ll_voiceleft.setVisibility(View.VISIBLE);
-//                String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getContent_voice());
-//                holderleft.tv_sec.setText(time);
+                holderleft.tv_sec.setText(bodyBean.getContent_voice_second()+"''");
             }
             /**
              * 阅读状态
@@ -260,42 +264,42 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
 
             final ViewHolderRight holderRight = (ViewHolderRight) holder;
             Glide.with(ctx).load(bodyBean.getHeader_pic()).into(holderRight.iv_righttitpic);
-            holderRight.tv_rightname.setText(bodyBean.getClass_name());
+            holderRight.tv_rightname.setText(bodyBean.getClass_name()+"("+bodyBean.getNickname()+")");
             holderRight.tv_title.setText(bodyBean.getTheme_name());
             EmoSwichUtiles.toSwich(ctx, holderRight.tv_content, bodyBean.getContent());
             int theme = bodyBean.getTheme();
             switch (theme) {
-                case 1://班级通知
-                    Glide.with(ctx).load(R.mipmap.icon_noti).into(holderRight.iv_type);
-                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
-                    holderRight.ll_url.setVisibility(View.GONE);
-                    break;
-                case 2://群组讨论
-                    Glide.with(ctx).load(R.mipmap.icon_diss).into(holderRight.iv_type);
-                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
-                    holderRight.ll_url.setVisibility(View.GONE);
-                    break;
-                case 3://调查问卷
-                    Glide.with(ctx).load(R.mipmap.icon_diaochawenjuan).into(holderRight.iv_type);
-                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
-                    holderRight.ll_url.setVisibility(View.GONE);
-                    break;
-                case 4://视频实时纪录
-                    Glide.with(ctx).load(R.mipmap.icon_video).into(holderRight.iv_type);
-                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
-                    holderRight.ll_url.setVisibility(View.GONE);
-                    break;
-                case 5://活动收集
+//                case 1://班级通知
+//                    Glide.with(ctx).load(R.mipmap.icon_noti).into(holderRight.iv_type);
+//                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
+//                    holderRight.ll_url.setVisibility(View.GONE);
+//                    break;
+//                case 2://群组讨论
+//                    Glide.with(ctx).load(R.mipmap.icon_diss).into(holderRight.iv_type);
+//                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
+//                    holderRight.ll_url.setVisibility(View.GONE);
+//                    break;
+//                case 3://调查问卷
+//                    Glide.with(ctx).load(R.mipmap.icon_diaochawenjuan).into(holderRight.iv_type);
+//                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
+//                    holderRight.ll_url.setVisibility(View.GONE);
+//                    break;
+//                case 4://视频实时纪录
+//                    Glide.with(ctx).load(R.mipmap.icon_video).into(holderRight.iv_type);
+//                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
+//                    holderRight.ll_url.setVisibility(View.GONE);
+//                    break;
+                case 5://习惯养成
                     Glide.with(ctx).load(R.mipmap.icon_actionshouji).into(holderRight.iv_type);
                     holderRight.ll_looknumandyueright.setVisibility(View.GONE);
                     holderRight.ll_url.setVisibility(View.GONE);
                     break;
-                case 6://布置作业
+                case 6://老师作业
                     Glide.with(ctx).load(R.mipmap.icon_zuoye).into(holderRight.iv_type);
                     holderRight.ll_looknumandyueright.setVisibility(View.GONE);
                     holderRight.ll_url.setVisibility(View.GONE);
                     break;
-                case 7://文章
+                case 7://家长作业
                     Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
                     Matcher matcher = compile.matcher(bodyBean.getContent());
                     while(matcher.find()){
@@ -338,8 +342,6 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
             }
 
             //http://(.)*com
-
-
             holderRight.tv_yuenum.setText(bodyBean.getTeacher_isyue());
             final List<String> content_pic = bodyBean.getContent_pic();
             //图片的数量
@@ -358,8 +360,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 holderRight.ll_voice.setVisibility(View.GONE);
             } else {
                 holderRight.ll_voice.setVisibility(View.VISIBLE);
-//                String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getContent_voice());
-//                holderRight.tv_sec.setText(time);
+               holderRight.tv_sec.setText(bodyBean.getContent_voice_second()+"''");
             }
 
             holderRight.tv_rightdate.setText(bodyBean.getCreatedtime());
@@ -431,7 +432,6 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
     }
     public interface ItemOnClickListener {
         void clickYue(String id);
-
     }
     private ItemOnClickListener itemOnClickListener;
 

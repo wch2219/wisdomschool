@@ -116,6 +116,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     protected MyItemClickListener extendMenuItemClickListener;
     protected boolean isRoaming = false;
     private ExecutorService fetchQueue;
+    private String title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -135,7 +136,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         chatType = fragmentArgs.getInt(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         // userId you are chat with or group id
         toChatUsername = fragmentArgs.getString(EaseConstant.EXTRA_USER_ID);
-
+        title = fragmentArgs.getString("title");
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -765,6 +766,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
             message.setAttribute("to_headportrait", otherHeader_pic);
             String othernickname = sp.getString("othernickname", "");
             message.setAttribute("to_username", othernickname);
+            message.setAttribute("groupname",title);//群名称
         } catch (Exception e) {
 
         }

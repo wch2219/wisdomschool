@@ -88,13 +88,12 @@ public class GradeAnalyzeMapActivity extends BaseActivity {
         if (gradeMapBean.getCode() == 200) {
             List<GradeMapBean.BodyBean> body = gradeMapBean.getBody();
             List<LineChartView.Data> datas = new ArrayList<>();
-            int [] arr = {50,80,90,70,40,30,60,80,78};
-            for (int i = 0; i < arr.length; i++) {
+            for (int i = 0; i < body.size(); i++) {
 //                GradeMapBean.BodyBean bodyBean = body.get(i);
-                LineChartView.Data data = new LineChartView.Data(arr[i]);
+                LineChartView.Data data = new LineChartView.Data((int) body.get(i).getScore());
                 datas.add(data);
             }
-            lineChartView.setStepSpace(screenWidth/(arr.length+1));
+            lineChartView.setStepSpace(screenWidth/(body.size()+1));
             lineChartView.setData(datas);
             lineChartView.setShowTable(true);
             lineChartView.playAnim();

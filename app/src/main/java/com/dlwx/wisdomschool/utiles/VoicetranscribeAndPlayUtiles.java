@@ -93,9 +93,10 @@ public class VoicetranscribeAndPlayUtiles {
             e.printStackTrace();
         }
         double duration = player.getDuration();//获取音频的时间
-        SimpleDateFormat format = new SimpleDateFormat("mm:ss");
-        String time = format.format(new Date((long) duration));
-        Log.d("ACETEST", "### duration: " + duration);
+//        SimpleDateFormat format = new SimpleDateFormat("mm:ss");
+//        String time = format.format(new Date((long) duration));
+//        Log.d("ACETEST", "### duration: " + duration);
+        String time = duration/1000+"";
         player.release();//记得释放资源
         return time;
     }

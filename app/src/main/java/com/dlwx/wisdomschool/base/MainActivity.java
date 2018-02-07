@@ -29,6 +29,7 @@ import com.dlwx.wisdomschool.fragments.RecordFragment;
 import com.dlwx.wisdomschool.fragments.WorkFragment;
 import com.dlwx.wisdomschool.interfac.SoftKeyBoard;
 import com.dlwx.wisdomschool.service.ExampleUtil;
+import com.dlwx.wisdomschool.utiles.SpUtiles;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -48,7 +49,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     protected void initView() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
+        sp.edit().putString(SpUtiles.First,"1").commit();
     }
 
     @Override

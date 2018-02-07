@@ -37,7 +37,6 @@
         <ImageView
             android:id="@+id/iv_remind"
             style="@style/Imagesmill2pic"
-            android:visibility="gone"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_canyutixing"
             />

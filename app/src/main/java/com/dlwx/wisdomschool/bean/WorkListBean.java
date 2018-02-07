@@ -82,6 +82,15 @@ public class WorkListBean {
         private String teacher_isyue;
         private String parent_isyue;
         private String texturl;
+        private String content_voice_second;
+
+        public String getContent_voice_second() {
+            return content_voice_second;
+        }
+
+        public void setContent_voice_second(String content_voice_second) {
+            this.content_voice_second = content_voice_second;
+        }
 
         public String getTexturl() {
             return texturl;

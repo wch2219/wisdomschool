@@ -85,6 +85,7 @@
                 android:layout_marginTop="3dp"
                 style="@style/Imagesmill3pic"
                 android:id="@+id/iv_share"
+                android:visibility="gone"
                 android:src="@mipmap/icon_huodonggd"
                 />
             </LinearLayout>

@@ -417,6 +417,9 @@ public class SendNotifiActivity extends BaseActivity implements VoiceRecordOrPla
         map.put("classids", class_nos);
         map.put("content_pic", imgs);
 //        map.put("video", video);
+        if (!TextUtils.isEmpty(voiceFile)) {
+            map.put("content_voice_second",tvSec.getText().toString());
+        }
         map.put("content_voice", voice);
         map.put("content", content);
         map.put("theme", themeID);
@@ -443,6 +446,11 @@ public class SendNotifiActivity extends BaseActivity implements VoiceRecordOrPla
                 tvActionname.setText(bodyBean.getActivity_type());
                 themeID = bodyBean.getId();
                 popu.dismiss();
+                if ("5".equals(themeID)) {
+                    llEndtime.setVisibility(View.VISIBLE);
+                }else {
+                    llEndtime.setVisibility(View.GONE);
+                }
             }
         });
     }

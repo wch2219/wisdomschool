@@ -4,6 +4,8 @@ package com.dlwx.wisdomschool.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.dlwx.baselib.base.BaseFragment;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ChatActivity;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -72,6 +75,9 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
     }
 
     private void getList() {
+        if (lvList == null) {
+            wch("sss");
+        }
         emConversations = new ArrayList<>();
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
 //初始化，参数为会话列表集合
@@ -103,8 +109,20 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
     @Override
     protected void initListener() {
         lvList.setOnItemClickListener(this);
+        ListenerUtile.setPriChatListListener(new ListenerUtile.PriChatListListener() {
+            @Override
+            public void priChatList() {
+               handler.sendEmptyMessage(1);
+            }
+        });
     }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
 
+            getList();
+        }
+    };
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -115,7 +133,6 @@ public class PrivateChatFragment extends BaseFragment implements AdapterView.OnI
         super.onDestroyView();
         unbinder.unbind();
     }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         EMConversation emConversation = emConversations.get(i);

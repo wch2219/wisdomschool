@@ -35,7 +35,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        first = sp.getString(SpUtiles.First, "1");
+        first = sp.getString(SpUtiles.First, "");
 
     }
 
@@ -55,7 +55,7 @@ public class SplashActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 if (TextUtils.isEmpty(first)) {
-//                    startActivity(new Intent(ctx,GuideActivity.class));
+                    startActivity(new Intent(ctx,GuiActivity.class));
 
                 }else{
                     if (TextUtils.isEmpty(Token)) {

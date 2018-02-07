@@ -14,7 +14,7 @@
         android:id="@+id/tv_backclass"
         style="@style/TextSizeSmallTitleBlack"
         android:layout_width="match_parent"
-        android:visibility="gone"
+
         android:layout_gravity="center_horizontal"
         android:gravity="center_horizontal"
         android:padding="10dp"

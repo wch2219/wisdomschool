@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -14,12 +13,10 @@ import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.AddActionActivity;
-import com.dlwx.wisdomschool.activitys.SendNotifiActivity;
 import com.dlwx.wisdomschool.adapter.WorkItemAdapter;
 import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.WorkListBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
-import com.dlwx.wisdomschool.utiles.SpUtiles;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -34,7 +31,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.dlwx.wisdomschool.base.MyApplication.Token;
@@ -46,8 +42,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 public class WorkDescListFragment extends BaseFragment implements WorkItemAdapter.ItemOnClickListener, BaseRecrviewAdapter.OnItemClickListener {
     @BindView(R.id.rv_recyclerview)
     RecyclerView rvRecyclerview;
-    @BindView(R.id.flbtn_edit)
-    Button flbtnEdit;
+
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
@@ -76,10 +71,7 @@ public class WorkDescListFragment extends BaseFragment implements WorkItemAdapte
         refreshLayout.setEnableLoadmore(true);//是否启用上拉加载功能
         refreshLayout.setEnableOverScrollBounce(true);//是否启用越界回弹
         refreshLayout.setEnableAutoLoadmore(true);//是否启用列表惯性滑动到底部时自动加载更多
-        int TeacherOrPatriarch = sp.getInt(SpUtiles.TeacherOrPatriarch, 1);
-        if (TeacherOrPatriarch == 2) {
-            flbtnEdit.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
@@ -134,12 +126,6 @@ public class WorkDescListFragment extends BaseFragment implements WorkItemAdapte
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @OnClick(R.id.flbtn_edit)
-    public void onViewClicked() {
-        startActivity(new Intent(ctx, SendNotifiActivity.class));
-
     }
 
 

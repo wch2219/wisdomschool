@@ -9,7 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.ConnectivityManager;
+import android.os.Handler;
+import android.os.Message;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
@@ -18,9 +22,9 @@ import com.dlwx.baselib.utiles.SpUtiles;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.activitys.ChatActivity;
 import com.dlwx.wisdomschool.activitys.LoginInActivity;
+import com.dlwx.wisdomschool.listener.ListenerUtile;
 import com.dlwx.wisdomschool.service.MyReceiver;
 import com.dlwx.wisdomschool.utiles.ResouseString;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;
 import com.hyphenate.EMMessageListener;
@@ -55,9 +59,13 @@ public class MyApplication extends Application {
     public static String EXTRAS = "";
     private SharedPreferences sp;
     private int pos;
+    public static SoundPool soundPool;
+    private int loadpath;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
         OkGo.getInstance().init(this);
         TbsDownloader.needDownload(getApplicationContext(), false);
         classnames = ResouseString.classnames;
@@ -104,12 +112,7 @@ public class MyApplication extends Application {
                     if (message.getChatType() == EMMessage.ChatType.GroupChat || message.getChatType() == EMMessage.ChatType.ChatRoom) {
                         username = message.getTo();
                         ChatType = EaseConstant.CHATTYPE_GROUP;
-                        from_username = message.getStringAttribute("from_username");
-                        try{
-//                            if (ListenerUtile.groupChatUnReadListener != null) {
-//                                ListenerUtile.groupChatUnReadListener.groupChatList();
-//                            }
-                        }catch (Exception e){}
+                        from_username = message.getStringAttribute("groupname");//获取群名称
                     } else {
                         // single chat message
                         username = message.getFrom();
@@ -117,20 +120,31 @@ public class MyApplication extends Application {
 
                         if (username.equals(sp.getString(com.dlwx.wisdomschool.utiles.SpUtiles.Userid,""))) {
                             to_username = message.getStringAttribute("to_username");
+                            from_username = message.getStringAttribute("to_username");
                             to_headportrait = message.getStringAttribute("to_headportrait");
                         }else{
                             to_username = message.getStringAttribute("from_username");
+                            from_username = message.getStringAttribute("from_username");
                             to_headportrait = message.getStringAttribute("from_headportrait");
                         }
-
+                        try{
+                            if (ListenerUtile.priChatListListener != null) {
+                                ListenerUtile.priChatListListener.priChatList();
+                            }
+                        }catch (Exception e){
+                            LogUtiles.LogI(e.getMessage());
+                        }
                     }
                 } catch (HyphenateException e) {
                     e.printStackTrace();
                 }
             }
+
+            handler.sendEmptyMessage(1);
             ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             String name = manager.getRunningTasks(1).get(0).topActivity.getClassName();
             if (!name.equals(ChatActivity.class.getName())) {
+
             Intent inten = null;
             inten = new Intent(getApplicationContext(), ChatActivity.class);
             inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -139,7 +153,8 @@ public class MyApplication extends Application {
             inten.putExtra(com.dlwx.wisdomschool.utiles.SpUtiles.OtherNickName,to_username);
             inten.putExtra(EaseConstant.EXTRA_USER_ID, username);
             inten.putExtra(EaseConstant.EXTRA_CHAT_TYPE, ChatType);
-            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, inten, 0);
+
+            PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0, inten, PendingIntent.FLAG_UPDATE_CURRENT);
             //获取NotificationManager实例
             NotificationManager notifyManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
             //实例化NotificationCompat.Builde并设置相关属性
@@ -260,25 +275,30 @@ public class MyApplication extends Application {
         }
     }
 
-    /**
-     * 登录环信
-     */
-    private void huanxinLogin(String username, String pwd) {
-        EMClient.getInstance().login(username, pwd, new EMCallBack() {//回调
-            @Override
-            public void onSuccess() {
-                LogUtiles.LogI("登录聊天服务器成功！");
-            }
+   private Handler handler = new Handler(){
+       @Override
+       public void handleMessage(Message msg) {
+           soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+           loadpath = soundPool.load(getApplicationContext(), R.raw.tishi, 1);
+           soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+               @Override
+               public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                   LogUtiles.LogI("声音加载完成");
 
-            @Override
-            public void onProgress(int progress, String status) {
+                   AudioManager am = (AudioManager) getApplicationContext()
+                           .getSystemService(Context.AUDIO_SERVICE);
+                   float audioMaxVolumn = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                   float volumnCurrent = am.getStreamVolume(AudioManager.STREAM_MUSIC);
+                   float volumnRatio = volumnCurrent / audioMaxVolumn;
+                   soundPool.play(loadpath,
+                           audioMaxVolumn,// 左声道音量
+                           audioMaxVolumn,// 右声道音量
+                           1, // 优先级
+                           0,// 循环播放次数
+                           1);// 回放速度，该值在0.5-2.0之间 1为正常速度
+               }
+           });
 
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                LogUtiles.LogI("登录聊天服务器失败！");
-            }
-        });
-    }
+       }
+   };
 }

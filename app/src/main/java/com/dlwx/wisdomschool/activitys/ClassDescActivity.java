@@ -159,17 +159,22 @@ public class ClassDescActivity extends BaseActivity {
         super.onResume();
         getClassDesc();
         //老师收到通知刷新当前页面
-        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ApplyAddClassNotifitionListener() {
+        ListenerUtile.setApplyAddClassNotifitionListener(new ListenerUtile.ClassNotifitionListener() {
             @Override
             public void send() {
                 getClassDesc();
+            }
+
+            @Override
+            public void agree() {
+
             }
         });
     }
 
     @Override
     public void onPause() {
-        ListenerUtile.applyAddClassNotifitionListener = null;
+        ListenerUtile.classNotifitionListener = null;
         super.onPause();
     }
     private int HttpType;
@@ -424,6 +429,7 @@ public class ClassDescActivity extends BaseActivity {
         });
         popupWindow.showAtLocation(tv_number, Gravity.BOTTOM, 0, 0);
         viewHolderPopu.tv_backclass.setOnClickListener(this);
+        viewHolderPopu.tv_backclass.setVisibility(View.GONE);
         viewHolderPopu.tv_dissolveclass.setOnClickListener(this);
         viewHolderPopu.tv_close.setOnClickListener(this);
     }

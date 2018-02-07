@@ -50,9 +50,9 @@ public class LookReadAdapter extends BaseFastAdapter {
 
         int is_yue = allInfoBean.getIs_yue();
         if ("1".equals(is_yue)) {
-            Glide.with(ctx).load(R.mipmap.icon_yanjing).into(vh.iv_unlook);
+           vh.iv_unlook.setVisibility(View.VISIBLE);
         }else{
-            Glide.with(ctx).load(R.mipmap.icon_baiban).into(vh.iv_unlook);
+            vh.iv_unlook.setVisibility(View.GONE);
         }
 
         vh.iv_phone.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,12 @@ public class LookReadAdapter extends BaseFastAdapter {
                 ctx.startActivity(intent);
             }
         });
+        vh.iv_unlook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
         return convertView;
     }
 

@@ -1,6 +1,8 @@
 package com.dlwx.wisdomschool.fragments;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -87,14 +89,25 @@ public class GroupChatFragment extends BaseFragment {
         ListenerUtile.setGroupChatUnReadListener(new ListenerUtile.GroupChatUnReadListener() {
             @Override
             public void groupChatList() {
-                Map<String, String> map = new HashMap<>();
-                map.put("token", Token);
-                mPreenter.fetch(map, true, HttpUrl.Grouplist, HttpUrl.Grouplist + Token);
+                handler.sendEmptyMessage(1);
             }
         });
         super.onResume();
     }
 
+    @Override
+    public void onPause() {
+        ListenerUtile.groupChatUnReadListener = null;
+        super.onPause();
+    }
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            Map<String, String> map = new HashMap<>();
+            map.put("token", Token);
+            mPreenter.fetch(map, true, HttpUrl.Grouplist, HttpUrl.Grouplist + Token);
+        }
+    };
     @Override
     protected void initListener() {
         lvList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,21 +154,12 @@ public class GroupChatFragment extends BaseFragment {
             }
             lvList.setAdapter(new GroupChatListAdapter(ctx, body));
 
-            getUnReadCount();
 
         } else {
             Toast.makeText(ctx, groupList.getResult(), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void getUnReadCount() {
-        new Thread() {
-            @Override
-            public void run() {
-
-            }
-        }.start();
-    }
 
     @Override
     public void onDestroyView() {

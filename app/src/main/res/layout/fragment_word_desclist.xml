@@ -31,12 +31,5 @@
     </android.support.v7.widget.RecyclerView>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
-    <Button
-        android:id="@+id/flbtn_edit"
-        android:layout_width="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:background="@mipmap/icon_bianxie"
-        android:layout_height="50dp" />
+
 </RelativeLayout>

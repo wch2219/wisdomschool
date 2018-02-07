@@ -1,9 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dlwx.wisdomschool.fragments.WorkFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <TextView
             style="@style/TextSizeTitleBlack"
             android:layout_gravity="center_horizontal"
@@ -100,4 +105,14 @@
                 />
         </LinearLayout>
     </RelativeLayout>
-</LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/flbtn_edit"
+        android:layout_width="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@mipmap/icon_bianxie"
+        android:layout_height="50dp" />
+</RelativeLayout>

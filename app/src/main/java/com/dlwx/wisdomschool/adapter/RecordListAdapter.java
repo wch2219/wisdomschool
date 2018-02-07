@@ -223,12 +223,12 @@ public class RecordListAdapter extends BaseFastAdapter {
         /**
          * 点击弹出分享
          */
-            vh.ll_share.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    windowListener.share(position,bodyBean.getId(),bodyBean.getShare_url());
-                }
-            });
+//            vh.ll_share.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    windowListener.share(position,bodyBean.getId(),bodyBean.getShare_url());
+//                }
+//            });
             vh.ll_title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
