@@ -207,16 +207,38 @@
                         <TextView
                             android:id="@+id/tv_yueType"
                             style="@style/TextSizecontentBlack"
+                            android:layout_width="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:text="点击"
                             android:textColor="@color/garytext" />
 
                         <ImageView
                             style="@style/Imagesmillpic"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
 
+                            android:layout_marginLeft="5dp"
                             android:src="@mipmap/icon_yue" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_lookdicusright"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Imagesmillpic"
+                            android:layout_width="wrap_content"
+                            android:src="@mipmap/icon_yanjingb" />
+
+                        <TextView
+                            android:id="@+id/tv_yuenum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="0/0" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

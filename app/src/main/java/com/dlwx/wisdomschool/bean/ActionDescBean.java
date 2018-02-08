@@ -241,8 +241,35 @@ public class ActionDescBean {
             private String pl_time;
             private String userid;
             private int zan_num;
+            private String content_video;
+            private String content_voice;
+            private String pl_voice_sec;
             private List<String> content_img;
             private List<PinglunContetBean> pinglun;
+
+            public String getContent_voice() {
+                return content_voice;
+            }
+
+            public void setContent_voice(String content_voice) {
+                this.content_voice = content_voice;
+            }
+
+            public String getPl_voice_sec() {
+                return pl_voice_sec;
+            }
+
+            public void setPl_voice_sec(String pl_voice_sec) {
+                this.pl_voice_sec = pl_voice_sec;
+            }
+
+            public String getContent_video() {
+                return content_video;
+            }
+
+            public void setContent_video(String content_video) {
+                this.content_video = content_video;
+            }
 
             public String getHeader_pic() {
                 return header_pic;

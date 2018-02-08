@@ -9,6 +9,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.dlwx.baselib.utiles.LogUtiles;
+import com.dlwx.wisdomschool.activitys.ClassHistoryNewsActivitry;
 import com.dlwx.wisdomschool.activitys.ClassManageActivity;
 import com.dlwx.wisdomschool.base.MainActivity;
 import com.dlwx.wisdomschool.base.MyApplication;
@@ -95,6 +96,11 @@ public class MyReceiver extends BroadcastReceiver {
                     case 6:
 
                         break;
+                    case 7://收到通知 请及时点阅
+                        inten = new Intent(context, ClassHistoryNewsActivitry.class);
+                        inten.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(inten);
+                        break;
                 }
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
                 Log.i(TAG, "[NotiReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
@@ -176,6 +182,7 @@ public class MyReceiver extends BroadcastReceiver {
             case 6:
 
                 break;
+
 
         }
 

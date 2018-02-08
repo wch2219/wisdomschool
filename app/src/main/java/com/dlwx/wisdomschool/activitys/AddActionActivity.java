@@ -255,9 +255,14 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
                     startActivityForResult(intent, 2);
                     break;
                 case R.id.tv_voice:
+                    intent = new Intent(ctx, JoinActionSendMessActivity.class);
+                    intent.putExtra("id",id);
+                    startActivity(intent);
                     bottompopu.dismiss();
                     break;
                 case R.id.tv_video:
+                    intent = new Intent(ctx, RecordVideoActivity.class);
+                    startActivityForResult(intent, 1);
                     bottompopu.dismiss();
                     break;
                 case R.id.tv_close:
@@ -279,6 +284,14 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
                 ArrayList<String> images = data.getStringArrayListExtra("images");
                 intent = new Intent(ctx, JoinActionSendMessActivity.class);
                 intent.putStringArrayListExtra("images", images);
+                intent.putExtra("id",id);
+                startActivity(intent);
+                break;
+            case 1://视频
+                String vodeofile = data.getStringExtra("videofile");
+                wch("视频：" + vodeofile);
+                intent = new Intent(ctx, JoinActionSendMessActivity.class);
+                intent.putExtra("videofile", vodeofile);
                 intent.putExtra("id",id);
                 startActivity(intent);
                 break;

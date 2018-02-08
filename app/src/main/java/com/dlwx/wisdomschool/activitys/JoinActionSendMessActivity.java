@@ -1,8 +1,14 @@
 package com.dlwx.wisdomschool.activitys;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.bean.Image;
@@ -108,6 +115,9 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         id = intent.getStringExtra("id");
         setContentView(R.layout.activity_join_action_send_mess);
         ButterKnife.bind(this);
+        if (images == null) {
+            images = new ArrayList<>();
+        }
     }
 
     @Override
@@ -118,7 +128,8 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         if (!TextUtils.isEmpty(videofile)) {//判断是视频
             ivMp3.setVisibility(View.GONE);
             ivAddpic.setVisibility(View.GONE);
-            Glide.with(ctx).load(videofile).into(ivVideopic);
+            llVideo.setVisibility(View.VISIBLE);
+            Glide.with(ctx).load(videofile).apply(new RequestOptions().centerCrop()).into(ivVideopic);
         } else {
 
             llVideo.setVisibility(View.GONE);
@@ -207,9 +218,18 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                 startActivityForResult(intent, requestCodeVideo);
                 break;
             case R.id.ll_video://视频播放
-                intent = new Intent(ctx, VideoPlayActivity.class);
-                intent.putExtra("path", videofile);
-                startActivity(intent);
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions((Activity) ctx, new String[]{
+                            Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.READ_EXTERNAL_STORAGE,
+
+                    }, 1002);
+
+                }else{
+                    intent = new Intent(ctx, VideoPlayActivity.class);
+                    intent.putExtra("path", videofile);
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.ll_voice://语音
                 break;
@@ -270,13 +290,11 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                     }
                 }
             });
+            showLoading();
             UpFileUtiles.start(ctx, new File(videofile), "2", 0);
 
         } else {
-            if (images.size() == 0) {
-                Toast.makeText(ctx, "请先选择图片", Toast.LENGTH_SHORT).show();
-                return;
-            }
+
             //上传图片语音
             if (!TextUtils.isEmpty(voiceFile)) {//先判断是否有语音,有语音先上传语音
                 showLoading();
@@ -290,7 +308,12 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                         if (upPicBean.getCode() == 200) {
                             voice = upPicBean.getBody().getFileid() + "";
                             //上传成功后再多图上传
-                            upPic();
+                            if (images.size() == 0) {
+                               send();
+                                return;
+                            }else{
+                                upPic();
+                            }
                         } else {
                             Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                         }
@@ -298,8 +321,14 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                 });
                 wch(voiceFile);
                 UpFileUtiles.start(ctx, new File(voiceFile), "2", 0);
-            } else {//没有语音开始多图上传
-                upPic();
+            } else {
+                //没有语音开始多图上传
+                if (images.size() == 0) {//没有图片直接上传
+                    send();
+                    return;
+                }else{
+                    upPic();
+                }
             }
         }
     }
@@ -348,8 +377,11 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         map.put("pl_content", content);
         map.put("pl_img", imgs);
         map.put("irid", id);
-//        map.put("video", video);
-//        map.put("voice", voice);
+        map.put("pl_video", video);
+        map.put("pl_voice", voice);
+        if (!TextUtils.isEmpty(voice)) {
+            map.put("pl_voice_sec",tvSec.getText().toString());
+        }
         mPreenter.fetch(map, false, HttpUrl.JoinAction, "");
     }
     @Override
@@ -357,7 +389,7 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         voiceFile = file;
         //录制完成返回的语音文件
         llVoice.setVisibility(View.VISIBLE);
-        tvSec.setText(VoicetranscribeAndPlayUtiles.durationTime(voiceFile));
+        tvSec.setText(VoicetranscribeAndPlayUtiles.durationTime(voiceFile)+"''");
     }
 
     @Override
@@ -394,11 +426,13 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         Intent intent;
         switch (requestCode) {
             case 1://视频
-                String vodeofile = data.getStringExtra("vodeofile");
-                wch("视频：" + vodeofile);
-                intent = new Intent(ctx, PublishGroupUpActivity.class);
-                intent.putExtra("videofile", vodeofile);
-                startActivity(intent);
+                videofile = data.getStringExtra("videofile");
+                wch("视频：" + videofile);
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                mmr.setDataSource(videofile);
+                Bitmap bitmap = mmr.getFrameAtTime();
+                llVideo.setVisibility(View.VISIBLE);
+                ivVideopic.setImageBitmap(ImageCrop(bitmap));
                 break;
             case 2://图片
                 List<String> imag = data.getStringArrayListExtra("images");
@@ -430,5 +464,17 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                 break;
 
         }
+    }
+    /**
+     * 按正方形裁切图片
+     */
+    public static Bitmap ImageCrop(Bitmap bitmap) {
+        int w = bitmap.getWidth(); // 得到图片的宽，高
+        int h = bitmap.getHeight();
+        int centH = h / 2;
+        int wh = w * 3 / 4;
+        int retY = (centH - centH / 2);
+        //下面这句是关键
+        return Bitmap.createBitmap(bitmap, 0, retY, wh, wh, null, false);
     }
 }

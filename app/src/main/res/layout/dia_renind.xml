@@ -4,5 +4,43 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        style="@style/TextSizeSmallTitleBlack"
+        android:text="一键提醒"
+            android:textColor="@color/black"
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+         />
+    <TextView
+        style="@style/TextSizecontentBlack"
+        android:layout_width="match_parent"
+            android:text="一键提醒家长查看，是否确定？"
+        android:gravity="center_horizontal"
+        />
+    <LinearLayout
 
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:text="取消"
+            android:id="@+id/tv_close"
+            android:padding="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+        <TextView
+            style="@style/TextSizecontentBlack"
+            android:text="确定"
+            android:id="@+id/tv_aff"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
 </LinearLayout>

@@ -83,6 +83,15 @@ public class WorkListBean {
         private String parent_isyue;
         private String texturl;
         private String content_voice_second;
+        private int my_now_role;
+
+        public int getMy_now_role() {
+            return my_now_role;
+        }
+
+        public void setMy_now_role(int my_now_role) {
+            this.my_now_role = my_now_role;
+        }
 
         public String getContent_voice_second() {
             return content_voice_second;

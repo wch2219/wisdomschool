@@ -156,8 +156,8 @@ public class RegisterActivity extends BaseActivity {
             BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
             if (backResultBean.getCode() == 200) {
                 //注册成功后保存帐号密码，之后立即登录
-                sp.edit().putString(SpUtiles.Account, etPhone.getText().toString().trim());
-                sp.edit().putString(SpUtiles.PasswordWord, etPwd.getText().toString().trim());
+                sp.edit().putString(SpUtiles.Account, etPhone.getText().toString().trim()).commit();
+                sp.edit().putString(SpUtiles.PasswordWord, etPwd.getText().toString().trim()).commit();
                 finish();
             }
             Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
@@ -210,7 +210,6 @@ public class RegisterActivity extends BaseActivity {
                 }
             }
         }
-
         @Override
         public void gainImg() {
             getAuth();

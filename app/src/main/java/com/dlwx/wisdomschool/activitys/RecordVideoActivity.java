@@ -162,6 +162,7 @@ public class RecordVideoActivity extends BaseActivity implements
             String format = simpleDateFormat.format(new Date(l));
             videoFile = new File(outfilePath, format + ".mp4");
             wch(videoFile);
+            tv_upvideo.setVisibility(View.GONE);
             mCamera.unlock();
             mediaRecorder = new MediaRecorder();
             mediaRecorder.reset();
@@ -175,7 +176,7 @@ public class RecordVideoActivity extends BaseActivity implements
             //设置录制的视频编码比特率
             mediaRecorder.setVideoEncodingBitRate(3 * 1024 * 1024);
             mediaRecorder.setVideoSize(640, 480);
-            mediaRecorder.setVideoFrameRate(50);
+//            mediaRecorder.setVideoFrameRate(50);
             mediaRecorder.setOutputFile(videoFile.getAbsolutePath());
             // 判断是前置摄像头还是后置摄像头 然后设置视频旋转 如果不加上 后置摄像头没有问题 但是前置摄像头录制的视频会导致上下翻转
             if (currentCameraType == FRONT) {
@@ -248,7 +249,9 @@ public class RecordVideoActivity extends BaseActivity implements
             Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
             sendBroadcast(localIntent);
             Intent intent = new Intent();
-            intent.putExtra("videofile", videoFile + "");
+            wch(videoFile);
+
+            intent.putExtra("videofile", videoFile.getAbsoluteFile().toString());
             setResult(1, intent);
             finish();
 //            Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -277,8 +280,9 @@ public class RecordVideoActivity extends BaseActivity implements
         File sd = Environment.getExternalStorageDirectory();
         String path = sd.getPath();
         File file = new File(path);
-        if (!file.exists())
+        if (!file.exists()){
             file.mkdir();
+        }
         return sd;
     }
 

@@ -29,6 +29,7 @@ import com.dlwx.wisdomschool.activitys.WebUrlActivity;
 import com.dlwx.wisdomschool.bean.WorkListBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.dlwx.wisdomschool.utiles.LookPic;
+import com.dlwx.wisdomschool.utiles.VoicetranscribeAndPlayUtiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
     private List<WorkListBean.BodyBean> body;
     private int LeftViewType = 2;
     private int RightViewType = 1;
+    private Pattern compile;
+    private Matcher matcher;
 
     public WorkItemAdapter(Context ctx, List<WorkListBean.BodyBean> body) {
         super(ctx);
@@ -104,12 +107,66 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 case 5://习惯养成
                     holderleft.tv_joinaction.setVisibility(View.VISIBLE);
                     holderleft.ll_yue.setVisibility(View.GONE);
+                    ((ViewHolderleft) holder).ll_lookdicusright.setVisibility(View.GONE);
                     holderleft.ll_url.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_actionshouji).into(holderleft.iv_typeleft);
                     break;
-                case 6://老师作业
+                case 6://家长作业
+                    /**
+                     * 阅读状态
+                     */
+                    if (bodyBean.getMy_now_role() == 1) {//在当前班级的身份 1是老师 2是家长
+                        holderleft.ll_yue.setVisibility(View.GONE);
+                        holderleft.ll_lookdicusright.setVisibility(View.VISIBLE);
+                    }else{
+                        holderleft.ll_yue.setVisibility(View.VISIBLE);
+                        holderleft.ll_lookdicusright.setVisibility(View.GONE);
+                        String parent_isyue = bodyBean.getParent_isyue();
+                        if ("1".equals(parent_isyue)) {//已阅
+                            holderleft.tv_yueType.setText("已阅");
+                        }else{
+                            holderleft.tv_yueType.setText("请点");
+                        }
+                    }
+
+                    compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                    matcher = compile.matcher(bodyBean.getContent());
+                    while(matcher.find()){
+                        String group = matcher.group();
+                        bodyBean.setTexturl(group);
+                        // 设置setWebChromeClient对象
+                        WebView webView = new WebView(ctx);
+                        webView.setWebChromeClient(new WebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                holderleft.tv_urltitle.setText(title);
+                                super.onReceivedTitle(view, title);
+                            }
+                            @Override
+                            public void onReceivedIcon(WebView view, Bitmap icon) {
+                                super.onReceivedIcon(view, icon);
+
+                                holderleft.iv_urlpic.setImageBitmap(icon);
+                            }
+                        });
+
+                        webView.loadUrl(group);
+                        webView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                view.loadUrl(url);
+                                return true;
+                            }
+                        });
+                    }
+                    if (matcher.find()) {
+                        holderleft.ll_url.setVisibility(View.VISIBLE);
+                    }else{
+                        holderleft.ll_url.setVisibility(View.GONE);
+                    }
                     holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_url.setVisibility(View.GONE);
+                    holderleft.ll_yue.setVisibility(View.VISIBLE);
+
                     Glide.with(ctx).load(R.mipmap.icon_zuoye).into(holderleft.iv_typeleft);
                     break;
                 case 10://周刊
@@ -119,10 +176,26 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                     Glide.with(ctx).load(R.mipmap.icon_zhoukan).into(holderleft.iv_typeleft);
                     break;
                 case 7://家长作业
-                    Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
-                    Matcher matcher = compile.matcher(bodyBean.getContent());
-                    while(matcher.find()){
 
+                    /**
+                     * 阅读状态
+                     */
+                    if (bodyBean.getMy_now_role() == 1) {//在当前班级的身份 1是老师 2是家长
+                        holderleft.ll_yue.setVisibility(View.GONE);
+                        holderleft.ll_lookdicusright.setVisibility(View.VISIBLE);
+                    }else{
+                        holderleft.ll_yue.setVisibility(View.VISIBLE);
+                        holderleft.ll_lookdicusright.setVisibility(View.GONE);
+                        String parent_isyue = bodyBean.getParent_isyue();
+                        if ("1".equals(parent_isyue)) {//已阅
+                            holderleft.tv_yueType.setText("已阅");
+                        }else{
+                            holderleft.tv_yueType.setText("请点");
+                        }
+                    }
+                   compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                   matcher = compile.matcher(bodyBean.getContent());
+                    while(matcher.find()){
                         String group = matcher.group();
                         bodyBean.setTexturl(group);
                         // 设置setWebChromeClient对象
@@ -183,15 +256,8 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 holderleft.ll_voiceleft.setVisibility(View.VISIBLE);
                 holderleft.tv_sec.setText(bodyBean.getContent_voice_second()+"''");
             }
-            /**
-             * 阅读状态
-             */
-            String parent_isyue = bodyBean.getParent_isyue();
-            if ("1".equals(parent_isyue)) {//已阅
-                holderleft.tv_yueType.setText("已阅");
-            }else{
-                holderleft.tv_yueType.setText("请点");
-            }
+
+
             holderleft.tv_leftdate.setText(bodyBean.getCreatedtime());
             /*参与活动*/
             holderleft.tv_joinaction.setOnClickListener(new View.OnClickListener() {
@@ -224,13 +290,21 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 @Override
                 public void onClick(View v) {
                     String yueType = holderleft.tv_yueType.getText().toString().trim();
-                    if (yueType.equals("点击")) {
+                    if (yueType.equals("请点")) {
                         holderleft.tv_yueType.setText("已阅");
                         itemOnClickListener.clickYue(bodyBean.getId());
                     }else{
                         holderleft.tv_yueType.setText("已阅");
                     }
 
+                }
+            });
+            //语音播放
+            holderleft.ll_voiceleft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holderleft.iv_viecoplaytype.setImageResource(R.drawable.anim_viceo_play);
+                    VoicetranscribeAndPlayUtiles.play(holderleft.iv_viecoplaytype,bodyBean.getContent_voice());
                 }
             });
             /**
@@ -253,10 +327,10 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                         Toast.makeText(ctx, "错误的链接地址", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                        Intent intent  = new Intent(ctx, WebUrlActivity.class);
-                        intent.putExtra("url","www.baidu.com");
-
-                        ctx.startActivity(intent);
+                    Intent intent  = new Intent(ctx, WebUrlActivity.class);
+                    intent.putExtra("url",bodyBean.getTexturl());
+                    intent.putExtra("isback",true);
+                    ctx.startActivity(intent);
                 }
             });
 
@@ -267,7 +341,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
             holderRight.tv_rightname.setText(bodyBean.getClass_name()+"("+bodyBean.getNickname()+")");
             holderRight.tv_title.setText(bodyBean.getTheme_name());
             EmoSwichUtiles.toSwich(ctx, holderRight.tv_content, bodyBean.getContent());
-            int theme = bodyBean.getTheme();
+            final int theme = bodyBean.getTheme();
             switch (theme) {
 //                case 1://班级通知
 //                    Glide.with(ctx).load(R.mipmap.icon_noti).into(holderRight.iv_type);
@@ -295,13 +369,8 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                     holderRight.ll_url.setVisibility(View.GONE);
                     break;
                 case 6://老师作业
-                    Glide.with(ctx).load(R.mipmap.icon_zuoye).into(holderRight.iv_type);
-                    holderRight.ll_looknumandyueright.setVisibility(View.GONE);
-                    holderRight.ll_url.setVisibility(View.GONE);
-                    break;
-                case 7://家长作业
-                    Pattern compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
-                    Matcher matcher = compile.matcher(bodyBean.getContent());
+                    compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                    matcher = compile.matcher(bodyBean.getContent());
                     while(matcher.find()){
                         String group = matcher.group();
                         bodyBean.setTexturl(group);
@@ -329,10 +398,43 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                             }
                         });
                     }
-                    holderRight.ll_url.setVisibility(View.VISIBLE);
                     holderRight.ll_voice.setVisibility(View.GONE);
-                    Glide.with(ctx).load(R.mipmap.icon_wenzhang).into(holderRight.iv_type);
                     holderRight.ll_looknumandyueright.setVisibility(View.VISIBLE);
+                    Glide.with(ctx).load(R.mipmap.icon_zuoye).into(holderRight.iv_type);
+                    break;
+                case 7://家长作业
+                   compile = Pattern.compile("http://(.)*html|http://(.)*cn|http://(.)*com");
+                    matcher = compile.matcher(bodyBean.getContent());
+                    while(matcher.find()){
+                        String group = matcher.group();
+                        bodyBean.setTexturl(group);
+                        // 设置setWebChromeClient对象
+                        WebView webView = new WebView(ctx);
+                        webView.setWebChromeClient(new WebChromeClient(){
+                            @Override
+                            public void onReceivedTitle(WebView view, String title) {
+                                holderRight.tv_urltitle.setText(title);
+                                super.onReceivedTitle(view, title);
+                            }
+                            @Override
+                            public void onReceivedIcon(WebView view, Bitmap icon) {
+                                super.onReceivedIcon(view, icon);
+                                holderRight.iv_urlpic.setImageBitmap(icon);
+                            }
+                        });
+                        //此处省略N行代码
+                        webView.loadUrl(group);
+                        webView.setWebViewClient(new WebViewClient(){
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                view.loadUrl(url);
+                                return true;
+                            }
+                        });
+                    }
+                    holderRight.ll_voice.setVisibility(View.GONE);
+                    holderRight.ll_looknumandyueright.setVisibility(View.VISIBLE);
+                    Glide.with(ctx).load(R.mipmap.icon_wenzhang).into(holderRight.iv_type);
                     break;
                 case 10://周刊
                     Glide.with(ctx).load(R.mipmap.icon_zhoukan).into(holderRight.iv_type);
@@ -390,10 +492,25 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                 public void onClick(View v) {
                     Intent intent = new Intent(ctx, LookReadActivity.class);
                     intent.putExtra("id", bodyBean.getId());
+                    intent.putExtra("type",theme);
                     ctx.startActivity(intent);
                 }
             });
-
+            //语音播放
+            holderRight.ll_voice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holderRight.iv_viecoplaytype.setImageResource(R.drawable.anim_viceo_play);
+                    VoicetranscribeAndPlayUtiles.play(holderRight.iv_viecoplaytype,bodyBean.getContent_voice());
+                }
+            });
+            //视频播放
+            holderRight.iv_video.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //todo
+                }
+            });
             /**
              * 条目点击
              */
@@ -460,6 +577,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
         public TextView tv_leftdate;
         public TextView tv_joinaction;
         public LinearLayout ll_yue;
+        public LinearLayout ll_lookdicusright;
         public TextView tv_yueType;
         public LinearLayout ll_url;
         public ImageView iv_urlpic;
@@ -481,6 +599,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
             this.ll_voiceleft = (LinearLayout) rootView.findViewById(R.id.ll_voiceleft);
             this.tv_leftdate = (TextView) rootView.findViewById(R.id.tv_leftdate);
             this.ll_yue = (LinearLayout) rootView.findViewById(R.id.ll_yue);
+            this.ll_lookdicusright = (LinearLayout) rootView.findViewById(R.id.ll_lookdicusright);
             this.ll_url = (LinearLayout) rootView.findViewById(R.id.ll_url);
             this.tv_yueType = (TextView) rootView.findViewById(R.id.tv_yueType);
             this.iv_urlpic = rootView.findViewById(R.id.iv_urlpic);

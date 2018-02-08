@@ -1,6 +1,7 @@
 package com.dlwx.wisdomschool.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,15 +14,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.bean.Image;
 import com.dlwx.baselib.view.MyGridView;
 import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
+import com.dlwx.wisdomschool.activitys.VideoPlayActivity;
 import com.dlwx.wisdomschool.bean.ActionDescBean;
 import com.dlwx.wisdomschool.bean.PinglunContetBean;
 import com.dlwx.wisdomschool.utiles.EmoSwichUtiles;
 import com.dlwx.wisdomschool.utiles.LookPic;
+import com.dlwx.wisdomschool.utiles.VoicetranscribeAndPlayUtiles;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
@@ -83,6 +87,13 @@ public class AddActionAdapter extends BaseRecrviewAdapter {
             } else {
                 vhHead.ll_voiceleft.setVisibility(View.VISIBLE);
             }
+            if (TextUtils.isEmpty(body.getTheme_endtime())) {
+                vhHead.tv_endime.setText("结束时间：长期有效");
+            }else{
+
+                vhHead.tv_endime.setText("结束时间："+body.getTheme_endtime());
+            }
+
             /**
              * 图片点击
              */
@@ -123,27 +134,26 @@ public class AddActionAdapter extends BaseRecrviewAdapter {
             } else {
                 vh.gv_list.setNumColumns(3);
             }
-//        //判断是是视频还是图片
-//        if (TextUtils.isEmpty(pinglunBean.getVideo())) {
-//            vh.gv_list.setVisibility(View.VISIBLE);
-//            vh.rl_voide.setVisibility(View.GONE);
-//        }else{
-//            vh.gv_list.setVisibility(View.GONE);
-//            vh.rl_voide.setVisibility(View.VISIBLE);
-//            Glide.with(ctx).asBitmap().load(bodyBean.getVideo()).apply(new RequestOptions().centerCrop()).into(vh.iv_video);
-//        }
+        //判断是是视频还是图片
+        if (TextUtils.isEmpty(pinglunBean.getContent_video())) {
+            vh.gv_list.setVisibility(View.VISIBLE);
+            vh.rl_voide.setVisibility(View.GONE);
+        }else{
+            vh.gv_list.setVisibility(View.GONE);
+            vh.rl_voide.setVisibility(View.VISIBLE);
+            Glide.with(ctx).asBitmap().load(pinglunBean.getContent_video()).apply(new RequestOptions().centerCrop()).into(vh.iv_video);
+        }
             //展示图片列表
             List<String> imgs = pinglunBean.getContent_img();
             vh.gv_list.setAdapter(new RecordPicListAdapter(ctx, imgs));
             //语音
-//        if (TextUtils.isEmpty(bodyBean.getVoice())) {
-//            vh.rl_viceo.setVisibility(View.GONE);
-//
-//        }else{
-//            vh.rl_viceo.setVisibility(View.VISIBLE);
-////            String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getVoice());
-////            vh.tv_viceotime.setText(time);
-//        }
+        if (TextUtils.isEmpty(pinglunBean.getContent_voice())) {
+            vh.rl_viceo.setVisibility(View.GONE);
+
+        }else{
+            vh.rl_viceo.setVisibility(View.VISIBLE);
+            vh.tv_viceotime.setText(pinglunBean.getPl_voice_sec()+"''");
+        }
 
             //文字简介
             EmoSwichUtiles.toSwich(ctx, vh.tv_connect, pinglunBean.getPl_content());
@@ -163,22 +173,22 @@ public class AddActionAdapter extends BaseRecrviewAdapter {
             /**
              * 视频播放
              */
-//        vh.rl_voide.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ctx, VideoPlayActivity.class);
-//                intent.putExtra("path", bodyBean.getVideo());
-//                ctx.startActivity(intent);
-//            }
-//        });
+        vh.rl_voide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx, VideoPlayActivity.class);
+                intent.putExtra("path", pinglunBean.getContent_video());
+                ctx.startActivity(intent);
+            }
+        });
             //语音播放
-//        vh.rl_viceo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                vh.iv_playing.setImageResource(R.drawable.anim_viceo_play);
-//                VoicetranscribeAndPlayUtiles.play(vh.iv_playing,bodyBean.getVoice());
-//            }
-//        });
+        vh.rl_viceo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vh.iv_playing.setImageResource(R.drawable.anim_viceo_play);
+                VoicetranscribeAndPlayUtiles.play(vh.iv_playing,pinglunBean.getContent_voice());
+            }
+        });
             /**
              * 图片点击
              */

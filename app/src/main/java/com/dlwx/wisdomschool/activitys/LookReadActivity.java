@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -18,6 +20,7 @@ import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.LookReadAdapter;
+import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.LookReadBean;
 import com.dlwx.wisdomschool.utiles.HttpUrl;
 import com.google.gson.Gson;
@@ -35,7 +38,7 @@ import static com.dlwx.wisdomschool.base.MyApplication.Token;
 /**
  * 查看反馈
  */
-public class LookReadActivity extends BaseActivity {
+public class LookReadActivity extends BaseActivity implements LookReadAdapter.SendNotifitiListener {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tool_bar)
@@ -58,12 +61,19 @@ public class LookReadActivity extends BaseActivity {
     ListView lvList;
     @BindView(R.id.tv_remindlook)
     TextView tv_remindlook;
+    @BindView(R.id.btn_oneKey)
+    Button btn_oneKey;
     private String id;
+    //消息的主题
+    private int theme;
+    private AlertDialog onKeyDia;
+    private List<LookReadBean.BodyBean.Unread_info> unread_info;
 
     @Override
     protected void initView() {
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        theme = intent.getIntExtra("type",0);
         setContentView(R.layout.activity_look_read);
         ButterKnife.bind(this);
     }
@@ -78,6 +88,7 @@ public class LookReadActivity extends BaseActivity {
     }
 
     private void getData(String choose) {
+        HttpType = 1;
         Map<String, String> map = new HashMap<>();
         map.put("token", Token);
         map.put("id", id);
@@ -97,7 +108,7 @@ public class LookReadActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_all, R.id.tv_notlook, R.id.tv_remindlook})
+    @OnClick({R.id.tv_all, R.id.tv_notlook, R.id.btn_oneKey})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_all:
@@ -105,41 +116,64 @@ public class LookReadActivity extends BaseActivity {
                 tvNotlook.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//加粗
                 rlType.setBackgroundResource(R.drawable.shape_loop_bgg_reen);
                 getData("1");
+                btn_oneKey.setVisibility(View.GONE);
+                type = 1;
                 break;
             case R.id.tv_notlook:
                 tvAll.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));//加粗
                 tvNotlook.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));//加粗
                 rlType.setBackgroundResource(R.drawable.shape_loop_bgg_blue);
                 getData("2");
+                type = 2;
+
                 break;
-            case R.id.tv_remindlook://一键提醒
-//                showremind();
+            case R.id.btn_oneKey://一键提醒
+                showremind();
                 break;
         }
     }
 
-    /**
-     * 弹出提醒框体
-     */
-    private void showremind() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
-        View view = LayoutInflater.from(ctx).inflate(R.layout.dia_renind, null);
-        builder.setView(view);
-    }
+    private int type = 1;
+
 
     @Override
     public void showData(String s) {
         disLoading();
         wch(s);
         Gson gson = new Gson();
+        if (HttpType == 1) {
+
+            listDate(s, gson);
+        } else {
+            BackResultBean backResultBean = gson.fromJson(s, BackResultBean.class);
+            if (backResultBean.getCode() == 200) {
+                getData(type + "");
+            }
+            Toast.makeText(ctx, backResultBean.getResult(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void listDate(String s, Gson gson) {
         LookReadBean lookReadBean = gson.fromJson(s, LookReadBean.class);
         if (lookReadBean.getCode() == 200) {
             LookReadBean.BodyBean body = lookReadBean.getBody();
             tvLooknum.setText(body.getRead_num() + "人已查看");
             tvNotlooknum.setText(body.getUnread_num() + "人未查看");
             tvNum.setText(body.getPercentage());
-            List<LookReadBean.BodyBean.AllInfoBean> all_info = body.getAll_info();
-            lvList.setAdapter(new LookReadAdapter(ctx, all_info));
+            LookReadAdapter lookReadAdapter;
+            if (type == 1) {
+                List<LookReadBean.BodyBean.AllInfoBean> all_info = body.getAll_info();
+                lookReadAdapter = new LookReadAdapter(ctx, all_info);
+                lvList.setAdapter(lookReadAdapter);
+            } else {
+                unread_info = body.getUnread_info();
+                lookReadAdapter = new LookReadAdapter(ctx, unread_info, type);
+                lvList.setAdapter(lookReadAdapter);
+                if (unread_info.size() > 0) {
+                    btn_oneKey.setVisibility(View.VISIBLE);
+                }
+            }
+            lookReadAdapter.setSendNotifitiListener(this);
         } else {
             Toast.makeText(ctx, lookReadBean.getResult(), Toast.LENGTH_SHORT).show();
         }
@@ -161,5 +195,74 @@ public class LookReadActivity extends BaseActivity {
                 backgroundAlpha(1);
             }
         });
+    }
+
+    //单个提醒用户
+    @Override
+    public void send(String parent_id) {
+        senNoti(parent_id);
+    }
+
+    /**
+     * 给家长发送通知
+     *
+     * @param parent_id
+     */
+    private void senNoti(String parent_id) {
+        Map<String, String> map = new HashMap<>();
+        map.put("token", Token);
+        map.put("parent_id", parent_id);
+        map.put("type", theme+"");
+        HttpType = 2;
+        mPreenter.fetch(map, true, HttpUrl.Push_message, "");
+    }
+
+    /**
+     * 弹出提醒框体
+     */
+    private void showremind() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        View view = LayoutInflater.from(ctx).inflate(R.layout.dia_renind, null);
+        ViewHolder vh = new ViewHolder(view);
+        builder.setView(view);
+        onKeyDia = builder.show();
+        vh.tv_close.setOnClickListener(this);
+        vh.tv_aff.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onKeyDia.dismiss();
+        switch (v.getId()) {
+            case R.id.tv_close:
+                break;
+            case R.id.tv_aff:
+                String parentid = "";
+                for (int i = 0; i < unread_info.size(); i++) {
+                    LookReadBean.BodyBean.Unread_info unread_info = this.unread_info.get(i);
+
+                        if (TextUtils.isEmpty(parentid)) {
+                            parentid = unread_info.getUserid();
+                        }else{
+                            parentid = parentid + ","+ unread_info.getUserid();
+                        }
+                }
+                senNoti(parentid);
+                break;
+        }
+
+    }
+
+    private class ViewHolder {
+        public View rootView;
+        public TextView tv_close;
+        public TextView tv_aff;
+
+        public ViewHolder(View rootView) {
+            this.rootView = rootView;
+            this.tv_close = (TextView) rootView.findViewById(R.id.tv_close);
+            this.tv_aff = (TextView) rootView.findViewById(R.id.tv_aff);
+        }
+
     }
 }

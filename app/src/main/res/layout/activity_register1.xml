@@ -73,6 +73,7 @@
             android:id="@+id/tv_getteachcode"
             style="@style/TextSizeSmallTitleBlack"
             android:text="获取教师邀请码"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"

@@ -49,17 +49,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     >
+
                     <TextView
                         style="@style/TextSizecontentBlack"
+                        android:layout_height="match_parent"
                         android:text="纪录："
-                        android:textSize="11sp"
                         android:textColor="@color/garytext"
-                        />
+                        android:textSize="11sp" />
                     <TextView
                         android:id="@+id/tv_classname"
                         style="@style/TextSizecontentBlack"
                         android:text="一年级八班"
+
                         android:textSize="11sp"
                         android:textColor="@color/garytext"
                         />

@@ -13,14 +13,13 @@
         >
         <ImageView
             android:id="@+id/iv_unlook"
+            android:visibility="gone"
            style="@style/Imagesmill2pic"
-            android:layout_marginLeft="10dp"
             android:layout_gravity="center_vertical"
             android:src="@mipmap/icon_baiban"
             />
         <ImageView
             android:id="@+id/iv_pic"
-            android:layout_marginLeft="10dp"
             style="@style/ImagehomeItempic"
             android:src="@mipmap/ss33"
             android:scaleType="fitXY"
@@ -34,12 +33,13 @@
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
         />
+
         <ImageView
             android:id="@+id/iv_remind"
             style="@style/Imagesmill2pic"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@mipmap/icon_canyutixing"
-            />
+            android:src="@mipmap/icon_canyutixing" />
     <ImageView
         android:id="@+id/iv_send"
         style="@style/Imagesmill2pic"

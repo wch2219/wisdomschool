@@ -104,8 +104,13 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if (b) {//开始录制
-                VoicetranscribeAndPlayUtiles.start((Activity) ctx, cbRecord, tv_time);
-                tv_recordType.setText("正在录制……");
+
+                if (tv_recordType.getText().toString().equals("正在录制……")) {
+                    cbRecord.setChecked(!b);
+                }else{
+                    VoicetranscribeAndPlayUtiles.start((Activity) ctx, cbRecord, tv_time);
+                    tv_recordType.setText("正在录制……");
+                }
             } else {//结束录制
                 outFile = VoicetranscribeAndPlayUtiles.stop();
                 VoiceRecordOrPlayListener.recordListener.backFile(outFile);
@@ -117,7 +122,6 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
             }
         }
     };
-
     private CompoundButton.OnCheckedChangeListener playListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -131,7 +135,6 @@ public class RecordOrPlayFragment extends BaseFragment implements SeekBar.OnSeek
             release();
         }
     }
-
     private String outFile;
     private MediaPlayer mMediaPlayer;
     private int duration;//音频时长

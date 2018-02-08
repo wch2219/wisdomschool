@@ -54,7 +54,7 @@ public class LookReadBean {
         private int read_num;
         private int unread_num;
         private List<AllInfoBean> all_info;
-
+        private List<Unread_info> unread_info;
         public String getPercentage() {
             return percentage;
         }
@@ -87,7 +87,71 @@ public class LookReadBean {
             this.all_info = all_info;
         }
 
+        public List<Unread_info> getUnread_info() {
+            return unread_info;
+        }
+
+        public void setUnread_info(List<Unread_info> unread_info) {
+            this.unread_info = unread_info;
+        }
+
         public static class AllInfoBean {
+            /**
+             * join_role : 哈哈爸爸
+             * userid : 5
+             * header_pic : http://192.168.0.199/school/assets/default_user_photo.jpg
+             * telephone : 13782254956
+             * is_yue : 1
+             */
+
+            private String join_role;
+            private String userid;
+            private String header_pic;
+            private String telephone;
+            private int is_yue;
+
+            public String getJoin_role() {
+                return join_role;
+            }
+
+            public void setJoin_role(String join_role) {
+                this.join_role = join_role;
+            }
+
+            public String getUserid() {
+                return userid;
+            }
+
+            public void setUserid(String userid) {
+                this.userid = userid;
+            }
+
+            public String getHeader_pic() {
+                return header_pic;
+            }
+
+            public void setHeader_pic(String header_pic) {
+                this.header_pic = header_pic;
+            }
+
+            public String getTelephone() {
+                return telephone;
+            }
+
+            public void setTelephone(String telephone) {
+                this.telephone = telephone;
+            }
+
+            public int getIs_yue() {
+                return is_yue;
+            }
+
+            public void setIs_yue(int is_yue) {
+                this.is_yue = is_yue;
+            }
+        }
+
+        public class Unread_info{
             /**
              * join_role : 哈哈爸爸
              * userid : 5

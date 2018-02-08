@@ -96,7 +96,8 @@ public class VoicetranscribeAndPlayUtiles {
 //        SimpleDateFormat format = new SimpleDateFormat("mm:ss");
 //        String time = format.format(new Date((long) duration));
 //        Log.d("ACETEST", "### duration: " + duration);
-        String time = duration/1000+"";
+        int v = (int) (duration / 1000);
+        String time = v+"";
         player.release();//记得释放资源
         return time;
     }

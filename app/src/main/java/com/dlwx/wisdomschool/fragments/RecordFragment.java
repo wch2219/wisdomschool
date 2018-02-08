@@ -808,8 +808,6 @@ public class RecordFragment extends BaseFragment implements View.OnClickListener
         }
         Intent intent;
         switch (requestCode) {
-
-
             case 1://视频
                 String vodeofile = data.getStringExtra("videofile");
                 wch("视频：" + vodeofile);

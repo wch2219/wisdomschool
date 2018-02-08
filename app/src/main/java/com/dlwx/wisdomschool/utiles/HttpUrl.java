@@ -89,4 +89,5 @@ public class HttpUrl {
     public static final String getAllClassMember = BaseUrl + "Classroom/get_all_class_user";//班级以及所有成员显示
     public static final String TuiClass = BaseUrl + "User/tuiclass";//家长申请退出班级
     public static final String SysMess = BaseUrl + "message/message_list";//系统消息
+    public static final String Push_message = BaseUrl + "message/push_message";//作业推送消息
 }

@@ -157,6 +157,14 @@
             android:layout_height="wrap_content">
 
         </ListView>
-
+        <Button
+            android:id="@+id/btn_oneKey"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:background="@color/blue"
+            android:text="一键提醒"
+            />
 
 </LinearLayout>
