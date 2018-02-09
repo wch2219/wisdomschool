@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
@@ -26,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.bean.Image;
@@ -46,7 +46,12 @@ import com.dlwx.wisdomschool.utiles.VoicetranscribeAndPlayUtiles;
 import com.google.gson.Gson;
 import com.lzy.okgo.model.Response;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,10 +131,30 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         initTabBar(toolBar);
 
         if (!TextUtils.isEmpty(videofile)) {//判断是视频
+            images = new ArrayList<>();
             ivMp3.setVisibility(View.GONE);
             ivAddpic.setVisibility(View.GONE);
             llVideo.setVisibility(View.VISIBLE);
-            Glide.with(ctx).load(videofile).apply(new RequestOptions().centerCrop()).into(ivVideopic);
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            mmr.setDataSource(videofile);
+            try {
+                FileInputStream fis = new FileInputStream(videofile);
+                wch("视频大小："+fis.available());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Bitmap bitmap = mmr.getFrameAtTime();
+            llVideo.setVisibility(View.VISIBLE);
+            ivVideopic.setImageBitmap(ImageCrop(bitmap));
+            File file = saveBitmapFile(bitmap);
+            try{
+                images.add(file.toString());
+            }catch (Exception e){
+                wch("错误信息："+e.getMessage());
+            }
         } else {
 
             llVideo.setVisibility(View.GONE);
@@ -283,9 +308,10 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                     if (upPicBean.getCode() == 200) {
                         wch("视频上传成功：" + response.body());
                         video = upPicBean.getBody().getFileid() + "";
-                        send();
+                        upPic();
 
                     } else {
+                        disLoading();
                         Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -344,7 +370,6 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
             @Override
             public void success(Response<String> response) {
-                disLoading();
                 Gson gson = new Gson();
                 UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                 if (upPicBean.getCode() == 200) {
@@ -355,6 +380,7 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
                     }
                     upPic();
                 } else {
+                    disLoading();
                     Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -426,13 +452,21 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         Intent intent;
         switch (requestCode) {
             case 1://视频
+                images = new ArrayList<>();
                 videofile = data.getStringExtra("videofile");
                 wch("视频：" + videofile);
+                llVideo.setVisibility(View.VISIBLE);
                 MediaMetadataRetriever mmr = new MediaMetadataRetriever();
                 mmr.setDataSource(videofile);
                 Bitmap bitmap = mmr.getFrameAtTime();
                 llVideo.setVisibility(View.VISIBLE);
                 ivVideopic.setImageBitmap(ImageCrop(bitmap));
+                File file = saveBitmapFile(bitmap);
+                try{
+                    images.add(file.toString());
+                }catch (Exception e){
+                    wch("错误信息："+e.getMessage());
+                }
                 break;
             case 2://图片
                 List<String> imag = data.getStringArrayListExtra("images");
@@ -476,5 +510,28 @@ public class JoinActionSendMessActivity extends BaseActivity implements VoiceRec
         int retY = (centH - centH / 2);
         //下面这句是关键
         return Bitmap.createBitmap(bitmap, 0, retY, wh, wh, null, false);
+    }
+    public File saveBitmapFile(Bitmap bitmap) {
+        File file = new File(createFile(),  "1.jpg");
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+            Glide.with(ctx).load(file).into(ivVideopic);
+        } catch (IOException e) {
+            wch("转化错误："+e.getMessage());
+            e.printStackTrace();
+        }
+        return file;
+    }
+    private File createFile() {
+        File sd = Environment.getExternalStorageDirectory();
+        String path = sd.getPath();
+        File file = new File(path);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        return sd;
     }
 }

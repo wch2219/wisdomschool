@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
@@ -89,6 +90,8 @@ public class SettActivity extends BaseActivity {
                 diaShow.dismiss();
                 break;
             case R.id.tv_aff:
+                Toast.makeText(ctx, "清除成功", Toast.LENGTH_SHORT).show();
+                tvCachsize.setText("0KB");
                 diaShow.dismiss();
                 break;
         }

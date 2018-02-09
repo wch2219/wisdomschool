@@ -12,6 +12,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 成长纪录
+ */
 public class RecordActivity extends BaseActivity {
     @BindView(R.id.fl_record_activity)
     FrameLayout flRecordActivity;

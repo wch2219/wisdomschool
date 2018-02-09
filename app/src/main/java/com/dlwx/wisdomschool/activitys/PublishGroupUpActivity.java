@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.base.BaseRecrviewAdapter;
 import com.dlwx.baselib.bean.Image;
@@ -44,7 +46,10 @@ import com.dlwx.wisdomschool.utiles.VoicetranscribeAndPlayUtiles;
 import com.google.gson.Gson;
 import com.lzy.okgo.model.Response;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,15 +145,23 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         gvList.setAdapter(publishLableAdapter);
 
         if (!TextUtils.isEmpty(videofile)) {//判断是视频
+            images = new ArrayList<>();
             ivMp3.setVisibility(View.GONE);
             ivAddpic.setVisibility(View.GONE);
+            llVideo.setVisibility(View.VISIBLE);
             MediaMetadataRetriever mmr = new MediaMetadataRetriever();
             mmr.setDataSource(videofile);
             Bitmap bitmap = mmr.getFrameAtTime();
             llVideo.setVisibility(View.VISIBLE);
             ivVideopic.setImageBitmap(ImageCrop(bitmap));
-        } else {
+            File file = saveBitmapFile(bitmap);
+            try{
+                images.add(file.toString());
+            }catch (Exception e){
+                wch("错误信息："+e.getMessage());
+            }
 
+        } else {
             llVideo.setVisibility(View.GONE);
             ivMp3.setVisibility(View.VISIBLE);
             ivAddpic.setVisibility(View.VISIBLE);
@@ -192,8 +205,30 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         //下面这句是关键
         return Bitmap.createBitmap(bitmap, 0, retY, wh, wh, null, false);
     }
-
-    @Override
+    public File saveBitmapFile(Bitmap bitmap) {
+        File file = new File(createFile(),  "1.jpg");
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+            Glide.with(ctx).load(file).into(ivVideopic);
+        } catch (IOException e) {
+            wch("转化错误："+e.getMessage());
+            e.printStackTrace();
+        }
+        return file;
+    }
+    private File createFile() {
+        File sd = Environment.getExternalStorageDirectory();
+        String path = sd.getPath();
+        File file = new File(path);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        return sd;
+    }
+        @Override
     protected void initData() {
         tvTitle.setText("发送智慧成长");
         initTabBar(toolBar);
@@ -234,7 +269,6 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         VoiceRecordOrPlayListener.setRecordListener(this);
         VoiceRecordOrPlayListener.setAnewRecordListener(this);
     }
-
     @Override
     protected Presenter createPresenter() {
         return new Presenter(this);
@@ -247,6 +281,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         Intent intent = null;
         switch (view.getId()) {
             case R.id.tv_aff://发送
+                showLoading();
                 submit();
 
                 break;
@@ -320,15 +355,15 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
             UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
                 @Override
                 public void success(Response<String> response) {
-                    disLoading();
                     Gson gson = new Gson();
                     UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                     if (upPicBean.getCode() == 200) {
                         wch("视频上传成功：" + response.body());
                         video = upPicBean.getBody().getFileid() + "";
-                        send();
+                        upPic();
 
                     } else {
+                        disLoading();
                         Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -377,7 +412,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         UpFileUtiles.setBackInterface(new UpFileUtiles.BackInterface() {
             @Override
             public void success(Response<String> response) {
-                disLoading();
+
                 Gson gson = new Gson();
                 UpPicBean upPicBean = gson.fromJson(response.body(), UpPicBean.class);
                 if (upPicBean.getCode() == 200) {
@@ -388,6 +423,7 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
                     }
                     upPic();
                 } else {
+                    disLoading();
                     Toast.makeText(ctx, upPicBean.getResult(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -451,11 +487,17 @@ public class PublishGroupUpActivity extends BaseActivity implements VoiceRecordO
         Intent intent;
         switch (requestCode) {
             case 1://视频
-                String vodeofile = data.getStringExtra("vodeofile");
-                wch("视频：" + vodeofile);
-                intent = new Intent(ctx, PublishGroupUpActivity.class);
-                intent.putExtra("videofile", vodeofile);
-                startActivity(intent);
+               videofile = data.getStringExtra("videofile");
+                wch("视频：" + videofile);
+                images = new ArrayList<>();
+                MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+                mmr.setDataSource(videofile);
+                Bitmap bitmap = mmr.getFrameAtTime();
+                llVideo.setVisibility(View.VISIBLE);
+                ivVideopic.setImageBitmap(ImageCrop(bitmap));
+                File file = saveBitmapFile(bitmap);
+                images.add(file.toString());
+
                 break;
             case 2://图片
                 List<String> imag = data.getStringArrayListExtra("images");

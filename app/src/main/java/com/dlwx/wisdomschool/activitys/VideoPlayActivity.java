@@ -68,9 +68,9 @@ public class VideoPlayActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
+            public void onPrepared(MediaPlayer mp) {
                 disLoading();
             }
         });

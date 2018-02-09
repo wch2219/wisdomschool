@@ -127,8 +127,12 @@ public class AddActionActivity extends BaseActivity implements AddActionAdapter.
     }
 
     @Override
-    protected void initListener() {
+    public void downOnRefresh() {
+        getData();
+    }
 
+    @Override
+    protected void initListener() {
     }
 
     @Override

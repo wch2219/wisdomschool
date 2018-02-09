@@ -24,7 +24,6 @@ import com.dlwx.wisdomschool.activitys.PersionMessActivity;
 import com.dlwx.wisdomschool.activitys.SetWorkTimeActivity;
 import com.dlwx.wisdomschool.activitys.SettActivity;
 import com.dlwx.wisdomschool.activitys.SysNotifitionActivity;
-import com.dlwx.wisdomschool.activitys.TeacherInvitaCodeActivity;
 import com.dlwx.wisdomschool.activitys.VideoExplainActivity;
 import com.dlwx.wisdomschool.activitys.WishDomBagActivity;
 import com.dlwx.wisdomschool.adapter.MyFoodAdapter;
@@ -77,7 +76,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                     R.mipmap.icon_wdwdshijian
                     , R.mipmap.icon_wdwdxitong
                     , R.mipmap.icon_wdwdfankui
-                    , R.mipmap.icon_wdwdjsyqm
+//                    , R.mipmap.icon_wdwdjsyqm
 
                     , R.mipmap.icon_wdwdbanben
                     , R.mipmap.icon_wdwdshezhi
@@ -178,19 +177,19 @@ public class MyFragment extends BaseFragment implements View.OnClickListener, Ad
                 case 3://反馈建议
                     startActivity(new Intent(ctx, FeedbackActivity.class));
                     break;
-                case 4://生成教师邀请码
-                    startActivity(new Intent(ctx, TeacherInvitaCodeActivity.class));
-                    break;
+//                case 4://生成教师邀请码
+//                    startActivity(new Intent(ctx, TeacherInvitaCodeActivity.class));
+//                    break;
 //                case 5://申请学校培训
 //                    startActivity(new Intent(ctx, SchoolTrainActivity.class));
 //                    break;
-                case 5://版本信息
+                case 4://版本信息
                     Beta.checkUpgrade();
                     break;
-                case 6://设置
+                case 5://设置
                     startActivity(new Intent(ctx, SettActivity.class));
                     break;
-                case 7://退出登录
+                case 6://退出登录
 
                     showDia();
                     break;

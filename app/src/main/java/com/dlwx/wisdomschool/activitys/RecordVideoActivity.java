@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dlwx.baselib.base.BaseActivity;
 import com.dlwx.baselib.presenter.Presenter;
@@ -58,7 +59,7 @@ public class RecordVideoActivity extends BaseActivity implements
     private MediaRecorder mediaRecorder;
     private long startmilliTime;
     private File videoFile;
-    private int maxMillTime = 120;//最大时间
+    private int maxMillTime = 60;//最大时间 秒
     private Camera mCamera;
     private SurfaceHolder holder;
     private static final int FRONT = 1;//前置摄像头标记
@@ -174,7 +175,7 @@ public class RecordVideoActivity extends BaseActivity implements
             mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);//声音格式
             mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);//图像编码格式
             //设置录制的视频编码比特率
-            mediaRecorder.setVideoEncodingBitRate(3 * 1024 * 1024);
+            mediaRecorder.setVideoEncodingBitRate(1024 * 1024);
             mediaRecorder.setVideoSize(640, 480);
 //            mediaRecorder.setVideoFrameRate(50);
             mediaRecorder.setOutputFile(videoFile.getAbsolutePath());
@@ -270,7 +271,8 @@ public class RecordVideoActivity extends BaseActivity implements
             Date date = new Date(curmilliTime);
             String tiem = format.format(date);
             tvTime.setText(tiem);
-            if (curmilliTime == maxMillTime) {
+            if (curmilliTime >= maxMillTime*1000) {
+                Toast.makeText(ctx, "录制完成", Toast.LENGTH_SHORT).show();
                 stop();
             }
         }

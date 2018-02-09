@@ -111,7 +111,7 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                     holderleft.ll_url.setVisibility(View.GONE);
                     Glide.with(ctx).load(R.mipmap.icon_actionshouji).into(holderleft.iv_typeleft);
                     break;
-                case 6://家长作业
+                case 6://学生作业
                     /**
                      * 阅读状态
                      */
@@ -229,8 +229,6 @@ public class WorkItemAdapter extends BaseRecrviewAdapter {
                         holderleft.ll_url.setVisibility(View.GONE);
                     }
                     holderleft.tv_joinaction.setVisibility(View.GONE);
-                    holderleft.ll_yue.setVisibility(View.VISIBLE);
-
                     Glide.with(ctx).load(R.mipmap.icon_wenzhang).into(holderleft.iv_typeleft);
                     break;
 
