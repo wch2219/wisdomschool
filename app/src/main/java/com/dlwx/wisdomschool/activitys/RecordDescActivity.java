@@ -1,7 +1,5 @@
 package com.dlwx.wisdomschool.activitys;
 
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -35,7 +33,6 @@ import com.dlwx.baselib.view.MyListView;
 import com.dlwx.wisdomschool.R;
 import com.dlwx.wisdomschool.adapter.RecordCommentListAdapter;
 import com.dlwx.wisdomschool.adapter.RecordPicListAdapter;
-import com.dlwx.wisdomschool.anima.ShakeAnima;
 import com.dlwx.wisdomschool.bean.BackResultBean;
 import com.dlwx.wisdomschool.bean.RecordListBean;
 import com.dlwx.wisdomschool.fragments.EmojiconFragment;
@@ -300,11 +297,6 @@ public class RecordDescActivity extends BaseActivity {
                 VoicetranscribeAndPlayUtiles.play(ivPlaying,bodyBean.getVoice());
                 break;
             case R.id.ll_praise:
-                ObjectAnimator animator = ShakeAnima.tada(ivPraise, 1f);
-                animator.setRepeatCount(ValueAnimator.INFINITE);
-                animator.setDuration(10);
-                animator.start();
-
                 Map<String, String> map = new HashMap<>();
                 map.put("token", Token);
                 map.put("id", recorid);
