@@ -158,7 +158,7 @@ public class RecordVideoActivity extends BaseActivity implements
 
     private void start() {
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
             long l = System.currentTimeMillis();
             String format = simpleDateFormat.format(new Date(l));
             videoFile = new File(outfilePath, format + ".mp4");
@@ -172,7 +172,7 @@ public class RecordVideoActivity extends BaseActivity implements
             mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);//采集图像
             mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);//声音格式
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);//声音格式
             mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);//图像编码格式
             //设置录制的视频编码比特率
             mediaRecorder.setVideoEncodingBitRate(1024 * 1024);
