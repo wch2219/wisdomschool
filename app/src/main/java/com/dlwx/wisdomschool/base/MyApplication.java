@@ -52,7 +52,7 @@ import static com.lzy.okgo.utils.HttpUtils.runOnUiThread;
  */
 
 public class MyApplication extends Application {
-    public static final String BuglyAppID = "567efebd79";//bug  版本更新
+    public static final String BuglyAppID = "e153ffc4fa";//bug  版本更新
     public static String classnames;
     public static EaseUI easeUI;
     public static String Token;

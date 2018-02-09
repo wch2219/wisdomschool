@@ -78,6 +78,16 @@ public class RecordListBean {
         private List<?> quality_sign;
         private List<PinglunHuifu> pinglun_huifu;
         private PraiseBean praise;
+        private String voice_seconds;
+
+        public String getVoice_seconds() {
+            return voice_seconds;
+        }
+
+        public void setVoice_seconds(String voice_seconds) {
+            this.voice_seconds = voice_seconds;
+        }
+
         public String getClass_name() {
             return class_name;
         }

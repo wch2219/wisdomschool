@@ -85,7 +85,16 @@ public class RecordListAdapter extends BaseFastAdapter {
         }else{
             vh.gv_list.setVisibility(View.GONE);
             vh.rl_voide.setVisibility(View.VISIBLE);
-            Glide.with(ctx).asBitmap().load(bodyBean.getVideo()).apply(new RequestOptions().centerCrop()).into(vh.iv_video);
+            if (bodyBean == null) {
+
+            }
+            if (bodyBean.getImgs().size() == 0) {
+
+                Glide.with(ctx).asBitmap().load(R.mipmap.icon_lttupian).apply(new RequestOptions().centerCrop()).into(vh.iv_video);
+            }else{
+
+                Glide.with(ctx).asBitmap().load(bodyBean.getImgs().get(0)).apply(new RequestOptions().centerCrop()).into(vh.iv_video);
+            }
         }
         //展示图片列表
         List<String> imgs = bodyBean.getImgs();
@@ -97,7 +106,7 @@ public class RecordListAdapter extends BaseFastAdapter {
         }else{
             vh.rl_viceo.setVisibility(View.VISIBLE);
 //            String time = VoicetranscribeAndPlayUtiles.durationTime(bodyBean.getVoice());
-//            vh.tv_viceotime.setText(time);
+            vh.tv_viceotime.setText(bodyBean.getVoice_seconds()+"''");
         }
 
 //        标签
